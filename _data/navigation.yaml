@@ -1,0 +1,18 @@
+main:
+  - title: "Posts"
+    url: /
+  - title: "Portfolio"
+    url: /portfolio/
+  - title: "CV"
+    url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
+
+
+posts_nav:
+  - title: "Filter posts by"
+    children:
+      - title: "Category"
+        url: /categories/
+      - title: "Tag"
+        url: /tags/
+      - title: "Year"
+        url: /year-archive/

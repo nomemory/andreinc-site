@@ -1,0 +1,61 @@
+title: "andreinc.net"
+title_separator: "|"
+subtitle: "Neat programming blog"
+email: none@none.com
+description: >-
+  Andrei Ciobanu's programming blog.
+baseurl: "" 
+url: ""
+github_username:  nomemory
+
+# Build settings  
+theme: minimal-mistakes-jekyll
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+
+minimal_mistakes_skin: air # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+
+compress_html:
+  clippings: all
+
+include: ["_pages"]
+
+author:
+  name: "Andrei Ciobanu"
+  avatar: "/assets/images/me.jpg"
+  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers to get things done. My programming languages of choice are Java and Kotlin."
+  location: "Bucharest"
+  links:
+    - label: GitHub
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/nomemory/mockneat"
+    - label: Maven Repository
+      icon: "fab fa-fw fa-java"
+      url: "https://bintray.com/bintray/jcenter/mockneat"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/andrei-n-ciobanu-50708611/"
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      show_date: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
