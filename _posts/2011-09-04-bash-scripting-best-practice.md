@@ -5,10 +5,8 @@ classes: wide
 categories: 
   - "bash"
   - "shell"  
-tags: 
-  - "access"
+tags:
   - "bash-2"
-  - "bash-cleaunp"
   - "best-practices"
   - "echo-errors"
   - "portable-shebang"
