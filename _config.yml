@@ -25,18 +25,21 @@ include: ["_pages"]
 author:
   name: "Andrei Ciobanu"
   avatar: "/assets/images/me.jpg"
-  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers to get things done. My programming languages of choice are Java and Kotlin."
+  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers get things done. My programming languages of choice are Java and Kotlin."
   location: "Bucharest"
   links:
     - label: GitHub
       icon: "fab fa-fw fa-github"
       url: "https://github.com/nomemory/mockneat"
-    - label: Maven Repository
+    - label: Bintray
       icon: "fab fa-fw fa-java"
       url: "https://bintray.com/bintray/jcenter/mockneat"
-    - label: "LinkedIn"
+    - label: LinkedIn
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/andrei-n-ciobanu-50708611/"
+    - label: Spotify
+      icon: "fab fa-fw fa-spotify"
+      url: "https://open.spotify.com/user/a3dud6s6igdiphj760chzhpxv?si=haRc0m-YQEqrPQVNbGxAEA"
 
 defaults:
   # _posts
