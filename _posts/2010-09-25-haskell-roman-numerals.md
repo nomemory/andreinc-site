@@ -4,6 +4,7 @@ date: "2010-09-25"
 classes: wide
 categories: 
   - "haskell"
+  - "algorithms"
 tags: 
   - "converter"
   - "functional-programming"

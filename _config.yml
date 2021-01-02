@@ -59,3 +59,4 @@ defaults:
       layout: single
       author_profile: true
 
+permalink: /:year/:month/:day/:title

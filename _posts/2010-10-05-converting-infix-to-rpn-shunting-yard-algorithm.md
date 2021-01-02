@@ -4,9 +4,7 @@ date: "2010-10-05"
 classes: wide
 categories: 
   - "algorithms"
-  - "java-programming-languages"
-  - "programming-languages"
-  - "python-programming-languages"
+  - "java"
 tags: 
   - "algorithm"
   - "calculator"
