@@ -3,16 +3,13 @@ title: "Generic data structures in C"
 date: "2010-09-30"
 classes: wide
 categories: 
-  - "c"
-  - "algorithms"
-  - "programming-languages"
+  - "c" 
+  - "algorithms" 
 tags: 
   - "advanced"
   - "advanced-c"
-  - "c-2"
   - "c-generics"
   - "c-tutorial"
-  - "c-3"
   - "c-templates"
   - "code-wizard"
   - "compile-time"
@@ -22,7 +19,6 @@ tags:
   - "generic-stack"
   - "generics"
   - "glib"
-  - "hacks"
   - "java-2"
   - "java-generics"
   - "macro"
@@ -35,12 +31,16 @@ tags:
   - "templates"
 ---
 
-In order to prove that [generic programming](http://en.wikipedia.org/wiki/Generic_programming) (the style of computer programming in which algorithms are written in terms of _to-be-specified-later_ types that are then_instantiated_ when needed for specific types provided as parameters) can be achieved in **C**, let's write the implementation of a generic **[Stack](http://en.wikipedia.org/wiki/Stack_(data_structure))** [data structure](http://en.wikipedia.org/wiki/Stack_(data_structure)) . We will follow two possible approaches:
+> This tutorial assumes the reader is familiar with _C macros_, _C pointers_, and basic data-structures. 
+
+Let's face it, The `C` Language is not friendly towards generic programming, but we can use a few tricks:
 
 * [_Hacking_ with the `#preprocessor`](#hacking-with-the-preprocessor)
 * [Using the flexibility of the void pointer (`void*`)](#using-the-void-pointer-void)
 
-You can always try both of the approaches and see which one is more suitable for your particular case . Also note that there are already generic C libraries available (see [GLib](http://library.gnome.org/devel/glib/)).
+You can always try both of the approaches and see which one is more suitable for your particular case .
+
+Also note that there are already _generic_ C libraries available (see [GLib](http://library.gnome.org/devel/glib/)).
 
 An existing [github project](https://github.com/nomemory/blog-generic-data-structures-in-c) contains all the code from this article, to clone it:
 
@@ -72,7 +72,7 @@ int main(){
 
 In the above example the label is `HELLO`, and the associated data is `"Hello World Macro!"`.
 
-Before compile-time the preprocessor will replace the label with the associated code. If we compile and run the above code the output will be:
+Before the compile-time the preprocessor will replace the label with the associated code. If we compile and run the above code the output will be:
 
 ```
 Hello World Macro!
@@ -95,9 +95,9 @@ In the case above `MAX` works exactly as a function that receives two arguments 
 
 Note that the arguments are _generic_ and appear to be _typeless_, the preprocessor is not performing any validation on types (that's the compiler job) - but bear in mind this an advantage is also a disadvantage.
 
-If we want to expand the above macro (_see with the eyes of the compiler_ :p) you can use the `-E` switch with [`gcc`](http://gcc.gnu.org/).
+If we want to expand the above macro (_seeing with the eyes of the compiler_) you can use the `-E` switch with [`gcc`](http://gcc.gnu.org/).
 
-After the macro is expanded (replaced with the associated code) the sample above will look similar to this:
+After the macro is expanded, the sample code above becomes:
 
 ```c
 int main(){
@@ -150,7 +150,7 @@ The tokens were concatenated with `show_?`, and the resulting two tokens were ac
 
 Now lets jump into writing our `generic<>` Stack data structure:
 
-## Declaring the (Stack) data structure, and the associated functions (`pop` and `push`):
+## Declaring the (Stack) data structure, and the associated functions (`pop()` and `push()`):
 
 ```c
 #define STACK_DECLARE(type)                                     \
@@ -163,7 +163,7 @@ type stack_##type##_pop(stack_##type **stack);                  \
 ```
 
 Depending on the type supplied as the argument, different code will be generated.
-A macro can be associated with blocks of code, we just need to use `\` to signal the fact to the `#preprocessor`.
+A macro can be associated with blocks of code, we just need to use `\` to signal a multi-line macro.
 
 
 ```c
@@ -191,9 +191,7 @@ type stack_##type##_pop(stack_##type **stack) {                 \
 }                                                               \
 ```
 
-Different types, different code ...
-
-## Defining the STACK functions (`push` and `pop`) declared in the previous step:
+## Defining the STACK functions (`push()` and `pop()`) declared in the previous step:
 
 ```c
 #define STACK_DEFINE(type)                                      \
@@ -263,7 +261,7 @@ int stack_int_pop(stack_int **stack) {
     stack_##type##_pop(stack)               \
 ```
 
-## Putting all togheter
+## Putting all together
 
 ```c
 #include <stdio.h>
@@ -313,6 +311,7 @@ type stack_##type##_pop(stack_##type **stack) {                 \
     stack_##type##_pop(stack)               \
 
 
+//
 // If you want to work with a stack that holds integers you should
 // use those macros. They will expand and the associated functions will be
 // generated .
@@ -347,20 +346,20 @@ _Note:_ The type argument cannot contain `*` or spaces. For example, `STACK_DECL
 
 # Using the void pointer (`void*`)
 
-Typecasting is one of the powerful features of C. Type casting represents the ability to convert between different type variables.
+Typecasting is one of the powerful features of C, and it represents the ability to convert between different type variables.
 
-Not let's focus on pointers: there are pointers of type `int`, `char`, or `float`, however there's a certain pointer that does not have a type known as the `void` pointer. Any type of pointer can be cast to a void pointer, and conversely, any void pointer can be cast to a pointer of a type .
+Not let's focus on pointers: there are pointers of type `int*`, `char*`, or `float*`, however there's a certain pointer that does not have a type known as the `void` pointer. Any type of pointer can be cast to a void pointer, and conversely, any void pointer can be cast to a pointer of a type .
 
 Generic data, can be referenced using `*void`. 
 
 ```c
 typedef struct stack_s {
-    void *data; // Can reference "anything"
+    void *data; // Can reference "anything" 
     struct stack_s *next; // The stack is built as a linked list
 } stack;
 ```
 
-The next step would be now to declare & define the functions involved in the stack manipulation: `push` and `pop`. 
+The next step would be now to declare & define the functions involved in the stack manipulation: `push()` and `pop()`. 
 Their signatures could look like this:
 
 ```c
@@ -372,7 +371,7 @@ void *stack_pop(stack **head);
 void stack_push(stack **head, void *data) {
     stack *new_node = malloc(sizeof(*new_node));
     if (NULL == new_node) {
-        fputs("Couldn't allocate memoryn", stderr);
+        fputs("Couldn't allocate memory\n", stderr);
         abort();
     }
     new_node->data = data;
@@ -395,7 +394,7 @@ void *stack_pop(stack **head) {
 }
 ```
 
-Main method:
+## Main method:
 
 ```c
 int main() {
@@ -429,7 +428,7 @@ int main() {
 }
 ```
 
-Putting all together:
+## Putting all together:
 
 ```c
 #include <stdio.h>
