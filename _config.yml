@@ -25,7 +25,7 @@ include: ["_pages"]
 author:
   name: "Andrei Ciobanu"
   avatar: "/assets/images/me.jpg"
-  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers get things done. My programming languages of choice are Java and Kotlin."
+  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers get things done. My programming languages of choice are Java and Kotlin, but deep inside I know we should re-write everything in C."
   location: "Bucharest"
   links:
     - label: GitHub
