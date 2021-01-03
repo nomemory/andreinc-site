@@ -1,6 +1,6 @@
 ---
 title: "Euclid's Algorithm: Reducing fraction to lowest terms"
-date: "2010-13-11"
+date: "2010-12-13"
 classes: wide
 categories: 
   - "c"
