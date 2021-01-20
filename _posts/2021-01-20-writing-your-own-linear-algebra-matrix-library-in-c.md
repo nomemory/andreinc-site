@@ -812,13 +812,567 @@ Observations:
 * When copying the elements from `m` to `r` we skip the column `column` by adding this condition `(column!=j)`:
     - Then we increment `k`, using `k++` inside the `r->data[i][k++]` statement;
     - From this moment onwards `k-j == 1`, meaning `k` and `j` are no longer in sync, because we've skipped the column.
+    
+### Removing a row
+
+Removing a column from a`M[n x m]` matrix, involves the creation of a new `[(n-1) x m]` matrix.
+
+The method signature looks like this:
+
+```c
+nml_mat *nml_mat_row_rem(nml_mat *m, unsigned int row);
+```
+
+Calling the `nml_mat_row_rem` on a matrix yields the following results:
+
+$$
+\text{nml_mat_row_rem(}
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+\text{, 1)=}
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+$$
+
+The code implementation:
 
 ```c 
-nml_mat *nml_mat_row_rem(nml_mat *m, unsigned int row);
-nml_mat *nml_mat_row_swap(nml_mat *m, unsigned int row1, unsigned int row2);
-int nml_mat_row_swap_r(nml_mat *m, unsigned int row1, unsigned int row2);
-nml_mat *nml_mat_col_swap(nml_mat *m, unsigned int col1, unsigned int col2);
-int nml_mat_col_swap_r(nml_mat *m, unsigned int col1, unsigned int col2);
-nml_mat *nml_mat_cath(unsigned int mnun, nml_mat **matrices);
-nml_mat *nml_mat_catv(unsigned int mnum, nml_mat **matrices);
+nml_mat *nml_mat_row_rem(nml_mat *m, unsigned int row) {
+  if (row >= m->num_rows) {
+    NML_FERROR(CANNOT_REMOVE_ROW, row, m->num_rows);
+    return NULL;
+  }
+  nml_mat *r = nml_mat_new(m->num_rows-1, m->num_cols);
+  int i, j, k;
+  for(i = 0, k = 0; i < m->num_rows; i++) {
+    if (row!=i) {
+      for(j = 0; j < m->num_cols; j++) {
+        r->data[k][j] = m->data[i][j];
+      }
+      k++;
+    }
+  }
+  return r;
+}
 ```
+
+Observations:
+* The resulting matrix `r` has the same number of columns as m (`m->num_cols`), but a smaller number of rows (`r->num_rows`);
+* We keep a separate row index `k` for the resulting matrix 'r';
+* Initially `k` is in sync with `i`, as long as `(row!=i)`;
+* When `row==i`, `k` is no longer incremented, so the sync is lost and `i - k == 1`. This is how the row gets skipped.
+
+### Swapping Rows
+
+This functionality will prove useful later when we re going to implement the Row Echelon Form and LU Decomposition algorithms.
+
+In this case we can define two methods:
+
+```c
+// Returns a new matrix with row1 and row2 swapped
+nml_mat *nml_mat_row_swap(nml_mat *m, unsigned int row1, unsigned int row2);
+
+// Modifies the existing matrix m, by swapping the two rows row1 and row2
+int nml_mat_row_swap_r(nml_mat *m, unsigned int row1, unsigned int row2);
+```
+
+Visually the method works like this:
+
+$$
+\text{nml_mat_row_swap_r(}
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+\text{, 0, 1)=}
+\begin{bmatrix}
+0.0 & 2.0 & 4.0\\
+1.0 & 2.0 & 3.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+$$
+
+The C implementation makes use of the fact that rows are contiguous memory blocks can be swapped without having to access each element of the rows in particular:
+
+```c
+int nml_mat_row_swap_r(nml_mat *m, unsigned int row1, unsigned int row2) {
+  if (row1 >= m->num_rows || row2 >= m->num_rows) {
+    NML_FERROR(CANNOT_SWAP_ROWS, row1, row2, m->num_rows);
+    return 0;
+  }
+  double *tmp = m->data[row2];
+  m->data[row2] = m->data[row1];
+  m->data[row1] = tmp;
+  return 1;
+} 
+```
+
+As for the `nml_mat_row_swap(..)` this can be written by re-using `nml_mat_row_swap_r(...)`:
+
+```c
+nml_mat *nml_mat_row_swap(nml_mat *m, unsigned int row1, unsigned int row2) {
+  nml_mat *r = nml_mat_cp(m);
+  if (!nml_mat_row_swap_r(r, row1, row2)) {
+    nml_mat_free(r);
+    return NULL;
+  }
+  return r;
+} 
+```
+
+### Swapping columns
+
+This functionality might not be as useful as the previous one (`nml_mat_row_swap(...)`), but for sake of having a robust API for our ~potential~ users, we will implement it.
+
+We define again two methods, one that is returning a new `nml_mat` matrix, and one that operates on the given on:
+
+```c
+nml_mat *nml_mat_col_swap(nml_mat *m, unsigned int col1, unsigned int col2);
+int nml_mat_col_swap_r(nml_mat *m, unsigned int col1, unsigned int col2); 
+```
+
+Visually the two methods are working like this:
+
+$$
+\text{nml_mat_col_swap_r(}
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+\text{, 0, 1)=}
+\begin{bmatrix}
+2.0 & 1.0 & 4.0\\
+2.0 & 0.0 & 3.0\\
+1.0 & 2.0 & 9.0
+\end{bmatrix}
+$$
+
+Compared to the previous two functions (for swapping rows) the code is slightly different. Columns are not contiguous blocks of memory, so we will need to swap each element one by one:
+
+```c
+int nml_mat_col_swap_r(nml_mat *m, unsigned int col1, unsigned int col2) {
+  if (col1 >= m->num_cols || col2 >= m->num_rows) {
+    NML_FERROR(CANNOT_SWAP_ROWS, col1, col2, m->num_cols);
+    return 0;
+  }
+  double tmp;
+  int j;
+  for(j = 0; j < m->num_rows; j++) {
+    tmp = m->data[j][col1];
+    m->data[j][col1] = m->data[j][col2];
+    m->data[j][col2] = tmp;
+  }
+  return 1;
+} 
+```
+
+Writing the `nml_mat_col_swap(...)` version of the method will simply re-use the previous "`_r`" one:
+
+```c
+nml_mat *nml_mat_col_swap(nml_mat *m, unsigned int col1, unsigned int col2) {
+  nml_mat *r = nml_mat_cp(m);
+  if (!nml_mat_col_swap_r(r, col1, col2)) {
+    nml_mat_free(r);
+    return NULL;
+  }
+  return r;
+} 
+```
+
+### Horizontal Concatenation of two matrices
+
+This functionality is probably not very useful from a "scientific" point of view, but it's a nice exercise we can solve, and a neat "utility" we can add to the library.
+
+We would like to write a function, that takes a variable number of matrices (`nml_mat**`) and returns a new matrix that represents the horizontal concatenation of those matrices.
+
+It's important that all the input matrices have the same number of columns, otherwise the horizontal concatenation won't work.
+
+Our C function will have the following signature:
+
+```c
+nml_mat *nml_mat_cath(unsigned int mnum, nml_mat **marr); 
+```
+
+Where:
+* `unsigned int mnum` - represents the total number of matrices we want to (horizontally) concatenate;
+* `nml_mat **marr` - are the matrices we want to (horizontally) concatenate;
+
+Visually, the function works like this:
+
+$$
+A=
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+\\
+B=
+\begin{bmatrix}
+4.0 & 0.0 & 9.0\\
+\end{bmatrix}
+\\
+C=
+\begin{bmatrix}
+3.0 & -1.0 & 1.0\\
+2.0 & 0.0 & -5.0
+\end{bmatrix}
+$$
+
+Calling the method `nml_mat_cath(3, **[A, B, C])` will yield the following result:
+
+$$
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+2.0 & 1.0 & 9.0\\
+4.0 & 0.0 & 9.0\\
+3.0 & -1.0 & 1.0\\
+2.0 & 0.0 & -5.0
+\end{bmatrix}
+$$
+
+The corresponding C code for this implementation looks like this:
+
+```c
+nml_mat *nml_mat_cath(unsigned int mnum, nml_mat **marr) {
+  if (0==mnum) {
+    // No matrices, nothing to return
+    return NULL;
+  }
+  if (1==mnum) {
+    // We just return the one matrix supplied as the first param
+    // no need for additional logic
+    return nml_mat_cp(marr[0]);
+  }
+  // We calculate the total number of columns to know how to allocate memory
+  // for the resulting matrix
+  int i,j,k,offset;
+  unsigned int lrow, ncols;
+  lrow = marr[0]->num_rows;
+  ncols = marr[0]->num_cols;
+  for(k = 1; k < mnum; k++) {
+    if (NULL == marr[k]) {
+      NML_FERROR(INCONSITENT_ARRAY, k, mnum);
+      return NULL;
+    }
+    if (lrow != marr[k]->num_rows) {
+      NML_FERROR(CANNOT_CONCATENATE_H, lrow, marr[k]->num_rows);
+      return NULL;
+    }
+    ncols+=marr[k]->num_cols;
+  }
+  // At this point we know how the resulting matrix looks like,
+  // we allocate memory for it accordingly
+  nml_mat *r = nml_mat_new(lrow, ncols);
+  for(i = 0; i < r->num_rows; i++) {
+    k = 0;
+    offset = 0;
+    for(j = 0; j < r->num_cols; j++) {
+      // If the column index of marr[k] overflows
+      if (j-offset == marr[k]->num_cols) {
+        offset += marr[k]->num_cols;
+        // We jump to the next matrix in the array
+        k++;
+      }
+      r->data[i][j] = marr[k]->data[i][j - offset];
+    }
+  }
+  return r;
+}
+```
+
+Observations:
+* `i`, `j` are used to iterate over the resulting matrix (`r`);
+* `k` is the index of the current we are concatenating;
+* `offset` is useful to determine we need to jump to next matrix that needs concatenation.
+
+### Vertical concatenation
+
+Just like the horizontal concatenation, this functionality is not very useful for the more complex algorithms we are going to implement later in this tutorial. But, for the sake of our ~potential~ library users, and because it's a nice exercise we will implement it.
+
+The main idea is to write a function, that takes a variable number of matrices (`nml_mat**`) and returns a new matrix that represents the vertical concatenation of those matrices.
+
+It's important that all the input matrices have the same number of rows, otherwise the vertical concatenation won't work.
+
+The method signature looks like:
+
+`nml_mat *nml_mat_catv(unsigned int mnum, nml_mat **marr);`
+
+Where:
+* `unsigned int mnum` - represents the total number of matrices we want to (horizontally) concatenate;
+* `nml_mat **marr` - are the matrices we want to (horizontally) concatenate;
+
+Visually the method works like this:
+
+$$
+A=
+\begin{bmatrix}
+1.0 & 2.0 & 3.0\\
+0.0 & 2.0 & 4.0\\
+\end{bmatrix}
+\\
+B=
+\begin{bmatrix}
+4.0 & 0.0 & 9.0\\
+2.0 & 1.0 & 9.0
+\end{bmatrix}
+\\
+$$
+
+Calling `nml_mat_catv(2, **[A, B])` will return the following result:
+
+$$
+\begin{bmatrix}
+1.0 & 2.0 & 3.0 & 4.0 & 0.0 & 9.0\\
+0.0 & 2.0 & 4.0 & 2.0 & 1.0 & 9.0
+\end{bmatrix}
+$$
+
+The code implementation looks like this:
+
+```c 
+// Concatenates a variable number of matrices into one.
+// The concentation is done vertically this means the matrices need to have
+// the same number of columns, while the number of rows is allowed to
+// be variable
+nml_mat *nml_mat_catv(unsigned int mnum, nml_mat **marr) {
+  if (0 == mnum) {
+    return NULL;
+  }
+  if (1 == mnum) {
+    return nml_mat_cp(marr[0]);
+  }
+  // We check to see if the matrices have the same number of columns
+  int lcol, i, j, k, offset;
+  unsigned int numrows;
+  nml_mat *r;
+  lcol = marr[0]->num_cols;
+  numrows = 0;
+  for(i = 0; i < mnum; i++) {
+    if (NULL==marr[i]) {
+      NML_FERROR(INCONSITENT_ARRAY, i, mnum);
+      return NULL;
+    }
+    if (lcol != marr[i]->num_cols) {
+      NML_FERROR(CANNOT_CONCATENATE_V,lcol,marr[i]->num_cols);
+      return NULL;
+    }
+    // In the same time we calculate the resulting matrix number of rows
+    numrows+=marr[i]->num_rows;
+  }
+  // At this point we know the dimensions of the resulting Matrix
+  r = nml_mat_new(numrows, lcol);
+  // We start copying the values one by one
+  for(j = 0; j < r->num_cols; j++) {
+    offset = 0;
+    k = 0;
+    for(i = 0; i < r->num_rows; i++) {
+      if (i - offset == marr[k]->num_rows) {
+        offset += marr[k]->num_rows;
+        k++;
+      }
+      r->data[i][j] = marr[k]->data[i-offset][j];
+    }
+  }
+  nml_mat_print(r);
+  return r;
+}
+```
+
+Observations:
+* `i`, `j` are used to iterate over the resulting matrix (`r`);
+* Compared to our previous method (`nml_mat_cath(..)`) this time we start by iterating though the columns;
+* `k` is the index of the current matrix we are concatenating;
+* `offset` is useful to determine we need to jump to next matrix that needs concatenation
+
+## Basic Matrix Operations
+
+### Add two matrices
+
+From a mathematical perspective the formula for adding two matrices A and B is quit simple:
+
+$$
+\begin{bmatrix}
+a_{01} & a_{02} & ... && a_{0n}\\
+a_{11} & a_{12} & ... && a_{1n}\\
+... & ... & ... && ...\\
+a_{m1} & a_{m2} & ... && a_{mn}\\
+\end{bmatrix}
++
+\begin{bmatrix}
+b_{01} & b_{02} & ... && b_{0n}\\
+b_{11} & b_{12} & ... && b_{1n}\\
+... & ... & ... && ...\\
+b_{m1} & b_{m2} & ... && b_{mn}\\
+\end{bmatrix}
+=
+\\
+\begin{bmatrix}
+a_{01} + b_{01} & a_{02} + b_{02} & ... && a_{0n} + b_{0n}\\
+a_{11} + b_{11} & a_{12} + b_{12} & ... && a_{1n} + b_{1n}\\
+... & ... & ... && ...\\
+a_{m1} + b_{m1} & a_{m2} + b_{m2} & ... && a_{mn} +  b_{mn}\\
+\end{bmatrix}
+$$
+
+Basically each element from the first matrix gets added with the corresponding element from the second matrix.
+
+The corresponding C code is straightforward:
+
+```c
+nml_mat *nml_mat_add(nml_mat *m1, nml_mat *m2) {
+  nml_mat *r = nml_mat_cp(m1);
+  if (!nml_mat_add_r(r, m2)) {
+    nml_mat_free(r);
+    return NULL;
+  }
+  return r;
+}
+
+int nml_mat_add_r(nml_mat *m1, nml_mat *m2) {
+  if (!nml_mat_eqdim(m1, m2)) {
+    NML_ERROR(CANNOT_ADD);
+    return 0;
+  }
+  int i, j;
+  for(i = 0; i < m1->num_rows; i++) {
+    for(j = 0; j < m2->num_rows; j++) {
+      m1->data[i][j] += m2->data[i][j];
+    }
+  }
+  return 1;
+}
+```
+
+### Subtracting two matrices
+
+This is very similar with to the addition, except this time each element from `m2` is subtracted from the corresponding element from `m1`:
+
+```c
+nml_mat *nml_mat_sub(nml_mat *m1, nml_mat *m2) {
+  nml_mat *r = nml_mat_cp(m2);
+  if (!nml_mat_sub_r(r, m2)) {
+    nml_mat_free(r);
+    return NULL;
+  }
+  return r;
+}
+
+int nml_mat_sub_r(nml_mat *m1, nml_mat *m2) {
+  if (!nml_mat_eqdim(m1, m2)) {
+    NML_ERROR(CANNOT_SUBTRACT);
+    return 0;
+  }
+  int i, j;
+  for(i = 0; i < m1->num_rows; i++) {
+    for(j = 0; j < m2->num_cols; j++) {
+      m1->data[i][j] -= m2->data[i][j];
+    }
+  }
+  return 1;
+} 
+```
+
+### Multiplying two matrices
+
+Having a matrix `A[m x n]` and a matrix `B[n x p]`:
+
+$$ A = 
+\begin{bmatrix}
+a_{11} & a_{12} & ... && a_{1n}\\
+a_{21} & a_{22} & ... && a_{2n}\\
+... & ... & ... && ...\\
+a_{m1} & a_{m2} & ... && a_{mn}\\
+\end{bmatrix}
+, B =
+\begin{bmatrix}
+b_{11} & b_{12} & ... && b_{1p}\\
+b_{11} & b_{12} & ... && b_{2p}\\
+... & ... & ... && ...\\
+b_{n1} & b_{n2} & ... && b_{np}\\
+\end{bmatrix}
+$$
+
+We define the product $$A * B = C$$, where `C [m x p]`:
+
+$$ C =
+\begin{bmatrix}
+c_{11} & c_{12} & ... && c_{1p}\\
+c_{11} & c_{12} & ... && c_{2p}\\
+... & ... & ... && ...\\
+c_{m1} & c_{m2} & ... && c_{mp}\\
+\end{bmatrix}
+$$
+
+Where:
+
+$$c_{ij} = a_{i1} * b_{1j} + a_{i2} * b_{2j} + ... + a_{in} * b_{nj} = \sum_{k=1}^{n} a_{ik} * b_{kj}$$, for $$i \rightarrow 1..m$$ and $$j \rightarrow 1..p$$.
+
+The product $$A*B$$ is defined if and only if the number of columns in `A` equals the number of rows in `B`, which is `n`.
+
+The resulting product matrix will then "inherit" the number of rows from `A` and the number of columns from `B`.
+
+The formula is more easy to digest if we follow a simple example:
+
+
+$$
+A=
+\begin{bmatrix}
+1 & 2 & 3\\
+0 & 0 & 4
+\end{bmatrix}
+\\
+B=
+\begin{bmatrix}
+2 & 3 \\
+2 & 1 \\
+1 & 5
+\end{bmatrix}
+\\
+$$
+
+$$A*B$$ exists because `A[2x3]` and `B[3x2]`. The resulting matrix `C` will be `2x2`.
+
+$$
+C=
+\begin{bmatrix}
+1 * 2 + 2 * 2 + 3 * 1 & 1 * 3 + 2 * 1 + 3 * 5 \\
+0 * 2 + 0 * 2 + 4 * 1 & 0 * 3 + 0 * 1 + 4 * 5 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+9 & 20 \\
+4 & 20 \\
+\end{bmatrix}
+$$
+
+The naive C implementation for this algorithm looks like:
+
+```c 
+nml_mat *nml_mat_dot(nml_mat *m1, nml_mat *m2) {
+  if (!(m1->num_cols == m2->num_rows)) {
+    NML_ERROR(CANNOT_MULITPLY);
+    return NULL;
+  }
+  int i, j, k;
+  nml_mat *r = nml_mat_new(m1->num_rows, m2->num_cols);
+  for(i = 0; i < r->num_rows; i++) {
+    for(j = 0; j < r->num_cols; j++) {
+      for(k = 0; k < m1->num_cols; k++) {
+        r->data[i][j] += m1->data[i][k] * m2->data[k][j];
+      }
+    }
+  }
+  return r;
+}
+```
+
+Better algorithms exists for matrix multiplications, if you want to find out more plese check this wikipedia [article](https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm).
