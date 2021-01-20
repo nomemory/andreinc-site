@@ -17,7 +17,7 @@ tags:
   - "greatest-comon-divisor"
 ---
 
-Recently I've started to implement (or reimplement) the [most common algorithms](http://andreinc.net/projects/algorithms-and-data-structures/) a software developer should know . One of the nicest books I found on this topic is [Algorithms in C](http://www.amazon.com/Algorithms-Parts-1-4-Fundamentals-Structures/dp/0201314525) (Robert Sedgewick) . 
+Recently I've started to implement (or reimplement) the most common algorithms a software developer should know . One of the nicest books I found on this topic is [Algorithms in C](http://www.amazon.com/Algorithms-Parts-1-4-Fundamentals-Structures/dp/0201314525) (Robert Sedgewick) . 
 
 Of course, there is [this](http://www.amazon.com/Art-Computer-Programming-Volumes-Boxed/dp/0201485419) and [this](http://www.amazon.com/Introduction-Algorithms-Second-Thomas-Cormen/dp/0262032937), but lately I am more interested on the "implementation" side of things than on maths and theory .
 

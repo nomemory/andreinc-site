@@ -24,8 +24,6 @@ tags:
   - "shunting-yard-algorithm"
 ---
 
-# Introduction
-
 If you've tried to write your own calculator (something in the style of [calculator](https://wiki.gnome.org/action/show/Apps/Calculator?action=show&redirect=Calculator)) you've probably had to build a simple converter for your mathematical expressions from [infix notation](http://en.wikipedia.org/wiki/Infix_notation) to [RPN](http://en.wikipedia.org/wiki/Postfix_notation) (Reverse Polish Notation).
 
 Before jumping directly into code, we first need to define the first two terms:

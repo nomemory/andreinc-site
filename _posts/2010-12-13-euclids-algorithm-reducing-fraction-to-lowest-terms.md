@@ -253,3 +253,5 @@ int main(int argc, char *argv[])
 	return (EXIT_SUCCESS);
 }
 ```
+
+_Note: As an alternative to Euclid's Algorithm take a look on [Stein's Algorithm](/2010/12/12/binary-gcd-steins-algorithm-in-c)._

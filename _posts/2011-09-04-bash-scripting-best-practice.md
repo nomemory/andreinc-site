@@ -21,6 +21,8 @@ tags:
 
 # Use a portable shebang
 
+> In computing, a shebang is the character sequence consisting of the characters number sign and exclamation mark (#!) at the beginning of a script. (source [wikipedia](https://en.wikipedia.org/wiki/Shebang_(Unix)))
+
 Use:
 
 ```shell
@@ -35,7 +37,7 @@ instead of
 
 `bash` can have various locations Eg.: `/sbin/bash` , `/usr/local/bin/bash`, `/usr/bin/bash`
 
-_Note: This is not only to be applied to `bash`, but other shells or scripting languages._
+_Note: This is not only to be applied to `bash`, but to other shells or scripting languages._
 
 # Perform "Sanity Checks"
 
@@ -46,6 +48,10 @@ Before running the actual code of your script, do some checks to assure that not
 Don't forget to include meaningful error messages if one of the sanity checks fails.
 
 Examples of common checks performed in bash scripts:
+
+* [Test if the script is being run by the correct user](#test-if-the-script-is-being-run-by-the-correct-user)
+* [Test if you have read / write access in certain locations](#test-if-you-have-read--write-access-in-certain-locations) 
+* [Test if everything needed is in `$PATH`](#test-if-everything-needed-is-in-path)
 
 ## Test if the script is being run by the correct user
 
