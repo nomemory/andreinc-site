@@ -5,24 +5,19 @@ classes: wide
 title: Portfolio
 ---
 
-This section contains links to my "open source" projects and libraries. 
+This section contains links to my "open source" projects and libraries.
 
-### [MockNeat](https://www.mockneat.com/)
-
-**mockneat** is an arbitrary data-generator open-source library written in Java. It provides a simple but powerful (fluent) API that enables developers to create `json`, `xml`, `csv` and `sql data` programatically. It can also act as a powerful Random substitute or a mocking library.
-
-### [ServerNeat](https://github.com/nomemory/serverneat)
-
-**serverneat** is ~~not another~~ a Kotlin Web Server for mocking and stubbing Rest APIs. It provides and easy to use DSL ([Domain Specific Language](https://en.wikipedia.org/wiki/Domain-specific_language?oldformat=true)) and seamless integration with [**mockneat**](https://www.mockneat.com/) for generating dynamic `json` responses. ServerNeat can be used as standalone application, capable of loading, compiling and evaluating kts scripts, or as a Kotlin/Java library.
-
-### [MapNeat](https://github.com/nomemory/mapneat)
-
-**mapneat** is a JVM library written in Kotlin that provides an easy to use DSL ([Domain Specific Language](https://en.wikipedia.org/wiki/Domain-specific_language?oldformat=true)) for transforming `json` to `json`, `xml` to `json`, `pojo` to `json` in a declarative way. No intermediary POJOs are needed. Given's Kotlin high-interoperability MapNeat can be used in a Java project without any particular hassle.
-
-### [MarkovNeat](https://github.com/nomemory/markovneat)
-
-**markovneat** is a Java [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain?oldformat=true) implementation.
-
-### [AlephFormatter](https://github.com/nomemory/aleph-formatter)
-
-**aleph-formatter** is a lightweight library for `String` formatting that supports both named and positional parameters with a twist: it has a limited support for object introspection. Aleph Formatter performs better than `String.format` for simple use-cases. 
+| Repository | Language | Description |
+| ---------- | -------- | ----------- |
+| [mockneat](https://github.com/nomemory/mockneat) | Java | MockNeat is a Java 8+ library that facilitates the generation of arbitrary data for your applications. |
+| [mapneat](https://github.com/nomemory/mapneat) | Kotlin | MapNeat is a JVM library written in Kotlin that provides an easy to use DSL (Domain Specific Language) for transforming JSON to JSON, XML to JSON, POJO to JSON in a declarative way.   |
+| [serverneat](https://github.com/nomemory/serverneat) | Kotlin |  A Kotlin DSL / Server for creating mock/stub servers - using MockNeat for generating data. |
+| [markovneat](https://github.com/nomemory/markovneat) | Java | A Markov Chains implementation for Java. |
+| [neat-matrix-library (nml)](https://github.com/nomemory/neat-matrix-library) | C | nml is a "simple" matrix/numerical analysis library written in pure C. The scope of the library is to highlight various algorithm implementations related to matrices. |
+| [JBVE](https://github.com/nomemory/java-bean-validation-extension) | Java | A library that extends the Java Bean Validation API with additional @Annotations. |
+| [ansiscape](https://github.com/nomemory/ansiscape) | Java | AnsiScape is a simple Java library that allows the user to format the output of the applications using ANSI Escape Codes. |
+| [aleph-formatter](https://github.com/nomemory/aleph-formatter) | Java | A simple and efficient StringFormatter that supports named parameters (with a twist). Oh!, and it works faster than `String.format(...)`sometimes. |
+| [nmlib](https://github.com/nomemory/nmlib) | C | A generic C data structures /algortihms library. | 
+| [pysert](https://github.com/nomemory/pysert) | python3 | A python script that can be used to generate data arbitrarly. |
+| [c-generic-pqueue](https://github.com/nomemory/c-generic-pqueue) | C | A generic PQueue implementations using binary heaps. |
+| [jasuggest](https://github.com/nomemory/jasuggest) | Java | An auto-suggest library using a Trie as the underlying implementation. |
