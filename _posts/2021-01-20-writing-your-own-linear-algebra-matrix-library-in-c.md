@@ -12,29 +12,141 @@ tags:
 
 **ARTICLE IS A DRAFT**
 
-# Rationale
+# Math, math
 
-Let's say you are one of the few Engineering/Computer Science students that are passionate about [linear algebra](https://en.wikipedia.org/wiki/Linear_algebra), [numerical analysis](https://en.wikipedia.org/wiki/Numerical_analysis) and writing code in a low-level language.
+Linear algebra is the branch of mathematics focused on:
+* linear equations: $$a_{1}*x_{1} + ... + a_{n}*x_{n} = b$$
+* linear maps: $$(x_{1},...,x_{n}) \rightarrow a_{1}*x_{1} + ... + a_{n}*x_{n}$$
+    -  and their representation in _vector spaces_ through matrices;
+  
+A finite set of linear equations with a finite set of variables, is called a **system of linear equations** or a **linear system**.
 
-Or you are just curious about what's behind the [`lu(A)`](https://www.mathworks.com/help/matlab/ref/lu.html) method in Matlab.
+Linear systems are a fundamental part of linear algebra. Historically speaking, the math behind matrix theory has been developed for solving such systems. In the modern context, many real-world problems may be interpreted in terms of matrices and linear systems.
 
-Or you plan to learn more about A.I. algorithms, and you want to accumulate this knowledge on top of a robust linear algebra foundation.
+To see the connection between matrices and linear systems of equations, let's look at the following example:
+
+$$ 
+2x_{1} + x_{2} + 3x_{3} = 1 \\
+2x_{1} + 6x_{2} + 8x_{3} = 3 \\
+6x_{1} + 8x_{3} + 18x_{3} = 5
+$$
+
+For this linear system composed of 3 linear equations we can associate the matrix `A[3x3]`:
+
+$$A=
+\begin{bmatrix}
+2 & 1 & 3\\
+2 & 6 & 8\\
+6 & 8 & 18
+\end{bmatrix}
+$$
+
+And the vector of solutions `B[3x1]`:
+
+$$B=
+\begin{bmatrix}
+1 \\
+3 \\
+5 \\
+\end{bmatrix}
+$$
+
+
+We can now define our system in terms of matrices as: $$A * x = B$$, or:
+
+$$
+\begin{bmatrix}
+2 & 1 & 3\\
+2 & 6 & 8\\
+6 & 8 & 18
+\end{bmatrix}
+*
+\begin{bmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \\
+3 \\
+5 \\
+\end{bmatrix}
+$$
+
+Or, we can use this notation, S:
+
+$$S=
+\left(\begin{array}{@{}ccc|c@{}}
+2 & 1 & 3 & 1 \\
+2 & 6 & 8 & 3 \\
+6 & 8 & 18 & 5
+\end{array}\right)
+$$
+
+The interesting aspect is that performing simple row operations (swap rows, add rows, multiply rows with scalars) on `S` we can transform the system into an equivalent form:
+
+For example afer applying the following row operations on S:
+
+> $$-1*Row1 + Row2$$
+>
+> $$-3*Row1 + Row3$$
+>
+> $$-1*Row1 + Row3$$
+>
+> $$\frac{1}{4}*Row3$$
+>
+> $$\frac{1}{2}*Row1$$
+>
+> $$\frac{1}{5}*Row2$$
+
+`S` becomes:
+
+$$S=
+\left(\begin{array}{@{}ccc|c@{}}
+1 & \frac{1}{2} & \frac{3}{2} & \frac{1}{2} \\
+0 & 1 & 1 & \frac{2}{5} \\
+0 & 0 & 1 & 0
+\end{array}\right)
+$$
+
+Notice, how our `M` matrix became an upper diagonal matrix (all elements under the first diagonal are `0`). Actually the more advanced algorithms we are going to implement in our C library are all about that. Creating equivalent matrices that are upper or lower diagonal.
+
+After all the basic row transformations on `S` matrix are performed, our initial linear system "morphs" into an equivalent system that is trivial to solve by the means of substitution:
+
+$$
+x_{1} + \frac{1}{2}x_{2} + \frac{3}{2}x_{3} = \frac{1}{2} \\
+x_{2} + x_{3} = \frac{2}{5} \\
+x_{3} = 0
+$$
+
+Because `M` is an upper diagonal matrix, we can instantly determine the value of $$x_{3}=0$$, then we substitute $$x_{3}$$ in the second equation to find $$x_{2}=\frac{2}{5}$$ and so on. 
+
+From a computational perspective, solving linear systems of equations and having around upper/lower diagonal matrices in place is essential.
+
+# The library
+
+Now, let's say you are one of the few Engineering/Computer Science students that are passionate about [linear algebra](https://en.wikipedia.org/wiki/Linear_algebra), [numerical analysis](https://en.wikipedia.org/wiki/Numerical_analysis) and writing code in a low-level language. Or you are just curious about what's behind the [`lu(A)`](https://www.mathworks.com/help/matlab/ref/lu.html) method in Matlab. Or you are passionate about A.I., and you know you cannot learn A.I. algorithms without a good foundation in linear algebra. 
 
 I believe the best exercise you can do is to try to write your (own) Matrix library in a low-level programming language (like [C](https://en.wikipedia.org/wiki/C_(programming_language)), [C++](https://en.wikipedia.org/wiki/C%2B%2B) or even [D](https://dlang.org/)).
 
-This tutorial is precisely this, a step-by-step explanation of how to write a C Matrix library that implements the "basic" numerical analysis algorithms.
+This tutorial is precisely this, a step-by-step explanation of writing a C Matrix library that implements the "basic" and "not-so-basic" numerical analysis algorithms that will allow us in the end to solve linear systems of equations.
 
-I've already done this exercise myself and the code is available on github in the repository called [neat-matrix-library](https://github.com/nomemory/neat-matrix-library). 
+All code in this tutorial is available on github in the repository called [neat-matrix-library](https://github.com/nomemory/neat-matrix-library). 
 
-To clone it (GitHub CLI):
+To clone it (using GitHub CLI):
 
 ```sh
 gh repo clone nomemory/neat-matrix-library
 ```
 
-# Starting with the data
+The code is not meant to be "efficient", but rather easy to follow and understand.
 
-To represent the matrix data we can start by defining the following C `struct`, called `nml_mat`:
+The tutorial assumes that the reader can write C code, understands pointers, dynamic memory allocation and is somewhat familiar with the C standard library. 
+
+# The data: `nml_matrix`
+
+The first step is to model the data our library will work with: "matrices". So we are going to define our first `struct`, called `nml_mat` which models a matrix:
 
 ```c
 typedef struct nml_mat_s {
@@ -59,7 +171,7 @@ data[i][j] <=> array[i * m + j]
 
 To better understand how to store multi-dimensional arrays in _linear storage_ please refer to [this stackoverflow question](https://stackoverflow.com/questions/14015556/how-to-map-the-indexes-of-a-matrix-to-a-1-dimensional-array-c), or read the [wikipedia article](https://en.wikipedia.org/wiki/Row-_and_column-major_order) on the topic.
 
-In my example I will keep the `double **` multi-dimensional storage for simplicity. 
+Even if it might sound like a "controversial" decision, for the sake of simplicity we will use the `double **` multi-dimensional storage. 
 
 ## Allocating / De-allocating memory for the `nml_mat` matrix
 
@@ -1375,4 +1487,780 @@ nml_mat *nml_mat_dot(nml_mat *m1, nml_mat *m2) {
 }
 ```
 
-Better algorithms exists for matrix multiplications, if you want to find out more plese check this wikipedia [article](https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm).
+Better algorithms exists for matrix multiplications, if you want to find out more please check this wikipedia [article](https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm).
+
+## Row Echelon Form 
+
+A matrix `A` is in _Row Echelon Form_ if it has the shape resulting from a Gaussian Elimination. 
+
+Additionally, the matrix `A` is in Row Echelon form if:
+* The first non-zero element for each row is exactly `1.0`;
+* Rows with all `0.0` elements are bellow rows that have at least one non-zero element.
+* Each leading entry (pivot) is in a column to the right of the leading entry in the previous row.
+
+
+All the bellow matrices are examples of matrices that have been "morphed" into Row Echelon Form:
+
+$$
+A=
+\begin{bmatrix}
+1 & 2 & 3 & 4 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & 1 
+\end{bmatrix}
+\\
+B=
+\begin{bmatrix}
+1 & 2 & 3 & 4 \\
+0 & 0 & 1 & 3 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\\
+C=
+\begin{bmatrix}
+1 & 2 \\
+0 & 1 \\
+0 & 0 \\
+0 & 0
+\end{bmatrix}
+\\
+$$
+
+Every matrix can be transformed into a Row Echelon, by using _elementary row operations_:
+* Interchanging (swapping) two rows. See `nml_mat_row_swap_r(...)` implemented before;
+* Multiply each element in a row by a non-zero number (scalar multiplication of rows). See `nml_mat_row_mult_r(...)` implemented before;
+* Multiply a row by a non-zero number and add the result to another row (row addition). See `nml_mat_row_addrow_r(...)` implemented before;
+
+The algorithm to transform the matrix in a Row Echelon Form is as follows:
+1. Find the "pivot", the first non-zero entry from the first column of the matrix;
+    - If the column has only zero elements, jump to the next column;
+2. Interchange rows, moving the pivot row to become the first row;
+3. Multiply each element in the pivot by the inverse of the pivot $$\frac{1}{pivot}$$ so that the pivot equals `1.0`;
+4. Add multiplies of the pivot row to each of the pivot rows, so every element in the pivot column will equal `0.0`.
+5. Continue the process until there are no more pivots to process.
+
+*Note:* A matrix can have multiple Row Echelon Forms, but you will see in the next chapter, there's only one Reduced Row Echelon Form.
+
+### Example
+
+Let's take for example the following matrix, `A[3x3]`. `REF(A)` is also a `3x3` matrix. The transitions are:
+
+$$
+A=
+\begin{bmatrix}
+0 & 1 & 2 \\
+1 & 2 & 1 \\
+2 & 7 & 8
+\end{bmatrix}
+\rightarrow
+A_{1}=
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+2 & 7 & 8
+\end{bmatrix}
+\rightarrow
+A_{2} =
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+0 & 3 & 6
+\end{bmatrix}
+\rightarrow
+\\
+A_{ref}  =
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+
+
+$$A \rightarrow A_{1}$$: We found out that the first non-zero element of the first `column[0]` is `1` on `row[1]` so we've swapped `row[0]` with `row[1]`. Using our code this means:
+
+$$
+\text{nml_mat_row_swap_r(}
+\begin{bmatrix}
+0 & 1 & 2 \\
+1 & 2 & 1 \\
+2 & 7 & 8
+\end{bmatrix}
+\text{, 0, 1)=}
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+2 & 7 & 8
+\end{bmatrix}
+$$
+
+$$A_{1} \rightarrow A_{2}$$: For $$A_{1}$$ we've multiplied each element of `row[0]` with `-2` and added the result to `row[2]`. Using our code this means:
+
+$$
+\text{nml_mat_row_addrow_r(}
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+2 & 7 & 8
+\end{bmatrix}
+\text{, 2, 0, -2.0)=}
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+0 & 3 & 6
+\end{bmatrix}
+$$
+
+$$A_{2} \rightarrow A_{ref}$$: For $$A_{2}$$ we've multiplied `row[1]` with `-3` and added the result to `row[2]`. Using the code this means:
+
+$$
+\text{nml_mat_row_addrow_r(}
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+0 & 3 & 6
+\end{bmatrix}
+\text{, 2, 1, -2.0)=}
+\begin{bmatrix}
+1 & 2 & 1 \\
+0 & 1 & 2 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+
+### Code implementation
+
+Most of the bits and pieces for assembling the algorithm, were already implemented before: `nml_mat_row_swap_r(...)`, `nml_mat_row_mult_r(...)`, `nml_mat_row_addrow_r(...)`. 
+
+What we are missing at this moment to assemble the algorithm is to write the "pivot function". We are going to call this: `_nml_mat_pivotidx(...)`:
+
+```c 
+// Finds the first non-zero element on the col column, under the row row.
+// This is used to determine the pivot in gauss Elimination
+// If not pivot is found, returns -1
+int _nml_mat_pivotidx(nml_mat *m, unsigned int col, unsigned int row) {
+  // No validations are made, this is an API Method
+  int i;
+  for(i = row; i < m->num_rows; i++) {
+    if (fabs(m->data[i][col]) > NML_MIN_COEF) {
+      return i;
+    }
+  }
+  return -1;
+}
+```
+
+At this point the algorithm is straight-forward to implement:
+
+```c
+// Retrieves the matrix in Row Echelon form using Gauss Elimination
+nml_mat *nml_mat_ref(nml_mat *m) {
+  nml_mat *r = nml_mat_cp(m);
+  int i, j, k, pivot;
+  j = 0, i = 0;
+  // We iterate until we exhaust the columns and the rows
+  while(j < r->num_cols && i < r->num_cols) {
+    // Find the pivot - the first non-zero entry in the first column of the matrix
+    pivot = _nml_mat_pivotidx(r, j, i);
+    if (pivot<0) {
+      // All elements on the column are zeros
+      // We move to the next column without doing anything
+      j++;
+      continue;
+    }
+    // We interchange rows moving the pivot to the first row that doesn't have
+    // already a pivot in place
+    if (pivot!=i) {
+      nml_mat_row_swap_r(r, i, pivot);
+    }
+    // Multiply each element in the pivot row by the inverse of the pivot
+    nml_mat_row_mult_r(r, i, 1/r->data[i][j]);
+    // We add multiplies of the pivot so every element on the column equals 0
+    for(k = i+1; k < r->num_rows; k++) {
+      if (fabs(r->data[k][j]) > NML_MIN_COEF) {
+        nml_mat_row_addrow_r(r, k, i, -(r->data[k][j]));
+      } 
+    }
+    i++;
+    j++;
+  }
+  return r;
+} 
+```
+
+`1/r->data[i][j]` might pose a risk. If `r->data[i][j]` becomes very small, (like, 0.0000...01), we might overflow when multiplying witg `1/r->data[i][j]`. 
+In this regard I've introduced a "guard" value called `NML_MIN_COEF`. 
+
+We consider every number smaller than `NML_MIN_COEF` to be `0.0`. That's why we perform this additional check: `if (fabs(r->data[k][j]) > NML_MIN_COEF)` in our algorithm.
+
+## Reduced Row Echelon Form
+
+A matrix $$A$$ is in Reduced Row Echelon Form, $$A_{rref}$$ if all the conditions of being in Row Echelon Form are satisfied, and the leading entry in each row is the only non-zero entry in this column.
+
+For example the following matrices are in Reduced Row Echelon Form (Rref):
+
+$$
+A=
+\begin{bmatrix}
+1 & 2 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\\
+B=
+\begin{bmatrix}
+1 & 2 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\\
+C=
+\begin{bmatrix}
+1 & 0 \\
+
+
+0 & 1 \\
+0 & 0 \\
+0 & 0
+\end{bmatrix}
+\\
+$$
+
+Compared to the previous algorithm, an additional step is performed:
+
+1. We identify the last row having a pivot equal to `1`;
+2. We mark this as the pivot row;
+3. We add multiplies of the pivot row to each of it's upper rows, until every element above it remains `0.0`;
+4. We repeat the process from bottom-up.
+
+*Note:* A matrix has only `RREF` form, but can have many `REF` forms. 
+
+## Code Implementation
+
+To make the algorithm more stable from a "computational" perspective we will change the "pivoting method" used above. We introduce a new one:
+
+```c
+// Find the max element from the column "col" under the row "row"
+// This is needed to pivot in Gauss-Jordan elimination
+// If pivot is not found, return -1
+int _nml_mat_pivotmaxidx(nml_mat *m, unsigned int col, unsigned int row) {
+  int i, maxi;
+  double micol;
+  double max = fabs(m->data[row][col]);
+  maxi = row;
+  for(i = row; i < m->num_rows; i++) {
+    micol = fabs(m->data[i][col]);
+    if (micol>max) {
+      max = micol;
+      maxi = i;
+    }
+  }
+  return (max < NML_MIN_COEF) ? -1 : maxi;
+} 
+```
+
+Compared to the previous one, this one will return the biggest element on the column under row `row`. 
+This will be picked as pivot.
+
+The C code:
+
+```c
+// Retrieves the matrix in Row Echelon form using Gauss Elimination
+nml_mat *nml_mat_ref(nml_mat *m) {
+  nml_mat *r = nml_mat_cp(m);
+  int i, j, k, pivot;
+  j = 0, i = 0;
+  while(j < r->num_cols && i < r->num_cols) {
+    // Find the pivot - the first non-zero entry in the first column of the matrix
+    pivot = _nml_mat_pivotidx(r, j, i);
+    if (pivot<0) {
+      // All elements on the column are zeros
+      // We move to the next column without doing anything
+      j++;
+      continue;
+    }
+    // We interchange rows moving the pivot to the first row that doesn't have
+    // already a pivot in place
+    if (pivot!=i) {
+      nml_mat_row_swap_r(r, i, pivot);
+    }
+    // Multiply each element in the pivot row by the inverse of the pivot
+    nml_mat_row_mult_r(r, i, 1/r->data[i][j]);
+    // We add multiplies of the pivot so every element on the column equals 0
+    for(k = i+1; k < r->num_rows; k++) {
+      if (fabs(r->data[k][j]) > NML_MIN_COEF) {
+        nml_mat_row_addrow_r(r, k, i, -(r->data[k][j]));
+      } 
+    }
+    i++;
+    j++;
+  }
+  return r;
+} 
+```
+
+## LU(P) Decomposition
+
+LU Decomposition, also named LU Factorisation refers to the factorisation of a matrix A, into two factors `L` and `U`.
+
+Normally the factorisation looks like this:
+
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & 0 \\
+l_{21} & 1 & 0 \\
+l_{31} & l_{32} & 1
+\end{bmatrix} 
+* 
+\begin{bmatrix}
+u_{11} & u_{12} & u_{13} \\
+0 & u_{22} & u_{23} \\
+0 & 0 & u_{33}
+\end{bmatrix}
+$$
+
+In practice, however, this type of factorisation might fail to materialise without swapping various rows of A during the computation. In this case, we need to introduce into the equation a new matrix `P` where we keep track of all the row changes that are happening during the LU process.
+
+Thus, the decomposition is called _LU Factorisation with partial pivoting_, and the new equation becomes:
+
+$$P * A = L * U$$
+
+Where:
+* `P` represents any valid (row) permutation of the Identity `I` matrix, and it's computed during the process;
+* `L` is a lower diagonal matrix, with all the elements of the first diagonal `==1`;
+* `U` is an upper diagonal matrix.
+
+There's another factorisation where not only the rows are pivoted, but also columns, this is called _LU Factorisation with full pivoting_ but we are not going to implement this.
+
+If the `A` matrix is square (`nxn`), it can always be decomposed like : $$P * A = L * U$$.
+
+To compute the LU(P) decomposition we will need to basically implement a modified version of the Gauss Elimination algorithm (see Row Echelon Form). This is probably the most popular implementation, and it requires around $$\frac{2}{3}*n^{3}$$ floating point operations.
+
+Other algorithms involve direct recursion or randomizations. We are not going to implement those versions. 
+
+Computing the $$P * A = L * U$$ decomposition of matrix `A` is instrumental for computing the determinant of matrix `A`, the inverse of matrix `A` and solving linear systems of equations.
+
+### The LU(P) algorithm as an example
+
+We start with Matrix `A[3x3]`, and matrix `P` which starts as the initial `3x3` Identity matrix.
+`L` starts as a zero `3x3` matrix, and `U` is an exact copy of the initial matrix `A`.
+
+$$
+P=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1  
+\end{bmatrix}
+, A =
+\begin{bmatrix}
+2 & 1 & 5 \\
+4 & 4 & -4 \\
+1 & 3 & 1  
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0  
+\end{bmatrix}
+, U = 
+\begin{bmatrix}
+2 & 1 & 5 \\
+4 & 4 & -4 \\
+1 & 3 & 1  
+\end{bmatrix}
+$$
+
+* **Step1**: Because `4>2`, we swap $$Row_{0}$$ with $$Row_{1}$$. After this row operation we have:
+
+$$
+P=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1  
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0  
+\end{bmatrix}
+, U =
+\begin{bmatrix}
+4 & 4 & -4 \\
+2 & 1 & 5 \\
+1 & 3 & 1  
+\end{bmatrix}
+$$
+
+* **Step 2**: We want to start creating zeroes on the first column. So we apply the following operation, $$Row_{1}-(\frac{1}{2})Row_{0}$$. We record the multiplier $$\frac{1}{2}$$ in `L[1][0]`, and we compute the basic row operation on `U`:
+
+$$
+P=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1  
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+\frac{1}{2} & 0 & 0 \\
+0 & 0 & 0  
+\end{bmatrix}
+, U =
+\begin{bmatrix}
+4 & 4 & -4 \\
+0 & -1 & 7 \\
+1 & 3 & 1  
+\end{bmatrix}
+$$
+
+* **Step 3**: We continue to create zeroes on the first column, by applying: $$Row_{2} - \frac{1}{4}Row_{0}$$. We record the multiplier $$\frac{1}{4}$$ in `L[2][0]`, and we compute the row operation on `U`:
+
+$$
+P=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1  
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+\frac{1}{2} & 0 & 0 \\
+\frac{1}{4} & 0 & 0  
+\end{bmatrix}
+, U =
+\begin{bmatrix}
+4 & 4 & -4 \\
+0 & -1 & 7 \\
+0 & 2 & 2  
+\end{bmatrix}
+$$
+
+* **Step 4**: We've finished with the first column, we skip to the next one. Because `-1<2` we swap $$Row_{1}$$ with $$Row_{2}$$. The idea is to always have the biggest pivot. `P`, `L` and `U` are affected by this swap:
+
+$$
+P=
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 0 & 0 
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+\frac{1}{4} & 0 & 0 \\
+\frac{1}{2} & 0 & 0 
+\end{bmatrix}
+, U =
+\begin{bmatrix}
+4 & 4 & -4 \\
+0 & 2 & 2  \\
+0 & -1 & 7 
+\end{bmatrix}
+$$
+
+* **Step 5**: We want to create the last `0.0` on the second column. In this regard we apply $$Row_{2} - (-\frac{1}{2}) * Row_{1}$$:
+
+$$
+P=
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 0 & 0
+\end{bmatrix}
+, L =
+\begin{bmatrix}
+0 & 0 & 0 \\
+\frac{1}{4} & 0 & 0 \\
+\frac{1}{2} & -\frac{1}{2} & 0
+\end{bmatrix}
+, U =
+\begin{bmatrix}
+4 & 4 & -4 \\
+0 & 2 & 2  \\
+0 & 0 & 8
+\end{bmatrix}
+$$
+
+* **Step 6**: We modify L by adding `1`s on the first diagonal.
+
+In conclusion, the $$P*A=L*U$$ factorization of `A` looks like:
+
+$$
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 0 & 0
+\end{bmatrix}
+*
+\begin{bmatrix}
+2 & 1 & 5 \\
+4 & 4 & -4 \\
+1 & 3 & 1  
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & 0 \\
+\frac{1}{4} & 1 & 0 \\
+\frac{1}{2} & -\frac{1}{2} & 1
+\end{bmatrix}
+*
+\begin{bmatrix}
+4 & 4 & -4 \\
+0 & 2 & 2  \\
+0 & 0 & 8
+\end{bmatrix}
+$$
+
+There's also a video with this example, link [here](https://www.youtube.com/watch?v=f6RT4BI4S7M).
+
+## Code implementation
+
+The best way to model the results of the `LU(P)` computation is to create a `struct` called `nml_mat_lup` containing references to all three resulting matrices: `L`, `U`, `P`.
+
+```c
+typedef struct nml_mat_lup_s {
+  nml_mat *L;
+  nml_mat *U;
+  nml_mat *P;
+  unsigned int num_permutations;
+} nml_mat_lup;
+```
+
+The property `num_permutations` records the number of row permutations we've done during the factorization process.
+This value it's useful when computing the determinant of the matrix, so it's better to track it now.
+
+Following the same recipe as for `nml_mat` we are going to write "constructor-like"/"destructor-like" methods for managing the memory allocation for a `nml_mat_lup` structure. 
+
+```c
+nml_mat_lup *nml_mat_lup_new(nml_mat *L, nml_mat *U, nml_mat *P, unsigned int num_permutations) {
+  nml_mat_lup *r = malloc(sizeof(*r));
+  NP_CHECK(r);
+  r->L = L;
+  r->U = U;
+  r->P = P;
+  r->num_permutations = num_permutations;
+  return r;
+}
+
+void nml_mat_lup_free(nml_mat_lup* lu) {
+  nml_mat_free(lu->P);
+  nml_mat_free(lu->L);
+  nml_mat_free(lu->U);
+  free(lu);
+} 
+```
+
+The code that is performing the factorization:
+
+```c
+nml_mat_lup *nml_mat_lup_solve(nml_mat *m) {
+  if (!m->is_square) {
+    NML_FERROR(CANNOT_LU_MATRIX_SQUARE, m->num_rows, m-> num_cols);
+    return NULL;
+  }
+  nml_mat *L = nml_mat_new(m->num_rows, m->num_rows);
+  nml_mat *U = nml_mat_cp(m);
+  nml_mat *P = nml_mat_eye(m->num_rows);
+
+  int j,i, pivot;
+  unsigned int num_permutations = 0;
+  double mult;
+
+  for(j = 0; j < U->num_cols; j++) {
+    // Retrieves the row with the biggest element for column (j)
+    pivot = _nml_mat_absmaxr(U, j);
+    if (fabs(U->data[pivot][j]) < NML_MIN_COEF) {
+      NML_ERROR(CANNOT_LU_MATRIX_DEGENERATE);
+      return NULL;
+    }
+    if (pivot!=j) {
+      // Pivots LU and P accordingly to the rule
+      nml_mat_row_swap_r(U, j, pivot);
+      nml_mat_row_swap_r(L, j, pivot);
+      nml_mat_row_swap_r(P, j, pivot);
+      // Keep the number of permutations to easily calculate the
+      // determinant sign afterwards
+      num_permutations++;
+    }
+    for(i = j+1; i < U->num_rows; i++) {
+      mult = U->data[i][j] / U->data[j][j];
+      // Building the U upper rows
+      nml_mat_row_addrow_r(U, i, j, -mult);
+      // Store the multiplier in L
+      L->data[i][j] = mult;
+    }
+  }
+  nml_mat_diag_set(L, 1.0);
+
+  return nml_mat_lup_new(L, U, P, num_permutations);
+} 
+```
+
+## Solving linear systems of equations
+
+### Forward substitution
+
+```c
+// Forward substitution algorithm
+// Solves the linear system L * x = b
+//
+// L is lower triangular matrix of size NxN
+// B is column matrix of size Nx1
+// x is the solution column matrix of size Nx1
+//
+// Note: In case L is not a lower triangular matrix, the algorithm will try to
+// select only the lower triangular part of the matrix L and solve the system
+// with it.
+//
+// Note: In case any of the diagonal elements (L[i][i]) are 0 the system cannot
+// be solved
+//
+// Note: This function is usually used with an L matrix from a LU decomposition
+nml_mat *nml_ls_solvefwd(nml_mat *L, nml_mat *b) {
+  nml_mat* x = nml_mat_new(L->num_cols, 1);
+  int i,j;
+  double tmp;
+  for(i = 0; i < L->num_cols; i++) {
+    tmp = b->data[i][0];
+    for(j = 0; j < i ; j++) {
+      tmp -= L->data[i][j] * x->data[j][0];
+    }
+    x->data[i][0] = tmp / L->data[i][i];
+  }
+  return x;
+}
+```
+
+### Backward substitution
+
+```c
+// Back substition algorithm
+// Solves the linear system U *x = b
+//
+// U is an upper triangular matrix of size NxN
+// B is a column matrix of size Nx1
+// x is the solution column matrix of size Nx1
+//
+// Note in case U is not an upper triangular matrix, the algorithm will try to
+// select only the upper triangular part of the matrix U and solve the system
+// with it
+//
+// Note: In case any of the diagonal elements (U[i][i]) are 0 the system cannot
+// be solved
+nml_mat *nml_ls_solvebck(nml_mat *U, nml_mat *b) {
+  nml_mat *x = nml_mat_new(U->num_cols, 1);
+  int i = U->num_cols, j;
+  double tmp;
+  while(i-->0) {
+    tmp = b->data[i][0];
+    for(j = i; j < U->num_cols; j++) {
+      tmp -= U->data[i][j] * x->data[j][0];
+    }
+    x->data[i][0] = tmp / U->data[i][i];
+  }
+  return x;
+} 
+```
+
+### Solving linear systems using LU(P) decomposition
+
+```c
+// A[n][n] is a square matrix
+// m contains matrices L, U, P for A[n][n] so that P*A = L*U
+//
+// The linear system is:
+// A*x=b  =>  P*A*x = P*b  =>  L*U*x = P*b  =>
+// (where b is a matrix[n][1], and x is a matrix[n][1])
+//
+// if y = U*x , we solve two systems:
+//    L * y = P b (forward substition)
+//    U * x = y (backward substition)
+//
+// We obtain and return x
+nml_mat *nml_ls_solve(nml_mat_lup *lu, nml_mat* b) {
+  if (lu->U->num_rows != b->num_rows || b->num_cols != 1) {
+    NML_FERROR(CANNOT_SOLVE_LIN_SYS_INVALID_B,
+      b->num_rows,
+      b->num_cols,
+      lu->U->num_rows,
+      1);
+      return NULL;
+  }
+  nml_mat *Pb = nml_mat_dot(lu->P, b);
+
+  // We solve L*y = P*b using forward substition
+  nml_mat *y = nml_ls_solvefwd(lu->L, Pb);
+
+  // We solve U*x=y
+  nml_mat *x = nml_ls_solvebck(lu->U, y);
+
+  nml_mat_free(y);
+  nml_mat_free(Pb);
+  return x;
+} 
+```
+
+## Calculating the inverse of the matrix using LU(P) decomposition
+
+```c
+// Calculates the inverse of a matrix
+nml_mat *nml_mat_inv(nml_mat_lup *lup) {
+  unsigned n = lup->L->num_cols;
+  nml_mat *r = nml_mat_sqr(n);
+  nml_mat *I = nml_mat_eye(lup->U->num_rows);
+  nml_mat *invx;
+  nml_mat *Ix;
+  int i,j;
+  for(j =0; j < n; j++) {
+    Ix = nml_mat_col_get(I, j);
+    invx = nml_ls_solve(lup, Ix);
+    for(i = 0; i < invx->num_rows; i++) {
+      r->data[i][j] = invx->data[i][0];
+    }
+    nml_mat_free(invx);
+    nml_mat_free(Ix);
+  }
+  nml_mat_free(I);
+  return r;
+} 
+```
+
+## Calculating the determinant of the matrix using LU(P) decomposition
+
+```c
+// After the LU(P) factorisation the determinant can be easily calculated
+// by multiplying the main diagonal of matrix U with the sign.
+// the sign is -1 if the number of permutations is odd
+// the sign is +1 if the number of permutations is even
+double nml_mat_det(nml_mat_lup* lup) {
+  int k;
+  int sign = (lup->num_permutations%2==0) ? 1 : -1;
+  nml_mat *U = lup->U;
+  double product = 1.0;
+  for(k = 0; k < U->num_rows; k++) {
+    product *= U->data[k][k];
+  }
+  return product * sign;
+}
+```
+
+## QR Decomposition
+
+```c
+// 
+```
+
