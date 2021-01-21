@@ -2114,6 +2114,42 @@ nml_mat_lup *nml_mat_lup_solve(nml_mat *m) {
 
 ### Forward substitution
 
+Forward substitution is the process of solving linear systems of equations $$L*x=B$$ if `L` is a lower diagonal coefficient matrix. 
+
+$$
+\begin{bmatrix}
+l_{11} & 0 & ... && 0\\
+l_{21} & l_{22} & ... && 0\\
+... & ... & ... && ...\\
+l_{m1} & l_{m2} & ... && l_{mm}\\
+\end{bmatrix}
+*
+\begin{bmatrix}
+x_{1} \\
+x_{2} \\
+...   \\
+x_{m}
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_{1} \\
+b_{2} \\
+...   \\
+b_{m}
+\end{bmatrix}
+$$
+
+In this case the resulting formulas for $$x_{1}, x_{2}, ..., x_{m}$$ are:
+
+$$
+x_{1} = \frac{b_{1}}{l_{11}} \\
+x_{2} = \frac{b_{2}-l_{21}*x_{1}}{l_{22}} \\
+... \\
+x_{m} = \frac{b_{m}-\sum_{i=1}^{m-1} l_{mi}*x_{i}}{l_{mm}}
+$$
+
+Using the mathematical formulas, the code is easy to write:
+
 ```c
 // Forward substitution algorithm
 // Solves the linear system L * x = b
@@ -2147,6 +2183,33 @@ nml_mat *nml_ls_solvefwd(nml_mat *L, nml_mat *b) {
 
 ### Backward substitution
 
+Backward substitution is the process of solving linear systems of equations $$U*x=Y$$ if `U` is an upper diagonal coefficient matrix.
+
+$$
+\begin{bmatrix}
+u_{11} & u_{12} & ... && u_{1m}\\
+0 & u_{22} & ... && u_{2m} \\
+... & ... & ... && ...\\
+0 & 0 & ... && u_{mm}\\
+\end{bmatrix}
+*
+\begin{bmatrix}
+x_{1} \\
+x_{2} \\
+...   \\
+x_{m}
+\end{bmatrix}
+=
+\begin{bmatrix}
+y_{1} \\
+y_{2} \\
+...   \\
+y_{m}
+\end{bmatrix}
+$$
+
+Similar to the example above, the code implementation is straight-forward after we compute the mathematical formula:
+
 ```c
 // Back substition algorithm
 // Solves the linear system U *x = b
@@ -2178,19 +2241,24 @@ nml_mat *nml_ls_solvebck(nml_mat *U, nml_mat *b) {
 
 ### Solving linear systems using LU(P) decomposition
 
+Knowing the $$P * A = L * U$$ factorisation of a matrix allows us to solve a liniar system of equations in the form: $$A*x=B$$ by using a combination of backward and forward substitution.
+
+$$
+A * x = B <=> \\
+P * A * x = P * b <=> \\
+L * U * x = P * b 
+$$
+
+To make use of the previous two algorithms (`nml_ls_solvebck(...)`, `nml_ls_solvefwd(...)`) we can introduce an auxiliary system of equations: $$y=U*x$$.
+
+If $$y = U * x$$ => $$ L * y = P * b $$. This means that we need to solve two systems of equations:
+
+* $$ L * y = P * b$$ - forward substition, because `L` is lower triangular matrix;
+* $$ U * x = y$$ - backward substitution, becuase `U` is an upper triangular matrix.
+
+Translating this into code is simple: 
+
 ```c
-// A[n][n] is a square matrix
-// m contains matrices L, U, P for A[n][n] so that P*A = L*U
-//
-// The linear system is:
-// A*x=b  =>  P*A*x = P*b  =>  L*U*x = P*b  =>
-// (where b is a matrix[n][1], and x is a matrix[n][1])
-//
-// if y = U*x , we solve two systems:
-//    L * y = P b (forward substition)
-//    U * x = y (backward substition)
-//
-// We obtain and return x
 nml_mat *nml_ls_solve(nml_mat_lup *lu, nml_mat* b) {
   if (lu->U->num_rows != b->num_rows || b->num_cols != 1) {
     NML_FERROR(CANNOT_SOLVE_LIN_SYS_INVALID_B,
