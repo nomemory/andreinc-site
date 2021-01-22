@@ -64,8 +64,7 @@ if [ "$(whoami)" != root ] ; then
     exit 1
 fi
 
-echo -e "\nYou are have root rights!"
-echo -e "\nDoing something!"
+echo -e "\nYou are root!"
 ```
 
 ## Test if you have read / write access in certain locations
@@ -73,19 +72,19 @@ echo -e "\nDoing something!"
 ```shell
 #!/usr/bin/env bash
 
+#!/usr/bin/env bash
+
 #Global declaration area
 declare -r T_PATH1="/etc/passwd"
 
 #Sanity check: Test if /etc/passwd file exists and has read access .
 if [ ! -r "$T_PATH1" ] ; then
-    echo -e "Cannot access path $T_PATH1 !" >&2
+    echo -e "$T_PATH1 is not accesible!"  >&2
     exit 1
+else
+    echo -e "$T_PATH1 is accesible!"
+    exit 0
 fi
-
-
-#Read something from the /etc/passwd file
-
-# ...
 
 # ...
 ```
