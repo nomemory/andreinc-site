@@ -10,6 +10,57 @@ tags:
 - "computer-science"
 ---
 
+Table of Contents
+=================
+
+* [Disclaimer](#disclaimer)
+* [Math, math](#math-math)
+* [The library](#the-library)
+* [The data: nml_matrix](#the-data-nml_matrix)
+  * [Allocating / De-allocating memory for the nml_mat matrix](#allocating--de-allocating-memory-for-the-nml_mat-matrix)
+    * [Creating a random matrix](#creating-a-random-matrix)
+    * [Creating a square matrix](#creating-a-square-matrix)
+    * [Creating an identity matrix](#creating-an-identity-matrix)
+    * [Creating a matrix from a FILE](#creating-a-matrix-from-a-file)
+* [Matrix methods](#matrix-methods)
+  * [Checking for equality](#checking-for-equality)
+  * [Printing the matrix](#printing-the-matrix)
+  * [Accessing and modifying matrix elements](#accessing-and-modifying-matrix-elements)
+    * [Retrieving / Selecting a column](#retrieving--selecting-a-column)
+    * [Retrieving / Selecting a row](#retrieving--selecting-a-row)
+    * [Setting values](#setting-values)
+    * [Multiplying a row with a scalar](#multiplying-a-row-with-a-scalar)
+    * [Multiplying a column with a scalar](#multiplying-a-column-with-a-scalar)
+    * [Adding two rows](#adding-two-rows)
+    * [Multiplying the matrix with a scalar](#multiplying-the-matrix-with-a-scalar)
+  * [Modifying the nml_mat internal structure](#modifying-the-nml_mat-internal-structure)
+    * [Removing a column](#removing-a-column)
+    * [Removing a row](#removing-a-row)
+    * [Swapping Rows](#swapping-rows)
+    * [Swapping columns](#swapping-columns)
+    * [Horizontal Concatenation of two matrices](#horizontal-concatenation-of-two-matrices)
+    * [Vertical concatenation](#vertical-concatenation)
+  * [Basic Matrix Operations](#basic-matrix-operations)
+    * [Add two matrices](#add-two-matrices)
+    * [Subtracting two matrices](#subtracting-two-matrices)
+    * [Multiplying two matrices](#multiplying-two-matrices)
+  * [Row Echelon Form](#row-echelon-form)
+    * [Example](#example)
+    * [Code implementation](#code-implementation)
+  * [Reduced Row Echelon Form](#reduced-row-echelon-form)
+    * [Code Implementation](#code-implementation-1)
+  * [LU(P) Decomposition](#lup-decomposition)
+    * [The LU(P) algorithm as an example](#the-lup-algorithm-as-an-example)
+    * [Code implementation](#code-implementation-2)
+  * [Solving linear systems of equations](#solving-linear-systems-of-equations)
+    * [Forward substitution](#forward-substitution)
+    * [Backward substitution](#backward-substitution)
+    * [Solving linear systems using LU(P) decomposition](#solving-linear-systems-using-lup-decomposition)
+  * [Calculating the inverse of the matrix using LU(P) decomposition](#calculating-the-inverse-of-the-matrix-using-lup-decomposition)
+  * [Calculating the determinant of the matrix using LU(P) decomposition](#calculating-the-determinant-of-the-matrix-using-lup-decomposition)
+  * [QR Decomposition](#qr-decomposition)
+* [References](#references)
+
 # Disclaimer
 
 > This article is in an early stage. 
