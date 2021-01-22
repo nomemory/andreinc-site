@@ -1844,14 +1844,27 @@ If the `A` matrix is square (`nxn`), it can always be decomposed like : $$P * A 
 
 To compute the LU(P) decomposition we will need to basically implement a modified version of the Gauss Elimination algorithm (see Row Echelon Form). This is probably the most popular implementation, and it requires around $$\frac{2}{3}*n^{3}$$ floating point operations.
 
-Other algorithms involve direct recursion or randomizations. We are not going to implement those versions. 
+Other algorithms involve direct recursion or randomization. We are not going to implement those versions. 
 
 Computing the $$P * A = L * U$$ decomposition of matrix `A` is instrumental for computing the determinant of matrix `A`, the inverse of matrix `A` and solving linear systems of equations.
 
 ### The LU(P) algorithm as an example
 
-We start with Matrix `A[3x3]`, and matrix `P` which starts as the initial `3x3` Identity matrix.
-`L` starts as a zero `3x3` matrix, and `U` is an exact copy of the initial matrix `A`.
+LU(P) factorisation (or decomposition) can be obtained by adjusting the idea of Gaussian Elimination (see Row Echelon Form and Reduced Row Echelon Form).
+
+The algorithm starts like this:
+* We allocate memory for the L, U, P matrices
+  * `L` starts as zero matrix;
+  * `P` is the identity matrix;
+  * `U` is an exact copy of A;
+* We start iterating the matrix `U` by columns
+  * For each column we look for the pivot value (the biggest value of the column in absolute)
+    * If needed we swap the corresponding rows in `U`, `L` and `P`, so that the pivot is position on the first diagonal;
+    * If no swap is needed we start creating zeroes on the column by the means of row addition. $$Row{x} + multiplier * Row{y}$$. 
+      * We record the `multiplier` in matrix `L`
+  * We repeat for every column until `U` has only zero elements under the first diagonal.
+  
+Let's look at the decomposition for a matrix `A[3x3]`:
 
 $$
 P=
@@ -2042,6 +2055,18 @@ typedef struct nml_mat_lup_s {
 
 The property `num_permutations` records the number of row permutations we've done during the factorization process.
 This value it's useful when computing the determinant of the matrix, so it's better to track it now.
+
+To reduce memory consumption, the two matrices `L` and `U` can be kept in single matrix `LU` that looks like this:
+
+$$
+\begin{bmatrix}
+u_{11} & u_{12} & u_{13} \\
+l_{21} & u_{22} & u_{23} \\
+l_{31} & l_{32} & u_{33}
+\end{bmatrix}
+$$
+
+In our implementation, for simplicity and readability, we will keep them separated.
 
 Following the same recipe as for `nml_mat` we are going to write "constructor-like"/"destructor-like" methods for managing the memory allocation for a `nml_mat_lup` structure. 
 
@@ -2284,6 +2309,100 @@ nml_mat *nml_ls_solve(nml_mat_lup *lu, nml_mat* b) {
 
 ## Calculating the inverse of the matrix using LU(P) decomposition
 
+A matrix $$A$$ is called invertible, if there exists a matrix $$A^{-1}$$ so that $$A * A^{-1} = I$$.
+
+We call $$A^{-1}$$ the inverse of the matrix $$A$$. The equality $$A*A^{-1}=I$$ in matrix form looks like:
+
+$$
+\begin{bmatrix}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23} \\
+A_{31} & A_{32} & A_{33}
+\end{bmatrix}
+*
+\begin{bmatrix}
+A_{11}^{-1} & A_{12}^{-1} & A_{13}^{-1} \\
+A_{21}^{-1} & A_{22}^{-1} & A_{23}^{-1} \\
+A_{31}^{-1} & A_{32}^{-1} & A_{33}^{-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+To find $$A_{ij}^{-1}$$ we solve 3 systems of linear equations in the form:
+
+$$
+\begin{cases}
+\begin{bmatrix}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23} \\
+A_{31} & A_{32} & A_{33}
+\end{bmatrix}
+*
+\begin{bmatrix}
+A_{11}^{-1}  \\
+A_{21}^{-1}  \\
+A_{31}^{-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \\
+0 \\
+0 
+\end{bmatrix}
+\\
+\begin{bmatrix}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23} \\
+A_{31} & A_{32} & A_{33}
+\end{bmatrix}
+*
+\begin{bmatrix}
+A_{12}^{-1}  \\
+A_{22}^{-1}  \\
+A_{32}^{-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+1 \\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23} \\
+A_{31} & A_{32} & A_{33}
+\end{bmatrix}
+*
+\begin{bmatrix}
+A_{13}^{-1}  \\
+A_{23}^{-1}  \\
+A_{33}^{-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+0 \\
+1
+\end{bmatrix}
+\end{cases}
+\rightarrow
+\begin{cases}
+A * A_{col1}^{-1} = I_{col1} \\
+A * A_{col2}^{-1} = I_{col2} \\
+A * A_{col3}^{-1} = I_{col3} \\
+\end{cases}
+$$
+
+This means we need to solve actually three systems of type: $$A * x_{i} = B_{i}$$ where $$x_{i}$$ represents the column `i` of $$A^{-1}$$, and $$B_{i}$$ represents the column `i` of $$I$$.  
+
+Having said this, the C code implementing the algorithm is as follows:
+
 ```c
 // Calculates the inverse of a matrix
 nml_mat *nml_mat_inv(nml_mat_lup *lup) {
@@ -2309,6 +2428,30 @@ nml_mat *nml_mat_inv(nml_mat_lup *lup) {
 
 ## Calculating the determinant of the matrix using LU(P) decomposition
 
+The determinant of the product of two matrices is the product of their determinants. After LU(P) decomposition we have $$P * A = L * U => det(P) * det(A) = det(L) * det(U)$$.
+
+Because `P` is a permutation of `I`:
+
+$$
+det(P) = (-1)^{n} = f(n)
+\begin{cases}
+1, \text{n is even} \\
+-1, \text{n is odd}
+\end{cases}
+$$
+
+`n` represents the total number of permutations of I. This value is already computed and stored in `nml_mat_lup->num_permutations`.
+
+`L` is a lower triangular matrix. The determinant of a lower triangular matrix is the product of its diagonal elements $$=> det(L) = 1$$.
+
+`U` is an upper triangular matrix. The determinant of an upper triangular matrix is the product of its diagonal elements $$=> det(U) = \prod_{i=1}^{N} U_{ii}$$.
+
+So, our initial relationship: $$det(P) * det(A) = det(L) * det(P) <=> det(A) = \frac{\prod_{i=1}^{N} U_{ii}}{\text{f(num_permutations)}}$$.
+
+This means that the determinant of matrix `A` is actually the product of the diagonal elements of matrix `U` multiplied with *(-1)* in case the number of row permutations is odd. 
+
+Putting this into code is as simple as:
+
 ```c
 // After the LU(P) factorisation the determinant can be easily calculated
 // by multiplying the main diagonal of matrix U with the sign.
@@ -2327,6 +2470,35 @@ double nml_mat_det(nml_mat_lup* lup) {
 ```
 
 ## QR Decomposition
+
+Any square matrix `A` can be decomposed as: $$ A = Q * R $$ where `Q` is an orthogonal matrix, and `R` is an upper triangular matrix.
+
+A matrix is orthogonal if its columns are orthogonal unit vectors, meaning: $$Q * Q^{T} = Q^{T} * Q = I$$. Where $$Q^{T}$$ is the transpose of $$Q$$. $$Q_{T} = Q_{-1}$$ for an orthogonal matrix.
+
+The process of computing $$A = Q * R$$ is called the Gram–Schmidt algorithm.
+
+If LU(P) factorization works mainly by applying basic matrix operations on rows, the QR decomposition is more focused on columns.
+
+So we consider:
+
+$$ 
+A = 
+\begin{bmatrix}
+| & | & | \\
+a_{1} & a_{2} & a_{3} \\
+| & | & |
+\end{bmatrix}
+\text{, where } a_{i} \text{ are the column vectors of A}
+\\
+Q = 
+\begin{bmatrix}
+| & | & | \\
+q_{1} & q_{2} & q_{3} \\
+| & | & |
+\end{bmatrix}
+\text{, where } q_{i} \text{ are the column vectors of Q}
+$$
+
 
 ```c
 // 
