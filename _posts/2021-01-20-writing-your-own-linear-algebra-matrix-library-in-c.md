@@ -10,7 +10,11 @@ tags:
 - "computer-science"
 ---
 
-**ARTICLE IS A DRAFT**
+# Disclaimer
+
+> This article is in an early stage. 
+> If you see any error in the code or in the mathematical formulas, don't hesitate to contact me or to create a PR directly.
+> The article source is on github, link [here](https://github.com/nomemory/andreinc-site/blob/main/_posts/2021-01-20-writing-your-own-linear-algebra-matrix-library-in-c.md).
 
 # Math, math
 
@@ -2499,8 +2503,205 @@ q_{1} & q_{2} & q_{3} \\
 \text{, where } q_{i} \text{ are the column vectors of Q}
 $$
 
+Because all the vectors in matrix `Q` should have length `1`, we have to normalize the columns in `A`. 
+
+This gives the following formulas:
+
+$$
+\begin{cases}
+q_{1} = \frac{a_{1}}{\lVert a_{1} \rVert} \\
+q_{2} = \frac{a^{\bot}_{2}}{\lVert a^{\bot}_{2} \rVert} \text{ where, } a^{\bot}_{2} = a_{2} - \langle a_{2}, q_{1} \rangle * q_{1} \\
+q_{3} = \frac{a^{\bot}_{3}}{\lVert a^{\bot}_{3} \rVert} \text{ where, } a^{\bot}_{3} = a_{3} - \langle a_{3}, q_{1} \rangle * q_{1} - \langle a_{3}, q_{2} \rangle * q_{2}
+\end{cases}
+$$ 
+
+Basically our QR decomposition looks like this:
+
+$$
+\begin{bmatrix}
+| & | & | \\
+a_{1} & a_{2} & a_{3} \\
+| & | & |
+\end{bmatrix}
+=
+\begin{bmatrix}
+| & | & | \\
+\frac{a_{1}}{\lVert a_{1} \rVert} & \frac{a^{\bot}_{2}}{\lVert a^{\bot}_{2} \rVert} & \frac{a^{\bot}_{3}}{\lVert a^{\bot}_{3} \rVert} \\
+| & | & |
+\end{bmatrix}
+*
+\begin{bmatrix}
+\lVert a_{1} \rVert &  \langle a_{2}, q_{1} \rangle & \langle a_{3}, q_{1} \rangle \\
+0 & \lVert a^{\bot}_{2} \rVert &  \langle a_{3}, q_{2} \rangle \\
+0 & 0 & \lVert a^{\bot}_{3} \rVert
+\end{bmatrix}
+$$
+
+The formulas can be generalized for every `nxn` matrix.
+
+In case you are wondering what represents the $$\langle a_{i}, q_{j} \rangle$$ notation. This is called the dot product of two vectors, and it's calculated like this:
+
+$$
+a = [a_{1}, a_{2}, a_{3}, ..., a_{n}] \\
+b = [b_{1}, b_{2}, b_{3}, ..., b_{n}] \\
+\langle a, b \rangle = a_{1} * b_{1} + a_{2} * b_{2} + ... + a_{n} * b_{n} = \sum a_{i} * b_{i}
+$$
+
+From a code perspective this can be implemented as:
 
 ```c
-// 
+// Useful for QR decomposition
+// Represents the (dot) product of two vectors:
+// vector1 = m1col column from m1
+// vector2 = m2col column from m2
+double nml_vect_dot(nml_mat *m1, unsigned int m1col, nml_mat *m2, unsigned m2col) {
+  if (m1->num_rows!=m2->num_rows) {
+    NML_FERROR(CANNOT_VECT_DOT_DIMENSIONS, m1->num_rows, m2->num_rows);
+  }
+  if (m1col >= m1->num_cols) {
+    NML_FERROR(CANNOT_GET_COLUMN, m1col, m1->num_cols);
+  }
+  if (m2col >= m2->num_cols) {
+    NML_FERROR(CANNOT_GET_COLUMN, m2col, m2->num_cols);
+  }
+  int i;
+  double dot = 0.0;
+  for(i = 0; i < m1->num_rows; i++) {
+    dot += m1->data[i][m1col] * m2->data[i][m2col];
+  }
+  return dot;
+} 
 ```
 
+In case you are wondering what represents the $$\lVert a_{i} \rVert$$ this is called the $$L_{2}$$ Euclidean norm and it's computed by the formula:
+
+$$
+\lVert a \rVert = \sqrt{a^{2}_{1} + a^{2}_{2} + ... + a^{2}_{n}}
+$$
+
+From a code perspective this can be implemented as:
+
+```c
+// Calculates the l2 norm for a colum in the matrix
+double nml_mat_col_l2norm(nml_mat *m, unsigned int col) {
+  if (col >= m->num_cols) {
+    NML_FERROR(CANNOT_COLUMN_L2NORM, col, m->num_cols);
+  }
+  double doublesum = 0.0;
+  int i;
+  for(i = 0; i < m->num_rows; i++) {
+    doublesum += (m->data[i][col]*m->data[i][col]);
+  }
+  return sqrt(doublesum);
+}
+
+// Calculates the l2norm for each column
+// Keeps results into 1 row matrix
+nml_mat *nml_mat_l2norm(nml_mat *m) {
+  int i, j;
+  nml_mat *r = nml_mat_new(1, m->num_cols);
+  double square_sum;
+  for(j = 0; j < m->num_cols; j++) {
+    square_sum = 0.0;
+    for(i = 0; i < m->num_rows; i++) {
+      square_sum+=m->data[i][j]*m->data[i][j];
+    }
+    r->data[0][j] = sqrt(square_sum);
+  }
+  return r;
+} 
+```
+
+The code for the process of normalization is:
+
+```c 
+nt nml_mat_normalize_r(nml_mat *m) {
+  nml_mat *l2norms = nml_mat_l2norm(m);
+  int j;
+  for(j = 0; j < m->num_cols; j++) {
+    if (l2norms->data[0][j] < NML_MIN_COEF) {
+      NML_FERROR(VECTOR_J_DEGENERATE, j);
+      nml_mat_free(l2norms);
+      return 0;
+    }
+    nml_mat_col_mult_r(m, j, 1/l2norms->data[0][j]);
+  }
+  nml_mat_free(l2norms);
+  return 1;
+}
+
+nml_mat_qr *nml_mat_qr_new() {
+  nml_mat_qr *qr = malloc(sizeof(*qr));
+  NP_CHECK(qr);
+  return qr;
+}
+```
+
+And the code for the QR algorithm described by this relantionship:
+
+$$
+\begin{bmatrix}
+| & | & | \\
+a_{1} & a_{2} & a_{3} \\
+| & | & |
+\end{bmatrix}
+=
+\begin{bmatrix}
+| & | & | \\
+\frac{a_{1}}{\lVert a_{1} \rVert} & \frac{a^{\bot}_{2}}{\lVert a^{\bot}_{2} \rVert} & \frac{a^{\bot}_{3}}{\lVert a^{\bot}_{3} \rVert} \\
+| & | & |
+\end{bmatrix}
+*
+\begin{bmatrix}
+\lVert a_{1} \rVert &  \langle a_{2}, q_{1} \rangle & \langle a_{3}, q_{1} \rangle \\
+0 & \lVert a^{\bot}_{2} \rVert &  \langle a_{3}, q_{2} \rangle \\
+0 & 0 & \lVert a^{\bot}_{3} \rVert
+\end{bmatrix}
+$$
+
+is:
+
+```c
+nml_mat_qr *nml_mat_qr_solve(nml_mat *m) {
+
+  nml_mat_qr *qr = nml_mat_qr_new();
+  nml_mat *Q = nml_mat_cp(m);
+  nml_mat *R = nml_mat_new(m->num_rows, m->num_cols);
+
+  int j, k;
+  double l2norm;
+  double rkj;
+  nml_mat *aj;
+  nml_mat *qk;
+  for(j=0; j < m->num_cols; j++) {    
+    rkj = 0.0;
+    aj = nml_mat_col_get(m, j);
+    for(k = 0; k < j; k++) {
+       rkj = nml_vect_dot(m, j, Q, k);
+       R->data[k][j] = rkj;
+       qk = nml_mat_col_get(Q, k);
+       nml_mat_col_mult_r(qk, 0, rkj);
+       nml_mat_sub_r(aj, qk);
+       nml_mat_free(qk);
+    }
+    for(k = 0; k < Q->num_rows; k++) {
+      Q->data[k][j] = aj->data[k][0];
+    }
+    l2norm = nml_mat_col_l2norm(Q, j);
+    nml_mat_col_mult_r(Q, j, 1/l2norm);
+    R->data[j][j] = l2norm;
+    nml_mat_free(aj);
+  }
+  qr->Q = Q;
+  qr->R = R;
+  return qr;
+} 
+```
+
+# References
+
+* https://stattrek.com/matrix-algebra/echelon-transform.aspx?tutorial=matrix
+* http://lampx.tugraz.at/~hadley/num/ch2/2.3a.php
+* https://www.youtube.com/watch?v=FAnNBw7d0vg
+* https://en.wikipedia.org/wiki/Norm_(mathematics)
+* https://en.wikipedia.org/wiki/Dot_product
