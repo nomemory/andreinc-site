@@ -3,8 +3,7 @@ title: "Insertion Sort Algorithm"
 date: "2010-12-26"
 categories: 
   - "algorithms"
-  - "java-programming-languages"
-  - "programming-languages"
+  - "java"
 tags: 
   - "algorithm"
   - "algorithm-description"
@@ -19,9 +18,9 @@ tags:
   - "source"
 ---
 
-**1\. Algorithm Description**
+# Description
 
-**Insertion Sort** is one of the simplest, but less effective, sorting algorithms . It works very similar to the way (us humans) sort a hard of playing cards:
+Insertion Sort is one of the simplest, but not very effective, sorting algorithms . It works very similar to the way (us humans) sort a hand of playing cards:
 
 <table border="1"><tbody><tr><td>1. At first none of our cards are sorted . So we start with an "empty" space in our hand were we are going to insert cards one at a time .</td></tr><tr><td>2. We take a card from our hand and we put it in the "special place" were we planned to keep our cards sorted . We do this for every card in our initial hand, until we finish them off .</td></tr><tr><td>3. Finding the right position for the insertion is not hard . At this point we can apply two tactics :<ul><li>We compare the card we are planning to insert with all the cards that are already in sorted state <strong>O(n)</strong>;</li><li>We use binary search to determine the right position (<strong>O(logn)</strong>) .</li></ul></td></tr></tbody></table>
 
@@ -33,25 +32,29 @@ For example, we want to sort the following array (with bold, are the elements al
 
 The pseudo-code for the algorithm can be easily written as follows:
 
+```java
 FUNCTION SORT(A, length)
 	// The array is 0-indexed
 	FOR i:=1 TO length DO
-		key := A\[i\]
+		key := A[i]
 		j := i - 1
 
 		// COMPARE
-		WHILE j >= 0 AND A\[j\] > key DO
+		WHILE j >= 0 AND A[j] > key DO
 			// SHIFT
-			A\[j+1\] := A\[j\]
+			A[j+1] := A[j]
 			j := j - 1
 
 		// MOVE
-		A\[j+1\] = key
+		A[j+1] = key
+```
+		
 
-**2\. Algorithm Implemenation in Java**
+# Java Implementation
 
-The Java implementation of the algorithm is pretty straight-forward (follow the comments):
+The Java implementation of the algorithm is pretty straight-forward:
 
+```java 
 public class InsertionSort {
 	// Print array
 	public static void printArray(int \[\] array){
@@ -83,3 +86,5 @@ public class InsertionSort {
 		printArray(array);
 	}
 }
+```
+

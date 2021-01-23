@@ -4,6 +4,7 @@ date: "2010-12-26"
 classes: wide
 categories:
 - "java"
+- "algorithms"
 tags:
 - "algorithm"
 - "computer-science"

@@ -5,6 +5,7 @@ classes: wide
 usemathjax: true
 categories:
 - "c"
+- "linear-algebra"
 tags:
 - "algorithm"
 - "computer-science"

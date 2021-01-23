@@ -2,11 +2,10 @@
 title: "Bash Scripting - Best Practices"
 date: "2011-09-04"
 classes: wide
-categories: 
-  - "bash"
+categories:
   - "shell"  
 tags:
-  - "bash-2"
+  - "bash"
   - "best-practices"
   - "echo-errors"
   - "portable-shebang"
