@@ -17,8 +17,6 @@ tags:
   - "sorting-algorithms"
 ---
 
-# Description
-
 In computer science many algorithms are recursive by nature, and they usually follow an approach called _**divide-and-conquer**_. 
 
 Divide-and-conquering a problem means to break it into smaller identical sub-problems, resolve the smaller sub-problems recursively (by dividing the smaller sub-problems into even smaller problems), and eventually combine all their results to determine the solution for the initial problem .

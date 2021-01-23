@@ -17,8 +17,6 @@ tags:
 - "sorting-algorithms"
 ---
 
-# Description
-
 In the [**last article**](/2010/12/22/the-merge-sort-algorithm-implementation-in-java/) I've described a recursive version of the **Merge Sort Algorithm** . Of course every recursive algorithm can be written in an iterative manner. 
 
 An alternative implementation is the **bottom-up** version of the same algorithm (we don't use recursion for this implementation).

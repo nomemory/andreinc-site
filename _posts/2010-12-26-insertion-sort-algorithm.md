@@ -1,6 +1,7 @@
 ---
 title: "Insertion Sort Algorithm"
 date: "2010-12-26"
+classes: wide
 categories: 
   - "algorithms"
   - "java"
@@ -57,31 +58,31 @@ The Java implementation of the algorithm is pretty straight-forward:
 ```java 
 public class InsertionSort {
 	// Print array
-	public static void printArray(int \[\] array){
+	public static void printArray(int [] array){
 		for(int i : array){
 			System.out.printf("%d ", i);
 		}
 	}
 
 	// Sort array through the 'Insertion Sort' method .
-	public static void sortArray(int \[\] array){
+	public static void sortArray(int [] array){
 		int key, j;
 		for(int i = 1; i < array.length; ++i){
-			key = array\[i\];
+			key = array[i];
 			j = i - 1;
-			while(j >= 0 && array\[j\] > key){
+			while(j >= 0 && array[j] > key){
 				// Shift array elements so we can place
 				// the key to the right place
-				array\[j+1\] = array\[j\];
+				array[j+1] = array[j];
 				j--;
 			}
 			// Place the key into position
-			array\[j+1\] = key;
+			array[j+1] = key;
 		}
 	}
 
-	public static void main(String \[\] args){
-		int \[\] array = new int\[\] {8, 0, 3, 11, 5, -1 , 14, 10, 1, 1, -2};
+	public static void main(String[] args){
+		int [] array = new int[] {8, 0, 3, 11, 5, -1 , 14, 10, 1, 1, -2};
 		sortArray(array);
 		printArray(array);
 	}

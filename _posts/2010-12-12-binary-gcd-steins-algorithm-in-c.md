@@ -20,8 +20,6 @@ tags:
   - "steins-algorithm"
 ---
 
-# Introduction
-
 [**Binary GCD**](https://en.wikipedia.org/wiki/Binary_GCD_algorithm?oldformat=true) also known as **Stein's Algorithm** is an algorithm that computes the greatest common divisor of two (positive) numbers . Discovered in 1967 by the Israeli programmer Josef Stein, it's an alternative to the classical [Euclid's Algorithm](/2010/12/11/euclids-algorithm), and is considered to be more efficient than this as it's replacing divisions and multiplications with [bitwise operations](http://en.wikipedia.org/wiki/Bitwise_operation) . The algorithm is recursive by nature, but loops can be used instead of recursion .
 
 _Note that by `B_GCD(num1, num2)` we will refer to a function that returns the greatest common divisor of two positive numbers (`num1` and `num2`)._

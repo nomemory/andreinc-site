@@ -18,6 +18,8 @@ tags:
   - "test-if-script-is-run-by-user"
 ---
 
+A list of best practices when writing bash scripts:
+
 # Use a portable shebang
 
 > In computing, a shebang is the character sequence consisting of the characters number sign and exclamation mark (#!) at the beginning of a script. (source [wikipedia](https://en.wikipedia.org/wiki/Shebang_(Unix)))
