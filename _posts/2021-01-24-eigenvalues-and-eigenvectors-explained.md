@@ -36,7 +36,7 @@ Forcing the mathematical notation a little, we can say $$A(x) = b \text{,where }
 
 **Example 1**:
 
-Let's consider a bi-dimensional vector $$V = \begin{bmatrix} 2 \\ 3 \end{bmatrix} \text{, where } x \in R^2$$.
+Let's consider a bi-dimensional vector $$V = \begin{bmatrix} 2 \\ 3 \end{bmatrix} \text{, where } V \in R^2$$.
 
 If we were to plot this vector in the 2-d plane, it will look like this:
 
