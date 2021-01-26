@@ -291,12 +291,28 @@ But on the contrary if we use a eigenvector $$v_{eig} = \begin{bmatrix} 2 \\ 0 \
 
 ![vect]({{site.url}}/assets/images/2021-01-24-eigenvalues-and-eigenvectors-explained/eigen_01.png)
 
-We can see that $$v_{eig}^{'}$$ didn't change it's span compared to $$v_{eig}$$.
+We can see that $$v_{eig}^{'}$$ didn't change its span compared to $$v_{eig}$$.
 
 Conclusion: **Eigenvectors** and **Eigenvalues** are important because in a way they act like an "axis", along which a linear transformation acts simply by "shrinking/stretching" and not performing any other alterations.
 
 So **Eigenvectors** helps us model and understand the complex ways in which a linear transformation work, by decoupling their actions into "independent" "axes".
 
+> Not every linear transformation has "real" eigenvectors but all linear transformation have "complex" eigenvectors.
+
+For example the matrix associated with a linear transformation that performs a planar rotation clockwise is $$A = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}$$. 
+
+If we compute the eigenvalues for $$A$$ we will obtain: $$\lambda_{1}=-i$$ and $$\lambda_{2}=i$$. In this case the two associated eigenvectors will be:  $$v_{1} = \begin{bmatrix} i \\ 1 \end{bmatrix}$$ and $$v_{2} = \begin{bmatrix} -i \\ 1 \end{bmatrix}$$. 
+
+The results are not surprising, because $$A$$ will basically rotate every vector and the span of the vector changes automatically.
+
+# Why are Eigenvectors and Eigenvalues important
+
+From a "Computer Engineering" perspective, `Eigenvectors` and `Eigenvalues` are important in the following areas:
+
+* Statistics;
+* Computer Vision (e.g.: Principal Component Analisys);
+* Image compression.
+* etc.
 
 
 
