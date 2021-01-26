@@ -121,7 +121,7 @@ $$
 
 We see that the `z` information of our vector $$v$$ has "evaporated". Basically the matrix $$A$$ projected our vector $$v$$ on the `<x, y>` plane.
 
-To visualise better, let's say $$v=\begin{bmatrix}1 & 2 & 1\end{bmatrix}$$ and we plot $$v^{'}$$:
+To visualise better, let's say $$v=\begin{bmatrix}1 \\ 2 \\ 1\end{bmatrix}$$ and we plot $$v^{'} = A * v = \begin{bmatrix}1 \\ 2 \\ 0\end{bmatrix}$$:
 
 ![vect]({{site.url}}/assets/images/2021-01-24-eigenvalues-and-eigenvectors-explained/v-3d-vector-001.png)
 
@@ -275,9 +275,11 @@ $$
 If solve the two systems of equations, we will realise that our matrix "A" has multiple eigenvectors / eigenvalues pairs.
 
 $$
-\text{For } \lambda_{1} = 1 \text{, we have the eigenvectors} v_{1} = \begin{bmatrix} x \\ -2x \end{bmatrix} = \begin{bmatrix} \frac{-1}{2} \\ 1 \end{bmatrix} * x\\
-\text{For } \lambda_{2} = 3 \text{, we have the eigenvectors} v_{2} = \begin{bmatrix} x \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \end{bmatrix} * x
+\text{For } \lambda_{1} = 1 \text{, we have the eigenvectors } v_{1} = \begin{bmatrix} x \\ -2x \end{bmatrix} = \begin{bmatrix} \frac{-1}{2} \\ 1 \end{bmatrix} * x\\
+\text{For } \lambda_{2} = 3 \text{, we have the eigenvectors } v_{2} = \begin{bmatrix} x \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \end{bmatrix} * x
 $$
+
+> Wait! If you look closer, the eigenvalues $$\lambda_{1}=1$$ and $$\lambda_{2}=3$$ are exactly the elements of the first diagonal of our matrix $$A$$. That's not a pure coincidence. In fact matrix $$A$$ is a (upper) diagonal matrix (has only zero elements under the first diagonal). So we can generalise the following: the eigenvalues for a diagonal matrix are the elements of the first diagonal.
 
 Now, we can visually see why are eigenvectors so "special".
 
