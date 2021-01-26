@@ -5,10 +5,13 @@ classes: wide
 usemathjax: true
 categories:
 - "c"
+- "python"  
 - "linear-algebra"
 tags:
 - "algorithm"
 - "computer-science"
+- "eigenvalues"
+- "eigenvector"
 ---
 
 > In my last two articles I've tried to explore some fundamental topics in linear algebra: [QR Decomposition](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#qr-decomposition), [linear transformations](/2021/01/20/eigenvalues-and-eigenvectors-explained#linear-transformations) and [Eigenvalues/Eigenvectors](/2021/01/20/eigenvalues-and-eigenvectors-explained#eigenvalues-and-eigenvectors). In case you haven't done so, I recommend you to read the linked sub-chapters first, as it will be easier to follow through.  
@@ -32,7 +35,9 @@ Moreover, If $$X$$ is non-singular, then $$A$$ and $$X^{-1}*A*X$$ have the same 
 
 > This means that two similar matrices $$A$$ and $$B$$ have the same eigenvalues.
 
-Now, there's a type of factorization called **Schur Factorization** that says that $$A$$ can be written as: $$A = Q * U * Q^{*} = Q * U * Q^{-1}$$, where Q is an unitary matrix and T is an upper triangular matrix. Additionally, every square matrix $$A$$ has a **Schur Factorization**. 
+Now, there's a type of factorization called **Schur Factorization** that says that $$A$$ can be written as: $$A = Q * U * Q^{*} = Q * U * Q^{-1}$$, where Q is an unitary matrix and T is an upper triangular matrix. Additionally, every square matrix $$A$$ has a **Schur Factorization**.
+
+> Because $$Q$$ is a unitary matrix, its conjugate transpose $$Q^{*}=Q^{-1}$$. I am adding this because in some manuals you will see the Shur Factorization expressed as: $$A = Q * U * Q^{*}$$. 
 
 So good so far. Looking at the **Schur Factorization** it looks like matrix $$A$$ and $$U$$ are what we call **similar**, this mean they have the same **eigenvalues**. 
 
@@ -185,11 +190,119 @@ With the correct "eigenvalues" being:
 
 This time we were not that close, but we manage to find a few eigenvalues.
 
-And it was even slower.
+And it was even slower. Plus the temperature of my CPU increased drastically.
 
-# Improving our naive algorithm
+# Improving our naive algorithm - QR with shifts (Practical QR)
 
-((TO BE CONTINUED))
+The "naive QR algorithm" works flawlessly in theory, but in practice not so good.
+
+So people implementing linear algebra algorithms, found a few tricks. One of those tricks is called "shifts".
+
+So we play a little with our initial decomposition $$A_{k} = Q_{k} * R_{k}$$, by "attacking" the first diagonal like:
+
+$$ 
+\text{ we subtract the "value"}: \\
+\\
+A_{k} - s_{k}*I = Q_{k}*R_{k} \\
+\text{ and then we put the "value" back in:} \\
+\\
+A_{k+1} = R_{k} * Q_{k} + s_k * I
+$$
+
+A possible value for $$s_{k}$$ can be the last element of the first diagonal of matrix $$A_{k}$$.
+
+Having said this our "smarter qr algorithm with shifts looks like:"
+
+```python
+import numpy as np
+from tabulate import tabulate
+
+# A is a square random matrix of size n
+n = 5
+A = np.random.rand(n, n)
+print("A=")
+print(tabulate(A))
+
+ef eigen_qr_practical(A, iterations=500000):
+Ak = np.copy(A)
+n = Ak.shape[0]
+QQ = np.eye(n)
+for k in range(iterations):
+    # s_k is the last item of the first diagonal
+    s = Ak.item(n-1, n-1)
+    smult = s * np.eye(n)
+    # pe perform qr and subtract smult
+    Q, R = np.linalg.qr(np.subtract(Ak, smult))
+    # we add smult back in
+    Ak = np.add(R @ Q, smult)
+    QQ = QQ @ Q
+    if k % 10000 == 0:
+        print("A",k,"=")
+        print(tabulate(Ak))
+        print("\n")
+return Ak, QQ
+
+#Print results
+eigen_qr_practical(A)
+
+#Print the results of the "official" numpy algorithm
+print(np.linalg.eigvals(A))
+```
+
+Running the new algorithm will yield the following results:
+
+```
+A 490000 =
+-------  -------------  ------------  ----------  ----------
+2.44343  -0.240571      -0.189644      0.615036   -0.501964
+0         0.660489      -0.530664     -0.140285   -0.143883
+0        -4.94066e-324  -0.531766      0.0900106  -0.297511
+0         4.94066e-324   1.7737e-321   0.352584    0.488774
+0         0              0             0          -0.0891101
+-------  -------------  ------------  ----------  ----------
+```
+
+Compared with the "official ones":
+
+```
+[ 2.44343021 -0.53176643  0.66048936  0.35258393 -0.08911005]
+```
+
+We can see that our matrix converged quite nicely.
+
+# More improvements
+
+Before changing even further the algorithm, we need to discuss what a **Hessenberg** matrix is.
+
+A **Hessenberg Matrix** is a "lousy-upper diagonal matrix", that has zeroes under the first **sub**-diagonal:
+
+$$
+H_{\text{essenberg}} =
+\begin{bmatrix}
+\ldots & \ldots & \ldots & \ldots & \ldots \\
+\ldots & \ldots & \ldots & \ldots & \ldots \\
+\textbf{0} & \ldots & \ldots & \ldots & \ldots \\
+\textbf{0} & \textbf{0} & \ldots & \ldots & \ldots \\
+\textbf{0} & \textbf{0} & \textbf{0} & \ldots & \ldots \\
+\end{bmatrix}
+$$
+
+There is a theorem that states that every square matrix is similar to one in upper Hessenberg form.
+
+If we somehow manage to transform $$A$$ to an upper Hessenberg form, and then we run the previous algorithm, the convergence will be increased. 
+
+To compute the Hessenberg Matrix from an initial matrix $$A$$ you can follow [this tutorial](https://www.youtube.com/watch?v=t_bj3V9Ubac).
+
+In python, you can use the [following method](https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.hessenberg.html) to compute the Hessenberg form of a Matrix:
+
+```python
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.hessenberg.html
+from scipy.linalg import hessenberg
+A = np.array([[2, 5, 8, 7], [5, 2, 2, 8], [7, 5, 6, 6], [5, 4, 4, 8]])
+H, Q = hessenberg(A, calc_q=True)
+```
+
+
 
 
 
