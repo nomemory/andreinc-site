@@ -275,8 +275,8 @@ $$
 If solve the two systems of equations, we will realise that our matrix "A" has multiple eigenvectors / eigenvalues pairs.
 
 $$
-\text{For } \lambda_{1} = 1 \text{, we have the eigenvectors} v_{1} = \begin{bmatrix} x \\ -2x \end{bmatrix} \\
-\text{For } \lambda_{2} = 3 \text{, we have the eigenvectors} v_{1} = \begin{bmatrix} x \\ 0 \end{bmatrix}
+\text{For } \lambda_{1} = 1 \text{, we have the eigenvectors} v_{1} = \begin{bmatrix} x \\ -2x \end{bmatrix} = \begin{bmatrix} \frac{-1}{2} \\ 1 \end{bmatrix} * x\\
+\text{For } \lambda_{2} = 3 \text{, we have the eigenvectors} v_{2} = \begin{bmatrix} x \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \end{bmatrix} * x
 $$
 
 Now, we can visually see why are eigenvectors so "special".
