@@ -302,6 +302,52 @@ A = np.array([[2, 5, 8, 7], [5, 2, 2, 8], [7, 5, 6, 6], [5, 4, 4, 8]])
 H, Q = hessenberg(A, calc_q=True)
 ```
 
+# But what about the eigenvectors
+
+After finding out the **eigenvalues**, obtaining the **eigenvectors** is a matter of solving a linear system of equations.
+
+Let's take as example, the matrix I've used in [my previous article](/2021/01/20/eigenvalues-and-eigenvectors-explained#eigenvalues-and-eigenvectors): $$A = \begin{bmatrix} 3 & 1 \\ 0 & 1 \end{bmatrix}$$.
+
+We already computed the *eigenvalues* for it, namely $$\lambda_{1}=3, \lambda_{2}=1$$.
+
+To find the **eigenvectors** is a matter of solving two linear system of equations of the form $$A * x = b$$:
+
+$$
+\begin{bmatrix}
+3 - 1 & 1 \\
+0 & 1 - 1
+\end{bmatrix}
+*
+\begin{bmatrix}
+v_{1x} \\
+v_{1y}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+3 - 3 & 1 \\
+0 & 1 - 3
+\end{bmatrix}
+*
+\begin{bmatrix}
+v_{2x} \\
+v_{2y}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix}
+$$
+
+From a code perspective, if you want to do it in C you take a look on my "academical" called [nml](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#solving-linear-systems-of-equations). The algorithms related to solving linear system of equations are also described there. 
+
+Or we can do it in python, using numpy's [`numpy.linalg.eig()`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html) method.
+
 
 
 

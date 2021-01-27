@@ -316,6 +316,10 @@ From a "Computer Engineering" perspective, `Eigenvectors` and `Eigenvalues` are 
 * Image compression.
 * etc.
 
+# Where to go next
+
+If you want to find out how to compute **Eigenvectors** and **Eigenvalues** please refer to [my next article](/2021/01/25/computing-eigenvalues-and-eigenvectors-using-qr-decomposition) on this topic.
+
 
 
 
