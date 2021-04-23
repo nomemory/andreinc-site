@@ -15,6 +15,7 @@ This section contains links to my "open source" projects and libraries.
 | [markovneat](https://github.com/nomemory/markovneat) | Java | A Markov Chains implementation for Java. |
 | [neat-sample-database-generators](https://github.com/nomemory/neat-sample-databases-generators) | Java | Neat java scripts (!not javascript) to auto-generate data for various sample databases. |
 | [neat-matrix-library (nml)](https://github.com/nomemory/neat-matrix-library) | C | nml is a "simple" matrix/numerical analysis library written in pure C. The scope of the library is to highlight various algorithm implementations related to matrices. |
+| [neat-chess](https://github.com/nomemory/neat-chess) | Java | A Java UCI Protocol implementation - call chess engines from Java |
 | [JBVE](https://github.com/nomemory/java-bean-validation-extension) | Java | A library that extends the Java Bean Validation API with additional @Annotations. |
 | [ansiscape](https://github.com/nomemory/ansiscape) | Java | AnsiScape is a simple Java library that allows the user to format the output of the applications using ANSI Escape Codes. |
 | [aleph-formatter](https://github.com/nomemory/aleph-formatter) | Java | A simple and efficient StringFormatter that supports named parameters (with a twist). Oh!, and it works faster than `String.format(...)`sometimes. |
