@@ -232,6 +232,10 @@ public class Client {
 }
 ```
 
+Notes:
+* The `BufferedReader reader` will be used to read data from the process: `reader.readLine()`;
+* The `OutputStream writer` will be used to write data to the process: `writer.write()`.
+
 So given the above code, if we want to start a new `stockfish` process (assuming `stockfish` is already installed as a command-line utility), we can simply call:
 
 ```java
@@ -362,10 +366,181 @@ Output:
 f4g3
 ```
 
+## (Re)use the `command(...)` to retrieve the 10 best possible moves for a position.
+
+This task is a bit more complicated because it involves parsing *non-friendly* output from the engine.
+
+By default, an UCI-enabled chess engine only retrieves the single best line it founds. To retrieve more lines and their score, we first need to set the `MultiPV` option to `10`.
+
+Setting an option would be as simple as:
+
+```java
+client.command("setoption name MultiPV value 10", identity(), s->s.startsWith("readyok"), 2000l);
+```
+
+And now we need to look into format the engine retrieves the analysis line.
+
+Let's take the following position as an example (Ruy-Lopez):
+
+![png]({{site.url}}/assets/images/2021-04-22-writing-a-universal-chess-interface-client-in-java/ruylopez.png)
+
+The FEN string of this position is: `r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3`.
+
+If we want to get the 10 best continuations for black starting with this position, in the command line we will obtain the following output:
+
+```text
+go depth 10
+
+--- more text ----
+
+info depth 10 seldepth 12 multipv 1 score cp -8 nodes 125667 nps 657942 tbhits 0 time 191 pv a7a6 b5a4 g8f6 d2d3 f8c5 e1g1 d7d6 d3d4 e5d4 f3d4 c8d7 d4c6 b7c6
+info depth 10 seldepth 13 multipv 2 score cp -27 nodes 125667 nps 657942 tbhits 0 time 191 pv g8f6 b1c3 f8d6 d2d4 e5d4 f3d4 c6d4 d1d4
+info depth 10 seldepth 13 multipv 3 score cp -28 nodes 125667 nps 657942 tbhits 0 time 191 pv f8c5 c2c3 g8f6 d2d4 c5b6 d4e5 f6e4 e1g1 e8g8 b5a4
+info depth 10 seldepth 13 multipv 4 score cp -31 nodes 125667 nps 657942 tbhits 0 time 191 pv g8e7 e1g1 e7g6 b5a4 f8e7 c2c3 e8g8 d2d4 d7d6 g1h1
+info depth 10 seldepth 12 multipv 5 score cp -33 nodes 125667 nps 657942 tbhits 0 time 191 pv f8e7 b1c3 d7d6 d2d4 e5d4 f3d4 c8d7 e1g1 g8f6 d4f5 d7f5 e4f5
+info depth 10 seldepth 13 multipv 6 score cp -61 nodes 125667 nps 657942 tbhits 0 time 191 pv d7d6 d2d4 g8f6 d4e5 f6e4 b5c6 b7c6 e1g1 c8g4 d1d4
+info depth 10 seldepth 13 multipv 7 score cp -63 nodes 125667 nps 657942 tbhits 0 time 191 pv g7g6 d2d4 e5d4 c2c3 a7a6 b5c6 d7c6 c3d4 f8g7 c1e3
+info depth 10 seldepth 13 multipv 8 score cp -65 nodes 125667 nps 657942 tbhits 0 time 191 pv h7h6 e1g1 g8f6 b1c3 f8d6 d2d4 e5d4 f3d4 c6d4 d1d4
+info depth 10 seldepth 12 multipv 9 score cp -66 nodes 125667 nps 657942 tbhits 0 time 191 pv c6d4 f3d4 e5d4 e1g1 g8f6 d2d3 c7c6 b5c4 f8d6 f2f4
+info depth 10 seldepth 13 multipv 10 score cp -74 nodes 125667 nps 657942 tbhits 0 time 191 pv f8d6 d2d4 e5d4 e1g1 g8e7 c2c3 a7a6 b5c4 b7b5 c4b3 d4c3 b1c3 e7g6
+```
+
+The relevant output for us is:
+
+```
+info depth <depth> seldepth <...> multipv <line> score cp <score> nodes <...> nps <...> tbhits <...> time <...> pv <move1> <move2> ...
+``` 
+
+Were:
+
+- `depth` represents how deep the engine has searched;
+- `line` represents the line suggested by the engine (smaller is better);
+- `score` represents the score the of the move (bigger is better);
+- `move1` represents the actual move the engine suggests.
+- `move2`, `move3`, ... represent the best continuations on that line from the engine point of view.
+
+In case the line leads to a forced mate in 1,2,3,4,5... moves, the output is a little different. No score will be shown so instead of: `score cp <score>` the line will contain `score mate <number>`.
+
+The first thing that comes to find is to write a [regex](https://en.wikipedia.org/wiki/Regular_expression) that can capture the data we need using [groups](https://docs.oracle.com/javase/tutorial/essential/regex/groups.html). 
+
+I am no expert in writing regular expressions, but after some effort I've come to write the following:
+
+```
+info depth ([\w]*) seldepth [\w]* multipv ([\w]*) score (cp ([\-\w]*)|mate ([\w*])) [\s\w]*pv ([\w]*)\s*([\s\w]*)
+```
+
+![png]({{site.url}}/assets/images/2021-04-22-writing-a-universal-chess-interface-client-in-java/regex.png)
+
+So if you look closely the data is captured in the groups as follows:
+
+- `group1` contains the depth;
+- `group2` contains the line;
+- `group3` contains the score string (either `cp score` or `mate number`);
+- `group4` the actual `score`;
+- `group5` the `number` of moves to mate;
+- `group6` the actual move;
+- `group7` the next moves for that particular line.
+
+> `group5` and `group4` are mutually exclusive.
+
+Now that we have the regex in place, it's easy to write the actual command that extracts the best 10 moves from a given position. The code is the following:
+
+```java
+var client = new Client();
+var position = "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3";
+var analysisLineRegex = "info depth ([\\w]*) seldepth [\\w]* multipv ([\\w]*) score (cp ([\\-\\w]*)|mate ([\\w*])) [\\s\\w]*pv ([\\w]*)\\s*([\\s\\w]*)";
+final var pattern = Pattern.compile(analysisLineRegex);
+
+client.start("stockfish");
+
+// We initialise the engine to use the UCI interface
+client.command("uci", identity(), (s) -> s.startsWith("uciok"), 2000l);
+
+// We set MultiPV to 10
+client.command("setoption name MultiPV value 10", identity(), s->s.startsWith("readyok"), 2000l);
+
+// We set the give position
+client.command("position fen " + position, identity(), s -> s.startsWith("readyok"), 2000l);
+
+Map<Integer, String> bestMoves =
+        client.command(
+                "go depth 18",
+                lines -> {
+                    Map<Integer, String> result = new TreeMap<>();
+                    for(String line : lines) {
+                        var matcher = pattern.matcher(line);
+                        if (matcher.matches()) {
+                            Integer pv = Integer.parseInt(matcher.group(2));
+                            String move = matcher.group(6);
+                            result.put(pv, move);
+                        }
+                    }
+                    return result;
+                },
+                s -> s.startsWith("bestmove"),
+                50000l);
+
+bestMoves.forEach((k,v) -> {
+    System.out.printf("%d %s\n", k, v);
+});
+
+client.close();
+```
+
+With the following output:
+
+```text
+1 g8f6
+2 f8c5
+3 a7a6
+4 f7f5
+5 f8e7
+6 g8e7
+7 d7d6
+8 c6d4
+9 h7h6
+10 f8d6
+```
+
 ## Going further
 
-The above code example it's just a starting point/foundation for a full-fledged UCI client library. Normally, from a design perspective, the `command(...)` method is generic enough not to be public in your library API.
+The above code is *nasty*, and it can be become unreadable quickly, but it's just a starting point/foundation for a full-fledged UCI client library. 
 
-Instead of letting the developers use `command(...)` directly, specialised methods should be build.
+Normally, from a design perspective, the `command(...)` method is generic enough not to be public in your library API. Instead of letting the developers use `command(...)` directly, specialised methods should be built. 
 
-In this regard, please take a look at [neat-chess](https://github.com/nomemory/neat-chess). This is already a working library that was tested with `Stockfish 13`.  
+In this regard, please take a look at [neat-chess](https://github.com/nomemory/neat-chess). This is already a working library that was tested with `Stockfish 13`.
+
+Behind the scenes **neat-chess** uses the same mechanism as described in this article. But on top of the `command()` method I've built additional abstractions to make everything more readable.
+
+For example, the previous code, can be written using **neat-chess** as simple as:
+
+```java
+var client = new UCI();
+client.startStockfish();
+client.setOption("MultiPV", "10");
+client.positionFen("r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3").getResultOrThrow();
+var analysis = client.analysis(18).getResultOrThrow();
+var moves = analysis.getAllMoves();
+
+// Output
+moves.forEach((idx, move) -> {
+    System.out.println(move);
+});
+
+client.close();
+```
+
+With the following output:
+
+```text
+Move{lan='g8f6', strength=-0.13, pv=1, depth=18, continuation=[d2d3, f8c5, c2c3, e8g8, e1g1, d7d5, e4d5, d8d5, b5c4, d5d6, b1d2, c5b6, d2e4, f6e4, d3e4]}
+Move{lan='f8c5', strength=-0.31, pv=2, depth=18, continuation=[c2c3, g8f6, d2d4, e5d4, e4e5, f6e4, c3d4, c5b4, b1d2, e8g8, a2a3, b4d2, c1d2, d7d6, e1g1, e4d2, d1d2, c8e6]}
+Move{lan='a7a6', strength=-0.4, pv=3, depth=18, continuation=[b5a4, b7b5, a4b3, g8f6, e1g1, c8b7, d2d3, f8c5, a2a4, d7d6, a4b5, a6b5, a1a8, b7a8, b1c3, c6a5, c1g5, a5b3, c2b3]}
+Move{lan='f7f5', strength=-0.46, pv=4, depth=18, continuation=[d2d3, f5e4, d3e4, g8f6, e1g1, d7d6, b1c3, f8e7, b5c4, c6a5, c4d3, c8g4, h2h3, g4h5, f1e1, e8g8, c3d5, a5c6, c2c3, f6d5, e4d5]}
+Move{lan='f8e7', strength=-0.46, pv=5, depth=18, continuation=[e1g1, g8f6, f1e1, d7d6, c2c3, a7a6, b5a4, b7b5, a4b3, e8g8, h2h3, c6a5, b3c2, c7c5, d2d4, d8c7, b1d2, c5d4, c3d4]}
+Move{lan='g8e7', strength=-0.52, pv=6, depth=18, continuation=[b1c3, g7g6, d2d4, e5d4, c3d5, e7d5, e4d5, d8e7, b5e2, c6e5, f3d4, f8g7, e1g1, c7c5, d4b5, e8g8, f2f4, a7a6, f4e5, a6b5]}
+Move{lan='d7d6', strength=-0.53, pv=7, depth=18, continuation=[e1g1, a7a6, b5c6, b7c6, d2d4, e5d4, d1d4, g8e7, c1g5, f7f6, g5e3, c8g4, b1d2, e7g6, d4c4, d8d7, f1e1, f8e7]}
+Move{lan='c6d4', strength=-0.61, pv=8, depth=18, continuation=[f3d4, e5d4, e1g1, c7c6, b5c4, g8f6, d2d3, d7d5, e4d5, f6d5, f1e1, f8e7, c1g5, f7f6, g5h4, e8g8, h4g3, c8f5, c4d5, c6d5, b1d2]}
+Move{lan='h7h6', strength=-0.72, pv=9, depth=18, continuation=[e1g1, g8e7, c2c3, e7g6, d2d4, f8e7, d4e5, e8g8, b5a4, a7a5, a4b3, c6e5, f3e5, g6e5, f2f4, e5g6, g1h1]}
+Move{lan='f8d6', strength=-0.78, pv=10, depth=18, continuation=[e1g1, g8e7, c2c3, e8g8, d2d4, e7g6, f1e1, d6e7, c1e3, d7d5, e4d5, e5d4, f3d4, d8d5, c3c4, d5e5, d4c6, b7c6, b5c6, e5b2, c6a8, b2a1]}
+```
