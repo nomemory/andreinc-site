@@ -79,7 +79,7 @@ Each option has a type: `check`, `spin`, `combo`, `button` and `string`. It's im
 | Option type | Description | Example line |
 | ---------- | ------------ | ------------ |
 | `check` | The option can be `true` or `false` | `option name Ponder type check default false` |
-| `spin` | The option can be `true` or `false` | `option name MultiPV type spin default 1 min 1 max 500` |
+| `spin` | The option can be a number in a given range [`min`, `max`]. | `option name MultiPV type spin default 1 min 1 max 500` |
 | `combo` | The option has predefined values (Strings) | `option name Analysis Contempt type combo default Both var Off var White var Black var Both` |
 | `button` | The option doesn't have any value, but can be used to signal to engine to do something | `option name Clear Hash type button` |
 | `string` | As the name suggests | `option name EvalFile type string default nn-62ef826d1a6d.nnue` |
