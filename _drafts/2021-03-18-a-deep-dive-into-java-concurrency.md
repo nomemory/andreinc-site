@@ -11,23 +11,23 @@ tags:
 
 # Introduction
 
-In 2005, the year I was starting University, [Herb Sutter](https://github.com/hsutter), Software Architect at Microsoft and Chair of the ISO C++ Committee, wrote a famous article called: ["The free lunch is over"](http://www.gotw.ca/publications/concurrency-ddj.htm). In this paper he "prophesized" a paradigm shift in the way we will approach **Parallelism** and **Concurrency** in the coming decades (our times now).
+In 2005, the year I was starting University, [Herb Sutter](https://github.com/hsutter), Software Architect at Microsoft and Chair of the ISO C++ Committee, wrote the article called: ["The free lunch is over"](http://www.gotw.ca/publications/concurrency-ddj.htm). In this paper he "prophesized" a paradigm shift in the way we will approach **Parallelism** and **Concurrency** in the coming decades.
 
 > If you haven’t done so already, now is the time to take a hard look at the design of your application, determine what operations are CPU-sensitive now or are likely to become so soon, and identify how those places could benefit from concurrency. Now is also the time for you and your team to grok concurrent programming’s requirements, pitfalls, styles, and idioms.
 
-His assumptions were simple - [with silicon pushed to it physical limits](https://www.sheffield.ac.uk/news/nr/next-electronics-revolution-silicon-1.498610) and serial-processing speed of a single-core processor capped:
+The assumptions were simple - [with silicon pushed to it physical limits](https://www.sheffield.ac.uk/news/nr/next-electronics-revolution-silicon-1.498610) and serial-processing speed of a single-core processor capped:
 
 * CPU manufacturers will shift their focus on products that support multi-threading;
 * Programming Languages will natively support multithreaded programming, to make better use the innovations in the Hardware world;
 * Software Developers will be forced to develop multithreaded programs, while efficiency and performance optimization will get more, not less, important.
 
-Looking back to what happened in the last 15 years or so, he was right. We've constantly introduced more and more abstractions on how to make things work in parallel. In the same time the programming languages who have "threads" as first class citizens thrived. 
+Looking back to what happened in the last 15 years or so, he was right. We've constantly introduced more and more abstractions on how to make things work in parallel. In the same time the programming languages who have `Threads` as *first class* citizens thrived. 
 
-When I've started programming "buzzword"-concepts like: *Promises*, *Futures*, *Reactive Streams*, *Actors*, *Non-Blocking*, *Event-Loop* did not exist. The Java API had only the `Thread` class and the `Runnable` interface. 
+When I've started programming "buzzword"-concepts like: *Promises*, *Futures*, *Reactive Streams*, *Actors*, *Non-Blocking*, *Event-Loop* did not exist. I remember using [fork()](https://man7.org/linux/man-pages/man2/fork.2.html) and [pthreads](https://en.wikipedia.org/wiki/POSIX_Threads) in C, while the Java API had only the `Thread` class and the `Runnable` interface. 
 
-There was no `Future` (😄), `CompletableFuture`, `ExecutorService`, `ConcurrentMap` or `BlockingQueue` or any of nicer abstractions we are currently using. Oh, and people were still using `Hashtable<K,V>`, because it was more "safe".
+There was no `Future` (😄), `CompletableFuture`, `ExecutorService` or `ConcurrentMap` or any of nicer abstractions we are currently using. Oh, and people were still using `Hashtable<K,V>`, because it was "safer".
 
-But things are changing fast, and this article is a deep-dive into the wonderful *World of Java Concurrency* of the *present*.
+But things are now changing fast, and this article is a deep-dive into the wonderful *World of Java Concurrency* of the *present*.
 
 > The information presented in this article assumes the reader is already familiar with the Java Programming Language: OOP, Collections, Functional Interfaces, etc.
 
@@ -35,9 +35,9 @@ But things are changing fast, and this article is a deep-dive into the wonderful
 
 ## Threads vs. Processes
 
-In the beginning (בְּרֵאשִׁית), when Operating Systems were not yet born, computers were huge ([ENIAC](https://en.wikipedia.org/wiki/ENIAC) had 162 m<sup>2</sup>) but simple leviathans. They would run exactly one program at a time, from the beginning till the end, and that program would have full-control of all the resources of that machine. But this didn't stay for long. 
+In the beginning (בְּרֵאשִׁית), when Operating Systems were not yet born, computers were huge ([ENIAC](https://en.wikipedia.org/wiki/ENIAC) had 162 m<sup>2</sup>) but simple [leviathans](https://en.wikipedia.org/wiki/Leviathan). They would run exactly one program at a time, from the beginning till the end, and that program would have full-control of all the resources of that machine. But this didn't stay for long. 
 
-Eventually Operating Systems were born, and they evolved into letting Engineers to run more than one program at a time. This was a pragmatic evolution of how computers operated: time is money. A program that was blocking an entire machine just because it was waiting some sort of input was a huge waste of time.   
+Eventually Operating Systems were born, and they evolved into letting Engineers to run more than one program at a time. This was a pragmatic evolution of how computers operated: time is/was money. A program that was blocking an entire machine just because it was waiting some sort of input was a huge waste of time.   
 
 The concept of **process** was introduced. This is how we call a program that was loaded into the memory, along with all the resources it needs to operate. Processes were initially isolated and independent, but mechanisms allowing process inter-communication were developed: sockets, signal handlers, shared memory, files, semaphores, etc..
 
@@ -205,11 +205,13 @@ new Thread(runnable).start();
 new Thread(() -> System.out.println("Hello world!")).start();
 ```
 
-A "rookie" mistake is to call `run()` on the `Thread` instance, instead of `start()`. This will call the `run()` logic synchronously.
+A "rookie" mistake is to call `run()` on the `Thread` instance, instead of `start()`. This will call the `run()` logic synchronously, without actually opening a new `Thread`!
 
 # What's actually happening when we start a new `Thread`
 
-A `Thread` is a way to "split" the `main` timeline of the program and separate it into various timelines. They are all executed in (pseudo) parallel, meaning they get CPU time.  
+A `Thread` is a way to "split" the `main` timeline of the program and separate it into various timelines that are working in pseudo-parallel or parallel. 
+
+In reality, the `CPU` alternates between `Threads`, but this happens so fast by our standards, we get the illusion that everything *flows* in parallel. Operating systems *want* to keep the `CPU` constantly running, but in the same time they try to offer a fair amount of `CPU time` to any running `Thread` (or process).  
 
 Let's look at the following code as an example:
 
@@ -350,6 +352,21 @@ Notice how everything ended abruptly.
  
 The `main Thread` finished exactly after `M` was printed. With `main` finishing, the JVM decide it's time to shut-down. Poor `Thread-2` was abandoned before managing to print the last two letters (`K` and `L`).
 
+# How many threads is too many ?
+
+Now that we've seen how to create `Threads`, it's easy to assume that this is the "silver-bullet" for fixing any performance issue that we might encounter.
+
+From a hardware perspective, our CPU has a pre-determined number of cores (or [hyperthreads](https://en.wikipedia.org/wiki/Hyper-threading)), that are shared between all the running programs (Operating System included). So opening 3000 `Java Threads` doesn't mean anything. We are still limited by the underlying hardware support.
+
+Actually, opening too many `Threads`, can drastically reduce performance, because `Threads` bring overhead:
+* At `Thread` creation, the JVM needs to allocate off-heap memory for the internal stack. The default stack size is usually 1MB. So imagine having 3000 of them!
+* `Threads` will keep references to various objects in heap, thus the memory usage will increase;
+* Switching between `Threads` is non-trivial, and brings additional overhead. 
+
+Having a `ThreadPool` (we will discuss this concept in the next sections) might solve some above problems, but not all of them.
+
+But what is important to remember at this point: avoid opening short-lived `Threads` for solving simple-minded tasks (like printing something on the output, or do some basic math on a variable). It's not worth the trouble, and you may end-up with a slower implementation.   
+
 # Thread Safety
 
 Threads are wild constructs. Being able to do things in parallel (which is clearly not something us humans are good at), comes up with a lot of challenges. I'm not exaggerating when I say it's an "art" to use `Threads` in a smart way. If we are doing it right, our programs will be more efficient and elegant. If we are doing it wrong, we will walk on a minefield of bugs, some of which will be very hard to reproduce or fix.
@@ -360,13 +377,13 @@ Normally, there's no real definition of `Thread Safety`, but we can say that if 
 
 But maybe it's better to show what "incorrect" means, before jumping into describing "correctly".
 
-# What can go wrong ?
+# What can go wrong ? (PART ONE - Thread Safety)
 
-`Threads` allows us to split our programs into (pseudo) parallel series of instructions. All good, but the non-deterministic way a threads get CPU time ensures chaos. Without proper control, the same multithreaded program running multiple times can yield different and very surprising results. Similarly, without smart design and control, a multithreaded application can suffer from performance problems (the irony!).
+`Threads` allows us to split our programs into (pseudo) parallel series of instructions. 
+
+All sorted, but without proper control, the same multithreaded program running multiple times can yield different and very surprising results. Similarly, without smart design and control, a multithreaded application can suffer from performance problems (the irony!).
 
 Let's take a look at the following code:
-
-> Don't get scared if the code doesn't look familiar, we will explain how new threads are being created in the following section
 
 ```java
 import java.util.Iterator;
@@ -374,55 +391,343 @@ import java.util.List;
 
 public class ChaoticIteration {
     public static void main(String[] args) {
-        List<String> list = List.of("A", "B", "C", "D", "E", "F", "G");
+        List<String> list =
+                List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L");
         Iterator<String> it = list.iterator();
-        Runnable runnable;
         while(it.hasNext()) {
-            // Here we split the main control flow
-            runnable = () -> System.out.print(it.next());
-            new Thread(runnable).start();
+            new Thread(() ->
+                    System.out.print(it.next())
+            ).start();
         }
     }
 }
 ```
 
-It's a "wonderful" example of what could go wrong if we don't take care of the way we're writing our multi-threaded code. After 3 runs, on my machine the results were:
+It's a "wonderful" example of what could go wrong if we don't take care of the way we're writing our multi-threaded code. 
+
+After 3 runs, on my machine the results were:
 
 ```text
-ACDBEFG
-Exception in thread "Thread-7" java.util.NoSuchElementException
+AEDCBFGHIJKL
+Exception in thread "Thread-14" Exception in thread "Thread-11" Exception in thread "Thread-13" java.util.NoSuchElementException
 	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
-	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:10)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:14)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+java.util.NoSuchElementException
+	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:14)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+java.util.NoSuchElementException
+	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:14)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 ```
 
 ```text
-ADCFBEG
-Exception in thread "Thread-7" java.util.NoSuchElementException
+ADCBFEGHIJKL
+Exception in thread "Thread-12" java.util.NoSuchElementException
 	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
-	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:10)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:11)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 ```
 
 ```text
-ADCBFEG
-Exception in thread "Thread-7" java.util.NoSuchElementException
+ACDBEFGGHIJKL
+Exception in thread "Thread-13" Exception in thread "Thread-14" java.util.NoSuchElementException
 	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
-	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:10)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:11)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+java.util.NoSuchElementException
+	at java.base/java.util.ImmutableCollections$ListItr.next(ImmutableCollections.java:247)
+	at ChaoticIteration.lambda$main$0(ChaoticIteration.java:11)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 ```
 
-So not only that each run generated different results `ACDBEFG` != `ADCFBEG` != `ADCBFEG`, but the code constantly fails with a *nice* `RuntimeException`.
+So not only that each run generated different results, but the code fails with a *nice* `RuntimeException` (sometimes!). 
 
-And the results are not surprising. First, there is no guarantee which `Thread` is executed first, so the order in which the list is iterated is different for each run. That's not a bad thing per-se. Don't expect **order** when you are randomly spamming new `Thread`s.
+And the results are not surprising. First, there is no guarantee which `Thread` is executed first, so the order in which the list is iterated is different for each run. That's not a bad thing per-se, just don't expect **order** when you are randomly spamming new `Thread`s.
 
 The `java.util.NoSuchElementException` exception is more problematic. In this case it translates to "sloppy multi-threaded programming". 
 
-The reason is simple:
+The reason is simple: `it.hasNext()` is called, and the loop continues, but in (almost) the same time, another `Thread` consumes the last element (by calling `it.next()`). So when we enter the loop, we are in "an inconsistent state", because the `main Thread` (the one with the loop) "thinks" that there are still elements in the iterator.
 
-- `it.hasNext()` is being constantly called in the main execution `Thread`;
-- `it.next()` on the other hand, is called inside different threads; 
-- So when `it.hasNext()` is called the result is `true` and the loop continues. Immediately after, in a separate thread, `it.next()` is being called, and we reach the end of the `Iterator<String>`. It's too late now, we are inside the loop creating a `Thread` that will soon call `it.next()` on an `Iterator<String>` that reached its end. An exception soon follows.
+The lesson is that not every class from the Java API is thread-safe. Actually most of the classes aren't, so we need to be extra-careful, and read the javadocs. For example, the most common collection classes we use, `HashMap`, `ArrayList`, `HashSet` are not.
+
+> I remember finding out on my own that the `SimpleDateFormat` class is not thread-safe. I also remember how hard was to catch the bug. More about this: [here](https://stackoverflow.com/questions/4021151/java-dateformat-is-not-threadsafe-what-does-this-leads-to).
+
+# What can go wrong ? (PART TWO - Atomicity)
+
+Let's assume we want to implement our own `Counter` class that keeps an internal `int count`:
+
+```java
+public class BrokenCounter {
+    int count = 0;
+
+    public void inc() {
+        count++;
+    }
+}
+```
+
+If we use the `BrokenCounter` in a "controlled", single-threaded environment, everything will work according to the plan:
+
+```java
+final BrokenCounter brokenCounter = new BrokenCounter();
+int numIncrements = 30;
+
+while(numIncrements-->0)
+    brokenCounter.inc();
+
+System.out.println(brokenCounter.count);
+```
+
+The output will always be `30` no matter how many times we run the code.
+
+But happens if we call `inc()` from multi-threaded environment ?
+
+```java
+final BrokenCounter brokenCounter = new BrokenCounter();
+int numIncrements = 30;
+
+while(numIncrements-->0)
+    new Thread(brokenCounter::inc).start();
+
+// ...
+// Code to wait for all the threads from the while loop to finish
+// We will discuss this in the following sections
+// ...
+
+System.out.println(brokenCounter.count);
+```
+
+Chances are, in the majority of cases, we will still obtain `30`. But that's not guaranteed. In an extreme, improbable scenario, the output might even be `1`.
+
+It is easy to assume that incrementing `count` (`count++`) happens in a single *indivisible* operation. But `++` is a classic example of a *read-modify-write* chain of 3 discrete operations.
+
+`count++` is equivalent to `count+=1`, which is equivalent to `count=count+1` which can be further described as 3 operations:
+1. Read the value of `var count` (`READ`)
+2. Compute the value `count+1` (`MODIFY +1`)
+3. Write the value computed at step `MODIFY +1` in `var count` (`WRITE`)
+
+For the CPU the operations `READ`, `MODIFY +1` and `WRITE` are all independent of each other. So the following can happen:
+
+![png]({{site.url}}/assets/images/2021-03-18-a-deep-dive-into-java-concurrency/atomicity.png)
+
+* `Thread 3` is the first to `READ`, `MODIFY +1` and then `WRITE` back the value;
+* `Thread 1` and `Thread 2` step on each other toes. They both `READ` in almost the same time, so the `MODIFY +1` will be performed on the same value (which is `21`).
+* In the end `Thread 2` will override the value already computed in `Thread 1`. The counter will "skip" an update.
+
+# What can wrong ? (PART THREE - Race Conditions)
+
+I am sure you've heard about [Lazy Initialisation](https://en.wikipedia.org/wiki/Lazy_initialization). On short, it's a known tactic to delay/defer the creation of an object (or the calculation of a value) until the first time is needed. 
+
+To accomplish this we usually wrap the (private) value inside an accessor method (e.g.: a getter) that works like a "cache": 
+* If the value is not computed (`==null`), compute it and store in a variable (e.g.: `instance`);
+* Else return the variable (e.g.: `instance`).
+
+The idea behind Lazy Initialisation is used to implement a "popular" design pattern: [The Singleton](https://en.wikipedia.org/wiki/Singleton_pattern#Lazy_initialization).
+
+Normally, without thinking too much of concurrency, we would write our Singleton like:
+
+```java
+import static java.lang.String.format;
+import static java.lang.System.currentTimeMillis;
+
+public class BrokenSingleton {
+
+    private static BrokenSingleton instance;
+    String timestamp;
+
+    public static BrokenSingleton getInstance() {
+        if (null==instance) {
+            instance = new BrokenSingleton();
+        }
+        return instance;
+    }
+
+    public BrokenSingleton() {
+        // It's an expensive object,
+        // needs a few seconds to be initialised
+        try {
+            Thread.sleep(5000l);
+            this.timestamp = format("Object (%s) created at: %s", this, currentTimeMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+```
+
+> Calling `Thread.sleep(5000l)` blocks the current `Thread` for `5000` milliseconds (or `5` seconds). We use this trick to simulate a time-expensive object instantiation.
+
+If we call `BrokenSingleton.getInstance()` multiple times from a "single-threaded" environment, everything should work according to the plan. The same object will be returned every time:
+
+```java
+System.out.println(BrokenSingleton.getInstance().timestamp);
+System.out.println(BrokenSingleton.getInstance().timestamp);
+System.out.println(BrokenSingleton.getInstance().timestamp);
+System.out.println(BrokenSingleton.getInstance().timestamp);
+```
+
+Will have the output:
+
+```text
+Object (BrokenSingleton@65b54208) created at: 1620369341495
+Object (BrokenSingleton@65b54208) created at: 1620369341495
+Object (BrokenSingleton@65b54208) created at: 1620369341495
+Object (BrokenSingleton@65b54208) created at: 1620369341495
+```
+
+But if we call the same method from multiple threads, in almost the same time, we might encounter surprising results:
+
+```java
+new Thread(() -> System.out.println(BrokenSingleton.getInstance().timestamp)).start();
+new Thread(() -> System.out.println(BrokenSingleton.getInstance().timestamp)).start();
+new Thread(() -> System.out.println(BrokenSingleton.getInstance().timestamp)).start();
+new Thread(() -> System.out.println(BrokenSingleton.getInstance().timestamp)).start();
+```
+
+```text
+Object (BrokenSingleton@201642a9) created at: 1620369484024
+Object (BrokenSingleton@187492dc) created at: 1620369484024
+Object (BrokenSingleton@6b39d6b4) created at: 1620369484023
+Object (BrokenSingleton@1d088f6f) created at: 1620369484022
+```
+
+Looking at the output we see 4 different `BrokenSingleton` objects (`201642a9`, `187492dc`, `6b39d6b4`, `1d088f6f`) that are created at various moments in time (`1620369484024`,`1620369484023`, `1620369484022`). 
+
+This is not the desired behavior, and it clearly invalidates the sole-purpose of having a Singleton in the first place.
+
+What is happening is explained in the following diagram:
+
+![png]({{site.url}}/assets/images/2021-03-18-a-deep-dive-into-java-concurrency/singleton.png)
+
+Because a `BrokenSingleton` object is expensive to be created, and the 4 running `Threads` have no idea about what is happening in the *exterior* (meaning, inside other `Threads`), they will see `instance == null`, so they will run `instance = new BrokenSingleton()`.
+
+In a short span of time, we will have a succession of four `BrokenSingleton` objects, each overriding the previous.
+
+This is called [*Race Condition*](https://en.wikipedia.org/wiki/Race_condition).
+
+> A race condition or race hazard is the condition of an electronics, software, or other system where the system's substantive behavior is dependent on the sequence or timing of other uncontrollable events. It becomes a bug when one or more of the possible behaviors is undesirable.
+
+In our case, the uniqueness of `instance` depends on timing: if we call `getInstance()` from various `Threads`, in a short span of time, when `instance` is `null`, we might get into trouble.
+
+Bugs like this are silent in nature because the code doesn't yell `RuntimeException`, and everything happens quietly. Most of the time, it's impossible to reproduce them in isolation, it's all about "bad timing" and the alignment of the stars. And time is not exactly a problem for a long-running production app.
+
+# Taming `Threads`
+
+Because of their "non-deterministic" nature, and without any form of additional control, `Threads` would be "almost" useless to use in real-life scenarios. We wouldn't be able to retrieve a value computed in a `Thread`, we wouldn't be able to make a `Thread` wait for the completion of another, we wouldn't be able to modify a shared variable without the fear of letting things in an inconsistent state, etc. 
+
+But luckily for us, with each Java version, new mechanisms (some more sophisticated than others), were introduced. Some were there from the beginning. 
+
+## The `synchronized` keyword
+
+Before Java 1.5, the `synchronized` keyword was one of the most "powerful" tools in the Java programmer's arsenal for making `Threads` *tame*. 
+
+And don't get me wrong it's still is powerful, just not as popular as it used to be. Simply put, most of the time, we can replace `synchronised` with higher-level `Thread-synchronisation` constructs. But this doesn't mean we should not know about it, and use it when the time is right.
+
+The `synchronized` keyword can be used in two ways:
+- We can mark a method as `synchronised` - `synchronised method`;
+- We can wrap a statement in a `synchronised` code block - `synchronised statement`;
+
+
+
+## The `java.util.concurrent.atomic` package
+
+This package was first introduced in `Java 1.5`, and got some additions in `Java 8`. At the moment I am writing this article it contains the following classes:
+
+![png]({{site.url}}/assets/images/2021-03-18-a-deep-dive-into-java-concurrency/atomicpkg.png)
+
+The idea behind most of those util classes is quite simple: they wrap types on which you can make changes atomically. 
+
+As we discussed in the [What can go wrong ? (PART TWO - Atomicity)](#what-can-go-wrong--part-two---atomicity) section, applying `++` on an `int i` it's "syntactic sugar" for 3 operations that are happening at bytecode level:
+* Read the value of `i`;
+* Computer `i+1`;
+* Write the computed value back to `i`.
+
+This is what we call "read-modify-write" chain of (atomic) operations, and it leads to the inconsistent behavior of our `BrokenCounter` class:
+
+```java
+public class BrokenCounter {
+    int count = 0;
+
+    public void inc() {
+        count++;
+    }
+}
+```
+
+But wrapping our `int count` inside an `AtomicInteger` object solves the potential bug. So, instead of applying `++` on the `int count`, we will call `AtomicInteger::incrementAndGet()` on our new counter. 
+
+The new class will be written as:
+
+```java
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class NotSuchABrokenCounter {
+    AtomicInteger count = new AtomicInteger(0);
+    public void inc() {
+        count.incrementAndGet();
+    }
+}
+```
+
+And calling it from the same multi-threaded environment, will render consistent outputs this time:
+
+```java
+final NotSuchABrokenCounter counter = new NotSuchABrokenCounter();
+int numIncrements = 30;
+
+while(numIncrements-->0) {
+    new Thread(counter::inc).start();
+}
+
+System.out.println(counter.count.get());
+```
+
+Output:
+
+```text
+30
+```
+
+Running the same code, as many times we want, we will always return the same output: `30`. Problem solved!
+
+Another interesting class of the `java.util.concurrent.atomic` package is `AtomicReference<T>`. This one offer the same protection as `AtomicInteger`, but goes beyond `int` and `Integer` values, and can be used in conjunction with any generic type `<T>`.
+
+Let's take a look at the following `Person` class:
+
+```java
+public class Person {
+    int age;
+    public Person(int age) {
+        this.age = age;
+    }
+    public void incrementAge() {
+        this.age++;
+    }
+}
+```
+
+If we call the following code from a single-threaded environment:
+
+```java
+Person person = new Person(20);
+int iterations = 60;
+while (iterations-->0) {
+    person.incrementAge();
+}
+System.out.println(person.age);
+```
+
+As you rightfully assume, the output will always be the same: `80`.
+
+But what happens when more `Threads` are interfering and modifying the same `Person` instance:
+
+```java
+
+```
 
 # References
 
