@@ -59,7 +59,7 @@ int main() {
 
 In the Java world, there's `HashMap`:
 
-```Java
+```java
 import java.util.Map;
 import java.util.HashMap;
 
