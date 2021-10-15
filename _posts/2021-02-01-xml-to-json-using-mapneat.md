@@ -12,7 +12,7 @@ tags:
 
 Following my [previous article](/2021/01/31/hello-world-mapneat), I wanted to expand on the capabilities of the [**mapneat**](https://github.com/nomemory/mapneat) library. 
 
-In this tutorial I am going to show you how can you transform an existing XML source into a/the desired JSON format.
+In this tutorial, I will show you how you can transform an existing XML source into a/the desired JSON format.
 
 Let's start with the following XML structure:
 

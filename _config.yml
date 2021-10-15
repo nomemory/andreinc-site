@@ -1,4 +1,4 @@
-title: "andreinc.net"
+title: "www.andreinc.net"
 title_separator: "|"
 subtitle: "Neat programming blog"
 email: none@none.com
@@ -25,15 +25,12 @@ include: ["_pages"]
 author:
   name: "Andrei Ciobanu"
   avatar: "/assets/images/me.jpg"
-  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest. I love to write open-source software that helps other fellow programmers get things done. My programming languages of choice are Java and Kotlin, but deep inside I know we should re-write everything in C."
+  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest."
   location: "Bucharest"
   links:
     - label: GitHub
       icon: "fab fa-fw fa-github"
       url: "https://github.com/nomemory/mockneat"
-    - label: Bintray
-      icon: "fab fa-fw fa-java"
-      url: "https://bintray.com/bintray/jcenter/mockneat"
     - label: LinkedIn
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/andrei-n-ciobanu-50708611/"

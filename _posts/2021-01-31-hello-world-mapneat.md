@@ -107,14 +107,14 @@ But, if we were to serialise the `User` directly into a `JSON` format, a possibl
 
 Here intervenes **mapneat**. 
 
-The library can work directly on top of the object, and morph it into a (JSON) format of our choosing.
+The library can work directly on top of the object and morph it into a (JSON) format of our choosing.
 
 For example, instead of showing the `User` in the format above, let's say we want to:
-* Remove the `pwd` field and everything related to `creditCards`. We don't want the world know about them;
+* Remove the `pwd` field and everything related to `creditCards`. We don't want the world to know about them;
 * Show only the visited countries, without the visiting date or the id; 
     - In case the user has visited a country multiple times, we show it once;
 * We want to _uppercase_ the `lastName` of the user;
-* Instead of showing the `id` of his friends, we want to retrieve their fullname.
+* Instead of showing the `id` of his friends, we want to retrieve their full name.
 
 The equivalent **mapneat** transformation that performs what we've listed above is the following:
 
@@ -146,7 +146,7 @@ val out = json(fromObject(aRandomUser)) {
 println(out)
 ```
 
-If we were to run the code above, the "morphed" output will look like:
+If we were to run the code above, the "morphed" output is:
 
 ```json
 {
@@ -187,7 +187,7 @@ The next three lines (_Operations_) are discarding the information we don't real
 - "pwd"
 ```
 
-`-` is called the _Delete Operation_ and does exactly what it says, it deletes a node and all of its children.
+`-` is called the _Delete Operation_ and does exactly what it says; it deletes a node and all of its children.
 
 The next operation is also a shift (`*=`):
 
@@ -204,7 +204,7 @@ The next operation is also a shift (`*=`):
 
 We query the source using a [json-path](https://github.com/json-path/JsonPath) expression, and from the `visits` object we select only the `country` names (`"$.visits[*].country"`).
 
-To avoid possible duplications we keep the results into a `Set<String>`.
+To avoid possible duplications, we keep the results into a `Set<String>`.
 
 The next operation:
 
@@ -212,9 +212,9 @@ The next operation:
  "lastName" /= { targetCtx().read<String>("$.lastName").toUpperCase() }
 ```
 
-is called an _Assign Operation_ that normally allows us to retrieve information from a lambda expression. 
+Is called an _Assign Operation_ that normally allows us to retrieve information from a lambda expression. 
 
-In our case the `lastName` information is already in the target (remember `"" *= "$"`), so we read it from the target context, and then we just capitalize the `String`.
+In our case, the `lastName` information is already in the target (remember `"" *= "$"`), so we read it from the target context, and then we just capitalize the `String`.
 
 And the last operation, is an _Assign_ (as we already have the `friends` ids in the target context) that returns the `User`'s friends:
 
@@ -229,8 +229,8 @@ And the last operation, is an _Assign_ (as we already have the `friends` ids in 
 
 # Moving forward
 
-**mapneat** already offers an extensive [documentation](https://github.com/nomemory/mapneat), and that details every supported _Operation_ (there are more!).
+**mapneat** already offers extensive [documentation](https://github.com/nomemory/mapneat), and that details every supported _Operation_ (there are more!).
 
-If this article was an interesting read, check also the [existing examples](https://github.com/nomemory/mapneat-examples).
+If this article was an interesting read, also check the [existing examples](https://github.com/nomemory/mapneat-examples).
 
 
