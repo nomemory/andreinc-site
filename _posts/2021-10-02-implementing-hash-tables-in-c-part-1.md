@@ -542,6 +542,7 @@ If you want to explore this topic more, I suggest you also take a look at the fo
 * [FNV Hash](http://www.isthe.com/chongo/tech/comp/fnv/) - a popular **hash function** designed to be fast while maintaining a low collision rate;
 * [Murmurhash](https://en.wikipedia.org/wiki/MurmurHash) - is a non-cryptographic hash function suitable for general hash-based lookup. Source code [here](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp).
 * [Zobrist Hashing](https://en.wikipedia.org/wiki/Zobrist_hashing) - a **hash function** used in computer programs that play abstract board games, such as chess and Go, to implement transposition tables, a special kind of hash table that is indexed by a board position and used to avoid analyzing the same position more than once.
+* [chunk64](https://github.com/skeeto/scratch/blob/master/misc/chunky64.c#L7) - a **hash function** designed by [Christopher Wellons](https://nullprogram.com/)
 * [Integer hash function](https://gist.github.com/badboy/6267743)
 * [4-byte Integer hashing](http://burtleburtle.net/bob/hash/integer.html)
 
@@ -1021,9 +1022,10 @@ static void ch_hash_grow(ch_hash *hash) {
         while(NULL!=crt) {
             // Finding the new bucket
             new_idx = crt->hash % new_capacity;
-            crt->next = new_buckets[new_idx];
-            new_buckets[new_idx] = crt;
+            ch_node *cur = crt;
             crt = crt->next;
+            cur->next = new_buckets[new_idx];
+            new_buckets[new_idx] = cur;
         }
     }
 
@@ -1193,6 +1195,16 @@ This part is still work in progress.
 
 # References
 
+* [Hash Functions and Hash Tables, Breno Helfstein Moura](https://linux.ime.usp.br/~brelf/mac0499/monografia.pdf)
+* [Crafting Interpreters - Hash Tables, Robert Nystrom](https://craftinginterpreters.com/hash-tables.html)
+* [Hash functions](https://www.cs.hmc.edu/~geoff/classes/hmc.cs070.200101/homework10/hashfuncs.html)
+* [CS240 -- Lecture Notes: Hashing](https://www.cpp.edu/~ftang/courses/CS240/lectures/hashing.htm)
+* [Hash Functions: An Empirical Comparison](https://www.codeproject.com/Articles/32829/Hash-Functions-An-Empirical-Comparison)
+* [CSci 335 Software Design and Analysis - Chapter 5 Hashing and Hash Tables, Steward Weiss](http://www.compsci.hunter.cuny.edu/~sweiss/course_materials/csci335/lecture_notes/chapter05.pdf)
+* [CSE 241 Algorithms and Data Structures - Chosing hash functions](https://classes.engineering.wustl.edu/cse241/handouts/hash-functions.pdf)
+* [Integer hash functions, Thomas Wang](https://gist.github.com/badboy/6267743)
+* [Notes on Data Structures and Programming Techniques, James Aspnes](http://www.cs.yale.edu/homes/aspnes/classes/223/notes.html#hashTables)
+* [The FNV Non-Cryptographic Hash Algorithm](https://datatracker.ietf.org/doc/html/draft-eastlake-fnv-17)
 * [Hash Tables - Open Addressing vs Chaining](https://www.reddit.com/r/algorithms/comments/9bwzj5/hash_tables_open_addressing_vs_chaining/);
 * [Why did the designers of Java preferred chaining over open addressing](https://stackoverflow.com/questions/12019434/why-did-the-language-designers-of-java-preferred-chaining-over-open-addressing-f)
 * [Traits](https://en.wikipedia.org/wiki/Trait_(computer_programming))
