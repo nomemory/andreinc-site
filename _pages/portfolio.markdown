@@ -22,4 +22,5 @@ This section contains links to my "open source" projects and libraries.
 | [nmlib](https://github.com/nomemory/nmlib) | C | A generic C data structures /algortihms library. | 
 | [pysert](https://github.com/nomemory/pysert) | python3 | A python script that can be used to generate data arbitrarly. |
 | [c-generic-pqueue](https://github.com/nomemory/c-generic-pqueue) | C | A generic PQueue implementations using binary heaps. |
+| [chained-hash-table-c](https://github.com/nomemory/chained-hash-table-c) | C | A generic implementation of a hash table in C. |
 | [jasuggest](https://github.com/nomemory/jasuggest) | Java | An auto-suggest library using a Trie as the underlying implementation. |

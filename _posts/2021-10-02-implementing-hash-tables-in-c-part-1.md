@@ -540,6 +540,7 @@ For high(er)-level programming languages (C++, C#, Java, python), the "hashing" 
 If you want to explore this topic more, I suggest you also take a look at the following articles:
 
 * [FNV Hash](http://www.isthe.com/chongo/tech/comp/fnv/) - a popular **hash function** designed to be fast while maintaining a low collision rate;
+* [SipHash](https://github.com/skeeto/scratch/blob/master/siphash/siphash-embed.h#L8)
 * [Murmurhash](https://en.wikipedia.org/wiki/MurmurHash) - is a non-cryptographic hash function suitable for general hash-based lookup. Source code [here](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp).
 * [Zobrist Hashing](https://en.wikipedia.org/wiki/Zobrist_hashing) - a **hash function** used in computer programs that play abstract board games, such as chess and Go, to implement transposition tables, a special kind of hash table that is indexed by a board position and used to avoid analyzing the same position more than once.
 * [chunk64](https://github.com/skeeto/scratch/blob/master/misc/chunky64.c#L7) - a **hash function** designed by [Christopher Wellons](https://nullprogram.com/)
@@ -1112,7 +1113,7 @@ uint32_t ch_hash_numcol(ch_hash *hash) {
 
 #### Further optimizations & Improvements
 
-The current implementation is rather *naive*.
+The current implementation is rather *naive*, so don't judge it to harsh.
 
 If you plan to create something that can be used in a more "productive" environment (read *production*), further improvements and optimizations can be performed on the code:
 
