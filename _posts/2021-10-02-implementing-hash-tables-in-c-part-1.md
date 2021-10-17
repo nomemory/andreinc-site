@@ -17,9 +17,9 @@ tags:
 ---
 
 **NOTE(s)**: 
-Article is in "draft" status. The content was originally written in 2017. 
+The article is in "draft" status. The content was originally written in 2017. 
 
-The indented audience for this article are undergrad students, or seasoned developers who want to refresh their knowledge on the subject.
+The intended audience for this article is undergrad students or seasoned developers who want to refresh their knowledge on the subject.
 
 # Table of contents
 * toc
