@@ -517,13 +517,10 @@ A common *finalizer* found in [MurmurHash](https://en.wikipedia.org/wiki/MurmurH
 
 ```cpp
 uint32_t ch_hash_fmix32(uint32_t h) {
-  h ^= h >> 16;
-  h *= 0x85ebca6b;
-  h ^= h >> 13;
-  h *= 0xc2b2ae35;
-  h ^= h >> 16;
-
-  return h;
+    h ^= h >> 16;
+    h *= 0x3243f6a9U;
+    h ^= h >> 16;
+    return h;
 }
 ```
 
@@ -680,6 +677,14 @@ Think of `ch_key_ops` and `ch_val_ops` as [*traits*](https://en.wikipedia.org/wi
 As an example, the required functions for strings (`chr*`) can be implemented like this:
 
 ```cpp
+//Finalizer
+static uint32_t ch_hash_fmix32(uint32_t h) {
+    h ^= h >> 16;
+    h *= 0x3243f6a9U;
+    h ^= h >> 16;
+    return h;
+}
+
 // Returns the uint32_t hash value of a string computed using djb2
 uint32_t ch_string_hash(const void *data, void *arg) {
     
@@ -691,14 +696,7 @@ uint32_t ch_string_hash(const void *data, void *arg) {
         hash = ((hash << 5) + hash) + c;
     }
 
-    // MurmurHash3 Fializer (mixer)
-    hash ^= hash >> 16;
-    hash *= 0x85ebca6b;
-    hash ^= hash >> 13;
-    hash *= 0xc2b2ae35;
-    hash ^= hash >> 16;
-
-    return hash;
+    return ch_hash_fmix32(hash);
 }
 
 // Returns a copy of the *data string
@@ -1119,7 +1117,7 @@ uint32_t ch_hash_numcol(ch_hash *hash) {
 
 The current implementation is rather *naive*, so don't judge it too harshly. 
 
-The truth is **linked lists** are never used in practice because they are terrible for caching. The CPU is usually caching two things; firstly, it caches the recently accessed memory, and then it tries to predict what memory is being used next. **Linked Lists** nodes are spread randomly in memory, so it's impossible to make predictions for where `*->next` is going to point to.
+The truth is **linked lists** are never used in practice because they are terrible for caching. The CPU is usually caching two things; firstly, it caches the recently accessed memory, and then it tries to predict what memory is being used next. **Linked Lists** nodes are spread randomly in memory, so it's impossible to make predictions for where `*->next` is going to point to. 
 
 So, if you plan to create something that can be used in a more "productive" environment (read *production*), further improvements, and optimizations can be performed on the code:
 
