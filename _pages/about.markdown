@@ -21,7 +21,9 @@ I consider myself primarily a Java guy, but I have a soft spot for C and Kotlin.
 
 I prefer using Apple computers for programming, but in the past, I was an active member of the Ubuntu community. My IDE of choice is IntelliJ, and my favourite text editor is Visual Code, replacing Atom last year.
 
-Other than programming, I tend to keep myself occupied with chess and music... and literature... and table tennis.
+Most of my career was spent doing backend development with Spring. I am no stranger to databases (Oracle, MySql, MongoDb, Elasticsearch, etc.)
+ 
+Other than programming, I tend to keep myself occupied with chess and music... and literature... and table tennis. 
 
 My favorite Chess opening as White is Ruy Lopez, as as black is the French Opening or the Semi-slav. 
 
@@ -31,6 +33,5 @@ When it comes to music I keep an eye on the prog-rock scene, without being prog-
 
 I don't have a favorite book, but I do have some favorite writers: [Herbert](https://en.wikipedia.org/wiki/Frank_Herbert) and [Lem](https://en.wikipedia.org/wiki/Stanis%C5%82aw_Lem).
 
-Other than Romanian, I can speak English and French (medium level). A
-
+Other than Romanian, I can speak English and French (medium level).
 Thank you for stopping by!
