@@ -16,8 +16,10 @@ tags:
 - "division hashing"
 ---
 
-**NOTE**: 
-Article is in "draft" status. The content was originally written in 2017.
+**NOTE(s)**: 
+Article is in "draft" status. The content was originally written in 2017. 
+
+The indented audience for this article are undergrad students, or seasoned developers who want to refresh their knowledge on the subject.
 
 # Table of contents
 * toc
@@ -25,7 +27,7 @@ Article is in "draft" status. The content was originally written in 2017.
 
 # Code
 
-If you don't want to read the article, and you just want to jump directly into the code:
+If you don't want to read the article, and you just want to jump directly into [the code](https://github.com/nomemory/chained-hash-table-c):
 ```
 git clone git@github.com:nomemory/chained-hash-table-c.git
 ```
@@ -844,6 +846,8 @@ ch_hash *ch_hash_new(ch_key_ops k_ops, ch_val_ops v_ops) {
 }
 ```
 
+*Note*: using `exit(EXIT_FAILURE);` is not ideal, and it's not a good practice when you are writing libraries you want to share with the public. Basically, you are telling the program to **stop**, without giving it any chance to do some cleaning first. Don't this if you plan to make your own **hash table** library and share it to the public.
+
 The code for `ch_hash_free` is:
 
 ```cpp
@@ -1113,18 +1117,25 @@ uint32_t ch_hash_numcol(ch_hash *hash) {
 
 #### Further optimizations & Improvements
 
-The current implementation is rather *naive*, so don't judge it to harsh.
+The current implementation is rather *naive*, so don't judge it too harshly. 
 
-If you plan to create something that can be used in a more "productive" environment (read *production*), further improvements and optimizations can be performed on the code:
+The truth is **linked lists** are never used in practice because they are terrible for caching. The CPU is usually caching two things; firstly, it caches the recently accessed memory, and then it tries to predict what memory is being used next. **Linked Lists** nodes are spread randomly in memory, so it's impossible to make predictions for where `*->next` is going to point to.
+
+So, if you plan to create something that can be used in a more "productive" environment (read *production*), further improvements, and optimizations can be performed on the code:
 
 1. Experiment with other data structures than **linked lists**. For example you can use:
-    * Dynamic expanding arrays (a structure similar to [std::vector](https://en.cppreference.com/w/cpp/container/vector)). In this case the memory model will be more cache-friendly.
-    * A variant of a binary tree, that theoretically gives us better search complexity (`O(logn)`) inside the bucket;
+    * Dynamic expanding arrays (a structure similar to [std::vector](https://en.cppreference.com/w/cpp/container/vector)). In this case, the memory model will be more cache-friendly.
+    * A variant of a binary tree that theoretically gives us better search complexity (`O(logn)`) inside the bucket;
 2. Use a better **hash function** for distributing the entries to buckets;
 
 ## Using the **hash table**
 
-Using the **hash table** is quite trivial. Let's take for example the following code:
+The code put together can be found here:
+* [chained_hash.c](https://github.com/nomemory/chained-hash-table-c/blob/main/chained_hash.c)
+* [chained_hash.h](https://github.com/nomemory/chained-hash-table-c/blob/main/chained_hash.h)
+
+
+Using the **hash table** is quite trivial. Let's take for example the following:
 
 ```cpp
 ch_hash *htable = ch_hash_new(ch_key_ops_string, ch_val_ops_string);
@@ -1164,30 +1175,8 @@ Hash Buckets:
 	bucket[7]:
 	bucket[8]:
 		hash=2817274824, key=Athens, value=Greece
-	bucket[9]:
-	bucket[10]:
-	bucket[11]:
-	bucket[12]:
-	bucket[13]:
-	bucket[14]:
-	bucket[15]:
-	bucket[16]:
-	bucket[17]:
-	bucket[18]:
-	bucket[19]:
-	bucket[20]:
-	bucket[21]:
-	bucket[22]:
-	bucket[23]:
-	bucket[24]:
-	bucket[25]:
-	bucket[26]:
-		hash=3656095162, key=Warsaw, value=Poland
-	bucket[27]:
-	bucket[28]:
-	bucket[29]:
-	bucket[30]:
-	bucket[31]:
+// ...
+// and so on
 ```
 
 ## Open Addressing

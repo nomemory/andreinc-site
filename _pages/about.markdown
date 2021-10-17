@@ -19,17 +19,14 @@ I've started programming as a kid, in [BASIC], using some [of those](https://muz
 
 I consider myself primarily a Java guy, but I have a soft spot for C and Kotlin. I can also *speak* python and start conversations in C++ (although the natives accuse me of having a thick foreign accent).
 
-Other than programming, I tend to keep myself occupied with chess and music... and literature... and table tennis.
-
-My favorite Chess opening as White is Ruy Lopez, as as black is the French Opening or the Semi-slav. 
+Other than programming, I tend to keep myself occupied with chess and music... and literature... and table tennis. 
 
 When it comes to music I keep an eye on the prog-rock scene, without being prog-rock snob (if that's even possible). If I am to believe Spotify those are most my listened artists:
-
 
 ![png]({{site.url}}/assets/images/about/artists.png){:height="50%" width="50%"} 
 
 I don't have a favorite book, but I do have some favorite writers: [Herbert](https://en.wikipedia.org/wiki/Frank_Herbert) and [Lem](https://en.wikipedia.org/wiki/Stanis%C5%82aw_Lem). 
 
-Other than Romanian, I can speak English and French. 
+Other than Romanian, I can speak English and French.
 
 Thank you for stopping by!
