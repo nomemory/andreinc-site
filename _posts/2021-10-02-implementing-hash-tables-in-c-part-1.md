@@ -8,7 +8,8 @@ categories:
 tags:
 - "hashing"
 - "hash"
-- "hashtables"
+- "hash-table"
+- "hash-tables"
 - "hashmap"
 - "hash functions"
 - "djb2"
@@ -21,9 +22,9 @@ The article is in "draft" status. The content was originally written in 2017.
 
 The intended audience for this article is undergrad students or seasoned developers who want to refresh their knowledge on the subject.
 
-The code should be compiled with the `C99` flag.
+The code needs to be compiled with the `C99` flag.
 
-The reader should already be familiar with C (pointers, pointer functions, macros, memory management), and basic data sturctures knowledge (e.g.: arrays, linked lists and binary trees).
+The reader should already be familiar with C (pointers, pointer functions, macros, memory management) and basic data structures knowledge (e.g., arrays, linked lists, and binary trees).
 
 # Table of contents
 * toc
@@ -40,7 +41,7 @@ git clone git@github.com:nomemory/chained-hash-table-c.git
 
 > Outside the domain of computers, the word **hash** means to **chop**/**mix** something. 
 
-In Computer Science, a *hash table* is a fundamental data structure that associates a **set of keys** with a **set of values**. Each pair `<key, value>` is an entry in our hashtable. Given a **key**, we can get the **value**. Not only that, but we can add and remove `<key, value>` pairs whenever it is needed.
+In Computer Science, a *hash table* is a fundamental data structure that associates a **set of keys** with a **set of values**. Each pair `<key, value>` is an entry in our **hash table**. Given a **key**, we can get the **value**. Not only that, but we can add and remove `<key, value>` pairs whenever it is needed.
 
 > Not be confused with [hash trees](https://en.wikipedia.org/wiki/Hash_tree) or [hash lists](https://en.wikipedia.org/wiki/Hash_list). 
 
@@ -161,7 +162,7 @@ Whenever we have two elements $$x_{1}, x_{2} \in X$$ so that $$H(x_{1}) = H(x_{2
 
 In our example we can say that $$H$$ has a **hash collision** for $$x_{1}=Warsaw$$ and $$x_{2}=Athens$$, because $$H(x_{1}) = H(x_{2}) = 4$$.
 
-**Hash Collisions** are not game-breaking per-se, as long as the $$ n(X) > M$$ they might happen. But it's important to understand that a *good* **hash function** creates fewer **hash collisions** than a *bad* one.
+**Hash Collisions** are not game-breaking per se, as long as the $$ n(X) > M$$ they might happen. But it's important to understand that a *good* **hash function** creates fewer **hash collisions** than a *bad* one.
 
 Basically the worst hash function we can write is a function that returns a constant value, so that $$H(x_{1}) = H(x_{2}) = ... = H(x_{n}) = c$$, where $$n = n(X)$$, and $$c \in [0, M)$$. This is just another way of saying that every element $$x \in X$$ will collide with the others.
 
@@ -177,7 +178,7 @@ Picking the proper hash function is a tedious job. It involves a lot of statisti
 * It should be fast to compute;
 
 
-We can talk about "families" of hashing functions. On one hand you have **cryptographic hash functions** that are computationally complex and have to be resistant to [preimage attacks](https://en.wikipedia.org/wiki/Preimage_attack) (that's a topic for another day). Then you have simpler **hash functions** that are suitable to be used to implement **hash tables**:
+We can talk about "families" of hashing functions. On the one hand, you have **cryptographic hash functions** that are computationally complex and have to be resistant to [preimage attacks](https://en.wikipedia.org/wiki/Preimage_attack) (that's a topic for another day). Then you have simpler **hash functions** that are suitable to be used to implement **hash tables**:
 - Cryptographic hash functions;
 - All-around / general functions used for **hash table** implementations:
   - [Division hashing](#division-hashing);
@@ -286,13 +287,13 @@ bucket[2] has 499190 elements
 bucket[3] has 0 elements
 ```
 
-We see that values `1` and `3` are never used, which is unfortunate, but a normal consequence normal of the way our input was constructed. If all the input numbers are even, then their remainder is either `0` or `2`.
+We see that values `1` and `3` are never used, which is unfortunate, but an expected consequence of how the input is constructed. If all the input numbers are even, then their remainder is either `0` or `2`.
 
 Mathematically we can prove there's not a single $$x_{i} \in X \subset N $$, for our function $$H_{division}(x)=x \mod 4$$, where $$H : X \rightarrow [0, 4)$$, so that $$H_{division}(x_{i})=1$$ or $$H_{division}(x_{i})=3$$.  
 
-So this means our function is not so good after all because it's extremely sensitive to "input patterns" ?
+So this means our function is not so good after all because it's extremely sensitive to "input patterns"?
 
-Well the answer is not that simple, but what's for sure is that changing `M=4` to `M=7` will render different results.
+The answer is not that simple, but what's for sure is that changing `M=4` to `M=7` will render different results.
 
 This time, the output will be:
 
@@ -492,7 +493,7 @@ So, our expression `hash = ((hash << 5) + hash) + c` is equivalent to `hash = (h
 
 This is **not** just a fancy way of doing things. Historically speaking, most CPUs were performing bitshifts faster than multiplication or division. They still do.
 
-In modern times, modern compilers can perform all kinds of optimizations, including this one. So it's up to you to decide if making things harder to read is worth it. Also some benchmarking is recommended. 
+In modern times, modern compilers can perform all kinds of optimizations, including this one. So it's up to you to decide if making things harder to read is worth it. Again, some benchmarking is recommended. 
 
 ### sdbm
 
@@ -671,13 +672,13 @@ typedef struct ch_val_ops_s {
 The two types, `ch_key_ops` and `ch_val_ops` are simple structures (`struct`) used to group functions specific to the data inserted in the **hash table**.  As we previously stated, it's impossible to think of all the possible combinations of keys/pairs and their types, so we let the user supply us with the truth.
 
 
-> In case the above code is confusing, please refer to the following article: [Function pointers](https://en.wikipedia.org/wiki/Function_pointer); it will explain you in great detail how we can pass functions around through "pointers". 
+> In case the above code is confusing, please refer to the following article: [Function pointers](https://en.wikipedia.org/wiki/Function_pointer); it will explain to you in great detail how we can pass functions around through "pointers". 
 
 > It's funny to think C had its first functional programing feature implemented decades before Java...
 
 Think of `ch_key_ops` and `ch_val_ops` as [*traits*](https://en.wikipedia.org/wiki/Trait_(computer_programming)), bits of logic that are external to the **hash table** itself, but by defining them, we are creating a simple contract between our structure and the data we are inserting:
 
-> Look, if you want to add a `chr*` as a `key` in our **hash table**, please tell us first how do you: compute it's hash, copy it and free the memory. Our table will do the heavy work for you, but first, we need to know this !?
+> Look, if you want to add a `chr*` as a `key` in our **hash table**, please tell us first how do you: compute its hash, copy it, and free the memory. Our table will do the heavy work for you, but first, we need to know this !?
 
 As an example, the required functions for strings (`chr*`) can be implemented like this:
 
@@ -803,13 +804,11 @@ The `ch_hash_grow(ch_hash *hash)` function it's not defined as part of the inter
 
 Another function that's not exposed in our (public) interface is: `ch_node* ch_hash_get_node(ch_hash*, const void*)`. This one is used to check if a node exists or not. In case it exists, it retrieves the node. Otherwise, it returns `NULL`.
 
-The reason we have two functions for retrieving data: 
+The reason we have two functions for retrieving data is simple: 
 * `void* ch_hash_get(ch_hash *hash, const void *k);` (public)
 * `ch_node* ch_hash_get_node(ch_hash *hash, const void *key)` (private)
 
-is simple. `ch_hash_get_node` works on an internal structure that we don't want to expose: `ch_node publicly`. 
-
-Internally `ch_hash_get` will use `ch_hash_get_node`.
+`ch_hash_get_node` works on a structure (`ch_node`) that is internal for our implementation, while `ch_hash_get` will use `ch_hash_get_node` to retrieve the actual value.
 
 #### Creating/Destroying a **hash table**
 
@@ -849,7 +848,7 @@ ch_hash *ch_hash_new(ch_key_ops k_ops, ch_val_ops v_ops) {
 }
 ```
 
-*Note*: using `exit(EXIT_FAILURE);` is not ideal, and it's not a good practice when you are writing libraries you want to share with the public. Basically, you are telling the program to **stop**, without giving it any chance to do some cleaning first. Don't this if you plan to make your own **hash table** library and share it to the public.
+*Note*: using `exit(EXIT_FAILURE);` is not ideal, and it's not a good practice when you are writing libraries you want to share with the public. Basically, you are telling the program to **stop**, without giving it any chance to do some cleaning first. Don't do this if you plan to make your own **hash table** library and share it with a larger audience.
 
 The code for `ch_hash_free` is:
 
@@ -984,19 +983,19 @@ void ch_hash_put(ch_hash *hash, const void *k, const void *v) {
 }
 ```
 
-`ch_hash_grow` is an internal method (not exposed in the public API) responsible for scaling up the the number of buckets (`hash->buckets`) based on the number of elements contained in the table (`hash->size`).
+`ch_hash_grow` is an internal method (not exposed in the public API) responsible for scaling up the number of buckets (`hash->buckets`) based on the number of elements contained in the table (`hash->size`).
 
 `ch_hash_grow` allocates memory for a new array `ch_node **new_buckets`, and then re-hashes all the elements from the *old* array (`hash->buckets`) by projecting them in the *new buckets*.
 
 In regards to this, 3 constants are being used:
 
 ```cpp
-#define CH_HASH_CAPACITY_INIT (31)
+#define CH_HASH_CAPACITY_INIT (32)
 #define CH_HASH_CAPACITY_MULT (2)
 #define CH_HASH_GROWTH (1)
 ```
 
-`CH_HASH_CAPACITY_INIT` is the initial size of the array (`hash->buckets`). And because we've decided to use [**division hashing**](#division-hashing) for determining the *buckets*, it is a prime number: `31`.
+`CH_HASH_CAPACITY_INIT` is the initial size of the array (`hash->buckets`). 
 
 `CH_HASH_CAPACITY_MULT` is the growth multiplier: `hash->capacity *= CH_HASH_CAPACITY_MULT`. Normally, it would've been better to grow to a bigger prime number (because of **division hashing**), but that would've been more complicated to implement in the code.
 
@@ -1173,11 +1172,11 @@ Hash Buckets:
 
 The previous implementation is rather *naive*, so don't judge it too harshly. I would be a little concerned if you will use it in practice. 
 
-The *elephant in the room* when it comes to **Linked Lists** is how unfriendly they are when it comes to caching. A **linked list** is good for inserting items (depending on the scenario), but when it comes to iteration and actually reading elements they are not well equipped for current hardware architectures. 
+The *elephant in the room* when it comes to **Linked Lists** is how unfriendly they are to caching. A **linked list** is suitable for inserting items (depending on the scenario). Still, they are not well equipped for current hardware architectures, especially when it comes to iteration and reading elements. 
 
-CPUs are usually looking to cache two things: the recently accessed memory, and then it tries to predict which memory will be used next. With **linked lists** data is not contiguous, nodes are somewhat scattered (depends also on the `malloc()`), so calling `node->next` might generate a few cache-misses. 
+CPUs are usually looking to cache two things: the recently accessed memory, and then it tries to predict which memory will be used next. For **linked lists**, the data is not contiguous; nodes are somewhat scattered (also depends on the `malloc()` implementation), so calling `node->next` might be subject to cache misses. 
 
-So what if we plan to use a "self-expanding" array instead of a **linked list**. When I say self-expanding array I am thinking something akin to C++'s `std::vector`, or Java's `ArrayList`.  
+So what if we plan to use a "self-expanding" array instead of a **linked list**. When I say self-expanding array, I am thinking something akin to C++'s `std::vector` or Java's `ArrayList`.  
 
 The number of *cache misses* will decrease, but we will need to grow the array; `realloc` is expensive.
 
@@ -1190,7 +1189,7 @@ Visually our new **hash table** will look like this:
 ### Writing a `vector`-like structure for our buckets: `ch_vect`
 
 #### The model
-Implementing a `vector`-like structure is straight-forward. We will use the same approach as before to achieve some sort of *genericity* (is this a word?!) as before, but this time we will keep the interface and the model as simple as possible.
+Implementing a `vector`-like structure is straightforward. We will use the same approach as before to achieve *genericity* (is this a word?!) as before, but we will keep the interface and the model as simple as possible this time.
 
 Each of our buckets will be a *vector*, with the following internal structure:
 
@@ -1207,13 +1206,13 @@ typedef struct ch_vect_s {
 
 The `capacity` is the actual memory allocated for the `ch_vect` vector internal `ch_vect->array`. This may, or may be not fully used.
 
-The `size` is the actual number of elements in the the `ch_vect`. It's the actual length we use for iteration.
+The `size` is the actual number of elements in the `ch_vect`. It's the exact length we use for iteration (`i<vect->size`).
 
 `VECT_INIT_CAPACITY` represents the initial `capacity` for the `ch_vect`.
 
 `VECT_GROWTH_MULTI` is the multiplicator the `ch_vect->array`. Whenever we are about to remain without space, we perform another allocation of size `VECT_GROWTH_MULTI * ch_vect->capacity`. 
 
-For `VECT_GROWTH_MULTI` is usually a good idea to have a value in the `[1, 2]` interval. For simplicity we've picked `2`, but there's a risk our `array` will grow faster than it's needed; doubling it's size every time it's needed is not the best idea. 
+The value of `VECT_GROWTH_MULTI` is ideally a number in the `[1, 2]` interval. For simplicity we've picked `2`, but there's a risk our `array` will grow faster than it's needed; doubling its `size` every time might be an exaggeration. 
 
 #### The interface
 
@@ -1230,7 +1229,7 @@ void ch_vect_append(ch_vect *vect, void *data);
 
 `ch_vect_new` is the constructor-like function. It accepts only a parameter which is the initial `ch_vect->capacity`.
 
-`ch_vect_newdefault` it would've been the overloaded `ch_vect_new` method that uses `capacity=VECT_INIT_CAPACITY` as the default param value. Unfortunately C doesn't support [function overloading](https://en.wikipedia.org/wiki/Function_overloading), so we had to give it another name.
+`ch_vect_newdefault` it would've been the overloaded `ch_vect_new` method that uses `capacity=VECT_INIT_CAPACITY` as the default param value. Unfortunately, C doesn't support [function overloading](https://en.wikipedia.org/wiki/Function_overloading), so we had to give it another name.
 
 `ch_vect_free` is the destructor-like function. It only de-allocates the memory of the structure itself, but not for the data.
 
@@ -1369,28 +1368,30 @@ As you can see only the type of the `buckets` changes: `ch_node **buckets` vs. `
 
 The interface will remain identical as well. 
 
-For the actual methods, we are going to keep 90% of the code from the previous implementation. But, instead of using a `while` loop for iterating in the **linked list**, we will use a `for` loop for iterating through the **dynamically-expanding array** (`ch_vect`) - the bucket. 
+For the actual methods, we are going to keep 90% of the code from the previous implementation. But, instead of using a `while` loop for iterating through the **linked list**,  a `for` loop will be used for iterating through the **dynamically-expanding array** (`ch_vect`). 
 
-If you are curious about the changes and the implementation of `ch_hashv`, you can take a look at the code directly on github:
+In case you are curious about the changes and the implementation of `ch_hashv`, you can take a look at the code directly on [github](https://github.com/nomemory/chained-hash-table-c):
 
-- chained_hashv.c 
-- chained_hash.h
-- ch_vect.h
-- ch_vect.c
+- [chained_hashv.c](https://github.com/nomemory/chained-hash-table-c/blob/main/chained_hashv.c) 
+- [chained_hash.h](https://github.com/nomemory/chained-hash-table-c/blob/main/chained_hashv.h)
+- [ch_vect.c](https://github.com/nomemory/chained-hash-table-c/blob/main/vect.c)
+- [ch_vect.h](https://github.com/nomemory/chained-hash-table-c/blob/main/vect.h)
 
 ## Separate Chaining (Red Black Trees optimization)
 
-From a practical perspective, the `ch_hashv` improves the read times for the **hash table** as it reduces considerably the number of cache misses introduced by the use of **linked lists**.
+From a practical perspective, the `ch_hashv` improves the read times for the **hash table** as it reduces the number of *cache misses* introduced by our use of **linked lists**.
 
-But from a theoretical perspective searching in a bucket is still `O(N)`, were `N` is the number of elements in the bucket. So, how can we improve the reads further (`ch_hash_get()`) ?
+But from a theoretical perspective searching in a bucket is still `O(N)`, where `N` is the number of elements in the bucket. So, how can we improve the reads further (`ch_hash_get()`)?
 
-In this regard, we can introduce another optimisation: 
+In this regard, we can introduce another optimization: 
 - We can measure the number of colliding elements inserted in a bucket;
-- If this number increases, after a certain threshold we can "morph" our bucket into a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). 
+- If this number increases, after a certain threshold, we can "morph" our bucket into a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). 
+
+Without getting into many details, **red-black trees** are binary search trees are self-balancing themselves during the insertion and deletion of new elements. This means that searching performance doesn't degenerate, and it will remain in logarithmic bounds.
 
 ![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/hashtablerbtree.png)
 
-This article is not about red-black tress (maybe for another day), but what's important to know is that searching for an element in a **red-black tree** is O(logn), which is amazing.
+This is the route the creators of Java took when `HashMap` was implemented.
 
 ## Open Addressing
 
