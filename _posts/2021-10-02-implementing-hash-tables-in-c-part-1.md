@@ -21,6 +21,10 @@ The article is in "draft" status. The content was originally written in 2017.
 
 The intended audience for this article is undergrad students or seasoned developers who want to refresh their knowledge on the subject.
 
+The code should be compiled with the `C99` flag.
+
+The reader should already be familiar with C (pointers, pointer functions, macros, memory management), and basic data sturctures knowledge (e.g.: arrays, linked lists and binary trees).
+
 # Table of contents
 * toc
 {:toc}
@@ -572,7 +576,7 @@ Each strategy has its own PROs and CONs. For example, the creators of Java prefe
 
 *Open Addressing* is more complex to implement, but if we keep **hash collisions** at bay, it's very *cache-friendly*.
 
-## Separate Chaining 
+## Separate Chaining (using Linked Lists)
 
 To better understand how *Separate Chaining* works, let's represent in a visual way a **hash table** that associates the capitals of Europe (the keys) to their corresponding countries (the values):
 
@@ -652,6 +656,7 @@ typedef struct ch_key_ops_s {
     uint32_t (*hash)(const void *data, void *arg);
     void* (*cp)(const void *data, void *arg);
     void (*free)(void *data, void *arg);
+    bool (*eq)(const void *data1, const void *data2, void *arg);
     void *arg;
 } ch_key_ops;
 
@@ -733,7 +738,7 @@ Sadly, `void*` is not the `T` we know from *C++ Templates* or *Java Generics*. N
 And then, what it remains is two keep two instances around (one for keys and one for values):
 
 ```c
-ch_key_ops ch_key_ops_string = { ch_string_hash, ch_string_cp, ch_string_free, NULL};
+ch_key_ops ch_key_ops_string = { ch_string_hash, ch_string_cp, ch_string_free, ch_string_eq, NULL};
 ch_val_ops ch_val_ops_string = { ch_string_cp, ch_string_free, ch_string_eq, NULL};
 ```
 
@@ -909,7 +914,7 @@ static ch_node* ch_hash_get_node(ch_hash *hash, const void *key) {
     while(NULL!=crt) {
         // Iterated through the linked list found at the bucket 
         // to determine if the element is present or not
-        if (crt->hash == h && hash->val_ops.eq(crt->key, key, hash->val_ops.arg)) {
+        if (crt->hash == h && hash->key_ops.eq(crt->key, key, hash->val_ops.arg)) {
             result = crt;
             break;
         }
@@ -1113,20 +1118,7 @@ uint32_t ch_hash_numcol(ch_hash *hash) {
 }
 ```
 
-#### Further optimizations & Improvements
-
-The current implementation is rather *naive*, so don't judge it too harshly. 
-
-The truth is **linked lists** are never used in practice because they are terrible for caching. The CPU is usually caching two things; firstly, it caches the recently accessed memory, and then it tries to predict what memory is being used next. **Linked Lists** nodes are spread randomly in memory, so it's impossible to make predictions for where `*->next` is going to point to. 
-
-So, if you plan to create something that can be used in a more "productive" environment (read *production*), further improvements, and optimizations can be performed on the code:
-
-1. Experiment with other data structures than **linked lists**. For example you can use:
-    * Dynamic expanding arrays (a structure similar to [std::vector](https://en.cppreference.com/w/cpp/container/vector)). In this case, the memory model will be more cache-friendly.
-    * A variant of a binary tree that theoretically gives us better search complexity (`O(logn)`) inside the bucket;
-2. Use a better **hash function** for distributing the entries to buckets;
-
-## Using the **hash table**
+### Using the **hash table**
 
 The code put together can be found here:
 * [chained_hash.c](https://github.com/nomemory/chained-hash-table-c/blob/main/chained_hash.c)
@@ -1177,9 +1169,232 @@ Hash Buckets:
 // and so on
 ```
 
+## Separate Chaining (Dynamically growing array buckets)
+
+The previous implementation is rather *naive*, so don't judge it too harshly. I would be a little concerned if you will use it in practice. 
+
+The *elephant in the room* when it comes to **Linked Lists** is how unfriendly they are when it comes to caching. A **linked list** is good for inserting items (depending on the scenario), but when it comes to iteration and actually reading elements they are not well equipped for current hardware architectures. 
+
+CPUs are usually looking to cache two things: the recently accessed memory, and then it tries to predict which memory will be used next. With **linked lists** data is not contiguous, nodes are somewhat scattered (depends also on the `malloc()`), so calling `node->next` might generate a few cache-misses. 
+
+So what if we plan to use a "self-expanding" array instead of a **linked list**. When I say self-expanding array I am thinking something akin to C++'s `std::vector`, or Java's `ArrayList`.  
+
+The number of *cache misses* will decrease, but we will need to grow the array; `realloc` is expensive.
+
+This "optimization" will improve the read times, but it will increase (significantly) the writes. 
+
+Visually our new **hash table** will look like this:
+
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/hashtablevectors.png)
+
+### Writing a `vector`-like structure for our buckets: `ch_vect`
+
+#### The model
+Implementing a `vector`-like structure is straight-forward. We will use the same approach as before to achieve some sort of *genericity* (is this a word?!) as before, but this time we will keep the interface and the model as simple as possible.
+
+Each of our buckets will be a *vector*, with the following internal structure:
+
+```cpp
+#define VECT_INIT_CAPACITY (1<<2)
+#define VECT_GROWTH_MULTI (2)
+
+typedef struct ch_vect_s {
+	size_t capacity;
+	size_t size;
+	void **array;
+} ch_vect;
+```
+
+The `capacity` is the actual memory allocated for the `ch_vect` vector internal `ch_vect->array`. This may, or may be not fully used.
+
+The `size` is the actual number of elements in the the `ch_vect`. It's the actual length we use for iteration.
+
+`VECT_INIT_CAPACITY` represents the initial `capacity` for the `ch_vect`.
+
+`VECT_GROWTH_MULTI` is the multiplicator the `ch_vect->array`. Whenever we are about to remain without space, we perform another allocation of size `VECT_GROWTH_MULTI * ch_vect->capacity`. 
+
+For `VECT_GROWTH_MULTI` is usually a good idea to have a value in the `[1, 2]` interval. For simplicity we've picked `2`, but there's a risk our `array` will grow faster than it's needed; doubling it's size every time it's needed is not the best idea. 
+
+#### The interface
+
+When it comes to the interface, for simplicity, we will limit ourselves in implementing only the functions we are going to use:
+
+```cpp
+ch_vect* ch_vect_new(size_t capacity);
+ch_vect* ch_vect_new_default();
+void ch_vect_free(ch_vect *vect);
+void* ch_vect_get(ch_vect *vect, size_t idx);
+void ch_vect_set(ch_vect *vect, size_t idx, void *data);
+void ch_vect_append(ch_vect *vect, void *data);
+```
+
+`ch_vect_new` is the constructor-like function. It accepts only a parameter which is the initial `ch_vect->capacity`.
+
+`ch_vect_newdefault` it would've been the overloaded `ch_vect_new` method that uses `capacity=VECT_INIT_CAPACITY` as the default param value. Unfortunately C doesn't support [function overloading](https://en.wikipedia.org/wiki/Function_overloading), so we had to give it another name.
+
+`ch_vect_free` is the destructor-like function. It only de-allocates the memory of the structure itself, but not for the data.
+
+`ch_vect_get` is used to access an item from the internal array (`ch_vect->array`) at the specified index `idx`.
+
+`ch_vect_set` is used to set the value of an item from the internal array (`ch_vect->array`) at the specified index. 
+
+`ch_vect_append` appends an element at the end of the `ch_vect->array`. In case there's not enough allocated space for it, it allocates a new array. 
+
+It's important to understand there's not a good idea to interact with `ch_vect->array` directly. If you do this, `ch_vect->size` won't be updated, so growth is not guaranteed to work. 
+
+##### Allocating an de-allocating memory
+
+The code is definitely standard for both the constructor and the destructor:
+
+```cpp
+ch_vect* ch_vect_new(size_t capacity) {
+    ch_vect *result;
+    result = malloc(sizeof(*result));
+    if (NULL==result) {
+        fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);  
+    }
+    result->capacity = capacity;
+    result->size = 0;
+    result->array = malloc(result->capacity * sizeof(*(result->array)));
+    if (NULL == result->array) {
+        fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);  
+    }
+    return result;
+}
+
+ch_vect* ch_vect_new_default() {
+    return ch_vect_new(VECT_INIT_CAPACITY);
+}
+
+void ch_vect_free(ch_vect *vect) {
+    free(vect->array);
+    free(vect);
+}
+```
+
+> It's a bad idea to call `exit(EXIT_FAILURE)` if you are building a library. You need to give the program a chance to recover from an error. So don't do it in practice.  
+
+##### Reading and setting data
+
+Again, there's nothing fancy.
+
+```cpp
+void* ch_vect_get(ch_vect *vect, size_t idx) {
+    if (idx >= vect->size) {
+        fprintf(stderr, "cannot get index %lu from vector.\n", idx);
+        exit(EXIT_FAILURE);  
+    }   
+    return vect->array[idx];
+}
+
+void ch_vect_set(ch_vect *vect, size_t idx, void *data) {
+    if (idx >= vect->size) {
+        fprintf(stderr, "cannot get index %lu from vector.\n", idx);
+        exit(EXIT_FAILURE);  
+    }
+    vect->array[idx] = data;
+}
+```
+
+##### Appending an element
+
+Appending a new element to the `ch_vect` should take into consideration the following:
+- It actual `size` of the vector is equal or becomes bigger than the `capacity` we need to:
+    - Compute a `new_capacity`;
+        - Before computing it, take care of potential overflows;
+    - Allocate a new array `new_array` with `new_capacity`;
+    - Copy all elements from the old array `ch_vect->array` to the new array `new_array`;
+    - Free the memory associated with the old array `ch_vect->array`;
+    - Update the `ch_vect->array` so it points to the `new_array`. 
+
+The equivalent code for what has been described above is the following:
+
+
+```cpp
+void ch_vect_append(ch_vect *vect, void *data) {
+    if (!(vect->size < vect->capacity)) { 
+        // Check for a potential overflow
+        uint64_t tmp = (uint64_t) VECT_GROWTH_MULTI * (uint64_t) vect->capacity;
+        if (tmp > SIZE_MAX) {
+            fprintf(stderr, "size overflow\n");
+            exit(EXIT_FAILURE);
+        }
+        size_t new_capacity = (size_t) tmp;
+        void *new_array = malloc(new_capacity * sizeof(*(vect->array)));
+        if (NULL==new_array) {
+            fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+            exit(EXIT_FAILURE);  
+        }
+        memcpy(new_array, vect->array, vect->size * sizeof(*(vect->array)));
+        free(vect->array);
+        vect->array = new_array;
+        vect->capacity = new_capacity;
+    }
+    vect->array[vect->size] = data;
+    vect->size++;
+}
+```
+
+`SIZE_MAX` is a C99 macro that describes the maximum possible value for a `size_t` type. 
+
+### Updating the existing `ch_hash` structure to use `ch_vect` for buckets
+
+Our initial `ch_hash` structure from the previous chapter [Separate Chaining (using Linked Lists)](#separate-chaining-using-linked-lists), and its associated interface won't suffer a lot of changes. 
+
+We will simply create another version, and to make a distinction between the two we will name it: `ch_hashv` (with `v` from `v`ector at the end):
+
+```cpp
+typedef struct ch_hashv_s {
+    size_t capacity;
+    size_t size;
+    ch_vect **buckets;
+    ch_key_ops key_ops;
+    ch_val_ops val_ops;
+} ch_hashv;
+
+// VERSUS
+
+typedef struct ch_hash_s {
+    size_t capacity;
+    size_t size;
+    ch_node **buckets;
+    ch_key_ops key_ops;
+    ch_val_ops val_ops;
+} ch_hash;
+```
+
+As you can see only the type of the `buckets` changes: `ch_node **buckets` vs. `ch_vect **buckets`.
+
+The interface will remain identical as well. 
+
+For the actual methods, we are going to keep 90% of the code from the previous implementation. But, instead of using a `while` loop for iterating in the **linked list**, we will use a `for` loop for iterating through the **dynamically-expanding array** (`ch_vect`) - the bucket. 
+
+If you are curious about the changes and the implementation of `ch_hashv`, you can take a look at the code directly on github:
+
+- chained_hashv.c 
+- chained_hash.h
+- ch_vect.h
+- ch_vect.c
+
+## Separate Chaining (Red Black Trees optimization)
+
+From a practical perspective, the `ch_hashv` improves the read times for the **hash table** as it reduces considerably the number of cache misses introduced by the use of **linked lists**.
+
+But from a theoretical perspective searching in a bucket is still `O(N)`, were `N` is the number of elements in the bucket. So, how can we improve the reads further (`ch_hash_get()`) ?
+
+In this regard, we can introduce another optimisation: 
+- We can measure the number of colliding elements inserted in a bucket;
+- If this number increases, after a certain threshold we can "morph" our bucket into a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). 
+
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/hashtablerbtree.png)
+
+This article is not about red-black tress (maybe for another day), but what's important to know is that searching for an element in a **red-black tree** is O(logn), which is amazing.
+
 ## Open Addressing
 
-This part is still work in progress.
+This part is still a work in progress.
 
 # References
 
