@@ -560,11 +560,15 @@ In a **hash table**, data is stored in an array (not surprisingly), where each p
 
 The *bucket* is always computed by applying a hash function over a key: $$hash_{function}(key) \rightarrow \text{bucket[<key, value>)]}$$.
 
-Depending on how we plan to tackle potential **hash collisions**, there are two ways to implement a **hash table**:
-* [*Separate Chaining*](#separate-chaining)
+Depending on how we plan to tackle potential **hash collisions**, there are various ways to implement a **hash table**:
+* [*Separate Chaining (using linked lists)*](#separate-chaining-using-linked-lists)
     * Each *bucket* references a [**linked list**](https://en.wikipedia.org/wiki/Linked_list) that contains *none*, *one* or more `<key, value`> entries;
     * To add a new entry (*PUT*) we compute the bucket (`hash(key)`), and then we append the `<key, value`> to the corresponding **linked list**. If the `key` already exists, we just update the `value`;
     * To identify an entry (*GET*), we compute the *bucket*, traverse the corresponding **linked list** until we find the `key`. 
+* [Separate Chaining (dynamically growing array buckets)](#separate-chaining-dynamically-growing-array-buckets)
+    * Each *bucket* is an array that grows dynamically if needed;
+* [Separate Chaining (red black trees optimization)](#separate-chaining-red-black-trees-optimization)
+    * The *buckets* are being transformed into a *red black tree* if the number of elements contained exceeds a certain threshold.
 * [*Open Addressing*](#open-addressing)
     * There are no **linked lists** involved - there's only one `<key, value>` entry per bucket;
     * In case of collisions, we *probe* the array to find another suitable *bucket* for our entry, and then we add the entry at this new-found *empty* location;
@@ -1229,7 +1233,7 @@ void ch_vect_append(ch_vect *vect, void *data);
 
 `ch_vect_new` is the constructor-like function. It accepts only a parameter which is the initial `ch_vect->capacity`.
 
-`ch_vect_newdefault` it would've been the overloaded `ch_vect_new` method that uses `capacity=VECT_INIT_CAPACITY` as the default param value. Unfortunately, C doesn't support [function overloading](https://en.wikipedia.org/wiki/Function_overloading), so we had to give it another name.
+`ch_vect_newdefault` would've been the overloaded `ch_vect_new` method that uses `capacity=VECT_INIT_CAPACITY` as the default param value. Unfortunately, C doesn't support [function overloading](https://en.wikipedia.org/wiki/Function_overloading), so we had to give it another name.
 
 `ch_vect_free` is the destructor-like function. It only de-allocates the memory of the structure itself, but not for the data.
 
@@ -1387,7 +1391,7 @@ In this regard, we can introduce another optimization:
 - We can measure the number of colliding elements inserted in a bucket;
 - If this number increases, after a certain threshold, we can "morph" our bucket into a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). 
 
-Without getting into many details, **red-black trees** are binary search trees are self-balancing themselves during the insertion and deletion of new elements. This means that searching performance doesn't degenerate, and it will remain in logarithmic bounds.
+Without getting into many details, **red-black trees** are binary search trees are self-balancing themselves during the insertion and deletion of new elements. This means that searching performance doesn't degrade, and it will remain in logarithmic bounds.
 
 ![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/hashtablerbtree.png)
 
