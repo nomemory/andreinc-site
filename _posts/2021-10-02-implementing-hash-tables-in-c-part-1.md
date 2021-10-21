@@ -35,7 +35,7 @@ If you don't want to read the article, and you just want to jump directly into t
 * [Separate Chaining](https://github.com/nomemory/chained-hash-table-c): `git clone git@github.com:nomemory/chained-hash-table-c.git` 
 * [Open Addressing](https://github.com/nomemory/open-adressing-hash-table-c): `git clone git@github.com:nomemory/open-adressing-hash-table-c.git` 
 
-> The code needs to be compiled with the `C99` flag.
+> The code needs to be compiled with the `c99` flag.
 
 # Introduction
 
