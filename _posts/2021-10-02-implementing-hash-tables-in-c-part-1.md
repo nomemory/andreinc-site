@@ -1411,7 +1411,7 @@ To avoid probing for new slots in excess, we need to keep the load factor of the
 
 If we fail to increase the number of buckets, clusters of adjacent elements will form. **Clustering** diminishes the performance of both read and insert operations because we will need to iterate more over more buckets to obtain the correct value.
 
-For example, python's `dict` implementation uses a more advanced variant of **Separate Chaining**. 
+For example, python's `dict` implementation uses a more advanced variant of **Open Adressing**. 
 
 Compared to the **Separate Chaining** approach, cache misses are reduced because we operate on a single contiguous block of memory (the array of buckets). And, as long as we use a decent **hash function**, and the load factor is low, it can lead to superior performance for both read and write operations.
 
