@@ -22,8 +22,6 @@ The article is in "draft" status. The content was originally written in 2017.
 
 The intended audience for this article is undergrad students or seasoned developers who want to refresh their knowledge on the subject.
 
-The code needs to be compiled with the `C99` flag.
-
 The reader should already be familiar with C (pointers, pointer functions, macros, memory management) and basic data structures knowledge (e.g., arrays, linked lists, and binary trees).
 
 # Table of contents
@@ -32,10 +30,12 @@ The reader should already be familiar with C (pointers, pointer functions, macro
 
 # Code
 
-If you don't want to read the article, and you just want to jump directly into [the code](https://github.com/nomemory/chained-hash-table-c):
-```
-git clone git@github.com:nomemory/chained-hash-table-c.git
-```
+If you don't want to read the article, and you just want to jump directly into the code for:
+
+* [Separate Chaining](https://github.com/nomemory/chained-hash-table-c): `git clone git@github.com:nomemory/chained-hash-table-c.git` 
+* [Open Addressing](https://github.com/nomemory/open-adressing-hash-table-c): `git@github.com:nomemory/open-adressing-hash-table-c.git` 
+
+> The code needs to be compiled with the `C99` flag.
 
 # Introduction
 
@@ -257,8 +257,10 @@ bucket[3] has 249984 elements
 
 The results are OK:
 - All input has been evenly distributed between the four values (buckets);
-- The `%` operation is quite efficient (although it's usually two times more expensive than multiplication);
+- The `%` operation is quite efficient (although it's usually a number of times less efficient than multiplication);
 - Collisions are there, but they can be controlled by increasing the value `M` to accommodate the input size.
+
+> Multiplication and division take longer time. Integer multiplication takes 11 clock cycles on  Pentium 4 processors, and 3 - 4 clock cycles on most other microprocessors. Integer division takes 40 - 80 clock cycles, depending on the microprocessor. Integer division is  faster the smaller the integer size on AMD processors, but not on Intel processors. Details  about instruction latencies are listed in manual 4: "Instruction tables". Tips about how to speed up multiplications and divisions are given on page 146 and 147, respectively. ([source](https://www.agner.org/optimize/optimizing_cpp.pdf))
 
 > We call the resulting hashes **buckets**, and once we start implementing the actual hash table, this will make more sense. 
 
@@ -401,7 +403,7 @@ With `hashf_multip2()`, we achieve better diffusion with a price: more operation
 
 ## Hashing strings
 
-Converting non-numerical data to positive integers (`uint3_t`) is quite simple. After all, everything is a sequence of bits. 
+Converting non-numerical data to positive integers (`uint32_t`) is quite simple. After all, everything is a sequence of bits. 
 
 In [K&R Book](https://en.wikipedia.org/wiki/The_C_Programming_Language) (1st ed) a simple (and ineffective) hashing algorithm was proposed: *What if sum the numerical values of all characters from a string?*
 
@@ -1399,7 +1401,33 @@ This is the route the creators of Java took when `HashMap` was implemented.
 
 ## Open Addressing
 
-This part is still a work in progress.
+Compared to **Separate Chaining**, a **hash table** implemented with **Open Adressing** stores only one element per bucket. We handle collisions by inserting the colliding pairs to unused slots in the *bucket* array. 
+
+Finding unused locations in the *bucket* array is achieved through a probing algorithm that determines what the is second (or the *nth*) most *natural* index if the previous ones are occupied. 
+
+The most accessible probing algorithm is called **linear probing**. In case of collision, we iterate over each bucket (starting with the first bucket computed), until we find an empty slot to make the insertion. 
+
+To avoid probing for new slots in excess, we need to keep the load factor of the **hash table** at a satisfactory level, and the hash function should have remarkable diffusion properties. If the load factor (defined as `size/capacity`) reaches a certain threshold, we increase the buckets and perform full-rehashing.
+
+If we fail to increase the number of buckets, clusters of adjacent elements will form. **Clustering** diminishes the performance of both read and insert operations because we will need to iterate more over more buckets to obtain the correct value.
+
+For example, python's `dict` implementation uses a more advanced variant of **Separate Chaining**. 
+
+Compared to the **Separate Chaining** approach, cache misses are reduced because we operate on a single contiguous block of memory (the array of buckets). And, as long as we use a decent **hash function**, and the load factor is low, it can lead to superior performance for both read and write operations.
+
+Unfortunately, in case **clustering**, performance drop will be sudden and hard to mitigate.
+
+### A generic implementation
+
+If you want to jump directly into the code, without reading the explanations you can clone the following [repo](https://github.com/nomemory/open-adressing-hash-table-c):
+
+```
+git@github.com:nomemory/open-adressing-hash-table-c.git
+``` 
+
+Similar to the implementations for **Separate Chaining**, we will use the `void*` pointer to achieve some sort of genericity. 
+
+(TO BE CONTINUED)
 
 # References
 
@@ -1414,6 +1442,6 @@ This part is still a work in progress.
 * [Notes on Data Structures and Programming Techniques, James Aspnes](http://www.cs.yale.edu/homes/aspnes/classes/223/notes.html#hashTables)
 * [The FNV Non-Cryptographic Hash Algorithm](https://datatracker.ietf.org/doc/html/draft-eastlake-fnv-17)
 * [Hash Tables - Open Addressing vs Chaining](https://www.reddit.com/r/algorithms/comments/9bwzj5/hash_tables_open_addressing_vs_chaining/);
+* [Optimizing software in C++, Agner Fog](https://www.agner.org/optimize/optimizing_cpp.pdf)
 * [Why did the designers of Java preferred chaining over open addressing](https://stackoverflow.com/questions/12019434/why-did-the-language-designers-of-java-preferred-chaining-over-open-addressing-f)
 * [Traits](https://en.wikipedia.org/wiki/Trait_(computer_programming))
-
