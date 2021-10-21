@@ -3,3 +3,11 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
+Gemfile.lock
+.gitignore
+.gitignore
+.idea/workspace.xml
+.vscode/settings.json
+.idea/vcs.xml
+.idea/runConfigurations.xml
+assets/images/.DS_Store

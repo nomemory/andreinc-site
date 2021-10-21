@@ -33,7 +33,7 @@ The reader should already be familiar with C (pointers, pointer functions, macro
 If you don't want to read the article, and you just want to jump directly into the code for:
 
 * [Separate Chaining](https://github.com/nomemory/chained-hash-table-c): `git clone git@github.com:nomemory/chained-hash-table-c.git` 
-* [Open Addressing](https://github.com/nomemory/open-adressing-hash-table-c): `git@github.com:nomemory/open-adressing-hash-table-c.git` 
+* [Open Addressing](https://github.com/nomemory/open-adressing-hash-table-c): `git clone git@github.com:nomemory/open-adressing-hash-table-c.git` 
 
 > The code needs to be compiled with the `C99` flag.
 
@@ -54,7 +54,7 @@ printf("%d\n", arr[1]);
 
 If we were to run it, the output would be `200`. As we write `arr[<index>]`, we are *peeping* at the value associated with the given `<index>`, and in our case, the value associated with `1` is `200`. 
 
-In this regard, a hash table can act very similar to an array, as it will allow us to map a **value** to a given **key**. But there's a catch, compared to an array, the **key** can be *everything* - we are not limited to sorted numerical indexes.
+In this regard, a hash table can act very similar to an array, because it will allow us to map a **value** to a given **key**. But there's a catch, compared to an array, the **key** can be *everything* - we are not limited to sorted numerical indexes.
 
 Most modern computer programming languages have a hash table implementation in their standard libraries. The names can be different, but the results are the same.
 
@@ -418,7 +418,7 @@ uint32_t hashf_krlose(char *str) {
 }
 ```
 
-Unfortunately, the output for `hashf_krlose` will be "extremely" sensitive to input patterns. It's easy to apply a little [**Gematria**](https://en.wikipedia.org/wiki/Gematria) ourselves to create input that will return the identical hashes repeatedly again.
+Unfortunately, the output for `hashf_krlose` will be "extremely" sensitive to input patterns. It's easy to apply a little [**Gematria**](https://en.wikipedia.org/wiki/Gematria) ourselves to create input that will repeatedly return identical hashes.
 
 For example:
 
@@ -454,7 +454,7 @@ uint32_t hashf_generic(char* str) {
 
 ### djb2
 
-If `INIT=5381` and `MULT=33`, the function is called **Bernstein hash djb2**, which dates back to 1991. 
+If `INIT=5381` and `MULT=33`, the function is called **Bernstein hash djb2**, which dates 1991. 
 
 > If you find better values, chances are your name will remain in the history books of Computer Science.
 
@@ -474,7 +474,7 @@ uint32_t hashf_djb2_m(char *str) {
 }
 ```
 
-If you look over the internet for **djb2**, you will find a different implementation that uses one clever simple trick. The code would be:
+If you look over the internet for **djb2**, you will find a different implementation that uses one clever, simple trick. The code would be:
 
 ```c
 #define INIT 5381
@@ -577,7 +577,7 @@ Depending on how we plan to tackle potential **hash collisions**, there are vari
     * Various algorithms for "probing" exists; the simplest one is called [*linear probing*](https://en.wikipedia.org/wiki/Linear_probing) - in case of collision, we just jump to the next available *bucket*;
     * Deleting an existing entry is a complex operation.
 
-Each strategy has its own PROs and CONs. For example, the creators of Java preferred to use *Separate Chaining* in their `HashMap` implementation, while the creators of python went with *Open Addressing* for their `dict`. 
+Each strategy has its PROs and CONs. For example, the creators of Java preferred to use *Separate Chaining* in their `HashMap` implementation, while the creators of python went with *Open Addressing* for their `dict`. 
 
 *Separate Chaining* is simpler to implement, and in case we have a high frequency **hash collisions**, performance degradation is more *graceful* - not as exacerbated as for *Open Addressing*. 
 
@@ -900,7 +900,7 @@ So in this regard, we use the `free` functions referenced inside `key_ops` (for 
 
 For the sake of simplicity, the function that translates the `uint32_t` hash of the key to the `[0, hash->capacity)` space is `%`. 
 
-Basically, we will use [**division hashing**](#division-hashing) in our implementation. 
+We will use [**division hashing**](#division-hashing) in our implementation. 
 
 ```cpp
 static ch_node* ch_hash_get_node(ch_hash *hash, const void *key) {
@@ -1370,7 +1370,7 @@ typedef struct ch_hash_s {
 } ch_hash;
 ```
 
-As you can see only the type of the `buckets` changes: `ch_node **buckets` vs. `ch_vect **buckets`.
+As you can see, only the type of the `buckets` changes: `ch_node **buckets` vs. `ch_vect **buckets`.
 
 The interface will remain identical as well. 
 
@@ -1385,7 +1385,7 @@ In case you are curious about the changes and the implementation of `ch_hashv`, 
 
 ## Separate Chaining (Red Black Trees optimization)
 
-From a practical perspective, the `ch_hashv` improves the read times for the **hash table** as it reduces the number of *cache misses* introduced by our use of **linked lists**.
+From a practical perspective, the `ch_hashv` improves the read times for the **hash table** because it reduces the number of *cache misses* introduced by our use of **linked lists**.
 
 But from a theoretical perspective searching in a bucket is still `O(N)`, where `N` is the number of elements in the bucket. So, how can we improve the reads further (`ch_hash_get()`)?
 
@@ -1422,7 +1422,7 @@ Unfortunately, in case **clustering**, performance drop will be sudden and hard 
 If you want to jump directly into the code, without reading the explanations you can clone the following [repo](https://github.com/nomemory/open-adressing-hash-table-c):
 
 ```
-git@github.com:nomemory/open-adressing-hash-table-c.git
+git clone git@github.com:nomemory/open-adressing-hash-table-c.git
 ``` 
 
 Similar to the implementations for **Separate Chaining**, we will use the `void*` pointer to achieve some sort of genericity. 
