@@ -62,9 +62,9 @@ From it, we want to obtain a JSON like:
 }
 ```
 
-Basically we want to morph the source XML into a JSON that:
+We want to morph the source XML into a JSON that:
 * Has two separated nodes for `person` and `visits`;
-* Has the customer's mails grouped into two separated arrays based on their type (`<email type="...">`);
+* Has the customer's emails grouped into two separated arrays based on their type (`<email type="...">`);
 * Has an optional `hasVisistedRomania` field in case Romania appears in the visits list;
 * Has an array containing all the years during which the customer was active (visited countries around the globe) - no duplications accepted
 * Has an array containing all the countries the customer has visited - no duplications allowed
@@ -98,11 +98,11 @@ json(MapNeatSource.fromXml(xml)) {
 
 # Explanation
 
-Under the hood, **mapneat** uses the [JSON-java](https://github.com/stleary/JSON-java) library to automatically convert an XML Source to an intermediary JSON Source.
+Under the hood, **mapneat** uses the [JSON-java](https://github.com/stleary/JSON-java) library to convert an XML Source to an intermediary JSON Source automatically.
 
 This step si done automatically when `MapNeatSource.fromXml(xml)` is invoked.
 
-At this point, any XML information / reference will be "forever" lost. 
+At this point, any XML information/reference will be "forever" lost. 
 
 For debugging purposes, if you want to see how the intermediary JSON source looks like, especially for debugging purposes, you can do the following:
 
@@ -148,7 +148,7 @@ Running the above code on our input XML, would return this:
 }
 ```
 
-This is the actual JSON source, that we morph into our desired format.
+This is the actual JSON source that we morph into our desired format.
 
 Now, looking at the following operations:
 
@@ -161,9 +161,9 @@ Now, looking at the following operations:
 // ....
 ```
 
-First we observe that we can have `json{}` inside `json{}`. 
+First, we observe that we can have `json{}` inside `json{}`. 
 
-This behavior allows us to even merge various sources into a single file.
+This behavior allows us to merge various sources into a single file.
 
 Creating an inner `json{}` inside of an outer `json{}` is done using the assign operation: `/=`.
 
@@ -199,7 +199,7 @@ val df = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
 }
 ```
 
-Iterates of all the visits, extracts the year of the visit, and collects element to a `Set` (in order to avoid duplications).
+Iterates of all the visits extract the year of the visit and collect elements to a `Set` (in order to avoid duplications).
 
 
 

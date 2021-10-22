@@ -10,7 +10,7 @@ tags:
 - "xml-to-json"
 ---
 
-One of the most common scenarios I had to solve during my Software Engineering career is to manipulate data, apply some logic on top, eventually change the way the data is structured, and then serialize it to JSON to be consumed by other systems.
+One of the most common scenarios I had to solve during my Software Engineering career is manipulating data, applying some logic on top, eventually changing the way the data is structured, and then serializing it to JSON to be consumed by other systems.
 
 [**mapneat**](https://github.com/nomemory/mapneat) does precisely this; it provides an easy to use [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) for transforming `JSON` to `JSON`, `XML` to `JSON`, `POJO`(s) to `JSON` in a declarative way. The library is written in [Kotlin](https://kotlinlang.org/) (JVM), but it can be easily used from Java.
 
@@ -60,7 +60,7 @@ Now, let's say we are writing a [REST](https://en.wikipedia.org/wiki/Representat
 
 Of course, we won't want to share any kind of secret information (passwords), or any financial information.
 
-But, if we were to serialise the `User` directly into a `JSON` format, a possible output will look like:
+But, if we were to serialize the `User` directly into a `JSON` format, a possible output will look like this:
 
 ```json
 {
@@ -177,7 +177,7 @@ The first operation we've performed was: `"" *= "$"`.
 
 `*=` is called the _Shift Operation_ and allows us to query an object/json/xml using a [json-path](https://github.com/json-path/JsonPath) notation.
 
-What the line expresses is: _Copy everything (`$`) you find in the `aRandomUser` source and put it inside the target_.
+The line expresses: _Copy everything (`$`) you find in the `aRandomUser` source and put it inside the target_.
 
 The next three lines (_Operations_) are discarding the information we don't really need:
 
@@ -216,7 +216,7 @@ Is called an _Assign Operation_ that normally allows us to retrieve information 
 
 In our case, the `lastName` information is already in the target (remember `"" *= "$"`), so we read it from the target context, and then we just capitalize the `String`.
 
-And the last operation, is an _Assign_ (as we already have the `friends` ids in the target context) that returns the `User`'s friends:
+And the last operation is an _Assign_ (as we already have the `friends` ids in the target context) that returns the `User`'s friends:
 
 ```kotlin
 "friends" /= {

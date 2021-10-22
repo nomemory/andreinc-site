@@ -618,7 +618,7 @@ The good news, C is flexible enough to make [generic programming happen]({{site.
 * [using `void*`]({{site.url}}/2010/09/30/generic-data-structures-in-c#using-the-void-pointer-void)  to pass data around, 
 * [using `#macros`]({{site.url}}/2010/09/30/generic-data-structures-in-c#hacking-with-the-preprocessor) that generate *specialized* code after pre-processing (something similar to C++ templates).
 
-I've recently found an interesting *generic* data structures library called [STC](https://github.com/tylov/STC); looking at the code can be pretty inspirational.
+> I've recently found an interesting *generic* data structures library called [STC](https://github.com/tylov/STC); looking at the code can be pretty inspirational.
 
 I am the camp that prefers `#macros` over `void*`, but **not** when it comes to writing tutorials. With `#macros`, everything becomes messy fast, and the code is hard to debug and maintain. So, for this particular implementation, we will use `void*` for passing/retrieving *generic data* to/from the **hash table**.
 
@@ -1409,23 +1409,58 @@ The most accessible probing algorithm is called **linear probing**. In case of c
 
 To avoid probing for new slots in excess, we need to keep the load factor of the **hash table** at a satisfactory level, and the hash function should have remarkable diffusion properties. If the load factor (defined as `size/capacity`) reaches a certain threshold, we increase the buckets and perform full-rehashing.
 
-If we fail to increase the number of buckets, clusters of adjacent elements will form. **Clustering** diminishes the performance of both read and insert operations because we will need to iterate more over more buckets to obtain the correct value.
+If we fail to increase the number of buckets, clusters of adjacent elements will form. ** Clustering** diminishes the performance of both read and insert operations because we will need to iterate more over more buckets to obtain the correct value.
 
 For example, python's `dict` implementation uses a more advanced variant of **Open Adressing**. 
 
-Compared to the **Separate Chaining** approach, cache misses are reduced because we operate on a single contiguous block of memory (the array of buckets). And, as long as we use a decent **hash function**, and the load factor is low, it can lead to superior performance for both read and write operations.
+Compared to the **Separate Chaining** approach, cache misses are reduced because we operate on a single contiguous block of memory (the array of buckets). And, as long as we use a decent **hash function**, and the load factor is low, it can lead to superior performance, especially for read operations.
 
-Unfortunately, in case **clustering**, performance drop will be sudden and hard to mitigate.
+To better understand let's take a look at the following diagram:
+
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/open_addressing.png){:height="50%" width="50%"} 
+
+We want to insert `<key, value>` pairs with the keys (`char*`) from the set: [`"A"`, `"B"`, `"C"`, etc.]:
+
+* First, we insert `"A"`. The corresponding bucket for `"A"` (after we compute the hash) is `0`;
+* Then we insert `"B"`. The corresponding bucket for `"B"` is `0`. But `0` is occupied by `"A"`. So, by applying **linear probing** we go to the next index, which `1`, and it's free. So `"B"` is now inserted at bucket `1`;
+* Then we insert `"C"`. The corresponding bucket for `"C"` is `0`. But `0` is occupied by `"A"`, the next bucket, `1` is occupied by `"B"`, so we end-up inserting `"C"` to ` 2`.
+
+Let's look further; what is happening for `"D"`, `"E"`, `"F"`, `"G"`, `"H"` is the beginning of a *not* so lovely cluster of elements: areas in the array of buckets where intertwined elements are grouped together. 
+
+Having intertwined groups leads to decreased performance. Think of it, for reading the value associated with `"G"` we have to iterate over an area that is naturally associated with bucket number `7` (eg., `"F"`).
+
+Clustering usually happens for two reasons:
+
+* The load factor (size/capacity) is close to `1`, and we need to allocate more empty buckets to increase the *spacing* between elements;
+* The hash function doesn't have good diffusion properties, and it's biased towards specific buckets.
+
+Reducing Clustering can also be achieved by changing **linear probing** to another algorithm to identify the next good bucket (e.g., **quadratic probing**). 
+
+### Tombstones
+
+Compared to **Separate Chaining**, deleting elements in a **hash table** that uses **Open Addressing**, is relatively more challenging to implement. 
+
+After a delete operation occurs, we cannot simply empty the bucket (associate `NULL` with it). If we do that, we might break a sequence of entries and unjustly isolate some. The separated entries will become unreachable for the following read operations. They become reachable only if the previous *sequence* is somehow *restored* through a *lucky* insertion. 
+
+One solution would be to re-hash everything after each delete. But think of it for a moment; this means to allocate a new array of buckets, calculate the new index (bucket) for each element, and then free the memory associated with the old and *broken* array. It's a costly and unacceptable endeavor, especially when there are better alternatives.
+
+One alternative for avoiding full re-hashing is to introduce the notion of **tombstones**. Each time a delete operation occurs, instead of emptying the bucket, we put a sentinel value, metaphorically called **a tombstone**. 
+
+The tombstone will behave differently based on the operation. If we want to perform a read operation or another delete, the **tombstone** will act just as a real entry; probing will ignore it and continue further. This way, the rest of the entries are not isolated from the others. If we want to perform a `put` (insert) operation, the **tombstone** will act as a very inviting empty slot. 
+
+A high density of **tombstones** will increase the load factor, just like the actual entries do, so an intelligent **hash table** implementation needs to consider this. 
+
+There are ways of avoiding **tombstones** altogether, and if you are interested to read about this, [check this article](https://attractivechaos.wordpress.com/2019/12/28/deletion-from-hash-tables-without-tombstones/). But, for simplicity and academic purposes, our **hash table** will use **tombstones**. 
 
 ### A generic implementation
 
-If you want to jump directly into the code, without reading the explanations you can clone the following [repo](https://github.com/nomemory/open-adressing-hash-table-c):
+If you want to jump directly into the code, without reading the explanation,s you can clone the following [repo](https://github.com/nomemory/open-adressing-hash-table-c):
 
 ```
 git clone git@github.com:nomemory/open-adressing-hash-table-c.git
 ``` 
 
-Similar to the implementations for **Separate Chaining**, we will use the `void*` pointer to achieve some sort of genericity. 
+Similar to the implementations for **Separate Chaining**, we will use the `void*` pointer to achieve some sort of genericity.
 
 (TO BE CONTINUED)
 
@@ -1444,4 +1479,5 @@ Similar to the implementations for **Separate Chaining**, we will use the `void*
 * [Hash Tables - Open Addressing vs Chaining](https://www.reddit.com/r/algorithms/comments/9bwzj5/hash_tables_open_addressing_vs_chaining/);
 * [Optimizing software in C++, Agner Fog](https://www.agner.org/optimize/optimizing_cpp.pdf)
 * [Why did the designers of Java preferred chaining over open addressing](https://stackoverflow.com/questions/12019434/why-did-the-language-designers-of-java-preferred-chaining-over-open-addressing-f)
+* [Deletion from hash tables without tombstones](https://attractivechaos.wordpress.com/2019/12/28/deletion-from-hash-tables-without-tombstones/)
 * [Traits](https://en.wikipedia.org/wiki/Trait_(computer_programming))

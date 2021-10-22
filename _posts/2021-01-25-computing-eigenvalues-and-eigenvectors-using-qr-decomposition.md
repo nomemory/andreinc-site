@@ -14,20 +14,20 @@ tags:
 - "eigenvector"
 ---
 
-> In my last two articles I've tried to explore some fundamental topics in linear algebra: [QR Decomposition](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#qr-decomposition), [linear transformations](/2021/01/20/eigenvalues-and-eigenvectors-explained#linear-transformations) and [Eigenvalues/Eigenvectors](/2021/01/20/eigenvalues-and-eigenvectors-explained#eigenvalues-and-eigenvectors). In case you haven't done so, I recommend you to read the linked sub-chapters first, as it will be easier to follow through.  
+> In my last two articles, I've tried to explore some fundamental topics in linear algebra: [QR Decomposition](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#qr-decomposition), [linear transformations](/2021/01/20/eigenvalues-and-eigenvectors-explained#linear-transformations) and [Eigenvalues/Eigenvectors](/2021/01/20/eigenvalues-and-eigenvectors-explained#eigenvalues-and-eigenvectors). In case you haven't done so, I recommend you to read the linked sub-chapters first, as it will be easier to follow through.  
 
 Even if it's not very obvious, the QR Decomposition ($$A = Q * R$$) of a matrix $$A$$ is useful to compute the eigenvalues/eigenvectors associated with $$A$$.
 
 But, let's recap. A matrix $$A$$ can be decomposed like: $$A = Q * R$$, where $$R$$ is an upper triangular matrix, and Q is an orthonormal matrix.
 
-Because $$Q$$ is orthormal, it has a few special properties:
+Because $$Q$$ is orthonormal, it has a few unique properties:
 
 $$
 Q^{T} * Q = Q * Q^{T} = I \\
 Q^{T} = Q^{-1} 
 $$
 
-From a computational perspective, this leads to some advantages, because the inverse of an orthonormal matrix is the same as its transpose.
+From a computational perspective, this leads to some advantages because the inverse of an orthonormal matrix is the same as its transpose.
 
 Now, let's go further. We define two matrices $$A$$ and $$B$$ as being **similar** if there exists a non-singular matrix $$X$$ such that: $$B=X^{-1}*A*X$$.
 
@@ -35,11 +35,11 @@ Moreover, If $$X$$ is non-singular, then $$A$$ and $$X^{-1}*A*X$$ have the same 
 
 > This means that two similar matrices $$A$$ and $$B$$ have the same eigenvalues.
 
-Now, there's a type of factorization called **Schur Factorization** that says that $$A$$ can be written as: $$A = Q * U * Q^{*} = Q * U * Q^{-1}$$, where Q is an unitary matrix and T is an upper triangular matrix. Additionally, every square matrix $$A$$ has a **Schur Factorization**.
+Now, there's a type of factorization called **Schur Factorization** that says that $$A$$ can be written as: $$A = Q * U * Q^{*} = Q * U * Q^{-1}$$, where Q is a unitary matrix and T is an upper triangular matrix. Additionally, every square matrix $$A$$ has a **Schur Factorization**.
 
-> Because $$Q$$ is a unitary matrix, its conjugate transpose $$Q^{*}=Q^{-1}$$. I am adding this because in some manuals you will see the Shur Factorization expressed as: $$A = Q * U * Q^{*}$$. 
+> Because $$Q$$ is a unitary matrix, its conjugate transpose $$Q^{*}=Q^{-1}$$. I am adding this because, in some manuals, you will see the Shur Factorization expressed as: $$A = Q * U * Q^{*}$$. 
 
-So good so far. Looking at the **Schur Factorization** it looks like matrix $$A$$ and $$U$$ are what we call **similar**, this mean they have the same **eigenvalues**. 
+So good so far. Looking at the **Schur Factorization** it looks like matrix $$A$$ and $$U$$ are what we call **similar**; this mean they have the same **eigenvalues**. 
 
 From a computational perspective, this again is great. Because, as we've discussed in my previous article, the **eigenvalues** for an upper diagonal matrix are the elements of the first diagonal.
 
@@ -55,9 +55,9 @@ for <a number of iterations>
 
 Eventually, under desired conditions, $$A$$ will converge to the Schur Form of $$A$$ (which is $$U$$ from the formula $$A=Q * U * Q^{-1}$$). 
 
-Why it works ?
+Why does it work?
 
-Lets re-write the algorithm again using indices this time:
+Let's re-write the algorithm again using indices this time:
 
 ```
 A_{0} = A
@@ -72,9 +72,9 @@ We know $$A_{k} = Q_{k} * R_{k}$$. Multiplying each side with $$Q^{-1}_{k}$$ we 
 
 From the last relationship we can say: $$Q^{-1}_{k} * A_{k} * Q^{k} = R_{k} * Q_{k}$$, which can be written as: $$A_{k}=Q^{-1}_{1} * Q^{-1}_{2} \ldots Q_{k} * A * Q_{1} * Q_{2} \ldots Q_{k}$$.
 
-I know that all the math can look convoluted at this point, but if you put everything on paper it will be more clear.
+I know that all the math can look convoluted at this point, but if you put everything on paper, it will be more precise.
 
-In any case, after an infinite number of iterations the $$A_{k}$$ will converge to a solution. In practice, it will converge (or not) much sooner than infinity to acceptable values that can be considered the eigenvalues of the initial matrix $$A$$.
+In any case, after an infinite number of iterations, the $$A_{k}$$ will converge to a solution. In practice, it will converge (or not) much sooner than infinity to acceptable values that can be considered the eigenvalues of the initial matrix $$A$$.
 
 Implementing the "naive algorithm" using [numpy](https://numpy.org/) looks like this:
 
@@ -188,15 +188,15 @@ With the correct "eigenvalues" being:
   0.02525882+0.1916334j   0.02525882-0.1916334j ]
 ```
 
-This time we were not that close, but we manage to find a few eigenvalues.
+This time we were not that close, but we managed to find a few eigenvalues.
 
-And it was even slower. Plus the temperature of my CPU increased drastically.
+And it was even slower. Plus, the temperature of my CPU increased drastically.
 
 # Improving our naive algorithm - QR with shifts (Practical QR)
 
-The "naive QR algorithm" works flawlessly in theory, but in practice not so good.
+The "naive QR algorithm" works flawlessly in theory, but in practice, not so good.
 
-So people implementing linear algebra algorithms, found a few tricks. One of those tricks is called "shifts".
+So people implementing linear algebra algorithms found a few tricks. One of those tricks is called "shifts".
 
 So we play a little with our initial decomposition $$A_{k} = Q_{k} * R_{k}$$, by "attacking" the first diagonal like:
 
@@ -211,7 +211,7 @@ $$
 
 A possible value for $$s_{k}$$ can be the last element of the first diagonal of matrix $$A_{k}$$.
 
-Having said this our "smarter qr algorithm with shifts looks like:"
+Having said this, our "smarter qr algorithm with shifts looks like:"
 
 ```python
 import numpy as np
@@ -287,7 +287,7 @@ H_{\text{essenberg}} =
 \end{bmatrix}
 $$
 
-There is a theorem that states that every square matrix is similar to one in upper Hessenberg form.
+There is a theorem that states that every square matrix is similar to one in the upper Hessenberg form.
 
 If we somehow manage to transform $$A$$ to an upper Hessenberg form, and then we run the previous algorithm, the convergence will be increased. 
 
@@ -310,7 +310,7 @@ Let's take as example, the matrix I've used in [my previous article](/2021/01/20
 
 We already computed the *eigenvalues* for it, namely $$\lambda_{1}=3, \lambda_{2}=1$$.
 
-To find the **eigenvectors** is a matter of solving two linear system of equations of the form $$A * x = b$$:
+To find the **eigenvectors** is a matter of solving two linear systems of equations of the form $$A * x = b$$:
 
 $$
 \begin{bmatrix}
@@ -344,7 +344,7 @@ v_{2y}
 \end{bmatrix}
 $$
 
-From a code perspective, if you want to do it in C you take a look on my "academical" called [nml](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#solving-linear-systems-of-equations). The algorithms related to solving linear system of equations are also described there. 
+From a code perspective, if you want to do it in C, you take a look at my "academical" called [nml](/2021/01/20/writing-your-own-linear-algebra-matrix-library-in-c#solving-linear-systems-of-equations). The algorithms related to solving a linear system of equations are also described there. 
 
 Or we can do it in python, using numpy's [`numpy.linalg.eig()`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html) method.
 

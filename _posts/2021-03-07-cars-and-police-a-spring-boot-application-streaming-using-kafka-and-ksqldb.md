@@ -41,9 +41,9 @@ tags:
 
 # Introduction
 
-Recently I've started dabbling with [ksqlDB](https://ksqldb.io/), which is an "event-streaming data-base", that operates on top of [Apache Kafka](https://kafka.apache.org/), and makes working with streams "easy-peasy" (=declarative). 
+Recently I've started dabbling with [ksqlDB](https://ksqldb.io/), which is an "event-streaming database", that operates on top of [Apache Kafka](https://kafka.apache.org/), and makes working with streams "easy-peasy" (=declarative). 
 
-At least the promise is there, and even if I find ksqlDB a little rough around the edges, I've decided to give it try, and build my own [POC](https://en.wikipedia.org/wiki/Proof_of_concept) with it, called *[Cars and Police](https://github.com/nomemory/carsandpolice)*.
+At least the promise is there, and even if I find ksqlDB a little rough around the edges, I've decided to give it a try, and build my own [POC](https://en.wikipedia.org/wiki/Proof_of_concept) with it, called *[Cars and Police](https://github.com/nomemory/carsandpolice)*.
 
 To clone the project and follow the explanations:
 
@@ -57,27 +57,27 @@ The purpose of the POC is to create a web app capable of displaying a "city map"
 
 * Various cars are "cruising" randomly inside a map (grid);
 * Each time a car is crossing roads with the police, the driver's papers are being checked. A 'police stop' event is being triggered; 
-* If the driver forgot his papers, a 'car blocked event' is being triggered.
+* If the driver forgot his papers, a "car blocked event" is being triggered.
 
 Visually (excuse my front-end skills) the application looks like this:
 
 ![gif]({{site.url}}/assets/images/2021-03-07-cars-and-police-a-spring-boot-application-streaming-using-kafka-and-ksqldb/carsandpolice.gif)
 
-The canvas is getting "almost" real-time updates from the back-end, and re-renders everything every second.
+The canvas is getting "almost" real-time updates from the back-end and re-renders everything every second.
 
-> In this article we are going to explain the way **Cars and Police** was architected and implemented.
+> In this article, we are going to explain the way **Cars and Police** was architected and implemented.
 
-Note: The tutorial assumes the reader is already familiar with key [Kafka](https://kafka.apache.org/) concepts (e.g.: topic), [Spring Boot](https://spring.io/projects/spring-boot), STOMP/[websockets](https://en.wikipedia.org/wiki/WebSocket) and Reactive Programming. Some knowledge of [mockneat](https://www.mockneat.com/) is also advisable, but not mandatory.   
+Note: The tutorial assumes the reader is already familiar with key [Kafka](https://kafka.apache.org/) concepts (e.g.: topic), [Spring Boot](https://spring.io/projects/spring-boot), STOMP/[websockets](https://en.wikipedia.org/wiki/WebSocket) and Reactive Programming. Some knowledge of [mockneat](https://www.mockneat.com/) is also advisable but not mandatory.   
 
 # A short introduction to ksqlDB
 
 ## Setting the environment
 
-To run the *[Cars and Police](https://github.com/nomemory/carsandpolice)* POC, you will need a standalone instance of ksqlDB instance running. In the current example, **ksqlDB** will act like the main streaming orchestrator. Every event (car movement, police stop, car blocked) will go through and is going to be emitted by ksqlDB. 
+To run the *[Cars and Police](https://github.com/nomemory/carsandpolice)* POC, you will need a standalone instance of ksqlDB instance running. In the current example, **ksqlDB** will act as the main streaming orchestrator. Every event (car movement, police stop, car blocked) will go through and is going to be emitted by ksqlDB. 
 
 The easiest way to make it happen is to follow the [official documentation](https://ksqldb.io/quickstart.html).
 
-Personally, I've used this [docker-compose.yml](https://github.com/nomemory/carsandpolice/blob/main/docker-compose.yml) file to get everything up. So, in the folder where you've copied the file, just run:
+I've used this [docker-compose.yml](https://github.com/nomemory/carsandpolice/blob/main/docker-compose.yml) file to get everything up. So, in the folder where you've copied the file, just run:
 
 ```
 docker-compose start
@@ -109,8 +109,8 @@ docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
 
 > A ksqlDB stream is a partitioned, immutable, append-only collection that represents a series of historical facts.
 
-Usually a stream is composed by a series of events. 
-For example a car that moves from position `(x,y)` to position `(x+1, y+1)` inside a grid is called an event. While all the car movements that are happening one by one, as the time goes by, are forming a stream of events.
+Usually, a stream is composed of a series of events. 
+For example, a car that moves from position `(x,y)` to position `(x+1, y+1)` inside a grid is called an event. All the car movements are forming a stream of events.
 
 Let's create our first stream:
 
@@ -131,13 +131,13 @@ Explanation:
     - `hasPapers` - tells if the driver forgot his papers or not;
     - `location` - the "x y" coordinates on a grid (map) kept in a string.
   
-Before inserting a few events into our stream, let's run a query to see in real time how the events are getting appended, to the stream one-by-one. In a separate `ksqldb-cli` instance run:
+Before inserting a few events into our stream, let's run a query to see in real-time how the events are getting appended to the stream one by one. In a separate `ksqldb-cli` instance run:
 
 ```
 select * from carLocations emit changes;
 ```
   
-Now, let's insert a few events in our `carLocations` stream. You will see that the syntax of inserting new events is very similar to SQL, after all ksqlDB is a database:
+Now, let's insert a few events in our `carLocations` stream. You will see that the syntax of inserting new events is very similar to SQL; after all ksqlDB is a database:
 
 ```
 INSERT INTO carLocations (profileId, color, hasPapers, location) VALUES ('Car A', 'Red', true, '0 1');
@@ -163,7 +163,7 @@ When you run a `SELECT` over a stream, the results are not something you would c
 
 ## Joins
 
-Now that our first stream is up and running, let's create a new stream, called: `policeLocations` where we will keep the movement of potential police car movements.
+Now that our first stream is up and running let's create a new stream, called: `policeLocations` where we will keep the movement of potential police car movements.
 
 ```sql
 CREATE STREAM policeLocations(profileId VARCHAR, location VARCHAR)
@@ -172,7 +172,7 @@ WITH (kafka_topic='policeCarLocations', value_format='json', partitions=1);
 
 And now the interesting part, ksqlDB allows us to create a new stream by joining two or more existing streams. 
 
-So if we want, we can create a new stream, called `policeStops` that is going to join both `policeLocations` and `carLocations` on the condition that the events have the same `location`, within 10 seconds.
+So if we want, we can create a new stream called `policeStops` that will join both `policeLocations` and `carLocations` on the condition that the events have the exact `location`, within 10 seconds.
 
 ```sql
 CREATE STREAM policeStops AS
@@ -201,7 +201,7 @@ CREATE STREAM carsBlocked AS
         p.hasPapers = FALSE;
 ```
 
-Because the following stream is not created through a `JOIN`, but only filter some events from `policeStops`, we don't have to specify any `WITHIN` time interval.
+Because the following stream is not created through a `JOIN`, but only filters some events from `policeStops`, we don't have to specify any `WITHIN` time interval.
 
 To better understand how everything interacts, let's take look at the following diagram:
 
@@ -209,15 +209,15 @@ To better understand how everything interacts, let's take look at the following 
 
 All the streams (`carLocations`, `policeLocations` and `policeStops`) are receiving input events, and in the same time when you select data from them, they `emit changes`.
 
-`C1`, `C2` and `P1` are care movement events that are having the same `location`, of course, their timestamp differs. 
+`C1`, `C2` and `P1` are car movement events that have the same `location`; of course, their timestamp differs. 
 
 When `policeStops` is created by joining `carLocations` and `policeLocations`, (`C1`,`P1`) and (`C2`,`P1`) are aggregated together, and they become events for the `policeStops` stream. 
 
-`WITHIN 10 SECONDS` means that the events should happen in a frame of 10 seconds, so that they can be joined.
+`WITHIN 10 SECONDS` means that the events should happen in a frame of 10 seconds so that they can be joined.
 
 # Initialising the environment
 
-All in all, to initialise our environment for running the [carsandpolice](https://github.com/nomemory/carsandpolice) app, the "DDL" script can be found [here](https://github.com/nomemory/carsandpolice/blob/main/ksqldb-create-schema.sql):
+All in all, to initialize our environment for running the [carsandpolice](https://github.com/nomemory/carsandpolice) app, the "DDL" script can be found [here](https://github.com/nomemory/carsandpolice/blob/main/ksqldb-create-schema.sql):
 
 ```sql
 CREATE STREAM carLocations (profileId VARCHAR, color VARCHAR, hasPapers BOOLEAN, location VARCHAR)
@@ -290,7 +290,7 @@ Additionally, here is the link to the final [build.gradle](https://github.com/no
 
 ## My model layer
 
-Our model layer is composed by 3 main classes: `Car.java`, `PersonalCar.java`, `PoliceCar.java`, and 1 enum: `Direction.java`.
+Our model layer is composed by three main classes: `Car.java`, `PersonalCar.java`, `PoliceCar.java`, and 1 enum: `Direction.java`.
 
 Each car moves inside the map (which you will see it's actually modeled as a grid) in 4 possible directions which correspond to the [cardinal points](https://en.wikipedia.org/wiki/Cardinal_direction):
 
@@ -399,7 +399,7 @@ One for the `color` (something I am not using in the UI), and a boolean `hasPape
 
 ## Data generation
 
-Generating car movements was more difficult than I've initially estimated. My first approach was to generate procedurally a set of interconnected roads, but for the sake of simplicity I've opted for a simple grid.
+Generating car movements was more difficult than I'd initially estimated. My first approach was to generate a set of interconnected roads procedurally, but for the sake of simplicity, I've opted for a simple grid.
 
 The size of the grid, the number of "roads" (the perpendicular lines forming the grid), the number of police cars, the number of personal cars, their speed, etc. can be configured and changed from the `application.properties` file:
 
@@ -422,13 +422,13 @@ Cars are moving inside a "symmetrical" grid of squares forming the city map.
 ![streamjoin]({{site.url}}/assets/images/2021-03-07-cars-and-police-a-spring-boot-application-streaming-using-kafka-and-ksqldb/grid.png)
 
 As you can see:
-* `gridSize=501` - represents the width / height of grid. The grid is a square so `width=height`;
+* `gridSize=501` - represents the width / height of grid. The grid is a square, so `width=height`;
 * `step=50` - represents the width / height of the smaller squares composing the grid (has to be a divisor of `(gridSize-1)`, usually `step=(gridSize-1)/10`);
 * `movement` - represents the speed of the car, how much the car moves in one jump (has to be a divisor of `step`).
 
 ### Generating the initial positions of the cars
 
-When we first generate a random car on the grid, we don't want the car to be generated outside the roads. In the bellow picture, the red squares represent all the possible initial car locations.
+When we first generate a random car on the grid, we don't want the car to be generated outside the roads. In the below picture, the red squares represent all the possible initial car locations.
 
 ![startingpositions]({{site.url}}/assets/images/2021-03-07-cars-and-police-a-spring-boot-application-streaming-using-kafka-and-ksqldb/startingpositions.png)
 
@@ -475,7 +475,7 @@ Normally a cars keeps its initial `Direction`, but whenever it reaches an inters
 
 The condition to check if a car is an intersection (crossroad) is: `x%step == 0 && y%step == 0`, meaning `(x, y)` are both multiples of the `step`.
 
-Not all crossroads are created equal, so we have to write an additional method that determines what are the possible directions in a given intersection. Without it, there's a big probability our cars will start exiting the grid when they move.
+Not all crossroads are created equal, so we have to write an additional method that determines the possible directions in a given intersection. Without it, there's a significant probability our cars will start exiting the grid when they move.
 
 ![startingpositions]({{site.url}}/assets/images/2021-03-07-cars-and-police-a-spring-boot-application-streaming-using-kafka-and-ksqldb/cardinalpoints.png)
 
@@ -527,9 +527,9 @@ public List<Direction> getPossibleDirections(int x, int y) {
 
 ### Generating cars
 
-The various `Car` objects are generated using [mockneat](https://www.mockneat.com). If you never used the library before, I recommend you to give it a try and read the [tutorial](https://www.mockneat.com/tutorial/).
+The various `Car` objects are generated using [mockneat](https://www.mockneat.com). If you have never used the library before, I recommend you to give it a try and read the [tutorial](https://www.mockneat.com/tutorial/).
 
-On short, mockneat is an arbitrary data-generator open-source library written in Java, that provides a simple but powerful (fluent) API that enables developers to create json, xml, csv and sql data programmatically. It can also act as a powerful Random substitute or a mocking library.
+In short, mockneat is an arbitrary data-generator open-source library written in Java, that provides a simple but powerful (fluent) API that enables developers to create json, xml, csv and sql data programmatically. It can also act as a powerful Random substitute or a mocking library.
 
 Anyway, to generate the two lists `List<PersonalCar>` and `List<PoliceCar>`, the code is quite straightforward:
 
@@ -602,7 +602,7 @@ To better understand the magic behind the code, please check the following metho
 * [`map()`](https://www.mockneat.com/docs/#map);
 * [`list()`](https://www.mockneat.com/docs/#list).
 
-To check all the code responsible with generating random cars and random movement events please check the following class: [`CarsGenerator.java`](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/model/generators/CarsGenerator.java)
+To check all the code responsible for generating random cars and random movement events, please check the following class: [`CarsGenerator.java`](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/model/generators/CarsGenerator.java)
 
 ## Interacting with ksqlDB from Java
 
@@ -657,7 +657,7 @@ ksqldb.port=8088
 
 Now that client is configured, we can write a `@Service` responsible for inserting events into the two streams: `carLocations` and `policeLocations`.
 
-Normally, the interaction with the "database" shouldn't be done at the `@Service` layer, but for the sake of simplicity we will leave it like this.
+Normally, the interaction with the "database" shouldn't be done at the `@Service` layer, but for the sake of simplicity, we will leave it like this.
 
 ```java
 package net.andreinc.carsandpolice.service;
@@ -713,7 +713,7 @@ public class CarsAndPoliceService {
 }
 ```
 
-The key class for inserting (or to retrieve) information in ksqlDB is the `KsqlObject`. 
+The key class for inserting (or retrieving) information in ksqlDB is the `KsqlObject`. 
 
 Lucky for us a `KsqlObject` can be constructed from a `Map<String, Object>`, that's why we can use [jackson](https://github.com/FasterXML/jackson)'s `ObjectMapper` to transform our `PersonalCar` or `PoliceCar` instances into the corresponding `Map<String, Object>` representation.
 
@@ -783,7 +783,7 @@ public class CarMovementsProducerJob {
 }
 ```
 
-A nice-to-have feature is to implement a ON/OFF switch for our `JOB` - this explains the `toggle()` method.
+A nice-to-have feature is to implement an ON/OFF switch for our `JOB` - this explains the `toggle()` method.
 
 For example in the above code our methods:
 * `emitPoliceCarEvents()` will be called every 5 seconds (`fixedDelay = 5000`), as long as the application runs;
@@ -802,11 +802,11 @@ We will get similar results for all the streams we query.
 
 ### Reading events from a Stream
 
-As you've rightly guessed for, querying a ksqlDB stream in Java is done through the `io.confluent.ksql.api.client.Client` instance we've configured before.
+As you've rightly guessed, querying a ksqlDB stream in Java is done through the `io.confluent.ksql.api.client.Client` instance we've configured before.
 
 The biggest difference lies in the fact that our `SELECT` emit changes, so querying data is a long-running process. Invoking `client.streamQuery(query)` will return a [`CompletableFuture<StreamedQueryResult>`](https://www.baeldung.com/java-completablefuture), where the `StreamingQueryResult` is actually an `org.reactivestreams.Producer<Row>`.
 
-To help me reduce the boiler-plate code I've written my own util class for querying, called `KsqlDbStreamingQuery`:
+To help me reduce the boiler-plate code, I've written my (own) util class for querying, called `KsqlDbStreamingQuery`:
 
 ```java
 @Component
@@ -856,7 +856,7 @@ public void onNext(Row row) {
 }
 ```
 
-Everytime the Stream emits a change, I've defined a `Consumer<Row>` that will take care of that event.
+Every time the Stream emits a change, I've defined a `Consumer<Row>` that will take care of that event.
 
 For example, writing a query for the `carLocations` stream looks like this:
 
@@ -885,15 +885,15 @@ All our queries can be found in the `net.andreinc.carsandpolice.query` package:
 
 ## Websockets!
 
-Now that the back-end is almost complete, and our events are being constantly generated the next step is to start preparing for the client. 
+Now that the back-end is almost complete and our events are being constantly generated. The next step is to start preparing for the client. 
 
-Our events are going to be sent to the client (browser) through [STOMP](https://stomp.github.io/) (with websockets as the underlying mechanism).
+Our events are going to be sent to the client (browser) through [STOMP](https://stomp.github.io/) (with WebSockets as the underlying mechanism).
 
-In our particular case, think of [STOMP](https://stomp.github.io/) and websockets as having the same relationship as HTTP and TCP. STOMP, compared to a basic websockets implementation, provides us with a handful of abstractions.
+In our particular case, think of [STOMP](https://stomp.github.io/) and WebSockets as having the same relationship as HTTP and TCP. STOMP, compared to a basic WebSockets implementation, provides us with a handful of abstractions.
 
 ### Back-end configuration
 
-Websockets/STOMP support in Spring are very good, so to make things going it's simply a matter of configuration:
+Websockets/STOMP support in Spring is very good, so to make things going, it's simply a matter of configuration:
 
 ```java
 package net.andreinc.carsandpolice.config;
@@ -921,7 +921,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 }
 ```
 
-At this point, from a back-end perspective everything is set. We can start sending messages to the client using the: `org.springframework.messaging.simp.SimpMessagingTemplate` class.
+At this point, from a back-end perspective, everything is set. We can start sending messages to the client using the: `org.springframework.messaging.simp.SimpMessagingTemplate` class.
 
 For example our long-running streaming queries ([CarsBlockedStreamingQuery.java](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/query/CarsBlockedStreamingQuery.java), [PersonalCarMovementStreamingQuery.java](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/query/PersonalCarMovementStreamingQuery.java), [PoliceCarMovementStreamingQuery.java](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/query/PoliceCarMovementStreamingQuery.java), [PoliceStopsStreamingQuery.java](https://github.com/nomemory/carsandpolice/blob/main/src/main/java/net/andreinc/carsandpolice/query/PoliceStopsStreamingQuery.java)) can start pushing messages to the client by simply:
 
@@ -939,7 +939,7 @@ ksqlDbStreamingQuery.query("select * from carLocations emit changes;", (row)->{
 // ----
 ```
 
-In the above code, the query than runs on top of the `carLocations` stream will push every event to the client in the `/topic/carlocations` endpoint.
+In the above code, the query that runs on top of the `carLocations` stream will push every event to the client in the `/topic/carlocations` endpoint.
 
 Another important step is to send some initial information to the client (once per client). Mainly configurations coming from the back-end:
 
@@ -1151,7 +1151,7 @@ If we simply call the `drawGrid()` function once, the results will look like:
 
 Our Front-End needs to have a "state" where it keeps all the car positions at every given moment. 
 
-For the sake of simplicity we will keep a global variable, `var cars = new Map()` of type [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), where we keep both the personal cars and the police cars that are coming from the server.
+For the sake of simplicity, we will keep a global variable, `var cars = new Map()` of type [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), where we keep both the personal cars and the police cars that are coming from the server.
 
 Each time an event (coming from the back-end) is received we update the specified car from our `Map`:
 
@@ -1217,9 +1217,9 @@ function drawCars() {
 
 # Conclusions
 
-* **ksqlDB** is not yet fully-baked, but it's a promising technology. I will definitely keep an eye on it;
-* The code of this POC can optimized further. It's probably overkill to stream directly in the browser, maybe events can come up in batches;
-* Instead of using STOMP/websocket we can use a SSE technology given the communication is done nainly from the server to the client;
+* **ksqlDB** is not yet fully baked, but it's a promising technology. I will definitely keep an eye on it;
+* The code of this POC can be optimized further. It's probably a bad idea to stream directly in the browser; maybe events can come up in batches;
+* Instead of using STOMP/WebSocket we can use an SSE technology given the communication is done mainly from the server to the client;
 
 
 

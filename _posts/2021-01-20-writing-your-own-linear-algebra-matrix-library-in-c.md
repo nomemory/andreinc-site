@@ -75,7 +75,7 @@ Linear algebra is the branch of mathematics focused on:
 * linear maps: $$(x_{1},...,x_{n}) \rightarrow a_{1}*x_{1} + ... + a_{n}*x_{n}$$
     -  and their representation in _vector spaces_ through matrices;
   
-A finite set of linear equations with a finite set of variables, is called a **system of linear equations** or a **linear system**.
+A finite set of linear equations with a finite set of variables is called a **system of linear equations** or a **linear system**.
 
 Linear systems are a fundamental part of linear algebra. Historically speaking, the math behind matrix theory has been developed for solving such systems. In the modern context, many real-world problems may be interpreted in terms of matrices and linear systems.
 
@@ -108,7 +108,7 @@ $$B=
 $$
 
 
-We can now define our system in terms of matrices as: $$A * x = B$$, or:
+We can now define our system in terms of matrices as $$A * x = B$$, or:
 
 $$
 \begin{bmatrix}
@@ -142,7 +142,7 @@ $$
 
 The interesting aspect is that performing simple row operations (swap rows, add rows, multiply rows with scalars) on `S` we can transform the system into an equivalent form:
 
-For example afer applying the following row operations on S:
+For example, after applying the following row operations on S:
 
 > $$-1*Row1 + Row2$$
 >
@@ -166,9 +166,9 @@ $$S=
 \end{array}\right)
 $$
 
-Notice, how our `M` matrix became an upper diagonal matrix (all elements under the first diagonal are `0`). Actually the more advanced algorithms we are going to implement in our C library are all about that. Creating equivalent matrices that are upper or lower diagonal.
+Notice how our `M` matrix became an upper diagonal matrix (all elements under the first diagonal are `0`). The more advanced algorithms we will implement in our C library are all about creating equivalent matrices that are upper or lower diagonal.
 
-After all the basic row transformations on `S` matrix are performed, our initial linear system "morphs" into an equivalent system that is trivial to solve by the means of substitution:
+After all the basic row transformations on `S` matrix are performed, our initial linear system "morphs" into an equivalent system that is trivial to solve by means of substitution:
 
 $$
 x_{1} + \frac{1}{2}x_{2} + \frac{3}{2}x_{3} = \frac{1}{2} \\
@@ -176,7 +176,7 @@ x_{2} + x_{3} = \frac{2}{5} \\
 x_{3} = 0
 $$
 
-Because `M` is an upper diagonal matrix, we can instantly determine the value of $$x_{3}=0$$, then we substitute $$x_{3}$$ in the second equation to find $$x_{2}=\frac{2}{5}$$ and so on. 
+Because `M` is an upper diagonal matrix, we can instantly determine the value of $$x_{3}=0$$; then we substitute $$x_{3}$$ in the second equation to find $$x_{2}=\frac{2}{5}$$ and so on. 
 
 From a computational perspective, solving linear systems of equations and having around upper/lower diagonal matrices in place is essential.
 
@@ -188,7 +188,7 @@ I believe the best exercise you can do is to try to write your (own) Matrix libr
 
 This tutorial is precisely this, a step-by-step explanation of writing a C Matrix library that implements the "basic" and "not-so-basic" numerical analysis algorithms that will allow us in the end to solve linear systems of equations.
 
-All code in this tutorial is available on github in the repository called [neat-matrix-library](https://github.com/nomemory/neat-matrix-library). 
+All code in this tutorial is available on GitHub in the repository called [neat-matrix-library](https://github.com/nomemory/neat-matrix-library). 
 
 To clone it (using GitHub CLI):
 
@@ -196,9 +196,9 @@ To clone it (using GitHub CLI):
 gh repo clone nomemory/neat-matrix-library
 ```
 
-The code is not meant to be "efficient", but rather easy to follow and understand.
+The code is not meant to be "efficient", but relatively easy to follow and understand.
 
-The tutorial assumes that the reader can write C code, understands pointers, dynamic memory allocation and is somewhat familiar with the C standard library. 
+The tutorial assumes that the reader can write C code, understand pointers and dynamic memory allocation, and is familiar with the C standard library. 
 
 # The data: `nml_matrix`
 
@@ -225,13 +225,13 @@ From a performance perspective, it's better to keep the matrix elements in a `do
 data[i][j] <=> array[i * m + j]
 ```
 
-To better understand how to store multi-dimensional arrays in _linear storage_ please refer to [this stackoverflow question](https://stackoverflow.com/questions/14015556/how-to-map-the-indexes-of-a-matrix-to-a-1-dimensional-array-c), or read the [wikipedia article](https://en.wikipedia.org/wiki/Row-_and_column-major_order) on the topic.
+To better understand how to store multi-dimensional arrays in _linear storage_ please refer to [this StackOverflow question](https://stackoverflow.com/questions/14015556/how-to-map-the-indexes-of-a-matrix-to-a-1-dimensional-array-c), or read the [wikipedia article](https://en.wikipedia.org/wiki/Row-_and_column-major_order) on the topic.
 
-Even if it might sound like a "controversial" decision, for the sake of simplicity we will use the `double **` multi-dimensional storage. 
+Even if it might sound like a "controversial" decision, for the sake of simplicity, we will use the `double **` multi-dimensional storage. 
 
 ## Allocating / De-allocating memory for the `nml_mat` matrix
 
-Unlike "higher-level" programming languages (Java, python, etc.), that manage memory allocation for you, in C you need to explicitly ask for memory and explicitly free the memory once you no longer need it.
+Unlike "higher-level" programming languages (Java, Python, etc.), that manage memory allocation for you, in C, you need to explicitly ask for memory and explicitly free the memory once you no longer need it.
 
 In this regard, the next step is to create "constructor-like" and "destructor-like" functions for the `nml_mat` struct defined above. There's an unwritten rule that says: "Every [malloc()](https://www.cplusplus.com/reference/cstdlib/malloc/) has its _personal_ [free()](https://www.cplusplus.com/reference/cstdlib/free/)". 
 
@@ -282,9 +282,9 @@ _Notes:_
 Explanation:
 1. First step is to check if `num_rows == 0` or `num_cols == 0`. If they are, we consider the input as invalid, and we print on `stderr` an error. Afterwards `NULL` is returned;
 2. This line: `nml_mat *m = calloc(1, sizeof(*m))` allocates memory for `1` (one) `nml_mat` structure;
-3. For a multidimensional array (`double**`) we allocate memory in two steps: 
+3. For a multidimensional array (`double**`), we allocate memory in two steps: 
   - `m->data = calloc(m->num_rows, sizeof(*m->data))` - this allocates memory for the `column` array;
-  -  Then we allocate memory for each row. By using [`calloc()`](https://www.cplusplus.com/reference/cstdlib/calloc/) the data is initialised with `0.0`. 
+  -  Then, we allocate memory for each row. By using [`calloc()`](https://www.cplusplus.com/reference/cstdlib/calloc/) the data is initialized with `0.0`. 
 
 Freeing the matrix is even more straightforward. The implementation for `nml_mat_free()`:
 
@@ -304,7 +304,7 @@ It's important to note, that given the multidimensional nature of `double** data
 * then the column vector: `free(matrix->data)`; 
 * and lastly the actual struct: `free(matrix)`. 
 
-At this point it's a good idea to add more methods to help the potential user of the library to create various `nml_mat` structs, with various properties.
+At this point, it's a good idea to add more methods to help the potential user of the library to create various `nml_mat` structs, with various properties.
 
 | Method | Description |
 | ------ | ----------- |
@@ -331,7 +331,7 @@ nml_mat *nml_mat_rnd(unsigned int num_rows, unsigned int num_cols, double min, d
 }
 ```
 
-The input params `min` and `max` represent the boundaries of the interval in which the random numbers are being generated.
+The input params `min` and `max` represent the interval boundaries in which the random numbers are being generated.
 
 The `nml_rand_interval(min, max)`, the method responsible for generating the random value, looks like this:
 
