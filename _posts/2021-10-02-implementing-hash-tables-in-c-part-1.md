@@ -652,7 +652,7 @@ typedef struct ch_node_s {
 ```
 
 The `ch_node` structure contains:
-* `uint32_t hash` is not the actual bucket index, but it's the hash of the data that is going inside the **hash table**. For example, if our keys are strings, `uint32_t hash` is obtained by applying a **hashing function** that works for strings (e.g.: [djb2](#djb2)). This is only computed once, and it's (re)used whenever we need to **re-hash** our table;
+* `uint32_t hash` is not the actual bucket index, but it's the hash of the data that is going inside the **hash table**. For example, if our keys are strings, `uint32_t hash` is obtained by applying a **hashing function** that works for strings (e.g.: [djb2](#djb2)). This is only computed once, and it's (re)used whenever we need to ** rehash** our table;
 * `key` and `val` of a `void*` type. This gives us enough flexibility to store almost anything in the table.
 * `struct ch_node_s *next` which is a reference to the next node in the list.
 
@@ -785,7 +785,7 @@ As you might've noticed, there's no function for deleting an entry. That's inten
 
 Before implementing the enumerated methods, it's good to clarify a few things that are not obvious from the interface itself.
 
-Just for fun (best practices are fun!), our **hash table** will grow automatically if its `size` reaches a certain threshold. So every time we insert a new element, we check if the threshold has been reached and if it's time to increase the capacity (and the number of available buckets). A re-hashing of everything will also be performed - old entries might go to new buckets.
+Just for fun (best practices are fun!), our **hash table** will grow automatically if its `size` reaches a certain threshold. So every time we insert a new element, we check if the threshold has been reached and if it's time to increase the capacity (and the number of available buckets). A rehashing of everything will also be performed - old entries might go to new buckets.
 
 In this regard let's define the following constants (we can tweak their values later):
 
@@ -991,7 +991,7 @@ void ch_hash_put(ch_hash *hash, const void *k, const void *v) {
 
 `ch_hash_grow` is an internal method (not exposed in the public API) responsible for scaling up the number of buckets (`hash->buckets`) based on the number of elements contained in the table (`hash->size`).
 
-`ch_hash_grow` allocates memory for a new array `ch_node **new_buckets`, and then re-hashes all the elements from the *old* array (`hash->buckets`) by projecting them in the *new buckets*.
+`ch_hash_grow` allocates memory for a new array `ch_node **new_buckets`, and then rehashes all the elements from the *old* array (`hash->buckets`) by projecting them in the *new buckets*.
 
 In regards to this, 3 constants are being used:
 
@@ -1442,11 +1442,19 @@ Compared to **Separate Chaining**, deleting elements in a **hash table** that us
 
 After a delete operation occurs, we cannot simply empty the bucket (associate `NULL` with it). If we do that, we might break a sequence of entries and unjustly isolate some. The separated entries will become unreachable for the following read operations. They become reachable only if the previous *sequence* is somehow *restored* through a *lucky* insertion. 
 
-One solution would be to re-hash everything after each delete. But think of it for a moment; this means to allocate a new array of buckets, calculate the new index (bucket) for each element, and then free the memory associated with the old and *broken* array. It's a costly and unacceptable endeavor, especially when there are better alternatives.
+One solution would be to rehash everything after each delete. But think of it for a moment; this means to allocate a new array of buckets, calculate the new index (bucket) for each element, and then free the memory associated with the old and *broken* array. It's a costly and unacceptable endeavor, especially when there are better alternatives.
 
-One alternative for avoiding full re-hashing is to introduce the notion of **tombstones**. Each time a delete operation occurs, instead of emptying the bucket, we put a sentinel value, metaphorically called **a tombstone**. 
+One alternative for avoiding full rehashing is to introduce the notion of **tombstones**. Each time a delete operation occurs, instead of emptying the bucket, we put a sentinel value, metaphorically called **a tombstone**. 
 
-The tombstone will behave differently based on the operation. If we want to perform a read operation or another delete, the **tombstone** will act just as a real entry; probing will ignore it and continue further. This way, the rest of the entries are not isolated from the others. If we want to perform a `put` (insert) operation, the **tombstone** will act as a very inviting empty slot. 
+The tombstone will behave differently based on the operation.
+
+If we want to perform a `read` operation or another `delete`, the **tombstone** will act just like an actual entry; probing will ignore it and continue further. This way, the rest of the entries are not isolated from the others. 
+
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/tobstonesgetdelete.png){:height="75%" width="75%"} 
+
+If we want to perform a `put` (insert) operation, the **tombstone** will act as a very inviting empty slot. 
+
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/tombstonesinsert.png){:height="75%" width="75%"} 
 
 A high density of **tombstones** will increase the load factor, just like the actual entries do, so an intelligent **hash table** implementation needs to consider this. 
 
@@ -1461,6 +1469,428 @@ git clone git@github.com:nomemory/open-adressing-hash-table-c.git
 ``` 
 
 Similar to the implementations for **Separate Chaining**, we will use the `void*` pointer to achieve some sort of genericity.
+
+#### The model
+
+For the model layer, we will keep almost the same structures as before. 
+
+```cpp
+typedef struct oa_key_ops_s {
+    uint32_t (*hash)(const void *data, void *arg);
+    void* (*cp)(const void *data, void *arg);
+    void (*free)(void *data, void *arg);
+    bool (*eq)(const void *data1, const void *data2, void *arg);
+    void *arg;
+} oa_key_ops;
+
+typedef struct oa_val_ops_s {
+    void* (*cp)(const void *data, void *arg);
+    void (*free)(void *data, void *arg);
+    bool (*eq)(const void *data1, const void *data2, void *arg);
+    void *arg;
+} oa_val_ops;
+```
+
+`oa_key_ops_s` and `oa_val_ops_s` are collections of functions that are related to the data kept inside the keys and values. 
+
+```cpp
+typedef struct oa_pair_s {
+    uint32_t hash;
+    void *key;
+    void *val;
+} oa_pair;
+```
+
+The `oa_pair_s` is the structure corresponding to the actual `<key, value>` entry.
+
+```cpp
+typedef struct oa_hash_s {
+    size_t capacity;
+    size_t size;
+    oa_pair **buckets;
+    void (*probing_fct)(struct oa_hash_s *htable, size_t *from_idx);
+    oa_key_ops key_ops;
+    oa_val_ops val_ops;
+} oa_hash;
+```
+
+`oa_hash_s` is the actual structure behind our **hash table** implementation:
+* `capacity` - the number of buckets;
+* `size` - the number of elements (gets incremented each time we add a new element, and decremented when a removal is performed);
+* `buckets` - the actual references to our `oa_pairs`;
+* `probing_fct` - the probing algorithm (eg., linear probing);
+* `key_ops` - key related operations;
+* `val_ops` - value related operations;
+
+`probing_fct` is a *pointer function* that allows our users to choose the algorithm for probing. 
+
+For example, for linear probing, we can come with something like this:
+
+```cpp
+static inline void oa_hash_lp_idx(oa_hash *htable, size_t *idx) {
+    (*idx)++;
+    if ((*idx)==htable->capacity) {
+        (*idx) = 0;
+    }
+}
+```
+
+`oa_hash_lp_idx` is a simple function that increments the index (`idx`). If we reach the end of the *bucket array* we simply start again.
+
+We can also write a function for **quadratic probing** later and pass it to the **hash table**. It's good to offer some flexibility, after all. 
+
+A few constants are also defined:
+
+```cpp
+#define OA_HASH_LOAD_FACTOR (0.75)
+#define OA_HASH_GROWTH_FACTOR (1<<2)
+#define OA_HASH_INIT_CAPACITY (1<<12)
+```
+
+* `OA_HASH_LOAD_FACTOR` - The maximum accepted load factor. 
+* `OA_HASH_GROWTH_FACTOR` - The growth factor.
+* `OA_HASH_INIT_CAPACITY` - The initial capacity (nuber of buckets for the **hash table**).
+
+#### The interface
+
+The interface is again relatively straightforward:
+
+```cpp
+// Creating  anew hash table
+oa_hash* oa_hash_new(oa_key_ops key_ops, oa_val_ops val_ops, void (*probing_fct)(struct oa_hash_s *htable, size_t *from_idx));
+oa_hash* oa_hash_new_lp(oa_key_ops key_ops, oa_val_ops val_ops);
+// Destructor like method for destroying the hashtable
+void oa_hash_free(oa_hash *htable);
+// Adding, Reading, Deleting entries
+void oa_hash_put(oa_hash *htable, const void *key, const void *val);
+void *oa_hash_get(oa_hash *htable, const void *key);
+void oa_hash_delete(oa_hash *htable, const void *key);
+void oa_hash_print(oa_hash *htable, void (*print_key)(const void *k), void (*print_val)(const void *v));
+
+// Pair related
+oa_pair *oa_pair_new(uint32_t hash, const void *key, const void *val);
+
+// String operations
+uint32_t oa_string_hash(const void *data, void *arg);
+void* oa_string_cp(const void *data, void *arg);
+bool oa_string_eq(const void *data1, const void *data2, void *arg);
+void oa_string_free(void *data, void *arg);
+void oa_string_print(const void *data);
+```
+
+##### Creating/Destroying a **hash table**
+
+It's always a good practice to start writing constructor-like and destructor-like functions for `oa_hash` structure.
+
+* `oa_hash_new` is the constructor-like function for dynamically allocating an `oa_hash` function on the heap;
+* `oa_hash_free` is a destructor-like function that frees the memory associated with `oa_hash` and its elements.
+
+```cpp
+oa_hash* oa_hash_new(
+    oa_key_ops key_ops, 
+    oa_val_ops val_ops, 
+    void (*probing_fct)(struct oa_hash_s *htable, size_t *from_idx)) 
+{
+    oa_hash *htable;
+    
+    htable = malloc(sizeof(*htable));
+    if (NULL==htable) {
+        fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);  
+    }
+
+    htable->size = 0;
+    htable->capacity = OA_HASH_INIT_CAPACITY;
+    htable->val_ops = val_ops;
+    htable->key_ops = key_ops;
+    htable->probing_fct = probing_fct;
+
+    htable->buckets = malloc(sizeof(*(htable->buckets)) * htable->capacity);
+    if (NULL==htable->buckets) {
+        fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);  
+    }
+
+    for(int i = 0; i < htable->capacity; i++) {
+        htable->buckets[i] = NULL;
+    }
+
+    return htable;
+}
+```
+
+In practice, it's not a good idea to free the memory associated with the pairs, but for simplicity our implementation frees the memory:
+
+```cpp
+void oa_hash_free(oa_hash *htable) {
+    for(int i = 0; i < htable->capacity; i++) {
+        if (NULL!=htable->buckets[i]) {
+            htable->key_ops.free(htable->buckets[i]->key, htable->key_ops.arg);
+            htable->val_ops.free(htable->buckets[i]->val, htable->val_ops.arg);
+        }
+        free(htable->buckets[i]);
+    }
+    free(htable->buckets);
+    free(htable);
+}
+```
+
+Given the fact we are going to use **linear probing** for our implementation we can *overload* the allocator to use the previously defined algorithm for **linear probing**:
+
+```cpp
+oa_hash* oa_hash_new_lp(oa_key_ops key_ops, oa_val_ops val_ops) {
+    return oa_hash_new(key_ops, val_ops, oa_hash_lp_idx);
+}
+```
+
+##### Modeling Tombstones
+
+We will need a way to model [**tombstones**](#tombstones) for our **hash table**. In this regard we will call a tombstone a non-`NULL` `oa_pair` element with `oa_pair->hash=0`, `oa_pair->key=NULL` and `oa_pair->val=NULL`. 
+
+Then we write a function that checks if a certain bucket is a **tombstone**:
+
+```cpp
+inline static bool oa_hash_is_tombstone(oa_hash *htable, size_t idx) {
+    if (NULL==htable->buckets[idx]) {
+        return false;
+    }
+    if (NULL==htable->buckets[idx]->key && 
+        NULL==htable->buckets[idx]->val && 
+        0 == htable->buckets[idx]->key) {
+            return true;
+    }        
+    return false;
+}
+```
+
+And another function that puts a tombstone at given bucket index every time we delete an element:
+
+```cpp
+inline static void oa_hash_put_tombstone(oa_hash *htable, size_t idx) {
+    if (NULL != htable->buckets[idx]) {
+        htable->buckets[idx]->hash = 0;
+        htable->buckets[idx]->key = NULL;
+        htable->buckets[idx]->val = NULL;
+    }
+}
+```
+
+##### Growing the bucket capacity if needed
+
+Let's define a metric to track down the load on the *buckets*: `load_factor=size/capacity`. If the load factor is bigger than `0.75`, our **hash table** performance might drop. 
+
+In this regard, we will define a function `oa_hash_should_grow` that will check after each addition if we need to grow the **hash table**.
+
+```cpp
+#define OA_HASH_LOAD_FACTOR (0.75)
+inline static bool oa_hash_should_grow(oa_hash *htable) {
+    return (htable->size / htable->capacity) > OA_HASH_LOAD_FACTOR;
+}
+```
+
+We will continue by writing the growth method `oa_hash_grow`. This method will:
+* check if the new bucket capacity doesn't overflow;
+* allocate a new memory zone for the new buckets;
+* perform a complete rehash of all the elements (skipping any potential tombstone).
+* free the memory associated with the old buckets.
+
+```cpp
+inline static void oa_hash_grow(oa_hash *htable) {
+    uint32_t old_capacity;
+    oa_pair **old_buckets;
+    oa_pair *crt_pair;
+
+    // Check if the new bucket capacity doesn't overflow;
+    uint64_t new_capacity_64 = (uint64_t) htable->capacity * OA_HASH_GROWTH_FACTOR;
+    if (new_capacity_64 > SIZE_MAX) {
+        fprintf(stderr, "re-size overflow in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    old_capacity = htable->capacity;
+    old_buckets = htable->buckets;
+
+    // Allocate a new memory zone for the new buckets;
+    htable->capacity = (uint32_t) new_capacity_64;
+    htable->size = 0;
+    htable->buckets = malloc(htable->capacity * sizeof(*(htable->buckets)));
+
+    if (NULL == htable->buckets) {
+        fprintf(stderr,"malloc() failed in file %s at line # %d", __FILE__,__LINE__);
+        exit(EXIT_FAILURE);  
+    }
+
+    for(int i = 0; i < htable->capacity; i++) {
+        htable->buckets[i] = NULL;
+    };
+
+    // Perform a complete rehash of all the elements (skipping any potential tombstone).
+    for(size_t i = 0; i < old_capacity; i++) {
+        crt_pair = old_buckets[i];
+        if (NULL!=crt_pair && !oa_hash_is_tombstone(htable, i)) {
+            oa_hash_put(htable, crt_pair->key, crt_pair->val);
+            htable->key_ops.free(crt_pair->key, htable->key_ops.arg);
+            htable->val_ops.free(crt_pair->val, htable->val_ops.arg);
+            free(crt_pair);
+        }
+    }
+
+    // Free the memory associated with the old buckets.
+    free(old_buckets);
+}
+```
+
+##### Getting the correct index 
+
+The next step is to implement a function that retrieves the bucket where we perform [`oa_hash_get`](#retrieving-an-element-from-the-hash-table), [`oa_hash_put`](#adding-an-element-to-the-hash-table) or [`oa_hash_delete`](#removing-an-element-from-the-hash-table) operations.
+
+```cpp
+static size_t oa_hash_getidx(oa_hash *htable, size_t idx, uint32_t hash_val, const void *key, enum oa_ret_ops op) {
+    do {
+        if (op==PUT && oa_hash_is_tombstone(htable, idx)) {
+            break;
+        }
+        if (htable->buckets[idx]->hash == hash_val && 
+            htable->key_ops.eq(key, htable->buckets[idx]->key, htable->key_ops.arg)) {
+            break;
+        }
+        htable->probing_fct(htable, &idx);
+    } while(NULL!=htable->buckets[idx]);
+    return idx;
+}
+```
+
+The input params of the function are:
+
+* `htable` - this represents the **hash table** where we operate;
+* `idx` - this is the starting index from where we will start probing (using `htable->probing_fct`, the **pointer function** supplied at construction-time);
+* `hash_val` - the `hash` of the value we are searching;
+* `key` - the `key` for which we are operating;
+* `op` - the operation. For example, if we `PUT` an element, tombstones won't be ignored, but if we use this function tp `GET` or `DELETE` elements, tombstones will act just as normal elements.
+
+`idx`, or the starting index is usually obtained like this:
+
+```cpp
+uint32_t hash_val = htable->key_ops.hash(key, htable->key_ops.arg);
+size_t idx = hash_val % htable->capacity;
+```
+
+`idx` is the *natural* choice for each entry, but in the case of **hash collisions**, we need to find another free index. Here's where the `oa_hash_getidx` functions come into play. It returns the most natural choice starting from `idx`.
+
+##### Adding an element to the **hash table**
+
+The steps to add (`oa_hash_put`) an element inside the **hash table** are the following:
+* We grow the **hash table** if necesary;
+* We check if there is an empty bucket to insert the element;
+* If it's not empty, we probe for another suitable bucket;
+* We insert the element;
+
+```cpp
+void oa_hash_put(oa_hash *htable, const void *key, const void *val) {
+
+    if (oa_hash_should_grow(htable)) {
+        oa_hash_grow(htable);
+    }
+
+    uint32_t hash_val = htable->key_ops.hash(key, htable->key_ops.arg);
+    size_t idx = hash_val % htable->capacity;
+
+    if (NULL==htable->buckets[idx]) {
+        // Key doesn't exist & we add it anew
+        htable->buckets[idx] = oa_pair_new(
+                hash_val, 
+                htable->key_ops.cp(key, htable->key_ops.arg),
+                htable->val_ops.cp(val, htable->val_ops.arg)
+        );
+    } else {
+        // // Probing for the next good index
+        idx = oa_hash_getidx(htable, idx, hash_val, key, PUT);
+
+        if (NULL==htable->buckets[idx]) {
+            htable->buckets[idx] = oa_pair_new(
+                hash_val, 
+                htable->key_ops.cp(key, htable->key_ops.arg),
+                htable->val_ops.cp(val, htable->val_ops.arg)
+            );
+        } else {
+            // Update the existing value
+            // Free the old values
+            htable->val_ops.free(htable->buckets[idx]->val, htable->val_ops.arg);
+            htable->key_ops.free(htable->buckets[idx]->key, htable->key_ops.arg);
+            // Update the new values
+            htable->buckets[idx]->val = htable->val_ops.cp(val, htable->val_ops.arg);
+            htable->buckets[idx]->key = htable->val_ops.cp(key, htable->key_ops.arg);
+            htable->buckets[idx]->hash = hash_val;
+        }
+   }
+    htable->size++;
+}
+```
+
+##### Removing an element from the **hash table**
+
+The steps to remove (`oa_hash_delete`) an element from the **hash table** are the following:
+* We check if the bucket is empty. If it is, we simply return;
+* If the bucket is not empty we check if the element should be removed or not;
+* If it's not the good element, it means we need to probe to find it.
+* We free the memory associated with the element;
+
+```cpp
+void oa_hash_delete(oa_hash *htable, const void *key) {
+    uint32_t hash_val = htable->key_ops.hash(key, htable->key_ops.arg);
+    size_t idx = hash_val % htable->capacity;
+    
+    if (NULL==htable->buckets[idx]) {
+        return;
+    }
+
+    idx = oa_hash_getidx(htable, idx, hash_val, key, DELETE);
+    if (NULL==htable->buckets[idx]) {
+        return;
+    }
+    
+    htable->val_ops.free(htable->buckets[idx]->val, htable->val_ops.arg);
+    htable->key_ops.free(htable->buckets[idx]->key, htable->key_ops.arg);
+
+    oa_hash_put_tombstone(htable, idx);
+}
+```
+
+##### Retrieving an element from the **hash table**
+
+Retrieving an element is again a straight-forward function to implement:
+
+```cpp
+void *oa_hash_get(oa_hash *htable, const void *key) {
+    uint32_t hash_val = htable->key_ops.hash(key, htable->key_ops.arg);
+    size_t idx = hash_val % htable->capacity;
+
+    if (NULL==htable->buckets[idx]) {
+        return NULL;
+    }
+
+    idx = oa_hash_getidx(htable, idx, hash_val, key, GET);
+
+    return (NULL==htable->buckets[idx]) ?
+         NULL : htable->buckets[idx]->val;
+}
+```
+
+#### Putting all together
+
+```cpp
+int main(int argc, char *argv[]) {
+    oa_hash *h = oa_hash_new(oa_key_ops_string, oa_val_ops_string, oa_hash_lp_idx);
+
+    oa_hash_put(h, "Bucharest", "Romania");
+    oa_hash_put(h, "Sofia", "Bulgaria");
+
+    printf("%s\n", oa_hash_get(h, "Bucharest"));
+    printf("%s\n", oa_hash_get(h, "Sofia"));
+
+    return 0;
+}
+```
 
 (TO BE CONTINUED)
 
