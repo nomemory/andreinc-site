@@ -1,11 +1,12 @@
-title: "www.andreinc.net"
+title: "andreinc"
 title_separator: "|"
-subtitle: "Neat programming blog"
+subtitle: "Personal blog of Andrei N. Ciobanu"
 email: none@none.com
 description: >-
-  Andrei Ciobanu's programming blog.
+  Personal blog of Andrei N. Ciobanu.
 baseurl: "" 
 url: ""
+breadcrumbs: false
 github_username:  nomemory
 
 # Build settings  
@@ -14,6 +15,7 @@ markdown: kramdown
 highlighter: rouge
 plugins:
   - jekyll-feed
+  - jekyll-email-protect
 
 minimal_mistakes_skin: air # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 
@@ -25,12 +27,13 @@ include: ["_pages"]
 author:
   name: "Andrei Ciobanu"
   avatar: "/assets/images/me.jpg"
-  bio: "I am 34 years Software Developer and Engineering Manager from Romania/Bucharest."
-  location: "Bucharest"
+  bio: >-
+    A random software engineer from Eastern Europe.
+  location: "Bucharest, Romania"
   links:
     - label: GitHub
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/nomemory/mockneat"
+      url: "https://github.com/nomemory"
     - label: LinkedIn
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/andrei-n-ciobanu-50708611/"
@@ -47,10 +50,10 @@ defaults:
       layout: single
       author_profile: true
       show_date: true
-      read_time: true
-      comments: true
+      read_time: false
+      comments: false
       share: true
-      related: true
+      related: false
   # _pages
   - scope:
       path: ""

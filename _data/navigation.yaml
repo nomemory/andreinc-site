@@ -1,12 +1,12 @@
 main:
-  - title: "Posts"
-    url: /
+  # - title: "Tech"
+  #   url: /
   - title: "About"
     url: /about/   
-  - title: "Portfolio"
+  - title: "Projects"
     url: /portfolio/
-  - title: "CV"
-    url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
+  # - title: "CV"
+  #   url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
 
 
 posts_nav:
