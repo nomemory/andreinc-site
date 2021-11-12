@@ -5,10 +5,15 @@ classes: wide
 usemathjax: true
 categories:
 - "c"
-- "linear-algebra"
+- "mathematics"
+- "algorithms"
 tags:
 - "algorithm"
 - "computer-science"
+- "linear-algebra"
+- "qr"
+- "matrix-inverse"
+- "matrix-determinant"
 ---
 
 Table of Contents
@@ -282,7 +287,7 @@ _Notes:_
 Explanation:
 1. First step is to check if `num_rows == 0` or `num_cols == 0`. If they are, we consider the input as invalid, and we print on `stderr` an error. Afterwards `NULL` is returned;
 2. This line: `nml_mat *m = calloc(1, sizeof(*m))` allocates memory for `1` (one) `nml_mat` structure;
-3. For a multidimensional array (`double**`), we allocate memory in two steps: 
+3. For a multi-dimensional array (`double**`), we allocate memory in two steps: 
   - `m->data = calloc(m->num_rows, sizeof(*m->data))` - this allocates memory for the `column` array;
   -  Then, we allocate memory for each row. By using [`calloc()`](https://www.cplusplus.com/reference/cstdlib/calloc/) the data is initialized with `0.0`. 
 

@@ -23,7 +23,7 @@ I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer w
 
 I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent).
 
-I keep my technical skills sharp by doing coding exercises and contributing to the open source world. My most *popular* project is [www.mockneat.com](www.mockneat.com). 
+I keep my technical skills sharp by doing coding exercises and contributing to the open source world. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
 I usually blog about my interests: Java/Kotlin, Mathematics, Computer Science curricula (algorithms and data structures).
 

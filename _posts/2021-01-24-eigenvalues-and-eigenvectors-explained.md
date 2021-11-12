@@ -4,9 +4,9 @@ date: "2021-01-20"
 classes: wide
 usemathjax: true
 categories:
-- "c"
-- "linear-algebra"
+- "mathematics"
 tags:
+- "linear-algebra"
 - "algorithm"
 - "computer-science"
 ---

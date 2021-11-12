@@ -4,9 +4,9 @@ date: "2021-03-07"
 classes: wide
 categories:
 - "java"
+tags:
 - "kafka"
 - "ksqldb"
-tags:
 - "events"
 - "streams"
 ---

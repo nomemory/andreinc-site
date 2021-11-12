@@ -6,8 +6,9 @@ usemathjax: true
 categories:
 - "c"
 - "python"  
-- "linear-algebra"
+- "mathematics"
 tags:
+- "linear-algebra"
 - "algorithm"
 - "computer-science"
 - "eigenvalues"

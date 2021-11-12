@@ -3,8 +3,13 @@ title: "Implementing Hash Tables in C"
 date: "2021-10-02"
 classes: wide
 usemathjax: true
+# toc: true
+# toc_label: "My Table of Contents"
+# toc_icon: "cog"
+# toc_sticky: true
 categories:
 - "c"
+- "algorithms"
 tags:
 - "hashing"
 - "hash"

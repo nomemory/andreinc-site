@@ -7,6 +7,7 @@ categories:
 tags:
 - "uci"
 - "stockfish"
+- "chess"
 ---
 
 > I love chess; it's just that chess doesn't love me back.
@@ -19,7 +20,7 @@ My plan was to build something straightforward, you know, the type of statistics
 - How often do I blunder pieces in blitz;
 - etc.
 
-So my first reaction (as a programmer) was to find a Java library that "connects" to Stockfish (or to a similar open-source chess engine) and do the works for me. Little did I know. There's no maintained Java library that does that. 
+So my first reaction (as a programmer) was to find a Java library that "connects" to Stockfish (or to a similar open-source chess engine) and do the works for me. Little did I know: no maintained Java library does that. 
 
 After doing my research, I've found out that most modern chess engines implement a protocol called UCI. UCI stands for [*Universal Chess Interface*](https://en.wikipedia.org/wiki/Universal_Chess_Interface). It's good that we have a standard, right?
 
