@@ -3,6 +3,7 @@ title: "Writing your own linear algebra matrix library in C"
 date: "2021-01-20"
 classes: wide
 usemathjax: true
+excerpt: "A step-by-step guide on how to implement a matrix library in pure C."
 categories:
 - "c"
 - "mathematics"

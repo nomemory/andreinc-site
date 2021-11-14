@@ -2,6 +2,7 @@
 title: "Computing Eigenvalues and Eigenvectors using QR Decomposition"
 date: "2021-01-25"
 classes: wide
+excerpt: "A short tutorial on how to compute Eigenvalues and Eigenvectors using QR Matrix Decomposition. Python code included."
 usemathjax: true
 categories:
 - "c"

@@ -2,6 +2,7 @@
 title: "Bash Scripting - Best Practices"
 date: "2011-09-04"
 classes: wide
+excerpt: "A list of bash best practices."
 categories:
   - "shell"  
 tags:
@@ -18,7 +19,7 @@ tags:
   - "test-if-script-is-run-by-user"
 ---
 
-A list of best practices when writing bash scripts:
+A list of best practices for writing bash scripts:
 
 # Use a portable shebang
 

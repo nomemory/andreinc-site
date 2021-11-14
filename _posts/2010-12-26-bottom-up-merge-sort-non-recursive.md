@@ -2,6 +2,7 @@
 title: "Bottom-up Merge Sort (non-recursive)"
 date: "2010-12-26"
 classes: wide
+excerpt: "The merge sort algorithm (non-recursive) explained and implemented in Java."
 categories:
 - "java"
 - "algorithms"

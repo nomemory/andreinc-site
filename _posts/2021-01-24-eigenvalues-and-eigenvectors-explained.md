@@ -3,6 +3,7 @@ title: "Linear transformations, Eigenvectors and Eigenvalues - an easy explanati
 date: "2021-01-20"
 classes: wide
 usemathjax: true
+excerpt: "A short mathematical explanatory article on Linear Transformations, Eigenvalues and Eigenvectors."
 categories:
 - "mathematics"
 tags:

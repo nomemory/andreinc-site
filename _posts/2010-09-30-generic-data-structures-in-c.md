@@ -2,6 +2,7 @@
 title: "Generic data structures in C"
 date: "2010-09-30"
 classes: wide
+excerpt: "A short tutorial on how to write generic code in C."
 categories: 
   - "c" 
   - "algorithms" 

@@ -2,6 +2,7 @@
 title: "XML to JSON using MapNeat"
 date: "2021-02-01"
 classes: wide
+excerpt: "A short tutorial on how to transform XML to JSON using mapneat."
 categories:
 - "java"
 - "kotlin"

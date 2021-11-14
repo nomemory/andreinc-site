@@ -2,6 +2,7 @@
 title: "Implementing a generic Priority Queue in C (using heaps)"
 date: "2011-06-01"
 classes: wide
+excerpt: "An article describing how to implement a Priority Queue in C."
 categories: 
   - "c"
   - "algorithms"

@@ -2,6 +2,7 @@
 title: "Euclid's Algorithm: Reducing fraction to lowest terms"
 date: "2010-12-13"
 classes: wide
+excerpt: "The Euclid algorithm explained and implemented in C."
 categories: 
   - "c"
   - "algorithms"

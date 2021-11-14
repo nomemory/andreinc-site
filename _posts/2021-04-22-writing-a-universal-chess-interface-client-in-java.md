@@ -2,6 +2,7 @@
 title: "Writing a Universal Chess Interface (UCI) Client in Java"
 date: "2021-04-22"
 classes: wide
+excerpt: "A step-by-step guide on how to implement an UCI client in Java."
 categories:
 - "java"
 tags:

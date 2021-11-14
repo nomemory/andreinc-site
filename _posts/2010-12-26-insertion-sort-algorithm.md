@@ -2,6 +2,7 @@
 title: "Insertion Sort Algorithm"
 date: "2010-12-26"
 classes: wide
+excerpt: "The insertion sort algorithm explained and implemented in Java."
 categories: 
   - "algorithms"
   - "java"

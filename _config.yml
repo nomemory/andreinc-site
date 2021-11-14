@@ -54,6 +54,7 @@ defaults:
       comments: false
       share: true
       related: false
+      excerpt: false
   # _pages
   - scope:
       path: ""

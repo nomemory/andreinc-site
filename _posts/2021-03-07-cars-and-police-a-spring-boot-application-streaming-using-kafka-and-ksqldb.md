@@ -2,6 +2,7 @@
 title: "Cars and Police, a Spring Boot streaming application using Kafka and ksqlDB"
 date: "2021-03-07"
 classes: wide
+excerpt: "A ksqlDB proof of concept."
 categories:
 - "java"
 tags:

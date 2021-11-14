@@ -6,7 +6,7 @@ title: About
 ---
 
 ![jpg]({{site.url}}/assets/images/about/me-it.jpg){:height="50%" width="50%"}
-<sup><sup><sup>Saint-Paul-de-Vence, 2019</sup></sup></sup>
+<sup><sup><sup>Saint-Paul-de-Vence, France, 2019</sup></sup></sup>
 
 My name is Andrei N. Ciobanu; I live in [Bucharest](https://en.wikipedia.org/wiki/Bucharest), [Romania](https://en.wikipedia.org/wiki/Romania). I am happily married and the father of a sweet baby girl. 
 
@@ -23,8 +23,10 @@ I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer w
 
 I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent).
 
-I keep my technical skills sharp by doing coding exercises and contributing to the open source world. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
+I keep my technical skills sharp by doing coding exercises and contributing to the open-source world. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
-I usually blog about my interests: Java/Kotlin, Mathematics, Computer Science curricula (algorithms and data structures).
+I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site.url}}/categories/#java)/[Kotlin]({{site.url}}/categories/#kotlin), Mathematics, Computer Science curricula (algorithms and data structures).
+
+The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). If you see any mistake, or if you wan to propose a change in the articles, please open a PR.
 
 To contact me, drop a message on [LinkedIn]((https://www.linkedin.com/in/andrei-n-ciobanu-50708611/)).

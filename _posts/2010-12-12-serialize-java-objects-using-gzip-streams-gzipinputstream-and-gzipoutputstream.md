@@ -1,6 +1,7 @@
 ---
 title: "Serialize java objects using GZip streams (GZIPInputStream and GZIPOutputStream)"
 classes: wide
+excerpt: "An article on how to serialize and deserialize Java Objects using GZIP streams."
 date: "2010-12-12"
 categories: 
   - "java"

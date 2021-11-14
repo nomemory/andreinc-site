@@ -2,6 +2,7 @@
 title: "The merge sort algorithm (implementation in Java)"
 date: "2010-12-22"
 classes: wide
+excerpt: "The merge sort algorithm explained and implemented in Java."
 categories: 
   - "java"
   - "algorithms"

@@ -2,6 +2,7 @@
 title: "Converting infix to RPN (shunting-yard algorithm)"
 date: "2010-10-05"
 classes: wide
+excerpt: "The shunting-yard algorithm implemented in Java."
 categories: 
   - "algorithms"
   - "java"

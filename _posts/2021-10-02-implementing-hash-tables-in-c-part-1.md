@@ -3,10 +3,7 @@ title: "Implementing Hash Tables in C"
 date: "2021-10-02"
 classes: wide
 usemathjax: true
-# toc: true
-# toc_label: "My Table of Contents"
-# toc_icon: "cog"
-# toc_sticky: true
+excerpt: "An in-depth explanation on how we can implement hash tables in pure C. The article covers the following topics: hash functions, separate chaninig and open addressing"
 categories:
 - "c"
 - "algorithms"

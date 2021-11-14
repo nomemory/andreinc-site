@@ -1,6 +1,7 @@
 ---
 title: "Binary GCD (Stein's Algorithm) in C"
 date: "2010-12-12"
+excerpt: "The Stein's algorithm explained and implemented in C."
 classes: wide
 categories: 
   - "c"

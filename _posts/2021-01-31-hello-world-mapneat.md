@@ -2,6 +2,7 @@
 title: "Hello world, mapneat!"
 date: "2021-01-31"
 classes: wide
+excerpt: "A gentle introduction to the Kotlin mapneat library."
 categories:
 - "java"
 - "kotlin"

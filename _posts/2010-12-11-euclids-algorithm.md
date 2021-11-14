@@ -1,6 +1,7 @@
 ---
 title: "Euclid's Algorithm"
 date: "2010-12-11"
+excerpt: "The Euclid's algorithm explained and implemented in C."
 classes: wide
 categories: 
   - "c"

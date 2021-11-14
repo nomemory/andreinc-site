@@ -2,6 +2,7 @@
 title: "Generate random SQL inserts using pysert"
 date: "2011-08-21"
 classes: wide
+excerpt: "A short tutorial on how to use and configure pysert."
 categories: 
 - "python"
 tags:
