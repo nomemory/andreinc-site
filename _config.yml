@@ -51,7 +51,7 @@ defaults:
       author_profile: true
       show_date: true
       read_time: false
-      comments: false
+      comments: true
       share: true
       related: false
       excerpt: false
@@ -62,5 +62,11 @@ defaults:
     values:
       layout: single
       author_profile: true
+
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-light" # "github-dark"
+    issue_term: "pathname"
 
 permalink: /:year/:month/:day/:title

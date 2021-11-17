@@ -29,4 +29,6 @@ I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site
 
 The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). If you see any mistake, or if you wan to propose a change in the articles, please open a PR.
 
-To contact me, drop a message on [LinkedIn]((https://www.linkedin.com/in/andrei-n-ciobanu-50708611/)).
+For contact, drop me a message on [LinkedIn]((https://www.linkedin.com/in/andrei-n-ciobanu-50708611/)). 
+
+The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml).
