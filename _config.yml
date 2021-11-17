@@ -41,6 +41,15 @@ author:
       icon: "fab fa-fw fa-spotify"
       url: "https://open.spotify.com/user/a3dud6s6igdiphj760chzhpxv?si=haRc0m-YQEqrPQVNbGxAEA"
 
+repository: "nomemory/andreinc-site"
+comments:
+  provider: "utterances"
+  utterances:
+    repo:  "nomemory/andreinc-site"
+    theme: "github-light" # "github-dark"
+    issue_term: "pathname"
+
+
 defaults:
   # _posts
   - scope:
@@ -54,7 +63,7 @@ defaults:
       comments: true
       share: true
       related: false
-      excerpt: false
+      excerpt: true
   # _pages
   - scope:
       path: ""
@@ -62,12 +71,5 @@ defaults:
     values:
       layout: single
       author_profile: true
-
-repository: "nomemory/andreinc-site"
-comments:
-  provider: "utterances"
-  utterances:
-    theme: "github-light" # "github-dark"
-    issue_term: "pathname"
 
 permalink: /:year/:month/:day/:title

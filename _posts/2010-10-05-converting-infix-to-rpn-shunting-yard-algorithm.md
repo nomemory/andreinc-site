@@ -79,7 +79,7 @@ The Operators can be compared by their precedence (that's why we implement `Comp
 public enum Operator implements Comparable<Operator> {
 
     ADDITION("+", Associativity.LEFT, 0),
-    SUBTRACTION("-", Associativity.RIGHT, 0),
+    SUBTRACTION("-", Associativity.LEFT, 0),
     DIVISION("/", Associativity.LEFT, 5),
     MULTIPLICATION("*", Associativity.LEFT, 5),
     MODULUS("%", Associativity.LEFT, 5),
