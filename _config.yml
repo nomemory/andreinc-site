@@ -63,6 +63,7 @@ defaults:
       layout: single
       author_profile: true
 
+repository: "nomemory/andreinc-site"
 comments:
   provider: "utterances"
   utterances:
