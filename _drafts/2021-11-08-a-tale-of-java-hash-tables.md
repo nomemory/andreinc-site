@@ -83,7 +83,7 @@ In this regard, think of the `Node<K,V>[] table` as an array of linked data stru
 
 ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/chained-structure.drawio.png)
 
-In order to make things clearer, let's analyse the following example. We define a `HashMap<String, String>`, where keys `K` are European capital cities (`String`), while the values `V` are the corresponding country names (`String`).
+To make things more transparent, let's analyze the following example. We define a `HashMap<String, String>`, where keys `K` are European capital cities (`String`), while the values `V` are the corresponding country names (`String`).
 
 Before doing any insert, there will be one empty `table` with the initial capacity set to: `DEFAULT_INITIAL_CAPACITY=1<<4` (by the magic of bitwise operators, `1<<4==16`). The choice of using a power of two is not *accidental*, we will see shortly why.
 
@@ -283,13 +283,11 @@ Algorithms that avoid tombstones altogether exists, but they make the delete ope
 * In most of the cases, deleting an element from a `Map<K,V>` is not a common activity;
 * If deletes are rare, introducing a few tombstones down the road won't affect the performance in a significant manner.
 
-
-
 ## `LProbMap<K, V>`
 
 `LProbMap<K,V>` was my first *academic* attempt to implement an *Open Addressing* `Map<K,V>` in Java. I haven't tried any trick, I've just implemented the corresponding algorithms *by the book*.
 
-The first thing was to `extend Map<K,V>` and, as per the interface contract, I had to implement a few abstract methods. For the sake of readability, I won't copy paste the entire code here, but I will focus on the most important methods.
+The first thing was to `extend Map<K,V>` and, as per the interface contract, I had to write an implementation for all the abstract methods. I won't copy-paste the entire code here, but I will focus on the most important methods: `put`, `get`, `remove`, and the underlying data structures.
 
 ```java
 public class LProbMap<K, V> implements Map<K,V> {
@@ -312,7 +310,7 @@ public class LProbMap<K, V> implements Map<K,V> {
 
 `DEFAULT_MAX_LOAD_FACTOR` is the maximum load factor my `LProbMap<K,V>` accepts. After this threshold is reached, the number of buckets is increased to the next power of two. 
 
-I've tried a few values, and `0.6` seems to be a decent choice when it comes to the read operations speed. At the same time, I am wasting `40%` of my `buckets` array on `null` elements. To be totally honest `0.7` or `0.77` are also decent choices, so it's up to you to try them out.
+I've tried a few values, and `0.6` seems to be a decent choice for when I've benchmarked the read operations. At the same time, I am wasting `40%` of my `buckets` array on `null` elements. `0.7` or `0.77` are also decent choices, so it's up to you to try them out.
 
 The `loadFactor` in for `LProbMap<K,V>` is computed by the following formula: 
 
@@ -338,13 +336,11 @@ public static int hash(final Object obj) {
 }
 ```
 
-As you can see we make use of Java's `obj.hashCode()` method. We also apply a *finalizer* to it, as it was inspired by [Murmur Hash](https://en.wikipedia.org/wiki/MurmurHash). The reason to shift/xor/multiply/shift/xor is to make a better use of the high order bits of the object key. 
+As you can see, we (re)use Java's `obj.hashCode()` method. We also apply a *finalizer* to it, inspired by [Murmur Hash](https://en.wikipedia.org/wiki/MurmurHash). The reason to shift/xor/multiply/shift/xor is to make better use of the high order bits of the object key. 
 
-The last line `h & 0xfffffff` is making sure that the returned value is not a negative number. In Java, compared to C for example, there is no `uint32_t` type, so we need to take in consideration the sign. Doing this we are invalidating (through others) the bit containing the sign.
+The last line `h & 0xfffffff` ensures that the returned value is not a negative number. In Java, compared to C, for example, there is no `uint32_t` type, so we need to consider the sign. Doing this, we are invalidating (through others) the bit containing the sign.
 
-
-
-In respect to the `Map<K,V>` contract, we need to use entries that are extending the `Map.Entry<K,V>` class.
+In regards to the `Map<K,V>` contract, we need to use entries extending the `Map.Entry<K,V>` class.
 
 ```java
 protected static class LProbMapEntry<K, V> implements Map.Entry<K, V> {
@@ -365,11 +361,11 @@ protected static class LProbMapEntry<K, V> implements Map.Entry<K, V> {
 
 ### Inserting an entry
 
-Inserting an entry in the `LProbMap<K, V>` is straight-forward, and the algorithm is as follows:
+Inserting an entry in the `LProbMap<K, V>` is straightforward, and the algorithm is as follows:
 * We increase capacity if the *load factor* is bigger than what we've decided to be the threshold;
 * We compute the base bucket (slot);
-    * If bucket is `null` we insert the element and increment the size;
-    * Otherwise we iterate forever (`while(true)`) using linear probing, until we either:
+    * If the bucket is `null`, we insert the element and increment the size;
+    * Otherwise, we iterate forever (`while(true)`) using linear probing, until we either:
         * Find a tombstone to insert the entry, then we decrement the number of tombstones and increase the size. We return `null`;
         * Find an empty bucket, we increase the size. We return `null`;
         * Find the exact element, and we update the value. We return the `oldVal`.
@@ -434,11 +430,11 @@ protected V put(K key, V value, int hash) {
 
 In code above, one line that can look awkward, if you are not familiar with bitwise operations, is `int idx = hash & (buckets.length-1)`. This is used to calculate the *base* slot for the entry. We define the *base* slot as the *most natural* position an entry could have in our `buckets` array, if there are no collisions.
 
-`LProbMap<K,V>.hash(Object key)` will always return a positive integer in the interval `[0, Integer.MAX_VALUE]`. But we have only `buckets.length` slots available to insert the item. Normally, we could just simply write `hash(key) % buckets.length` to return the base slot. But modulo `%` operation is kinda slow. 
+`LProbMap<K,V>.hash(Object key)` will always return a positive integer in the interval `[0, Integer.MAX_VALUE]`. But we have only `buckets.length` slots available to insert the item. Typically, we could write `hash(key) % buckets.length` to return the base slot. But modulo `%` operation is kinda slow. 
 
-> Multiplication and division take longer time. Integer multiplication takes 11 clock cycles on Pentium 4 processors, and 3 - 4 clock cycles on most other microprocessors. Integer division takes 40 - 80 clock cycles, depending on the microprocessor. Integer division is faster the smaller the integer size on AMD processors, but not on Intel processors. Details about instruction latencies are listed in manual 4: “Instruction tables”. Tips about how to speed up multiplications and divisions are given on page 146 and 147, respectively. ([source](https://www.agner.org/optimize/optimizing_cpp.pdf)).
+> Multiplication and division take a longer time. Integer multiplication takes 11 clock cycles on Pentium 4 processors and 3 - 4 clock cycles on most other microprocessors. Integer division takes 40 - 80 clock cycles, depending on the microprocessor. Integer division is faster the smaller the integer size on AMD processors, but not on Intel processors. Details about instruction latencies are listed in manual 4: “Instruction tables”. Tips about how to speed up multiplications and divisions are given on pages 146 and 147, respectively. ([source](https://www.agner.org/optimize/optimizing_cpp.pdf)).
 
-To be honest, I don't really know is the JVM is performing any optimizations in this regard, so the best solution was to apply this simple bitwise trick.
+Honestly, I don't know how the JVM is optimizing the code behind the scenes, so the best thing was to make sure optimizations were happening by using a simple bitwise trick. 
 
 Because `buckets.length` is a power of two, `hash(key) % buckets.length` is equivalent to writing `hash(key) & (buckets.length -1)`. If you don't believe me, just run the following code:
 
@@ -461,19 +457,23 @@ for(int i = 100; i < 1000; i++) {
 // and so on
 ```
 
-If this is a novelty, I recommend you to put down everything on paper, and everything will make sense.
+*The trick* has an easy visual explanation. Let's look at the `1001 & (32-1)` and why it's equivalent with `1001 % 32`:
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bitwise.drawio.png)
+
+*Note: In the above diagram, for simplicity, `int` numbers were represented on 16 bits instead of 32.*
 
 ### Retrieving an entry
 
 The algorithm for retrieving a `V value` by it's `Object key` is the following:
 * We compute the `hash(key)`;
-* We compute the base where we look first: `idx = hash & (buckets.length-1)`;
-* If the slot is `null`, `bucket[idx]==null` , then we are 100% sure there's no need to look further, and we return `null`;
-* Otherwise we check to see if the key's `hash` matches the node's `hash`
-    * If they do, we do an additional check to see if the keys are equal. We do this extra check, because there's a small chance that two different elements have the same `hash`.
+* We compute the base slot: `idx = hash & (buckets.length-1)`;
+* If the base slot is `null`, `bucket[idx]==null` , then we are 100% sure there's no need to look further, and we return `null`;
+* Otherwise, we check to see if the key's `hash` matches the node's `hash`
+    * If they do, we do an additional check to see if the keys are equal. We do this extra step because there's a small chance that two different elements have the same `hash`.
         * If not, we probe further;
         * If they are `equals()`, we return the `V value`;
-* We do the last step until we encounter a `null` idx. This means that we've ended-up traversing the potential cluster of entries without finding what we were looking for.        
+* We repeat until we encounter a `null` slot, which means we've finished traversing the potential cluster of entries without finding what we were looking for.    
 
 ```java
 public V get(Object key) {
@@ -504,18 +504,30 @@ public V get(Object key) {
 
 ### Deleting an entry
 
+The algorithm for deleting an entry is as follows:
+
+* We identify the base slot (the one bucket where we look first);
+* If the base is `null`, there's no reason to continue probing, we return `null`;
+* Otherwise, we check to see if the slot's `hash` matches the key's `hash`. (If they do, we compare the keys using `equals()`).
+    * If the element is present we remove it by inserting a tombstone;
+    * We return the old value;
+* We continue with the last step until the slot is `null`.        
+* We decrease the capacity if needed.
+
 ```java
-@Override
 public V remove(Object key) {
-    if (null==key) {
-        throw new IllegalArgumentException("Map doesn't support null keys");
-    }
+     // We determine the base bucket
     int hash = hash(key);
     int idx = hash & (buckets.length-1);
+    // If the base is null, there's no reason to continue probing
+    // We simply return null
     if (null==buckets[idx]) {
         return null;
     }
     do {
+        // If we found the bucket we insert a tombstone 
+        // Increment the number of tombstones
+        // and reduce the real size
         if (buckets[idx].hash == hash && key.equals(buckets[idx].key)) {
             V oldVal = buckets[idx].value;
             buckets[idx].key = null;
@@ -525,6 +537,7 @@ public V remove(Object key) {
             size--;
             return oldVal;
         }
+        // Continue with linear probing
         idx++;
         if (idx == buckets.length) idx = 0;
     } while (null != buckets[idx]);
@@ -535,12 +548,294 @@ public V remove(Object key) {
 
 ### Resizing and rehashing
 
+We will follow the same trick as `HashMap<K,V>` in regards to capacity re-adjustment. If the *load factor* reaches a certain max threshold, we increase the capacity of the `buckets` to the next power of two. Vice-versa, if the *load factor* reaches a min threshold, we decrease the capacity of the `buckets` to the previous power of two. A full-rehashing is also happening. 
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/capacity-readjustment.drawio.png)
+
+Capacity re-adjustment is performed to reduce the *clustering effect* and to remove the previously inserted junk elements (*tombstones*). After a capacity re-adjustment, there are simply more slots available to insert the entries so the `buckets` array will become more sparse.
+
+The code:
+
+```java
+protected final void reHashElements(int capModifier) {
+    // We modify the next power of two either +1 or -1
+    this.capPow2+=capModifier;
+    // We keep a reference to the old buckets
+    LProbMapEntry<K, V>[] oldBuckets = this.buckets;
+    // We allocate memory for new buckets
+    this.buckets = new LProbMapEntry[1 << capPow2];
+    this.size = 0;
+    this.tombstones = 0;
+    // We perform a full-rehash by re-insert all elements
+    // We don't re-compute the hash, because it was already computed 
+    for (int i = 0; i < oldBuckets.length; ++i) {
+        if (null != oldBuckets[i] && oldBuckets[i].key != null) {
+            this.put(oldBuckets[i].key, oldBuckets[i].value, oldBuckets[i].hash);
+        }
+    }
+}
+
+protected final void increaseCapacity() {
+    final double lf = (double)(size+tombstones) / buckets.length;
+    if (lf > DEFAULT_MAX_LOAD_FACTOR) {
+        reHashElements(1);
+    }
+}
+
+protected final void decreaseCapacity() {
+    final double lf = (double)(size) / buckets.length;
+    if (lf < DEFAULT_MIN_LOAD_FACTOR && this.capPow2 > DEFAULT_MAP_CAPACITY_POW_2) {
+        reHashElements(-1);
+    }
+}
+```
+
+This approach is a little *naive*, but it works. It can be improved by:
+- Compute in advance the actual value when we are going to trigger the rehash, so we don't have to do final `double lf = (double)(size) / buckets.length;` at each insert/remove;
+- Improve the way the next capacity is computed. For example, if the `buckets` is full of tombstones we can `reHashElements(-2)` and be fine about it.
+
 ## `PerturbMap<K, V>`
+
+`PerturbMap<K,V>` is my second approach of implementing an *Open Addressing* `Map<K,V>` and it's almost identical to `LProbMap<K,V>` with one important change. 
+
+Reading the [source code](https://github.com/python/cpython/blob/main/Objects/dictobject.c) for cpython's `dict` implementation I've stumbled upon those lines:
+
+```
+(...)
+
+This is done by initializing a (unsigned) vrbl "perturb" to the
+
+full hash code, and changing the recurrence to:
+
+    perturb >>= PERTURB_SHIFT;
+    j = (5*j) + 1 + perturb;
+    use j % 2**i as the next table index;
+
+(...)
+```
+
+In order to avoid clustering (that depends on how good our hash function is), a new strategy for probing is proposed, one that doesn't use *linear probing*, but instead tries to *scramble* the entries positions by itself. 
+
+So instead of *cycling* through the array with:
+
+```java
+idx++
+if (idx == buckets.length) idx = 0;
+```
+
+We will do something like:
+
+```java
+idx = 5 * idx + 1 + perturb;
+perturb>>= SHIFTER;
+idx = idx & (buckets.length-1);
+```
+
+Where `SHIFTER` is a constant that equals to 5, and `peturb` is initialized to `peturb=hash`.
+
+To make things clearer, let's look at the following example. Let's assume our initial `hash=32132932`, `shifter=5` and `bucketsLength=1<<4`. Let's see how the probing goes if we use this algorithm:
+
+```java
+final int hash = 32132932;
+final int shifter = 5;
+final int bucketsLength = 1 << 4;
+
+int idx = hash & (bucketsLength-1);
+System.out.println(idx);
+
+int j = 5;
+int perturb = hash;
+while(j-->0) {
+    idx = 5 * idx + perturb;
+    perturb>>=shifter;
+    idx = idx & (bucketsLength-1);
+    System.out.println(idx);
+}
+```        
+
+The output is:
+
+```
+4 8 2 13 5 7
+```
+
+Visually, the probing algorithm looks like this:
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/peturbprobing.drawio.png)
+
+You can access all the code here, but as an example, this is how the `get(Object key)` looks like:
+
+```java
+public V get(Object key) {
+    if (null==key) {
+        throw new IllegalArgumentException("Map doesn't support null keys");
+    }
+    int hash = hash32(key);
+    int idx = hash & (buckets.length-1);
+    if (null == buckets[idx]) {
+        return null;
+    }
+    int perturb = hash;
+    do {
+        if (buckets[idx].hash == hash && key.equals(buckets[idx].key)) {
+            return buckets[idx].value;
+        }
+        // !! Different than LProbMap<K,V> !!
+        idx = 5 * idx + 1 + perturb;
+        perturb>>= SHIFTER;
+        idx = idx & (buckets.length-1);
+    } while (null != buckets[idx]);
+    return null;
+}
+```
+
+Now, in terms of performance:
+* We combat clustering by augmenting the diffusion of the hashing function with this simple trick;
+* We potentially increase the number of cache misses, because elements that were previously sharing the same locality are now spread across the `buckets`.
 
 ## `LProbBinsMap<K,V>`
 
+This is another almost identical implementation to `LProbMap<K,V>`, but with an extra change inspired by [ruby's hash table implementation](https://github.com/ruby/ruby/blob/master/st.c). For simplicity, I've opted to use *linear probing* as the probing algorithm.
+
+The main idea is to avoid keeping everything inside the `buckets` array, so we split the information between two arrays:
+
+* `int[] bins`
+* `Map.Entry<K,V>[] entries`
+
+`bin` is (sparse) array of integer values that where we keep the indices of the entries.
+
+ `entries` is an `ArrayList<Map.Entry<K,V>>`-like structure, that is dense. Here is were we store the actual keys, values, hashes.
+
+Visually `LProbBinsMAp<K,V>` looks like this:
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/binsandentries.drawio.png)
+
+To find the base bucket we do a look-up inside `bins`, where we keep the index of `entries`.
+
+Code wise, this is only a re-interpretation of `LProbMap<K,V`. As an example this is how the `get(Object key)` method looks like:
+
+```java
+public V get(Object key) {
+    if (null==key) {
+        throw new IllegalArgumentException("Map doesn't support null keys");
+    }
+    int hash = hash(key);
+    int idx = hash & (bins.length-1);
+    if (bins[idx]==EMPTY_SLOT) {
+        return null;
+    }
+    do {
+        if (bins[idx]!=TOMBSTONE && entries[bins[idx]].hash==hash && key.equals(entries[bins[idx]].key)) {
+            return entries[bins[idx]].value;
+        }
+        idx++;
+        if (idx == bins.length) idx = 0;
+    } while(bins[idx]!=EMPTY_SLOT);
+    return null;
+}
+```
+
 ## `LProbRadarMap<K, V>`
 
-## `RobinHooThedMap<K, V>`
+This is a more original attempt of mine to write an implementation for `Map<K,V>`. To avoid clustering altogether, I've decided to implement a `radar`-like component that tracks the *neighborhood* of an entry. If a cluster of entries forms, and it makes me exit the boundaries covered by my *radar*, I increase the capacity and perform a full-rehash. 
+
+The `radar` is an array of integers, where the every bit in the integers values tells me if there's an element in its vicinity or not.
+
+To better describe the idea, let's look at the following representation:
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/radar.drawio.png)
+
+For example inserting an element in the `LProbRadarMap<K,V>` looks like this:
+
+```java
+protected V put(K key, V value, int hash) {
+    // We increase the capacity if needed
+    if (shouldGrow()) {
+        grow();
+    }
+    int idx = hash & (buckets.length-1);
+    int base = idx;
+    int probing = 0;
+    while(true) {
+        // We increase the capacity if we exit the radar
+        if (probing==32) {
+            grow();
+            return put(key, value, hash);
+        }
+        if (buckets[idx] == null) {
+            // It's a free spot
+            buckets[idx] = new LProbEntry(key, value, hash);
+            // We mark the bit in the radar entry
+            radar[base] |= (1 << probing);
+            size++;
+            return null;
+        }
+        else if (buckets[idx].key == null) {
+            // It's a tombstone
+            buckets[idx].key = key;
+            buckets[idx].val = value;
+            buckets[idx].hash = hash;
+            radar[base] |= (1 << probing);
+        }
+        else if (buckets[idx].hash == hash && key.equals(buckets[idx].key)) {
+            // We perform an update on the element
+            V ret;
+            ret = buckets[idx].val;
+            buckets[idx].key = key;
+            buckets[idx].hash = hash;
+            buckets[idx].val = value;
+            return ret;
+        }
+        probing++;
+        idx++;
+        if (buckets.length==idx) idx = 0;
+    }
+}
+``` 
+
+The algorithm for retrieving an element from `LProbRadarMap<K,V>` is the following:
+
+```java
+public V get(Object key) {
+    if (null==key) {
+        throw new IllegalArgumentException("Map doesn't support null keys");
+    }
+    int hash = hash(key);
+    int idx = hash & (buckets.length-1);
+    int rd = radar[idx];
+    if (rd==0) {
+        return null;
+    }
+    for(int bit = 0; bit < 32; bit++) {
+        if (((rd>>bit)&1)==1 && buckets[idx].hash == hash && key.equals(buckets[idx].key)) {
+            return buckets[idx].val;
+        }
+        idx++;
+        if (idx == buckets.length) idx = 0;
+    }
+    return null;
+}
+```    
+
+To be honest, doing this doesn't achieve much, because doing the bit check `(rd>>bit)&1)==1` is not necessarily more efficient than just verifying if the `bucket[idx]`is `null`. 
+
+Also, enforcing this:
+
+```java
+if (probing==32) {
+    grow();
+    return put(key, value, hash);
+}
+```    
+
+Is *dangerous*. We have no control on how the inserted `Object key` implements its `hashCode()`, so a bad `hashCode()` function might form clusters bigger than `32` (which is the maximum `radar` size for each element). In this regard, our `buckets` array can grow indefinitely until eventually crashing with an OOM.
+
+But, Nevertheless it was a fun exercise.
+
+## `RobinHoodMap<K, V>`
+
+This was my last attempt on implementing an *Open Addressing* hash table, using the [Robin Hood](https://en.wikipedia.org/wiki/Hash_table#Robin_Hood_hashing) hashing technique.
+
+This is an interesting direct improvement on the *linear probing* algorithm. 
 
 # Benchmarks

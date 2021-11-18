@@ -61,7 +61,7 @@ defaults:
       show_date: true
       read_time: false
       comments: true
-      share: true
+      share: false
       related: false
       excerpt: true
   # _pages
