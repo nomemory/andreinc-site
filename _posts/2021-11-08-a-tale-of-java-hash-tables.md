@@ -57,7 +57,7 @@ But, as described [here](https://rcoh.me/posts/hash-map-analysis/), the decision
 
 > There are, of course, lovely *hash table* implementations that sit outside the standard libraries. So, if you are looking for a good read, check out the Facebook (or should I say Meta) [Engineering Blog](https://engineering.fb.com/2019/04/25/developer-tools/f14/) discussing their super-fast & efficient F14 implementation.
 
-In this article we will discuss you how to implement a hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. 
+In this article we will discuss you how to implement hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. 
 
 I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it. In regards to [Cuckoo Hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing), you can find a "draft" implementation in the code repo.
 
