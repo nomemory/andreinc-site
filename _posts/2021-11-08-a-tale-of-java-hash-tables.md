@@ -57,7 +57,9 @@ But, as described [here](https://rcoh.me/posts/hash-map-analysis/), the decision
 
 > There are, of course, lovely *hash table* implementations that sit outside the standard libraries. So, if you are looking for a good read, check out the Facebook (or should I say Meta) [Engineering Blog](https://engineering.fb.com/2019/04/25/developer-tools/f14/) discussing their super-fast & efficient F14 implementation.
 
-But, this article will show you how to implement a few hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it. In regards to [Cuckoo Hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing), you can find a "draft" implementation in code repo.
+In this article we will discuss you how to implement a hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. 
+
+I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it. In regards to [Cuckoo Hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing), you can find a "draft" implementation in the code repo.
 
 I've also skipped Quadratic probing because I consider pythons' approach *smarter*. 
 
@@ -65,7 +67,7 @@ My implementations will be entirely academic, and I am sure a person with more e
 
 Also, given the complex nature of benchmarking Java code, please feel free to comment on the results. I've used [`jmh`](https://openjdk.java.net/projects/code-tools/jmh/), but I am more than happy to explore other alternatives.
 
-For the moment, we are going to implement five `Map<K,V>` and benchmark their (reading) speed against `HashMap<K,V>`:
+For the moment, we are going to implement five `Map<K,V>` and benchmark their (`get()`) speed against `HashMap<K,V>`:
 
 | Java Class | Source | Description |
 | --- | ---- | --- |
