@@ -1894,7 +1894,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-(TO BE CONTINUED)
+If you want to read more about **Open Addressing** techniques, checkout my new [blog post]({{site.url}}/2021/11/08/a-tale-of-java-hash-tables). The code is in Java, but hey, if you can read C, Java should be easier to grasp. 
 
 # References
 
