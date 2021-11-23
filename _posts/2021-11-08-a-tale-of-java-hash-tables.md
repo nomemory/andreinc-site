@@ -15,7 +15,7 @@ tags:
 
 **Note(s)**
 
-* The intended audience for this article is undergrad students who already have a good grasp Java, or seasoned Java developers who would like to explore an in-depth analysis of various *hash table* implementations that are using *Open Addressing*.
+* The intended audience for this article is undergrad students who already have a good grasp of Java, or seasoned Java developers who would like to explore an in-depth analysis of various *hash table* implementations that use *Open Addressing*.
 * The reader should be familiar with Java generics, collections, basic data structures, hash functions, and bitwise operations.
 
 # Table of contents
@@ -57,11 +57,11 @@ But, as described [here](https://rcoh.me/posts/hash-map-analysis/), the decision
 
 > There are, of course, lovely *hash table* implementations that sit outside the standard libraries. So, if you are looking for a good read, check out the Facebook (or should I say Meta) [Engineering Blog](https://engineering.fb.com/2019/04/25/developer-tools/f14/) discussing their super-fast & efficient F14 implementation.
 
-In this article we will discuss you how to implement hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. 
+In this article, we will discuss how to implement hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. 
 
 I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it. In regards to [Cuckoo Hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing), you can find a "draft" implementation in the code repo.
 
-I've also skipped Quadratic probing because I consider pythons' approach *smarter*. 
+I've also skipped Quadratic probing because I consider python's approach *smarter*. 
 
 My implementations will be entirely academic, and I am sure a person with more experience optimizing Java code manually will do a better job than me. 
 
@@ -83,17 +83,17 @@ The code is available in the following repo:
 git clone git@github.com:nomemory/open-addressing-java-maps.git
 ```
 
-Before jumping directly to the implementation, I recommend you to read [my previous article]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1) on the subject. Even if the code is in C, a few theoretical insights I recommend you to refresh (e.g., hash functions).
+Before jumping directly to the implementation, I recommend you to read [my previous article]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1) on the subject. Even if the code is in C, I recommend refreshing a few theoretical insights (e.g., hash functions).
 
 # Separate Chaining, or how `HashMap<K,V>` works internally
 
-As I've previously stated, `HashMap<K,V>` is implemented using a typical *Separate Chaining* technique. If you jump straight into [reading the source code](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java), things can be a little confusing, especially if you don't know what you are looking for. But once you understand the main concepts, everything becomes much clear.
+As I've previously stated, `HashMap<K,V>` is implemented using a typical *Separate Chaining* technique. If you jump straight into [reading the source code](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java), things can be a little confusing, especially if you don't know what you are looking for. But once you understand the main concepts, everything becomes much clearer.
 
 > Even if this is not the purpose of this article, I believe it's always a good idea to understand how `HashMap<K,V>` works. Many (Java) interviewers love to ask this question. 
 
 If you already understand how `HashMap<K,V>` works, you can skip directly to the [next section](#open-addressing). If you don't, and you are curious about it, please read the following paragraphs.
 
-The `HashMap<K,V` class contains an array of `Node<K,V>`. For simplicity and inertia, we are going to call this array `table`:
+The `HashMap<K,V>` class contains an array of `Node<K,V>`. For simplicity and inertia, we are going to call this array `table`:
 
 ```java
 // The table, initialized on first use, and resized as necessary. 
