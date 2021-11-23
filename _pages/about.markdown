@@ -34,7 +34,7 @@ The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [he
 
 #### `Contact`
 
-For contact, drop me a message on [LinkedIn]((https://www.linkedin.com/in/andrei-n-ciobanu-50708611/)). 
+For contact, drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
 
 #### `Tools`
 
