@@ -3,7 +3,8 @@ title: "A tale of Java Hash Tables"
 date: "2021-11-08"
 classes: wide
 comments: true
-usemathjax: true
+usemathjax: false
+excerpt: "Implementing Open Addressing hash tables in Java and benchmarking them vs. HashMap"
 categories:
 - "java"
 - "algorithms"
@@ -12,7 +13,35 @@ tags:
 - "hash"
 ---
 
-In Java, the main *hash table* implementation, `HashMap<K,V>`, uses the classical *Separate Chaining* technique (with a critical optimizations that reduce read times in case of collisions). 
+**Note(s)**
+
+* The intended audience for this article is undergrad students who already have a good grasp Java, or seasoned Java developers who would like to explore an in-depth analysis of various *hash table* implementations that are using *Open Addressing*.
+* The reader should be familiar with Java generics, collections, basic data structures, hash functions, and bitwise operations.
+
+# Table of contents
+
+- [Introduction](#introduction)
+- [Separate Chaining, or how `HashMap<K,V>` works internally](#separate-chaining-or-how-hashmapkv-works-internally)
+- [Open Addressing](#open-addressing)
+  - [`LProbMap<K, V>`](#lprobmapk-v)
+    - [Inserting an entry](#inserting-an-entry)
+    - [Retrieving an entry](#retrieving-an-entry)
+    - [Deleting an entry](#deleting-an-entry)
+    - [Resizing and rehashing](#resizing-and-rehashing)
+  - [`PerturbMap<K, V>`](#perturbmapk-v)
+  - [`LProbBinsMap<K,V>`](#lprobbinsmapkv)
+  - [`LProbRadarMap<K, V>`](#lprobradarmapk-v)
+  - [`RobinHoodMap<K, V>`](#robinhoodmapk-v)
+- [Benchmarks](#benchmarks)
+  - [`RandomStringsReads`](#randomstringsreads)
+  - [`SequencedStringsReads`](#sequencedstringsreads)
+  - [`AlphaNumericCodesReads`](#alphanumericcodesreads)
+- [The results](#the-results)
+- [Wrapping up](#wrapping-up)
+
+# Introduction
+
+In Java, the main *hash table* implementation, `HashMap<K,V>`, uses the classical *Separate Chaining* technique (with critical optimizations that reduce read times in case of collisions). 
 
 But, as described [here](https://rcoh.me/posts/hash-map-analysis/), the decision to use [*Separate Chaining*](https://en.wikipedia.org/wiki/Hash_table#Separate_chaining) vs. [*Open Addressing*](https://en.wikipedia.org/wiki/Hash_table#Open_addressing) is not unanimously accepted by programming languages designers. For example, in python, ruby, and rust, the standard hash tables are implemented using *Open Addressing*, while Java, go, C#, C++ are all more conservatory and use *Separate Chaining*.
 
@@ -28,7 +57,9 @@ But, as described [here](https://rcoh.me/posts/hash-map-analysis/), the decision
 
 > There are, of course, lovely *hash table* implementations that sit outside the standard libraries. So, if you are looking for a good read, check out the Facebook (or should I say Meta) [Engineering Blog](https://engineering.fb.com/2019/04/25/developer-tools/f14/) discussing their super-fast & efficient F14 implementation.
 
-But, this article will show you how to implement a few hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it, and Cuckoo Hashing (still, you can find a draft version in the code repo). I've also skipped Quadratic probing because I consider cpython's approach *brighter*. 
+But, this article will show you how to implement a few hash tables in Java, using *Open Addressing* and then benchmark them against the reference `HashMap<K,V>` implementation that uses *Separate Chaining*. I've decided to stay away from [Hopscotch](https://en.wikipedia.org/wiki/Hopscotch_hashing), although I did get inspired by it. In regards to [Cuckoo Hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing), you can find a "draft" implementation in code repo.
+
+I've also skipped Quadratic probing because I consider pythons' approach *smarter*. 
 
 My implementations will be entirely academic, and I am sure a person with more experience optimizing Java code manually will do a better job than me. 
 
@@ -36,19 +67,25 @@ Also, given the complex nature of benchmarking Java code, please feel free to co
 
 For the moment, we are going to implement five `Map<K,V>` and benchmark their (reading) speed against `HashMap<K,V>`:
 
-| Java Class | Description |
-| --- | ---- |
-| [`LProbMap<K, V>`](#lprobmapk-v) | A classic Open Addressing implementation that uses Linear Probing |
-| `LProbBinsMap<K,V>` | An "almost" classic Open Addressing implementation inspired by ruby's hash table.|
-| `LProbRadarMap<K, V>` | An Open Addressing implementation that uses a separate vector (`radar`) to determine where to search for items. It uses the same idea as *Hopscotch Hashing* |
-| `PerturbMap<K, V>` | An Open Addressing implementation that uses the python's *perturbator* algorithm instead of linear probing |
-| `RobinHoodMap<K, V>` | An Open Addressing implementation that uses linear probing with *Robin Hood Hashing* |
+| Java Class | Source | Description |
+| --- | ---- | --- |
+| [`LProbMap<K, V>`](#lprobmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java) | A classic Open Addressing implementation that uses Linear Probing |
+| [`LProbBinsMap<K,V>`](#lprobbinsmapkv) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java) | An "almost" classic Open Addressing implementation inspired by ruby's hash table.|
+| [`LProbRadarMap<K, V>`](#lprobradarmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java) | An Open Addressing implementation that uses a separate vector (`radar`) to determine where to search for items. It uses the same idea as *Hopscotch Hashing* |
+| [`PerturbMap<K, V>`](#perturbmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java) | An Open Addressing implementation that uses the python's *perturbator* algorithm instead of linear probing |
+| [`RobinHoodMap<K, V>`](#robinhoodmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/RobinHoodMap.java) | An Open Addressing implementation that uses linear probing with *Robin Hood Hashing* |
+
+The code is available in the following repo:
+
+```
+git clone git@github.com:nomemory/open-addressing-java-maps.git
+```
 
 Before jumping directly to the implementation, I recommend you to read [my previous article]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1) on the subject. Even if the code is in C, a few theoretical insights I recommend you to refresh (e.g., hash functions).
 
 # Separate Chaining, or how `HashMap<K,V>` works internally
 
-As I've previously stated, `HashMap<K,V>` is implemented using a typical *Separate Chaining* technique. If you jump straight into [reading the source code](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java), things can be a little confusing, especially if you don't know what you are looking for. But once you understand the main concepts, everything becomes more straightforward.
+As I've previously stated, `HashMap<K,V>` is implemented using a typical *Separate Chaining* technique. If you jump straight into [reading the source code](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/HashMap.java), things can be a little confusing, especially if you don't know what you are looking for. But once you understand the main concepts, everything becomes much clear.
 
 > Even if this is not the purpose of this article, I believe it's always a good idea to understand how `HashMap<K,V>` works. Many (Java) interviewers love to ask this question. 
 
@@ -287,6 +324,8 @@ Algorithms that avoid tombstones altogether exists, but they make the delete ope
 
 `LProbMap<K,V>` was my first *academic* attempt to implement an *Open Addressing* `Map<K,V>` in Java. I haven't tried any trick, I've just implemented the corresponding algorithms *by the book*.
 
+> For the source code, check this [link](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java).
+
 The first thing was to `extend Map<K,V>` and, as per the interface contract, I had to write an implementation for all the abstract methods. I won't copy-paste the entire code here, but I will focus on the most important methods: `put`, `get`, `remove`, and the underlying data structures.
 
 ```java
@@ -457,11 +496,11 @@ for(int i = 100; i < 1000; i++) {
 // and so on
 ```
 
-*The trick* has an easy visual explanation. Let's look at the `1001 & (32-1)` and why it's equivalent with `1001 % 32`:
+*The trick* has an easy visual explanation. Let's look at an example, `1001 & (32-1)` and why it's equivalent with `1001 % 32`:
 
-![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bitwise.drawio.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bitwise-modulo.drawio.png)
 
-*Note: In the above diagram, for simplicity, `int` numbers were represented on 16 bits instead of 32.*
+After the number is "cut", the maximum value of 5 remaining bits is `31` (`0...00011111`). 
 
 ### Retrieving an entry
 
@@ -550,7 +589,7 @@ public V remove(Object key) {
 
 We will follow the same trick as `HashMap<K,V>` in regards to capacity re-adjustment. If the *load factor* reaches a certain max threshold, we increase the capacity of the `buckets` to the next power of two. Vice-versa, if the *load factor* reaches a min threshold, we decrease the capacity of the `buckets` to the previous power of two. A full-rehashing is also happening. 
 
-![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/capacity-readjustment.drawio.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/resize-rehash.drawio.png)
 
 Capacity re-adjustment is performed to reduce the *clustering effect* and to remove the previously inserted junk elements (*tombstones*). After a capacity re-adjustment, there are simply more slots available to insert the entries so the `buckets` array will become more sparse.
 
@@ -590,13 +629,13 @@ protected final void decreaseCapacity() {
 }
 ```
 
-This approach is a little *naive*, but it works. It can be improved by:
-- Compute in advance the actual value when we are going to trigger the rehash, so we don't have to do final `double lf = (double)(size) / buckets.length;` at each insert/remove;
-- Improve the way the next capacity is computed. For example, if the `buckets` is full of tombstones we can `reHashElements(-2)` and be fine about it.
+This approach is a little *naive*, but it works. It can be improved by computing in advance the actual value when we are going to trigger the rehash, so we don't have to do final `double lf = (double)(size) / buckets.length;` at each insert/remove. 
+
+Also, depending on how many tombstones were created, we can reduce the capacity to `reHashElements(-2)` or `reHashElements(-3)` directly.
 
 ## `PerturbMap<K, V>`
 
-`PerturbMap<K,V>` is my second approach of implementing an *Open Addressing* `Map<K,V>` and it's almost identical to `LProbMap<K,V>` with one important change. 
+[`PerturbMap<K,V>`](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java) is my second approach of implementing an *Open Addressing* `Map<K,V>`, and it's almost identical to `LProbMap<K,V>` with one significant change. 
 
 Reading the [source code](https://github.com/python/cpython/blob/main/Objects/dictobject.c) for cpython's `dict` implementation I've stumbled upon those lines:
 
@@ -614,7 +653,7 @@ full hash code, and changing the recurrence to:
 (...)
 ```
 
-In order to avoid clustering (that depends on how good our hash function is), a new strategy for probing is proposed, one that doesn't use *linear probing*, but instead tries to *scramble* the entries positions by itself. 
+To avoid clustering (that depends on how good our hash function is), a new strategy for probing is proposed, one that doesn't use *linear probing*, but instead tries to *scramble* the entries positions by itself. 
 
 So instead of *cycling* through the array with:
 
@@ -631,7 +670,7 @@ perturb>>= SHIFTER;
 idx = idx & (buckets.length-1);
 ```
 
-Where `SHIFTER` is a constant that equals to 5, and `peturb` is initialized to `peturb=hash`.
+Where `SHIFTER` is a constant, that equals to 5, and `peturb` is initialized to `peturb=hash`.
 
 To make things clearer, let's look at the following example. Let's assume our initial `hash=32132932`, `shifter=5` and `bucketsLength=1<<4`. Let's see how the probing goes if we use this algorithm:
 
@@ -661,7 +700,7 @@ The output is:
 
 Visually, the probing algorithm looks like this:
 
-![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/peturbprobing.drawio.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/perturb.drawio.png)
 
 You can access all the code here, but as an example, this is how the `get(Object key)` looks like:
 
@@ -696,6 +735,8 @@ Now, in terms of performance:
 ## `LProbBinsMap<K,V>`
 
 This is another almost identical implementation to `LProbMap<K,V>`, but with an extra change inspired by [ruby's hash table implementation](https://github.com/ruby/ruby/blob/master/st.c). For simplicity, I've opted to use *linear probing* as the probing algorithm.
+
+> For the full source code please check [this link](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java)
 
 The main idea is to avoid keeping everything inside the `buckets` array, so we split the information between two arrays:
 
@@ -735,17 +776,25 @@ public V get(Object key) {
 }
 ```
 
+The advantage of this approach should be reduced memory consumption and increased memory locality.
+
 ## `LProbRadarMap<K, V>`
 
-This is a more original attempt of mine to write an implementation for `Map<K,V>`. To avoid clustering altogether, I've decided to implement a `radar`-like component that tracks the *neighborhood* of an entry. If a cluster of entries forms, and it makes me exit the boundaries covered by my *radar*, I increase the capacity and perform a full-rehash. 
+`LProbRadarMap<K,V>` is an original attempt to write an implementation for `Map<K,V>`, that fights clustering, by keeping a `radar` like structure that tracks the neighborhood of an element. 
 
-The `radar` is an array of integers, where the every bit in the integers values tells me if there's an element in its vicinity or not.
+> For the full source code please check [this link](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java)
 
-To better describe the idea, let's look at the following representation:
+The `radar[i]` keeps track of all the elements of `buckets` that have the base in `i` and are spread in the next 32 positions.
+
+To better understand, let's look at the following diagram:
 
 ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/radar.drawio.png)
 
-For example inserting an element in the `LProbRadarMap<K,V>` looks like this:
+`buckets[2]` doesn't have the base in `1`, so the second bit of `radar[1]` is 0.
+
+`bucket[3]`, `buckets[5]` and `buckets[6]` have the base in `1`, so we set to 1 the corresponding bits in `radar[1]`.
+
+Inserting an element in the `LProbRadarMap<K,V>` looks like this:
 
 ```java
 protected V put(K key, V value, int hash) {
@@ -817,7 +866,7 @@ public V get(Object key) {
 }
 ```    
 
-To be honest, doing this doesn't achieve much, because doing the bit check `(rd>>bit)&1)==1` is not necessarily more efficient than just verifying if the `bucket[idx]`is `null`. 
+To be honest, doing this doesn't achieve much because doing the bit check `(rd>>bit)&1)==1` is not necessarily more efficient than just verifying if the `bucket[idx]`is `null`. 
 
 Also, enforcing this:
 
@@ -828,14 +877,280 @@ if (probing==32) {
 }
 ```    
 
-Is *dangerous*. We have no control on how the inserted `Object key` implements its `hashCode()`, so a bad `hashCode()` function might form clusters bigger than `32` (which is the maximum `radar` size for each element). In this regard, our `buckets` array can grow indefinitely until eventually crashing with an OOM.
+it's *dangerous* approach. We have no control on how the inserted `Object key` implements its `hashCode()`, so a bad `hashCode()` function might form clusters bigger than `32` (which is the maximum `radar` size for each element). In this regard, our `buckets` array can grow indefinitely until eventually crashing with an OOM.
 
-But, Nevertheless it was a fun exercise.
+Nevertheless, it was a fun exercise.
 
 ## `RobinHoodMap<K, V>`
 
-This was my last attempt on implementing an *Open Addressing* hash table, using the [Robin Hood](https://en.wikipedia.org/wiki/Hash_table#Robin_Hood_hashing) hashing technique.
+This was my last attempt at implementing an *Open Addressing* hash table, using the [Robin Hood](https://en.wikipedia.org/wiki/Hash_table#Robin_Hood_hashing) hashing technique.
 
-This is an interesting direct improvement on the *linear probing* algorithm. 
+> For the full source code please check [this link](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/RobinHoodMap.java)
+
+
+*Robin Hood* works exactly as *Linear Probing*, with one more addition. When we insert a new entry, we also keep track of how it is from its base. In this regard, we add a new attribute to the inner `Map.Entry<K,V>`:
+
+```java
+public static class Entry<K, V> implements Map.Entry<K, V> {
+
+    private K key;
+    private V value;
+    private int hash;
+    private int dist; // <--
+
+    // (more code)
+}
+```
+
+`dist` signifies the distance of the entry from its base. 
+
+Whenever a new entry is inserted, we try to put it as close as possible to its base slot, displacing *older* entries in the process and putting them closer to the clusters' edge. 
+
+Let's look at the following example:
+
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/robinhood.drawio.png)
+
+* We want to insert `"B"`. The base slot for `"B"` is `3`.
+* We try to insert `"B"` at index `3`. But `distance(B,3) == 0 < distance(X,2) == 1` so we don't do a swap;
+* We try to insert `"B"` at index `4`. But `distance(B,3) == 1 < distance(D,2) == 2` so we don't do a swap;
+* We try to insert `"B"` at index `5`. `distance(B,3) == 2 > distance(F,4) == 1` so we swap `B` with `F` and we continue in the same manner to insert `F`.
+
+The `get` and `remove` operations are exactly as for `LProbMap<K,V>`, but what it differs is the `put` operation:
+
+```java
+protected V put(K key, V value, int hash) {
+    if (null==key) {
+        throw new IllegalArgumentException("Map doesn't support null keys");
+    }
+    increaseCapacity();
+    K cKey = key;
+    V cVal = value;
+    int cHash = hash;
+    V old = null;
+    int probing = 0;
+    // Identifying the base slot
+    int idx = hash & (buckets.length - 1);
+    while (true){
+        // If the bucket is empty we simply insert the element and we break the loop
+        if (null == buckets[idx]) {
+            buckets[idx] = new Entry<>(cKey, cVal, cHash, probing);
+            this.size++;
+            break;
+        } 
+        // If we found the bucket, we just update the value
+        else if (hash == buckets[idx].hash && key.equals(buckets[idx].key)) {
+            old = buckets[idx].value;
+            buckets[idx].value = value;
+            buckets[idx].dist = probing;
+            break;
+        } 
+        // We probe & swap until we find the right slot
+        else if (probing > buckets[idx].dist) {
+            K tmpKey;
+            V tmpVal;
+            int tmpHash;
+            int tmpDist;
+            tmpHash = buckets[idx].hash;
+            tmpVal = buckets[idx].value;
+            tmpDist = buckets[idx].dist;
+            tmpKey = buckets[idx].key;
+            buckets[idx].hash = cHash;
+            buckets[idx].value = cVal;
+            buckets[idx].key = cKey;
+            buckets[idx].dist = probing;
+            cHash = tmpHash;
+            cVal = tmpVal;
+            cKey = tmpKey;
+            probing = tmpDist;
+        }
+        // Linear probing is used
+        probing++;
+        idx++;
+        if (idx == buckets.length) idx = 0;
+    }
+    return old;
+}
+```
+
+One significant advantage of *Robin Hood* hashing is that it enforces minimal variances of entries compared to their base slot. There are no worst-case scenarios whenever we get an element because all elements will have almost the same distance for a given base slot. 
 
 # Benchmarks
+
+After having implemented the five *Open Addressing* maps, ([LProbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java), [LProbBinsMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java), [LProbRadarMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java), [PerturbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java), [RobinHoodMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/RobinHoodMap.java)), I wanted to check how good they perform vs. the `HashMap<K,V>` reference implementation.
+
+(micro)Benchmarking in Java is hard, so in this regard, I've used [jmh](https://openjdk.java.net/projects/code-tools/jmh/) + [mockneat](https://www.mockneat.com) (to generate test data). 
+
+The benchmarks are included in the repo, so if you plan to check out the code:
+
+```
+git clone git@github.com:nomemory/open-addressing-java-maps.git
+```
+
+they can be found in the [`performance/jmh`](https://github.com/nomemory/open-addressing-java-maps/tree/main/src/main/java/performance/jmh) folder. 
+
+If you want to run them yourself, see the [Main.class](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/performance/jmh/Main.java).
+
+```java
+// Cleans the existing generated data from previous runs
+InputDataUtils.cleanBenchDataFolder();
+
+Options options = new OptionsBuilder()
+        // Benchmarks to include
+        .include(RandomStringsReads.class.getName())
+        .include(SequencedStringReads.class.getName())
+        .include(AlphaNumericCodesReads.class.getName())
+        // Configuration
+        .timeUnit(TimeUnit.MICROSECONDS)
+        .shouldDoGC(true)
+        .resultFormat(ResultFormatType.JSON)
+        .addProfiler(GCProfiler.class)
+        .result("benchmarks_" + System.currentTimeMillis() + ".json")
+        .build();
+
+new Runner(options).run();
+```
+
+At the end of the program execution, a `benchmark_*.json` file will be generated (but be prepared; it will take some time).
+
+You can visually analyze the results by using [this tool](https://jmh.morethan.io/) or running this quick [python script](https://github.com/nomemory/open-addressing-java-maps/blob/main/reporting/benchmarks_reporting.py).
+
+At the moment I am writing this article, there are three benchmark classes:
+
+* `RandomStringsReads`
+* `SequencedStringReads`
+* `AlphaNumericCodesReads`
+
+They are configured like this:
+
+```java
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@State(Scope.Benchmark)
+@Fork(value = 3, jvmArgs = {"-Xms6G", "-Xmx16G"})
+@Warmup(iterations = 2, time = 5)
+@Measurement(iterations = 4, time = 5)
+```
+
+We use `3` forks, `2` warmup iterations, and `4` measurements. I know I should've probably increased those values, but even like this, and given the high input params variance, the benchmark takes around 6 hours to complete on my machine. 
+
+To conclude, I believe this is enough to get a glimpse of the performance of the code. 
+
+Each benchmark class has two methods:
+
+```java
+@Benchmark
+@CompilerControl(CompilerControl.Mode.INLINE)
+public void randomReads(Blackhole bh) {
+    bh.consume(
+            testedMap.get(fromStrings(keys).get())
+    );
+}
+```    
+
+```java
+@Benchmark
+@CompilerControl(CompilerControl.Mode.INLINE)
+public void randomReadsWithMisses(Blackhole bh) {
+    bh.consume(
+            testedMap.get(fromStrings(keysWithMisses).get())
+    );
+}
+```    
+
+The `randomReadsWithMisses()` method benchmarks `get()` operations where keys have a 50% chance of not being present in the `Map<K,V>`.
+
+For `randomReads()`, it is guaranteed all the keys exist.
+
+## `RandomStringsReads`
+
+The full code of this benchmark can be found [here](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/performance/jmh/bechmarks/reads/RandomStringsReads.java).
+
+For this benchmark the keys are randomly generated by following this simple rule:
+
+```java
+ probabilities(String.class)
+            .add(0.2, names().full())
+            .add(0.2, addresses())
+            .add(0.2, words())
+            .add(0.2, cars())
+            .add(0.2, ints().mapToString())
+```
+
+[`probabilities()`](https://www.mockneat.com/docs/#probabilities) is a [mockneat](https://www.mockneat.com) method that generates random data based on given "chances".
+
+The keys are `String` values that:
+* Have a 20% chance of being full names (e.g., "Mike Smith");
+* Have a 20% chance of being a full address;
+* Have a 20% chance of being a random word from the English dictionary;
+* Have a 20% chance of being a "car" name and model;
+* Have a 20% chance of being a numerical value (an `int`) converted to `String`.
+
+This benchmark will have the following input params:
+
+```java
+@Param({"KEYS_STRING_1_000", "KEYS_STRING_10_000", "KEYS_STRING_100_000", "KEYS_STRING_1_000_000", "KEYS_STRING_10_000_000"})
+private StringsSourceTypes input;
+
+@Param({"LProbMap", "LProbBinsMap", "LProbRadarMap", "RobinHoodMap", "PerturbMap", "HashMap"})
+private MapTypes mapClass;
+```    
+
+`KEYS_STRING_1_000` means that data will be read from a `MapType={LProbMap, LProbBinsMap, ...}` with `1000` entries, `KEYS_STRING_10_000` means that data will be read from a `MapType={LProbMap, LProbBinsMap, ...}` with `10_000` entries, and so on, up to `10_000_000` entries. 
+
+*Note: I've created the benchmarks in such a way, the same data will be used for all the `MapTypes`.*
+
+## `SequencedStringsReads`
+
+The full code of this benchmark can be found [here](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/performance/jmh/bechmarks/reads/SequencedStringsReads.java).
+
+For this benchmark, the keys are randomly generated by following this simple rule:
+
+```java
+intSeq().mapToString()
+``` 
+
+[`intSeq()`](https://www.mockneat.com/docs/#intseq) is part of the [`mockneat`](https://www.mockneat.com/) API.
+
+Basically the keys will be `String` values that are `int` values in a sequence: `"0"`, `"1"`, ..., `"1000"`.
+
+The reason I've introduced this benchmark was to see how my `Maps` are performing versus input that has a certain pattern.
+
+## `AlphaNumericCodesReads`
+
+The full code of this benchmark can be found [here](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/performance/jmh/bechmarks/reads/AlphaNumericCodesReads.java).
+
+For this benchmark, the keys are randomly generated by following this simple rule:
+
+```java
+strings().size(6).type(StringType.ALPHA_NUMERIC)
+```
+
+Keys are alphanumeric characters of `length==6`.
+
+I've introduced this benchmark (again) to see how my `Maps` are performing versus input with specific patterns.
+
+# The results
+
+After running all the three benchmarks for almost 6 hours, I've got the following results:
+
+:-------------------------:|:-------------------------:
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/RandomStringsReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/RandomStringsReads.randomReadsWithMisses.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/SequencedStringReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/SequencedStringReads.randomReadsWithMisses.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/AlphaNumericCodesReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/AlphaNumericCodesReads.randomReadsWithMisses.png)
+
+# Wrapping up
+
+Firstly, the benchmarks are incomplete as we haven't tested the performance for `put` or `remove` operations. More work can be done to improve both methods. The `tombstones` strategy is probably not the best; more thoughtful implementations prefer shifting elements instead. 
+
+Secondly, I was surprised to see that `LProbMap<K,V>` and `RobinHoodMap<K,V>` are performing relatively well vs. `HashMap<K,V>` for datasets < `1_000_000`. After the number of elements increases, performance is degrading but not by huge margins. In terms of memory consumption, the results were also quite similar.
+
+Implementing the 5 *Open Addressing* maps was a fun and frustrating exercise. In Java, you can only be *half-smart* when you are writing code. The other *half* is where the JIT comes into play. You cannot control even what function is getting inlined. So writing the code to make it as fast as possible was a trial and error endeavor. I am not even sure I've made the right decisions.
+
+I had high hopes for `LProbBinsMap<K,V>`, but surprisingly it performed the worst. Maybe I've missed something and someone more experienced than me can find the reason why it works poorly.
+
+Should you ever consider using an *Open Addressing* hash table in Java instead of `HashMap<K,V>`. Probably not. `HashMap<K,V>` is simple, performant and bullet-proof. 
+
+I am yet to find an *Open Addressing* implementation that outperforms `HashMap<K,V>` by a significant margin. If you have additional ideas, you can use the existing repo, as you already have some infrastructure at hand: unit tests, benchmarks, and a script to plot the results. I am accepting PRs, and I will update the article.
+
+
+

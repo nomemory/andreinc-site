@@ -2,8 +2,9 @@
 layout: single
 permalink: /about/
 classes: wide
-title: About
 ---
+
+#### `About`
 
 ![jpg]({{site.url}}/assets/images/about/me-it.jpg){:height="50%" width="50%"}
 <sup><sup><sup>Saint-Paul-de-Vence, France, 2019</sup></sup></sup>
@@ -27,8 +28,16 @@ I keep my technical skills sharp by doing coding exercises and contributing to t
 
 I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site.url}}/categories/#java)/[Kotlin]({{site.url}}/categories/#kotlin), Mathematics, Computer Science curricula (algorithms and data structures).
 
-The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). If you see any mistake, or if you wan to propose a change in the articles, please open a PR.
+The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site).
+
+The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml).
+
+#### `Contact`
 
 For contact, drop me a message on [LinkedIn]((https://www.linkedin.com/in/andrei-n-ciobanu-50708611/)). 
 
-The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml).
+#### `Tools`
+
+The blog is powered by [jekyll](https://jekyllrb.com/), [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/) and [netlify](https://www.netlify.com/). The comments system is based on [utterances](https://utteranc.es/).
+
+The "visuals" are created using the [draw.io](https://drawio-app.com/) desktop app.
