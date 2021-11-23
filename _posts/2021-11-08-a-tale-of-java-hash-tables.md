@@ -138,7 +138,7 @@ public V put(K key, V value) {
 }
 ```
 
-But, before `putVal(...)` is getting called, we need to compute `hash(key)`.
+But, before `putVal(...)` gets called, we need to compute `hash(key)`.
 
 ```java
 static final int hash(Object key) {
@@ -153,7 +153,7 @@ If the key is not `null`, we `shift` and `xor` the `hashCode()` of the key and r
 
 The reason for doing that extra bit operation is to improve the diffusion of the `hashCode()` by considering the higher-order bits. If you want to understand more of this magic, please read my previous article: [Implementing Hash Tables in C/Hash functions]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#hash-functions).
 
-If we were to apply the `hash` method to our input (`"Paris"`, `"Sofia"`, `"Madrid"`, `"Bucharest"`), we obtain the following values:
+If we were to apply the `hash` method to our input (`"Paris"`, `"Sofia"`, `"Madrid"`, `"Bucharest"`), we'd obtain the following values:
 
 ```java
 static final int hash(Object key) {
@@ -168,7 +168,7 @@ public static void main(String[] args) {
 }
 ```
 
-The next step is to look at the `putVal(...)` method and see what it's doing:
+The next step is to look at the `putVal(...)` method and see what it does:
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
@@ -257,13 +257,13 @@ Let's imagine for example we want to `get("Bucharest")`:
 
 First, we compute the `hash("Bucharest")=-543452922` and the possible index where we might find the item in the `table`, `6 = (16-1) & (-543452922)`.
 
-At position `table[6]`, there seems to be an item already. But we don't know for sure if it's the item we are looking for or another item we've collided with when we were performing the insertions. 
+At position `table[6]`, there seems to be an item already. But we don't know for sure if it's the item we are looking for or another item we've collided with when we perform the insertions. 
 
 In this regard we compare `hash("Bucharest")` with `table[6].hash`. In our case, the hash values are not equal, so we jump to the next item in the chain: `table[6].next`.
 
 We do the hash comparison again `hash("Bucharest)==table[6].next.hash`, and this time it's `true`.
 
-To be 100% sure we are getting (retrieving) the correct value we do a final comparison `"Bucharest".equals(table[6].next.key)`. If the two are keys are equal, we've found the correct value. If not, we continue the two comparisons until we reach the end of the chain `table[6].next ... .next`.
+To be 100% sure we get (retrieving) the correct value we do a final comparison `"Bucharest".equals(table[6].next.key)`. If the two keys are equal, we've found the correct value. If not, we continue the two comparisons until we reach the end of the chain `table[6].next ... .next`.
 
 > There's a slight chance of having two distinct `Strings` with the same `hash(..)` value. That's why we perform the additional comparison using `equals(...)` - to make sure we eliminate this possibility. 
 
@@ -273,7 +273,7 @@ In the `HashMap<K,V>` constructor, you can pass a `loadFactor` parameter. If you
 
 If the `loadFactor` exceeds the given threshold (by default `0.75f`), a new `table` will be allocated with an increased capacity. If the current size of the table is 2<sup>n</sup>, the new size will be 2<sup>n+1</sup> (basically the next power of two). 
 
-After the re-allocation is successful, all of the existing elements will be inserted in the new `Node<K,V>[] table`. Even if this is a costly operation, *having more air to breathe* will increase reading performance (`get(K key)`). Plus, it shouldn't happen very often. Most of the time *Hash Tables* are used for reads than for inserts. 
+After the successful re-allocation, all of the existing elements will be inserted in the new `Node<K,V>[] table`. Even if this is a costly operation, *having more air to breathe* will increase reading performance (`get(K key)`). Plus, it shouldn't happen very often. Most of the time *Hash Tables* are used for reads than for inserts. 
 
 ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/adjust-capacity-hashmap.drawio.png)
 
@@ -287,7 +287,7 @@ So let's assume this optimization is ignored, and there are 64 elements in a buc
 
 # Open Addressing 
 
-Compared to *Separate Chaining*, *Open Addressing* hash tables are storing only entry per slot. So there are no real *buckets*, no *linked lists*, and no *red-black trees*. It's only one extensive array that has everything it needs to operate.
+Compared to *Separate Chaining*, *Open Addressing* hash tables store only entry per slot. So there are no real *buckets*, no *linked lists*, and no *red-black trees*. It's only one extensive array that has everything it needs to operate.
 
 If the *array* of pairs is sparse enough (operating on a low load factor `< 0.77`), and the *hashing function* has decent diffusion, *hash collisions* should be rare. But even so, they can happen. In this case, we probe the array to find another empty slot for the entry to be inserted. 
 
@@ -309,22 +309,22 @@ The above example is rather extreme, in practice, nobody will use a *hash functi
 
 And one more thing before jumping straight to the code. 
 
-Deleting an element from an *Open Addressing* table is a subtle task! For this reason we need to introduce the concept of [**tombstones**](http://localhost:4000/2021/10/02/implementing-hash-tables-in-c-part-1#tombstones) (click on the link for an in-depth explanation).
+Deleting an element from an *Open Addressing* table is a subtle task! For this reason, we need to introduce the concept of [**tombstones**](http://localhost:4000/2021/10/02/implementing-hash-tables-in-c-part-1#tombstones) (click on the link for an in-depth explanation).
 
 Basically, whenever we delete an entry, we cannot empty the slot and make it `null`, because we might break an existing sequence. In this regard, we mark the slot as *tombstone*:
 * If we are doing insert operations (`put(Key k, V value)`), we consider the tombstone a potential candidate for the insertion. 
-* If we perform read or delete operations, we skip the tombstone and we continue the traversal to find the right spot.
+* If we perform read or delete operations, we skip the tombstone, and we continue the traversal to find the right spot.
 
-Whenever we need to re-adjust the size of the entries array, we don't rehash the tombstones. After all, they are "junk" elements, introduced by delete operations.
+Whenever we need to re-adjust the size of the entries array, we don't rehash the tombstones. After all, they are "junk" elements introduced by delete operations.
 
-Algorithms that avoid tombstones altogether exists, but they make the delete operation more complex, as they involve subsequent swaps of elements to fill up the space previously occupied by the deleted element. I've decided not to implement them. My logic was simple:
+Algorithms that avoid tombstones altogether exist, but they make the delete operation more complex, as they involve subsequent swaps of elements to fill up the space previously occupied by the deleted element. I've decided not to implement them. My logic was simple:
 
 * In most of the cases, deleting an element from a `Map<K,V>` is not a common activity;
 * If deletes are rare, introducing a few tombstones down the road won't affect the performance in a significant manner.
 
 ## `LProbMap<K, V>`
 
-`LProbMap<K,V>` was my first *academic* attempt to implement an *Open Addressing* `Map<K,V>` in Java. I haven't tried any trick, I've just implemented the corresponding algorithms *by the book*.
+`LProbMap<K,V>` was my first *academic* attempt to implement an *Open Addressing* `Map<K,V>` in Java. I haven't tried any trick; I've just implemented the corresponding algorithms *by the book*.
 
 > For the source code, check this [link](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java).
 
@@ -1155,4 +1155,8 @@ Should you ever consider using an *Open Addressing* hash table in Java instead o
 I am yet to find an *Open Addressing* implementation that outperforms `HashMap<K,V>` by a significant margin. If you have additional ideas, you can use the existing repo, as you already have some infrastructure at hand: unit tests, benchmarks, and a script to plot the results. I am accepting PRs, and I will update the article.
 
 
+# Discussion
 
+Related [hacker news link](https://news.ycombinator.com/item?id=29319151#29319535).
+
+Related [reddit link](https://www.reddit.com/r/java/comments/r0b9o9/a_tale_of_java_hash_tables/).
