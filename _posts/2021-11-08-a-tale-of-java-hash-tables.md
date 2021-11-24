@@ -28,6 +28,7 @@ tags:
     - [Retrieving an entry](#retrieving-an-entry)
     - [Deleting an entry](#deleting-an-entry)
     - [Resizing and rehashing](#resizing-and-rehashing)
+  - [`LProbSOAMap<K,V>`](#lprobsoamapkv)
   - [`PerturbMap<K, V>`](#perturbmapk-v)
   - [`LProbBinsMap<K,V>`](#lprobbinsmapkv)
   - [`LProbRadarMap<K, V>`](#lprobradarmapk-v)
@@ -37,7 +38,9 @@ tags:
   - [`SequencedStringsReads`](#sequencedstringsreads)
   - [`AlphaNumericCodesReads`](#alphanumericcodesreads)
 - [The results](#the-results)
+- [The results (2)](#the-results-2)
 - [Wrapping up](#wrapping-up)
+- [Discussion](#discussion)
 
 # Introduction
 
