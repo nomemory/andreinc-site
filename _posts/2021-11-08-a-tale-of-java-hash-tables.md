@@ -67,11 +67,12 @@ My implementations will be entirely academic, and I am sure a person with more e
 
 Also, given the complex nature of benchmarking Java code, please feel free to comment on the results. I've used [`jmh`](https://openjdk.java.net/projects/code-tools/jmh/), but I am more than happy to explore other alternatives.
 
-For the moment, we are going to implement five `Map<K,V>` and benchmark their (`get()`) speed against `HashMap<K,V>`:
+For the moment, we are going to implement <strike>five</strike> six `Map<K,V>` and benchmark their (`get()`) speed against `HashMap<K,V>`:
 
 | Java Class | Source | Description |
 | --- | ---- | --- |
 | [`LProbMap<K, V>`](#lprobmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java) | A classic Open Addressing implementation that uses Linear Probing |
+| [`LProbSOAMap<K,V>`](#lprobsoamapkv) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbSOAMap.java) | This a `LProbMap<K,V>` alternative implementation with a different memory layout than the original implementation. This was proposed by **dzaima** on [github](https://github.com/nomemory/open-addressing-java-maps/issues/1). Because it's a cool approach I've decided to include it in the article. |
 | [`LProbBinsMap<K,V>`](#lprobbinsmapkv) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java) | An "almost" classic Open Addressing implementation inspired by ruby's hash table.|
 | [`LProbRadarMap<K, V>`](#lprobradarmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java) | An Open Addressing implementation that uses a separate vector (`radar`) to determine where to search for items. It uses the same idea as *Hopscotch Hashing* |
 | [`PerturbMap<K, V>`](#perturbmapk-v) | [src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java) | An Open Addressing implementation that uses the python's *perturbator* algorithm instead of linear probing |
@@ -635,6 +636,31 @@ This approach is a little *naive*, but it works. It can be improved by computing
 
 Also, depending on how many tombstones were created, we can reduce the capacity to `reHashElements(-2)` or `reHashElements(-3)` directly.
 
+
+## `LProbSOAMap<K,V>`
+
+This is an interesting proposal made by **dzaima** on [github](https://github.com/nomemory/open-addressing-java-maps/issues/1). 
+
+> For the full source code, please check the following [link]([src](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbSOAMap.java)).
+
+This is what we propose:
+
+> A very important property of open addressing is the ability to not need an allocation per inserted item. Without that, your LProbMap and Java's HashMap differ only by where the next object pointer is read - a list in LProbMap, or the entry object in HashMap. Both are already in cache, so I would expect very similar performance, or worse because it has to iterate over more objects.
+
+> [Here](https://gist.github.com/dzaima/be4ef7efeda45a2930b1fb093f871c43) is a version of LProbMap utilizing a struct-of-arrays approach. It does mean that you have to read from three separate arrays, which would all be in different locations, but it's the best Java can currently offer.
+
+So we keep everything identical with `LProbMap<K,V>`, except we organize the memory in a different way.
+
+Instead of defining a single `LProbMapEntry<K, V>[] buckets` array of buckets, we split the data into three arrays:
+
+```java
+public K[] bucketsK = (K[]) new Object[1<<DEFAULT_MAP_CAPACITY_POW_2];
+public V[] bucketsV = (V[]) new Object[1<<DEFAULT_MAP_CAPACITY_POW_2];
+public int[] bucketsH = new int[1<<DEFAULT_MAP_CAPACITY_POW_2]; // k=null: hash=0 - empty; hash=1 - tombstone
+```
+
+In this way, we are not *forced* to use `Map.Entry<K,V>` and opt for a more straightforward memory layout.
+
 ## `PerturbMap<K, V>`
 
 [`PerturbMap<K,V>`](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java) is my second approach of implementing an *Open Addressing* `Map<K,V>`, and it's almost identical to `LProbMap<K,V>` with one significant change. 
@@ -1140,6 +1166,15 @@ After running all the three benchmarks for almost 6 hours, I've got the followin
 ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/SequencedStringReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/SequencedStringReads.randomReadsWithMisses.png)
 ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/AlphaNumericCodesReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench/AlphaNumericCodesReads.randomReadsWithMisses.png)
 
+# The results (2)
+
+After the [`LProbMapSOA<K,V>`]() contribution from [**dzaima**](https://github.com/dzaima), I've decided to re-run the benchmarks and include it. The new results are:
+
+:-------------------------:|:-------------------------:
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/RandomStringsReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/RandomStringsReads.randomReadsWithMisses.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/SequencedStringReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/SequencedStringReads.randomReadsWithMisses.png)
+![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/AlphaNumericCodesReads.randomReads.png) | ![png]({{site.url}}/assets/images/2021-11-08-a-tale-of-java-hash-tables/bench1/AlphaNumericCodesReads.randomReadsWithMisses.png)
+
 # Wrapping up
 
 Firstly, the benchmarks are incomplete as we haven't tested the performance for `put` or `remove` operations. More work can be done to improve both methods. The `tombstones` strategy is probably not the best; more thoughtful implementations prefer shifting elements instead. 
@@ -1149,6 +1184,8 @@ Secondly, I was surprised to see that `LProbMap<K,V>` and `RobinHoodMap<K,V>` ar
 Implementing the 5 *Open Addressing* maps was a fun and frustrating exercise. In Java, you can only be *half-smart* when you are writing code. The other *half* is where the JIT comes into play. You cannot control even what function is getting inlined. So writing the code to make it as fast as possible was a trial and error endeavor. I am not even sure I've made the right decisions.
 
 I had high hopes for `LProbBinsMap<K,V>`, but surprisingly it performed the worst. Maybe I've missed something and someone more experienced than me can find the reason why it works poorly.
+
+`LProbSOAMap<K,V>` performed exceptionally well, especially when we query entries that exist on the Map<K,V>. It performed better than `LProbMap<K,V>` and even `HashMap<K,V>` when the number of elements is lesser than `10_000_000`. Afterward, `HashMap<K,V>` starts to shine. 
 
 Should you ever consider using an *Open Addressing* hash table in Java instead of `HashMap<K,V>`. Probably not. `HashMap<K,V>` is simple, performant and bullet-proof. 
 
