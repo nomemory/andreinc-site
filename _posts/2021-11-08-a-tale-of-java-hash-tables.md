@@ -1007,7 +1007,7 @@ One significant advantage of *Robin Hood* hashing is that it enforces minimal va
 
 # Benchmarks
 
-After having implemented the five *Open Addressing* maps, ([LProbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java), [LProbBinsMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java), [LProbRadarMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java), [PerturbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java), [RobinHoodMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/RobinHoodMap.java)), I wanted to check how good they perform vs. the `HashMap<K,V>` reference implementation.
+After having implemented the <strike>five</strike> six *Open Addressing* maps, ([LProbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbMap.java), [LProbBinsMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbBinsMap.java), [LProbRadarMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/LProbRadarMap.java), [PerturbMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/PerturbMap.java), [RobinHoodMap.java](https://github.com/nomemory/open-addressing-java-maps/blob/main/src/main/java/net/andreinc/neatmaps/RobinHoodMap.java)), I wanted to check how good they perform vs. the `HashMap<K,V>` reference implementation.
 
 (micro)Benchmarking in Java is hard, so in this regard, I've used [jmh](https://openjdk.java.net/projects/code-tools/jmh/) + [mockneat](https://www.mockneat.com) (to generate test data). 
 
@@ -1184,7 +1184,7 @@ Firstly, the benchmarks are incomplete as we haven't tested the performance for 
 
 Secondly, I was surprised to see that `LProbMap<K,V>` and `RobinHoodMap<K,V>` are performing relatively well vs. `HashMap<K,V>` for datasets < `1_000_000`. After the number of elements increases, performance is degrading but not by huge margins. In terms of memory consumption, the results were also quite similar.
 
-Implementing the 5 *Open Addressing* maps was a fun and frustrating exercise. In Java, you can only be *half-smart* when you are writing code. The other *half* is where the JIT comes into play. You cannot control even what function is getting inlined. So writing the code to make it as fast as possible was a trial and error endeavor. I am not even sure I've made the right decisions.
+Implementing the <strike>five</strike> six *Open Addressing* maps was a fun and frustrating exercise. In Java, you can only be *half-smart* when you are writing code. The other *half* is where the JIT comes into play. You cannot control even what function is getting inlined. So writing the code to make it as fast as possible was a trial and error endeavor. I am not even sure I've made the right decisions.
 
 I had high hopes for `LProbBinsMap<K,V>`, but surprisingly it performed the worst. Maybe I've missed something and someone more experienced than me can find the reason why it works poorly.
 
