@@ -32,12 +32,12 @@ The blog source code/content is hosted on [github/nomemory/andreinc-site](https:
 
 The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml).
 
-#### `Contact`
-
-For contact, drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
-
 #### `Tools`
 
 The blog is powered by [jekyll](https://jekyllrb.com/), [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/) and [netlify](https://www.netlify.com/). The comments system is based on [utterances](https://utteranc.es/).
 
-The "visuals" are created using the [draw.io](https://drawio-app.com/) desktop app.
+I create the "visuals" with [draw.io](https://drawio-app.com/). For all the math formulas, I use [mathjax](https://www.mathjax.org/).
+
+#### `Contact`
+
+Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 

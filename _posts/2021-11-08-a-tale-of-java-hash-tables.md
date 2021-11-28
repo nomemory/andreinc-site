@@ -449,6 +449,7 @@ protected V put(K key, V value, int hash) {
             buckets[idx].value = value;
             buckets[idx].hash = hash;
             size++;
+            tombstones--;
             // No value was updated so we return null
             return null;
         }
@@ -856,6 +857,8 @@ protected V put(K key, V value, int hash) {
             buckets[idx].val = value;
             buckets[idx].hash = hash;
             radar[base] |= (1 << probing);
+            size++;
+            tombstones--;
         }
         else if (buckets[idx].hash == hash && key.equals(buckets[idx].key)) {
             // We perform an update on the element
