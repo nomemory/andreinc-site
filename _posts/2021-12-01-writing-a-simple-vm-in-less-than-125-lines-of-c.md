@@ -4,7 +4,7 @@ date: "2021-12-01"
 classes: wide
 comments: true
 usemathjax: false
-excerpt: "Writing a simple VM for LC3 in less than 200 lines of C"
+excerpt: "Writing a simple VM for LC3 in less than 125 lines of C"
 categories:
 - "c"
 tags:
