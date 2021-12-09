@@ -26,7 +26,7 @@ If you are a seasoned C developer that have already dabbled in this sort of stuf
 
 The reader should already be familiar with bitwise operations, hexadecimal notation, pointers, pointer functions, C macros and some functions from the standard library (eg., `fwrite` and `fread`). 
 
-It will be unfair not to mention some existing blog posts covering the same topic as this article, the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meyers](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little bit simpler, and the code takes a different route in terms of the implementation. 
+It will be unfair not to mention some existing blog posts covering the same topic as this article, the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meiners](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little bit simpler, and the code takes a different route in terms of the implementation. 
 
 # Virtual Machines
 
