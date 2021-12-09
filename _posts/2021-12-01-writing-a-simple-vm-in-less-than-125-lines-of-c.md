@@ -28,6 +28,42 @@ The reader should already be familiar with bitwise operations, hexadecimal notat
 
 It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meyers](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
 
+# Table of contents
+
+- [Virtual Machines](#virtual-machines)
+- [von Neumann model](#von-neumann-model)
+- [Implementing the VM](#implementing-the-vm)
+  - [The Main Memory](#the-main-memory)
+  - [The registers](#the-registers)
+  - [The instructions](#the-instructions)
+    - [`add` - Adding two values](#add---adding-two-values)
+    - [`and` - Bitwise logical AND](#and---bitwise-logical-and)
+    - [`ld` - Load RPC + offset](#ld---load-rpc--offset)
+    - [`ldi` - Load indirect](#ldi---load-indirect)
+    - [`ldr` - Load Base+Offset](#ldr---load-baseoffset)
+    - [`lea` - Load effective address](#lea---load-effective-address)
+    - [`not` - Bitwise complement](#not---bitwise-complement)
+    - [`st` - Store](#st---store)
+    - [`sti` - Store indirect](#sti---store-indirect)
+    - [`str` - Store base + offset](#str---store-base--offset)
+    - [`jmp` - Jump](#jmp---jump)
+    - [`jsr` - Jump to subroutines](#jsr---jump-to-subroutines)
+    - [`br` - Conditional branch](#br---conditional-branch)
+    - [`trap`](#trap)
+        - [`tgetc`](#tgetc)
+        - [`toutc`](#toutc)
+        - [`tputs`](#tputs)
+        - [`tin`](#tin)
+        - [`thalt`](#thalt)
+        - [`tinu16`](#tinu16)
+        - [`toutu16`](#toutu16)
+- [Loading and running programs](#loading-and-running-programs)
+  - [Our first program](#our-first-program)
+  - [Running our first program](#running-our-first-program)
+- [Final thoughts](#final-thoughts)
+- [Community Links](#community-links)
+
+
 # Virtual Machines
 
 In the world of computing, a VM (*Virtual Machine*) is a term that refers to a system that emulates/virtualizes a computer system/architecture. 
@@ -714,7 +750,7 @@ We iterate through the memory location starting at `R0` until we find `0x0000` a
 ```c
 static inline void tputs() {
     uint16_t *p = mem + reg[R0];
-    while(p) {
+    while(*p) {
         fprintf(stdout, "%c", (char)*p);
         p++;
     }
@@ -809,7 +845,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-# Our first program
+## Our first program
 
 Our first program will not be `"Hello, world!"`, but something more exciting: a complex software that reads two numbers from the keyboard and prints their sum to `stdout`.
 
@@ -890,3 +926,10 @@ Writing a simple toy like this is simple, but creating something remotely useful
 
 Maybe in another article, we will implement a [Stack-Based VM](https://en.wikipedia.org/wiki/Stack_machine), or a *modern* hybrid between the two.
 
+After submitting this article on various communities (btw, feedback was amazing), people constructively suggested the naming conventions are confusing: functions names are too short, code is too terse, etc. 
+
+I wouldn't usually name things like I did here, but given the fact that the program, in essence, is short, contained, and geared towards the low-level world of ASM (Where things have *non-modern* naming conventions), it was more natural for me to write the code like this. On short, the code was not imagined to be easily understood without this companion article aside.
+
+# Community links
+
+[`hackernews`](https://news.ycombinator.com/item?id=29492183) [`reddit/r/programming`](https://www.reddit.com/r/programming/comments/rc4eho/writing_a_simple_16_bit_vm_in_less_than_125_lines/) [`reddit/c_programming`](https://www.reddit.com/r/C_Programming/comments/rc3qus/writing_a_simple_16_bit_vm_in_less_than_125_lines/)
