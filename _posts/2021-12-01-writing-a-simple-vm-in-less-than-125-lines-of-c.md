@@ -16,39 +16,39 @@ This tutorial is intended for C beginners who want to do some coding practice, a
 
 By the end of the article, we will have a working register-based VM capable of interpreting and running a limited set of ASM instructions + some bonus programs to test if everything works well.
 
-The code is written in C11, and it will probably compile on most operating systems. The repo can be found [here](https://github.com/,nomemory/lc3-vm), and the exact source code is [`vm.c`](https://github.com/nomemory/lc3-vm/blob/main/vm.c):
+The code is written in C11, and it will probably compile on most operating systems. The repo can be found [here](https://github.com/nomemory/lc3-vm), and the exact source code is [`vm.c`](https://github.com/nomemory/lc3-vm/blob/main/vm.c):
 
 ```
 git clone git@github.com:nomemory/lc3-vm.git
 ```
 
-If you are a seasoned C developer that have already dabbled in this sort of stuff, you can skip this reading, because it will cover information you probably already know. 
+If you are a seasoned C developer that has already dabbled in this sort of stuff, you can skip this reading because it will cover information you probably already know. 
 
-The reader should already be familiar with bitwise operations, hexadecimal notation, pointers, pointer functions, C macros and some functions from the standard library (eg., `fwrite` and `fread`). 
+The reader should already be familiar with bitwise operations, hexadecimal notation, pointers, pointer functions, C macros, and some functions from the standard library (e.g., `fwrite` and `fread`). 
 
-It will be unfair not to mention some existing blog posts covering the same topic as this article, the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meyers](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little bit simpler, and the code takes a different route in terms of the implementation. 
+It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meyers](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
 
 # Virtual Machines
 
-In the world of computing, a VM (*Virtual Machine*) is a term that refers to a system that emulates/virtualize a computer system/architecture. 
+In the world of computing, a VM (*Virtual Machine*) is a term that refers to a system that emulates/virtualizes a computer system/architecture. 
 
 Broadly speaking, there are two categories of Virtual Machines:
-* *System Virtual Machines* which provide a complete substitute for a real machine. They implement enough functionality that allow operating systems to function on them. They can share and manage hardware, and sometimes multiple environments can function on the same physical machine without hindering each other.
+* *System Virtual Machines* which provide a complete substitute for a real machine. They implement enough functionality that allows operating systems to function on them. They can share and manage hardware, and sometimes multiple environments can function on the same physical machine without hindering each other.
 * *Process Virtual Machines* which are simpler and are designed to execute computer programs in a platform-agnostic environment. The [JVM](https://en.wikipedia.org/wiki/Java_virtual_machine) is a good example of a *Process Virtual Machine*.
 
 In this article, we will develop a simple *Process Virtual Machine* designed to execute simple computer programs in a platform-independent environment. Our *toy* Virtual Machine is based on the [LC-3 Computer Architecture](https://en.wikipedia.org/wiki/Little_Computer_3), and will be capable of interpreting and executing (a subset of) LC3 Assembly Code.
 
-> Little Computer 3, or LC-3, is a type of computer educational programming language, an assembly language, a type of low-level programming language. It features a relatively simple instruction set, but can be used to write moderately complex assembly programs and is a viable target for a C compiler. The language is less complicated than x86 assembly but has many features similar to those in more complex languages. These features make it worthwhile for beginning instruction, so it is most often used to teach fundamentals of programming and computer architecture to computer science and computer engineering students. ([wikipedia](https://en.wikipedia.org/wiki/Little_Computer_3))
+> Little Computer 3, or LC-3, is a type of computer educational programming language, an assembly language, a type of low-level programming language. It features a relatively simple instruction set but can be used to write moderately complex assembly programs and is a viable target for a C compiler. The language is less complicated than x86 assembly but has many features similar to those in more complex languages. These features make it worthwhile for beginning instruction, so it is most often used to teach fundamentals of programming and computer architecture to computer science and computer engineering students. ([wikipedia](https://en.wikipedia.org/wiki/Little_Computer_3))
 
 For simplicity, we deliberately stripped down our LC-3 implementation from the following features: interrupt processing, priority levels, process, status registers (PSR), privilege modes, supervisor stack, user stack. We will virtualize only the most basic hardware possible, and we will interact with the *outside* world (`stdin`, `stdout`) through `traps`.
 
 # von Neumann model
 
-Our LC-3 inspired VM, like most of the general purpose computers nowadays, is based on the [von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) [computer model](https://en.wikipedia.org/wiki/Von_Neumann_architecture), and it will have 3 main components: the **CPU**, the **Main Memory**, the **input**/**output** devices.
+Our LC-3 inspired VM, like most of the general-purpose computers nowadays, is based on the [von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) [computer model](https://en.wikipedia.org/wiki/Von_Neumann_architecture), and it will have three main components: the **CPU**, the **Main Memory**, the **input**/**output** devices.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/vn.drawio.png)
 
-The **CPU**, an abbreviation for *Central Processing Unit* is the "circuitry" that controls and manipulates data. Furthermore, the CPU is divided into three layers: **ALU**, **CU** and **Registers**.
+The **CPU**, an abbreviation for *Central Processing Unit* is the "circuitry" that controls and manipulates data. Furthermore, the CPU is divided into three layers: **ALU**, **CU**, and **Registers**.
 
 ALU stands for *Arithmetic/Logic Unit* and represents the circuits that are actually carrying the instructions on the data (operations like ADD, XOR, Division, etc.). 
 
@@ -56,7 +56,7 @@ CU, an abbreviation for *Control Unit*, coordinates the activities on CPU.
 
 The registers are quickly accessible "slots" located at the CPU level. The ALU operates on registers. They come in small numbers (that's a relative statement, as it depends on the architecture), so the amount of data that can be *loaded* inside the CPU is limited. We use registers to interact with the *Main Memory*. A typical scenario involves loading a memory location into a register, performing some changes, and putting the data back into memory.
 
-The **Main Memory** is imagined as an extensive "array" of `W` words of `N` bits each. Program instructions and the associated data are stored in the main memory in a binary format. Each memory *word* contains either one instruction or program data (e.g.: a number used for computation).
+The **Main Memory** is imagined as an extensive "array" of `W` words of `N` bits each. Program instructions and the associated data are stored in the main memory in a binary format. Each memory *word* contains either one instruction or program data (e.g., a number used for computation).
 
 The **Input/Output** devices enable the computer to communicate with the outside world. 
 
@@ -65,7 +65,7 @@ The **Input/Output** devices enable the computer to communicate with the outside
 Our VM functions like this:
 - We load the program into the main memory;
 - In the `RPC` register, we keep the current instruction that we need to execute;
-- We obtain the *Operation Code* (first 4 bits) from the instruction, and based on that, we *decode* the rest of the parameters.;
+- We obtain the *Operation Code* (first 4 bits) from the instruction and based on that, we *decode* the rest of the parameters.;
 - We execute the method associated with the given instruction;
 - We increment `RPC` and we continue with the next instruction;
 
@@ -98,7 +98,7 @@ Even if this looks redundant to implement `mr` and `mw` (we can access the memor
 Our VM has a total of 10 registers, 16 bits each:
 * `R0` is a general-purpose register. We are going to also use it for reading/writing data from/to `stdin`/`stdout`;
 * `R1`, `R2`,..`R7` are general purpose registers;
-* `RPC` is the program counter register. It contains the memory address of the next instruction we are going to execute.
+* `RPC` is the program counter register. It contains the memory address of the next instruction we will execute.
 * `RCND` is the conditional register. The conditional flag gives us information about the previous operation that happened at ALU level in the CPU.
 
 From a code perspective we can implement them as follows:
@@ -114,7 +114,7 @@ To access a register, we simply: `reg[R3]=...`.
 
 An instruction is like a *command* we give to the VM. 
 
-Through instructions we ask the VM to perform a simple (and granular) task for us: read a char from the keyboard, add two numbers, perform a binary AND on a register, etc.
+Through instructions, we ask the VM to perform a simple (and granular) task for us: read a char from the keyboard, add two numbers, perform a binary AND on a register, etc.
 
 Instructions have the same word size as the memory, 16 bits. This is a natural decision; after all, we keep instructions loaded inside the *Main Memory*. So, from the C language perspective, instructions are  `uint16_t` unsigned integers.
 
@@ -126,9 +126,9 @@ In terms of their format, instructions are usually *encoded* like this (inside a
 
 The first 4 bits are always the OpCode of the instruction. And then, depending on the instruction, there are 1,2,3,... params encoded in the remaining 12 bits.
 
-Based on the OpCode we can identify the instruction, and understand how can we "decode"/"extract" the rest of the params from the `uint16_t`.
+Based on the OpCode, we can identify the instruction and understand how to "decode"/"extract" the rest of the params from the `uint16_t`.
 
-For extracting the OpCode itself we can write an utility macro that applies a simple bitwise trick:
+For extracting the OpCode itself, we can write a utility macro that applies a simple bitwise trick:
 
 ```c
 #define OPC(i) ((i)>>12)
@@ -138,9 +138,9 @@ We shift 12 bits to the right (`i>>12`), to get the 4 most significant bits that
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/opp.drawio.png)
 
-Because OpCodes are represented on 4 bits, the maximum number of instructions we can encode are 16 (`2^4=16`).
+Because OpCodes are represented in 4 bits, the maximum number of instructions we can encode is 16 (`2^4=16`).
 
-Now, a nice trick we can perform in C (from a data modeling perspective) is to save all possible instructions (and their associated C functions) in an array. The index will represent the actual OpCode (after all, OpCodes are numbers from 0 to 15), and the value will be a pointer to the corresponding C function.
+A nice trick we can perform in C (from a data modeling perspective) is to save all possible instructions (and their associated C functions) in an array. The index will represent the actual OpCode (after all, OpCodes are numbers from 0 to 15), and the value will be a pointer to the corresponding C function.
 
 ```c
 #define NOPS (16) // number of instructions
@@ -170,7 +170,7 @@ op_ex[OP(instr)](instr); // this will execute the function associated with the O
                          //             (and so on)
 ```
 
-With this simple trick, we can avoid writing a `switch` statement with 16 (+1) `cases`. 
+We can avoid writing a `switch` statement with 16 (+1) `cases` with this simple trick. 
 
 Now, let see what instructions our VM supports. As I've said earlier, I wasn't original enough to come up with my own ASM, so I've decided to copy the instructions from the LC3 specification.
 
@@ -193,7 +193,7 @@ Now, let see what instructions our VM supports. As I've said earlier, I wasn't o
 | [`lea`](#lea---load-effective-address) | `0xE` | `0b1110` | `void lea(uint16_t i)` | Load effective address |
 | `trap` | `0xF` | `0b1111`| `void trap(uint16_t i)` | System trap/call |
 
-Regarding their order, instructions can be grouped togheter (based on their functionality) into 4 main categories:
+Regarding their order, instructions can be grouped together (based on their functionality) into 4 main categories:
 * [`br`](#br---conditional-branch), [`jmp`](#jmp---jump), `jsr` are used for the **control flow** of our programs: jumping from one instruction to another (similar to a `go to` statement) or conditional jumping (similar to an `if` statement);
 * [`ld`](#ld---load-rpc--offset), [`ldr`](#ldr---load-baseoffset), [`ldi`](#ldi---load-indirect), [`lea`](#lea---load-effective-address) are used to to **load data** from the main memory to the registers;
 * [`st`](#st---store), [`str`](#str---store-base--offset), [`sti`](#sti---store-indirect) are used to **store data** from the registers back to the main memory;
@@ -201,7 +201,7 @@ Regarding their order, instructions can be grouped togheter (based on their func
 
 `trap` is a special instruction that will enable us to interact with the keyboard (read characters or numbers), and print information on `stdout`.
 
-As you notice, in terms of actual mathematical operations our VM won't support a lot of operations. For example there's no `XOR`, and no division or multiplication. The good news is that we can implement them as an exercise to learn more about ASM. It's not going to be easy, but it's possible and it's a good practice to learn more about ASM.
+As you notice, our VM won't have a lot of functionality in terms of actual mathematical operations. For example, there's no `XOR`, and no division or multiplication. The good news is that we can implement them as an exercise to learn more about ASM. It's not going to be easy, but it's possible, and it's a good practice to know more about ASM.
 
 But before jumping into the implementation for each instruction, we must note that some operations have additional "side-effects" on the registers.
 
@@ -235,7 +235,7 @@ Our VM supports negative numbers (don't get confused by the fact we've used `uin
 
 ## `add` - Adding two values
 
-Having the ability to add two numbers is essential for the VM we are building. In this regard we will define two `add` instructions. Both of them will have the same OpCode, but the rest of the encoding will be different. `bit[5]` is the one that tells us which version of the `add` instruction we pick.
+Having the ability to add two numbers is essential for the VM we are building. In this regard, we will define two `add` instructions. Both of them will have the same OpCode, but the rest of the encoding will be different. `bit[5]` is the one that tells us which version of the `add` instruction we pick.
 
 The first one (`add1`) is used for adding the values of two registers: `SR1`, `SR2`, and storing their sum in `DR1`:
 
@@ -262,9 +262,9 @@ Visually, `SEXTIMM(i)` works like this (if the number is negative):
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/se.drawio.png)
 
-If the number is positive we don't have to perform any change on it.
+If the number is positive, we don't have to perform any change on it.
 
-For example running the following code, will give you the correct results:
+For example, running the following code will give you the correct results:
 ```c
 uint16_t a = 0x16;          // The 5th bit is 1
                             // This means that the number kept in the last 5 bits
@@ -288,9 +288,9 @@ Now, let's get back to our two `add` (`add1` and `add2`) functions.
 
 From a C perspective, we can group them inside a single method that tests if `bit[5]` is `0` or `1` to decide how to decode further. 
 
-If `bit[5]` is `0`, then we implement `add1`, otherwise we implement `add2`.
+If `bit[5]` is `0`, then we implement `add1`. Otherwise we implement `add2`.
 
-To get the 5th bit of the instruction we will define a macro: 
+To get the 5th bit of the instruction, we will define a macro: 
 
 ```c
 // Gets the 5th bit of i
@@ -299,7 +299,7 @@ To get the 5th bit of the instruction we will define a macro:
 ```
 
 From a visual perspective, `FIMM` works like this:
-* It shifts the `i` to right with 5 bits;
+* It shifts the `i` to the right with 5 bits;
 * It obtains the last bit by applying `&1`;
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/fimm.drawio.png)
@@ -313,7 +313,7 @@ Other useful macros we can use to "extract" `SR1`, `SR2`, `DR1` and `IMM5` are:
 #define IMM(i) ((i)&0x1F)
 ```
 
-Explaining each of them it's not exactly in the scope of this article, but things can become much clearer if you read a good tutorial on bitwise operations. Also, they work quite similar to `FIMM`, we just use a different mask to get the last 3 bits instead of 1.
+Explaining each of them it's not exactly in the scope of this article, but things can become much clearer if you read a good tutorial on bitwise operations. Also, they work quite similar to `FIMM`; we just use a different mask to get the last 3 bits instead of 1.
 
 All in all, our `add` function finally looks like this:
 
@@ -340,7 +340,7 @@ The second one (`add2`) applies binary `&` between `SR1` and `IMM5` and stores t
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/and2.drawio.png)
 
-The same idea as before applies, we check `bit[5]` to determine which format we decode.
+The same idea as before applies; we check `bit[5]` to determine which format we decode.
 
 From a code perspective, the implementation is more or less the same as the previous one, and re-uses the same macros. We just change the operation from `+` to `&`:
 
@@ -356,7 +356,7 @@ static inline void and(uint16_t i)  {
 
 ## `ld` - Load RPC + offset
 
-`ld` is an instruction to load data from a main memory location to a destination register, `DR1`. The memory location is obtained by adding to the `RPC` register an offset value. Calling `ld` doesn't modify the `RPC`, we use `RPC` just as a referencing point.
+`ld` is an instruction to load data from a main memory location to a destination register, `DR1`. The memory location is obtained by adding to the `RPC` register an offset value. Calling `ld` doesn't modify the `RPC`; we use `RPC` just as a referencing point.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/ldexp.drawio.png)
 
@@ -386,15 +386,15 @@ To solve this limitation `ld` has, let's look at another instruction for loading
 
 ## `ldi` - Load indirect 
 
-This instruction is used to load data into registers, using an intermediary addresses to access "far-away" memory areas.
+This instruction is used to load data into registers, using intermediary addresses to access "far-away" memory areas.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/ldiexp.drawio.png)
 
-So let's say the `RPC` points to `0x3002`. Just like before, we use a 9 bit offset to access another memory address at position (`RPC+offset`). In our case the `offset=100`, so the memory address we read is `0x3066`. 
+So let's say the `RPC` points to `0x3002`. Just like before, we use a 9 bit offset to access another memory address at position (`RPC+offset`). In our case, the `offset=100`, so the memory address we read is `0x3066`. 
 
 But instead of loading (directly) `0x3066` into `DR`, we look at the value contained by `0x3066`, which is `0x3204`. We now, bring the value of `0x3204` inside the `DR`. 
 
-Using `ldi` eliminates the issue with the offset's 9 bit limitation that *affects* `ld`.
+Using `ldi` eliminates the issue with the offset's 9-bit limitation that *affects* `ld`.
 
 As a side-note, this doesn't mean `ldi` is better than `ld`, because instead of performing one read, we have to perform two. It just serves another purpose.
 
@@ -413,13 +413,13 @@ static inline void ldi(uint16_t i)  {
 
 ## `ldr` - Load Base+Offset
 
-This is another instruction we use to load data into registers, but compared to `ld` where we start from `RPC`, this time we can use a different `base` (by base we mean a memory address kept in a register). 
+This is another instruction we use to load data into registers, but compared to `ld` where we start from `RPC`, this time we can use a different `base` (by base, we mean a memory address kept in a register). 
 
 The format of the instruction is as follows:
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/ldr.drawio.png)
 
-To extract `BASER` from the instruction we can re-use the macro we've firstly defined for `ld` (`SR1(i)`), because the bits have the same position. 
+To extract `BASER` from the instruction, we can re-use the macro we've firstly defined for `ld` (`SR1(i)`), because the bits have the same position. 
 
 The extract `OFFSET6` from the instruction we will use the following macro: 
 
@@ -445,7 +445,7 @@ static inline void ldr(uint16_t i) {
 
 ## `lea` - Load effective address
 
-This instruction help us load memory addresses into registers. Compared to `ld`, `ldi` and `ldr`, `lea` doesn't bring program data into registers, but memory locations.
+This instruction helps us load memory addresses into registers. Compared to `ld`, `ldi` and `ldr`, `lea` doesn't bring program data into registers, but memory locations.
 
 The format of `lea` is:
 
@@ -505,9 +505,9 @@ static inline void st(uint16_t i)  {
 }
 ```
 
-Because we don't do any computation on our registers, there's no need to update any flags.
+There's no need to update any flags because we don't do any computation on our registers.
 
-Similar to `ld` before, `st` suffers from the same limitation in terms of memory *addressability*. In this regard, we introduce a new instruction called `sti`. 
+Similar to `ld` before, `st` suffers from the same memory *addressability*limitation. In this regard, we introduce a new instruction called `sti`. 
 
 ## `sti` - Store indirect
 
@@ -517,7 +517,7 @@ The format of the instruction is similar to `st`, only the OpCode changes:
 
 The behavior is somewhat different. 
 
-Instead of writing to the memory address directly, we use an intermediary address from the main memory to intermediate the write (`mw(..)`). This secondary address contains the actual memory location where we will perform the write.
+Instead of writing to the memory address directly, we use an intermediary address from the main memory to intermediate the write (`mw(..)`). This secondary address contains the actual memory location where we will write.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/stiexp.drawio.png)
 
@@ -556,7 +556,7 @@ static inline void str(uint16_t i)  {
 
 ## `jmp` - Jump
 
-Normally, the `RPC` register auto-increment itself, after each instruction gets executed. 
+Typically, the `RPC` register auto-increment after each instruction gets executed. 
 
 `jmp` is an instruction that makes our `RPC` jump to the location specified by the contents of the `BASER` (base register). 
 
@@ -568,9 +568,9 @@ And visually the instruction works like this:
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/jmpexp.drawio.png)
 
-Let's say our `RPC=0x3002`, and `R2=0x3066` (this is `BASER`). When the `jmp` instruction is encountered, `RPC` will jump directly to the memory address kept in `BASER` (which is `R2=0x3066`), and the program flow will continued from there onwards.
+Let's say our `RPC=0x3002`, and `R2=0x3066` (this is `BASER`). When the `jmp` instruction is encountered, `RPC` will jump directly to the memory address kept in `BASER` (`R2=0x3066`), and the program flow will continue.
 
-In some high-level programing languages, `jmp` is similar to a `go to` statement.
+In some high-level programming languages, `jmp` is similar to a `go to` statement.
 
 The corresponding `C` code is:
 
@@ -582,9 +582,9 @@ static inline void jmp(uint16_t i)  {
 
 ## `jsr` - Jump to subroutines
 
-`jsr` is a control flow instruction, that help us to implement *subroutines*. 
+`jsr` is a control flow instruction that helps us implement *subroutines*. 
 
-Subroutines in (our) ASM are similar to functions from a high level programming language. They can be viewed as a series of instructions and their starting. They have an input (expect to read data from registers), and an output (they put the return value to a register).
+Subroutines in (our) ASM are similar to functions from a high-level programming language. They can be viewed as a series of instructions and their starting. They have an input (expect to read data from registers), and an output (they put the return value to a register).
 
 `jsr` comes into two formats:
 
@@ -610,12 +610,12 @@ The visual explanation for this instruction looks like this:
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/jsrexp.drawio.png)
 
-In the above example, `RPC` is initially set to `3002`. At this position it's a `jsr` instruction. We store `RPC` in `R7` to remember from where we branched off. Then we jump with te required `offset=100`, to position `0x3066`, and we update `RPC` to this.
+In the above example, `RPC` is initially set to `3002`. At this position, it's a `jsr` instruction. We store `RPC` in `R7` to remember from where we branched off. Then we jump with the required `offset=100`, to position `0x3066`, and we update `RPC` to this.
 
 
 ## `br` - Conditional branch
 
-This instruction works similar to `jsr`, but with one big difference, the branching happens only if some conditions are met.
+This instruction works similar to `jsr`, but there's one big difference, the branching happens only if some conditions are met.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/br.drawio.png)
 
@@ -643,13 +643,13 @@ static inline void br(uint16_t i)   {
 
 ## `trap`
 
-This instruction is more complex than the rest, because it enables us to interact with I/0 and theoretically speaking other devices.
+This instruction is more complex than the rest because it enables us to interact with I/0 and, theoretically, other devices.
 
 ![png]({{site.url}}/assets/images/2021-12-01-writing-a-simple-vm-in-less-than-125-lines-of-c/trap.drawio.png)
 
 In the `TRAPVECT` we keep an index to other functions that offer us the possibility to read numbers and strings from `stdin` and write them on `stdout`.
 
-Each trap will be kept in an array `trp_ex` that contains pointers to the associated C functions. We follow the same strategy as we did with the the instructions, but we will use a separate array. 
+Each trap will be kept in an array `trp_ex` that contains pointers to the associated C functions. We follow the same strategy as we did with the instructions, but we will use a separate array. 
 
 If we would've kept things *kosher*, traps should've been implemented in ASM, and we would've implemented another mechanism to interact with the keyboard and `stdout`. 
 
@@ -683,8 +683,8 @@ In total, there are 8 supported trap functions:
 | `tgetc` | `0x20` | 0 | Reads a character (`char`) from the keyboard that get copied in `R0` |
 | `tout` | `0x21` | 1 | Writes the character (`char`) from `R0` to the console. |
 | `tputs` | `0x22` | 2 | Writes a string of characters to the console. As a rule, the characters are kept in a contiguous memory location, one `char` per memory location. Starting with the address specified in `R0`. If `0x0000` is encountered, printing stops.|
-| `tin` | `0x23` | 3 | Reads a character (`char`) from the keyboard and it get copied in `R0`. Afterwards the `char` is printed on console. |
-| `tputsp` | `0x24` | 4 | Not implemented. This trap is used to store 2 characters per memory location instead of 1. Otherwise it works like `tputs`. It's left out as an exercise. |
+| `tin` | `0x23` | 3 | Reads a character (`char`) from the keyboard, and it gets copied in `R0`. Afterward, the `char` is printed on the console. |
+| `tputsp` | `0x24` | 4 | Not implemented. This trap is used to store 2 characters per memory location instead of 1. Otherwise, it works like `tputs`. It's left out as an exercise. |
 | `thalt` | `0x25` | 5 | Halts execution of the program. The VM stops. |
 | `tinu16` | `0x26` | 6 | Reads a `uint16_t` from the keyboard and stores it in `R0`. |
 | `toutu16` | `0x27` | 7 | Writes the `uint16_t` found inside `R0`. |
@@ -757,7 +757,7 @@ static inline void toutu16() { fprintf(stdout, "%hu\n", reg[R0]); }
 
 Congratulations, if you kept coding while you were reading this article, at this point you have a working toy-VM, capable of running simple programs written in our ASM language.
 
-We have only two functionality left missing: the main loop and the ability to load programs.
+We have only two missing functionalities: the main loop and the ability to load programs.
 
 The main loop of our VM looks like this:
 
