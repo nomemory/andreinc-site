@@ -36,8 +36,10 @@ The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [he
 
 The blog is powered by [jekyll](https://jekyllrb.com/), [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/) and [netlify](https://www.netlify.com/). The comments system is based on [utterances](https://utteranc.es/).
 
-I create the "visuals" with [draw.io](https://drawio-app.com/). For all the math formulas, I use [mathjax](https://www.mathjax.org/).
+I create the "visuals" with [draw.io](https://drawio-app.com/). 
 
-#### `Contact`
+I use [mathjax](https://www.mathjax.org/) for math formulas.
 
-Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
+#### `Contact & Collaboration` 
+
+I am open to discussing job opportunities. Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
