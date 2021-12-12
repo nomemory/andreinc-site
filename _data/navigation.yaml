@@ -1,9 +1,11 @@
 main:
   # - title: "Tech"
   #   url: /
+  - title: "Blog"
+    url: /
   - title: "About"
-    url: /about/   
-  - title: "Projects"
+    url: /about/     
+  - title: "Portfolio"
     url: /portfolio/
   # - title: "CV"
   #   url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
