@@ -7,24 +7,25 @@ classes: wide
 I love to write open source software. My portfolio:
 
 * Java: 
-    * [`mockneat`](#mockneat)
-    * [`neat-sample-database-generators`](#neat-sample-database-generators)
-    * [`markovneat`](#markovneat)
-    * [`neat-chess`](#neat-chess)
-    * [`JVBE`](#jbve), [`ansiscape`](#ansiscape)
-    * [`aleph-formatter`](#aleph-formatter)
-    * [`jasuggest`](#jasuggest);
+    * [`mockneat`](#mockneat) - A modern faker lib;
+    * [`neat-sample-database-generators`](#neat-sample-database-generators) - Generate database data;
+    * [`markovneat`](#markovneat) - Markov chains;
+    * [`neat-chess`](#neat-chess) - UCI client for calling Stockfish from Java;
+    * [`JVBE`](#jbve) - Additional annotations for Java Bean Validation API;
+    * [`ansiscape`](#ansiscape) - Color your `stdout`.
+    * [`aleph-formatter`](#aleph-formatter) - `String.format()` with named arguments; 
+    * [`jasuggest`](#jasuggest) - Simple auto-suggesting lib;
 * Kotlin: 
-    * [`mapneat`](#mapneat)
-    * [`serverneat`](#serverneat)
+    * [`mapneat`](#mapneat) - JSON transformers;
+    * [`serverneat`](#serverneat) - HTTP Server Stub/Mock;
 * C: 
-    * [`nml`](#nml---neat-matrix-library)
-    * [`lc3-vm`](#lc3-vm)
-    * [`nmlib`](#nmlib)
-    * [`c-generic-pqueue`](#c-generic-pqueue)
-    * [`chained-hash-table-c`](#chained-hash-table-c)
+    * [`nml`](#nml---neat-matrix-library) - Linear algebra library
+    * [`lc3-vm`](#lc3-vm) - Simple register based VM 
+    * [`nmlib`](#nmlib) - My first open source project, written 12 years ago, filled with bugs.
+    * [`c-generic-pqueue`](#c-generic-pqueue) - A generic PQueue in C
+    * [`chained-hash-table-c`](#chained-hash-table-c) - Chained Hashtable in C
 * Python: 
-    * [`pysert`](#pysert)
+    * [`pysert`](#pysert) - Generate random data based on templates
 
 ## `mockneat`
 
@@ -278,9 +279,26 @@ System.out.println(format);
 
 [github repo](https://github.com/nomemory/aleph-formatter) 
 
-`aleph-formatter` is a simple and efficient StringFormatter that supports named parameters (with a twist). 
+`aleph-formatter` is a simple and efficient StringFormatter that supports named parameters (with a twist). Oh!, and it works faster than `String.format(...)` sometimes. 
 
-Oh!, and it works faster than `String.format(...)`sometimes. 
+Example:
+
+```java
+String s3 = str("#{date.dayOfMonth}-#{date.month}-#{date.year}")
+            .arg("date", LocalDate.now())
+            .fmt();
+System.out.println(s3);
+
+String s4 = str("#{2.simpleName}, #{1}, #{0}, #{aNumber}, #{anArray}", 1, "A", String.class)
+            .args("aNumber", 100, "anArray", new int[]{1,2,3,})
+            .fmt();
+System.out.println(s4);                        
+
+// OUTPUT
+
+// 8-MAY-2018
+// String, A, 1, 100, [1, 2, 3]
+```
 
 
 ### `nmlib`
