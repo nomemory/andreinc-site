@@ -284,13 +284,13 @@ $$
 
 Now, we can visually see why eigenvectors are so "special".
 
-Using our transformation $$A= \begin{bmatrix} 3 - 1 & 1 \\ 0 & 1 - 1 \end{bmatrix}$$ on a "normal", "non-eigenvector" vector $$v = \begin{bmatrix} 2 \\ 3 \end{bmatrix}$$, we obtain a new vector $$v' = \begin{bmatrix} 3 - 1 & 1 \\ 0 & 1 - 1 \end{bmatrix} * \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 9 \\ 3 \end{bmatrix}$$, and project:
+Using our transformation $$A= \begin{bmatrix} 3 & 1 \\ 0 & 1 \end{bmatrix}$$ on a "normal", "non-eigenvector" vector $$v = \begin{bmatrix} 2 \\ 3 \end{bmatrix}$$, we obtain a new vector $$v' = \begin{bmatrix} 3 & 1 \\ 0 & 1 \end{bmatrix} * \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 9 \\ 3 \end{bmatrix}$$, and project:
 
 ![vect]({{site.url}}/assets/images/2021-01-24-eigenvalues-and-eigenvectors-explained/non_eigen_01.png)
 
 We see that $$v_{1}$$ changed its span in comparison with the initial $$v$$, from before the transformation.
 
-But on the contrary if we use a eigenvector $$v_{eig} = \begin{bmatrix} 2 \\ 0 \end{bmatrix} = v_{eig}^{'}$$, and we apply the transformation associated with $$A$$ on it: $$A * v_{eig} = \begin{bmatrix} 3 - 1 & 1 \\ 0 & 1 - 1 \end{bmatrix} * \begin{bmatrix} 2 \\ 0 \end{bmatrix} = \begin{bmatrix} 6 \\ 0 \end{bmatrix}$$, and we project:
+But on the contrary if we use a eigenvector $$v_{eig} = \begin{bmatrix} 2 \\ 0 \end{bmatrix} = v_{eig}^{'}$$, and we apply the transformation associated with $$A$$ on it: $$A * v_{eig} = \begin{bmatrix} 3 & 1 \\ 0 & 1 \end{bmatrix} * \begin{bmatrix} 2 \\ 0 \end{bmatrix} = \begin{bmatrix} 6 \\ 0 \end{bmatrix}$$, and we project:
 
 ![vect]({{site.url}}/assets/images/2021-01-24-eigenvalues-and-eigenvectors-explained/eigen_01.png)
 
