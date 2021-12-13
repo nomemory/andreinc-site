@@ -43,3 +43,5 @@ I use [mathjax](https://www.mathjax.org/) for math formulas.
 #### `Contact & Collaboration` 
 
 I am open to discussing job opportunities. Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
+
+> The opinions expressed on this blog are highly personal. 
