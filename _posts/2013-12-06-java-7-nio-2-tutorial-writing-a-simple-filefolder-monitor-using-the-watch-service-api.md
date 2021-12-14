@@ -2,6 +2,7 @@
 title: "Writing a simple file/folder monitor using the Watch Service API"
 date: "2013-12-06"
 classes: wide
+excerpt: "Writing simple file/folder monitor using the low-level WatchService API (Java NIO)"
 categories: 
   - "java"
 tags: 
