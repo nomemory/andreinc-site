@@ -537,7 +537,7 @@ The C code is straightforward:
 
 ```c
 static inline void st(uint16_t i)  { 
-    mw(reg[RPC] + POFF9(i), DR(i)); // writes the value of DR(i) to the memory address
+    mw(reg[RPC] + POFF9(i), reg[DR(i)]); // writes the value of DR(i) to the memory address
 }
 ```
 
@@ -563,7 +563,7 @@ From a code perspective, the implementation in C of `sti` looks like:
 
 ```c
 static inline void sti(uint16_t i)  { 
-    mw(mr(reg[RPC] + POFF9(i)), DR(i)); 
+    mw(mr(reg[RPC] + POFF9(i)), reg[DR(i)]); 
 }
 ```
 
@@ -580,13 +580,13 @@ The C code:
 
 ```c
 static inline void st(uint16_t i)   { 
-    mw(reg[RPC] + POFF9(i), DR(i)); 
+    mw(reg[RPC] + POFF9(i), reg[DR(i)]); 
 }
 
 // VERSUS
 
 static inline void str(uint16_t i)  { 
-    mw(reg[SR1(i)] + POFF(i), DR(i)); 
+    mw(reg[SR1(i)] + POFF(i), reg[DR(i)]); 
 }
 ```
 
