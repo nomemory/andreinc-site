@@ -151,7 +151,7 @@ public class MainWatch {
 		// Sanity check - Check if path is a folder
 		try {
 			Boolean isFolder = (Boolean) Files.getAttribute(path,
-					"basic:isDirectory", NOFOLLOW_LINKS);
+				"basic:isDirectory", NOFOLLOW_LINKS);
 			if (!isFolder) {
 				throw new IllegalArgumentException("Path: " + path + " is not a folder");
 			}
@@ -170,7 +170,7 @@ public class MainWatch {
 			
 			// We register the path to the service
 			// We watch for creation events
-			path.register(service, ENTRY\_CREATE);
+			path.register(service, ENTRY_CREATE);
 			
 			// Start the infinite polling loop
 			WatchKey key = null;
@@ -184,7 +184,7 @@ public class MainWatch {
 					kind = watchEvent.kind();
 					if (OVERFLOW == kind) {
 						continue; //loop
-					} else if (ENTRY\_CREATE == kind) {
+					} else if (ENTRY_CREATE == kind) {
 						// A new Path was created 
 						Path newPath = ((WatchEvent) watchEvent).context();
 						// Output
@@ -204,7 +204,7 @@ public class MainWatch {
 		
 	}
 
-	public static void main(String\[\] args) throws IOException,
+	public static void main(String[] args) throws IOException,
 			InterruptedException {
 		// Folder we are going to watch
 		Path folder = Paths.get(System.getProperty("user.home"));

@@ -26,7 +26,7 @@ I love to write open source software. My portfolio:
     * [`c-generic-pqueue`](#c-generic-pqueue) - A generic PQueue in C
     * [`chained-hash-table-c`](#chained-hash-table-c) - Chained Hashtable in C
     * [`open-adressing-hash-table-c`](#open-adressing-hash-table-c) - Open Addressing Hashtable in C
-* Python: 
+* [python](#python): 
     * [`pysert`](#pysert) - Generate random data based on templates
 
 >
@@ -245,7 +245,7 @@ System.out.println(s4);
 
 [github repo](https://github.com/nomemory/jasuggest)
 
-An auto-suggest library using a Trie as the underlying implementation.
+The repo contains anA auto-suggest library using a [Trie](https://en.wikipedia.org/wiki/Trie) as the underlying implementation.
 
 Example:
 
@@ -275,7 +275,7 @@ List<String> result = jaSuggest.findSuggestions("use");
 
 [github repo](https://github.com/nomemory/open-addressing-java-maps)
 
-A collection of `Map<K,V>` implementations in Java that use *Open Addressing* instead of *Separate Chaining*.
+A collection of `Map<K,V>` implementations in Java using *Open Addressing* instead of *Separate Chaining*.
 
 There's a blog article explaining the code from this repository: *[A tale of Java Hash Tables]({{site.url}}/2021/11/08/a-tale-of-java-hash-tables)*
 
@@ -455,7 +455,7 @@ Output:
 
 [github repo](https://github.com/nomemory/chained-hash-table-c) 
 
-A generic implementation of a hash table in C (separate chaining).
+This repo contains a generic implementation of a hash table in C (separate chaining).
 
 Blog article: *[Implementing Hash Tables in C ](http://localhost:4000/2021/10/02/implementing-hash-tables-in-c-part-1)*.
 
@@ -463,7 +463,7 @@ Blog article: *[Implementing Hash Tables in C ](http://localhost:4000/2021/10/02
 
 [github repo](open-adressing-hash-table-c)
 
-A generic implementation of a hash table in C (open addressing).
+This repo contains a generic implementation of a hash table in C (open addressing).
 
 Blog article: *[Implementing Hash Tables in C ](http://localhost:4000/2021/10/02/implementing-hash-tables-in-c-part-1)*.
 
@@ -477,9 +477,9 @@ Blog article: *[Implementing Hash Tables in C ](http://localhost:4000/2021/10/02
 
 [github repo](https://github.com/nomemory/pysert) 
 
-`pysert` is a python script that generates arbitrary data based on a template.
+`pysert` is a python script that generates arbitrary data based on a template. You can customize by adding new data generators. 
 
-Eg.:
+E.g.:
 
 Template:
 ```xml

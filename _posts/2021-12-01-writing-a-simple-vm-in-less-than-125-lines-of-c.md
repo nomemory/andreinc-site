@@ -514,7 +514,7 @@ The corresponding C code is:
 
 ```c
 static inline void not(uint16_t i) { 
-    reg[DR(i)]=~(SR1(i)); 
+    reg[DR(i)]=~reg[SR1(i)]; 
     uf(DR(i)); 
 }
 ```
@@ -638,7 +638,7 @@ static inline void jsr(uint16_t i) {
     reg[R7] = reg[RPC];         
     reg[RPC] = (FL(i)) ?            // Checks bit[11]
         reg[RPC] + POFF11(i) :      // rpc + offset
-        BR(i);                      // base register
+        reg[BR(i)];                      // base register
 }
 ```
 
