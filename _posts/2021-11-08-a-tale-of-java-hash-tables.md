@@ -313,7 +313,7 @@ The above example is rather extreme, in practice, nobody will use a *hash functi
 
 And one more thing before jumping straight to the code. 
 
-Deleting an element from an *Open Addressing* table is a subtle task! For this reason, we need to introduce the concept of [**tombstones**](http://localhost:4000/2021/10/02/implementing-hash-tables-in-c-part-1#tombstones) (click on the link for an in-depth explanation).
+Deleting an element from an *Open Addressing* table is a subtle task! For this reason, we need to introduce the concept of [**tombstones**]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#tombstones) (click on the link for an in-depth explanation).
 
 Basically, whenever we delete an entry, we cannot empty the slot and make it `null`, because we might break an existing sequence. In this regard, we mark the slot as *tombstone*:
 * If we are doing insert operations (`put(Key k, V value)`), we consider the tombstone a potential candidate for the insertion. 
