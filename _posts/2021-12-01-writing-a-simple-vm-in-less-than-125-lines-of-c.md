@@ -26,7 +26,9 @@ If you are a seasoned C developer that has already dabbled in this sort of stuff
 
 The reader should already be familiar with bitwise operations, hexadecimal notation, pointers, pointer functions, C macros, and some functions from the standard library (e.g., `fwrite` and `fread`). 
 
-It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meyers](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
+It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meiners](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
+
+*Later edit*: After publishing this article in December, [Philip Chimento](https://ptomato.wordpress.com/) was nice enough to write a Rust implementation of the same Virtual Machine. If you are curious to see how the C code looks like in another language, please [check this out](https://ptomato.wordpress.com/2022/01/10/a-little-computer/).
 
 # Table of contents
 
@@ -113,7 +115,7 @@ Our machine has `W=UINT16_MAX` words, of `N=16` bits each. From a C perspective 
 
 ```c
 uint16_t PC_START = 0x3000;
-uint16_t mem[UINT16_MAX] = {0};
+uint16_t mem[UINT16_MAX+1] = {0};
 ```
 
 `UINT16_MAX` is the maximum size of a `uint16_t` (a unsigned 16 bits integer), `UINT16_MAX=65535`. So to put things into perspective, our system is quite limited. It won't run/load programs with more than `65535` instructions. I know it sounds harsh for our current times, but computers were much more humble than this back in the day (a few decades ago). `65535` is more than enough to write a few ASCII games and keep them all in memory.
