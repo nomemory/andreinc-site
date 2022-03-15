@@ -13,6 +13,8 @@ tags:
 - "lc3"
 ---
 
+> NOTE: This article is still work in progress. For the moment there's only one simple implementation.
+
 As [Wikipedia states](https://en.wikipedia.org/wiki/Bloom_filter), *Bloom Filters* are space-efficient, probabilistic data structures, conceived by Burton Howard Bloom in 1970, used to test whether an element is a member of a set or not. What I find peculiar is that the real Mr. Howard Burton Bloom doesn't have a wiki page, while the imaginary [Mr. Leopold Bloom](https://en.wikipedia.org/wiki/Leopold_Bloom) has one... 
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/burton_howard_bloom.png)
