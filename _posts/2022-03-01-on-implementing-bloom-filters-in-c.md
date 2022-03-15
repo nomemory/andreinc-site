@@ -13,6 +13,10 @@ tags:
 - "lc3"
 ---
 
+This article assumes the reader is already familiar with the C programming language and some basic concepts concerning hash functions. The target audience (like most of the time on my blog) are undergrad CS students or seasoned developers who, just like me, haven't learned about Bloom Filters during their University years.
+
+# Introduction
+
 As [Wikipedia states](https://en.wikipedia.org/wiki/Bloom_filter), *Bloom Filters* are space-efficient, probabilistic data structures, conceived by Burton Howard Bloom in 1970, used to test whether an element is a member of a set or not. What I find peculiar is that the real Mr. Howard Burton Bloom doesn't have a wiki page, while the imaginary [Mr. Leopold Bloom](https://en.wikipedia.org/wiki/Leopold_Bloom) has one. 
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/burton_howard_bloom.png)
@@ -77,7 +81,7 @@ $$\varepsilon$$ is the false positive rate, and to keep it under control, we can
 
 The full code of this article can be found in this [github repo](https://github.com/nomemory/bloomfilters-c):
 
-"`sh
+```sh
 git clone git@github.com:nomemory/bloomfilters-c.git
 ```
 
@@ -118,7 +122,7 @@ If `n=3`, we would be able to store `3 * 4 * 8 = 96` bits.
 
 The method to allocate memory for a new *Bit Vector* has the following signature, where `num_bits` represents the (exact) number of bits our *Bit Vector* will contain:
 
-"`c
+```c
 bit_vect *bit_vect_new(size_t num_bits) ...
 ```
 
@@ -264,7 +268,7 @@ The only improvement I would make on these two would be to increase the data rea
 
 Next, we need to make sure is that our hash functions share the same signature, so we can `typedef` them for further use:
 
-"`cpp
+```cpp
 typedef uint32_t (*hash32_func)(const void *data, size_t length);
 ```
 
