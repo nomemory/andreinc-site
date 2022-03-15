@@ -51,7 +51,7 @@ $$E_{1},\ E_{2},\ E_{3},\ \text{...}$$ and so on are the elements we want to add
 
 $$h_{1}(x),\ h_{2}(x),\ h_{3}(x),\ h_{4}(x),\ \text{...}$$ and so on are (non-cryptographic) [hash functions]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#hash-functions). A *Bloom Filter* can have as many hash functions associated with it as you want, but usually, in practice, software developers pick a number between 4 and 8. In the section called [Interesting ideas to explore](#interesting-ideas-to-explore), you will see why it's not necessarily needed to have separate hash functions. One or two are enough to generate the others.
 
-For practical reasons, let's suppose our functions return `uint32_t` values, which are natural numbers between $$0$$ and $$2^{32}$$. 
+For practical reasons, let's suppose our functions return `uint32_t` values, which are natural numbers between $$0$$ and $$2^{32}-1$$. 
 
 Internally a *Bloom Filter* has an array-like memory zone associated where elements can have only two values: `0` and `1`. It's up to us how we organize this area, but the classical implementation uses a *Bit Vector* (described later in the article). 
 
