@@ -75,7 +75,7 @@ If you are curious about the math behind it and how to calculate the probability
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/falsepositives.png)
 
-$$\varepsilon$$ is the false positive rate, and to keep it under control, we can fine-tune the actual values of `k`, `n`, and `m'.
+$$\varepsilon$$ is the false positive rate, and to keep it under control, we can fine-tune the actual values of `k`, `n`, and `m`.
 
 # The implementation
 
