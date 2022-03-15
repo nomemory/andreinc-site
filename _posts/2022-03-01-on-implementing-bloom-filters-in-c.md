@@ -13,13 +13,11 @@ tags:
 - "lc3"
 ---
 
-> NOTE: This article is still work in progress. For the moment there's only one simple implementation.
-
-As [Wikipedia states](https://en.wikipedia.org/wiki/Bloom_filter), *Bloom Filters* are space-efficient, probabilistic data structures, conceived by Burton Howard Bloom in 1970, used to test whether an element is a member of a set or not. What I find peculiar is that the real Mr. Howard Burton Bloom doesn't have a wiki page, while the imaginary [Mr. Leopold Bloom](https://en.wikipedia.org/wiki/Leopold_Bloom) has one... 
+As [Wikipedia states](https://en.wikipedia.org/wiki/Bloom_filter), *Bloom Filters* are space-efficient, probabilistic data structures, conceived by Burton Howard Bloom in 1970, used to test whether an element is a member of a set or not. What I find peculiar is that the real Mr. Howard Burton Bloom doesn't have a wiki page, while the imaginary [Mr. Leopold Bloom](https://en.wikipedia.org/wiki/Leopold_Bloom) has one. 
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/burton_howard_bloom.png)
 
-To make it short, a *Bloom Filter* is a data structure where you add elements to and then it specializes itself in answering a very particular question: 
+To make it short, a *Bloom Filter* is a data structure where we "add" elements. But after the addition, we cannot recover them further. They are chopped and hashed into pieces, and only a tiny footprint of what they once were remains. Afterward, we can ask the filter a delicate question:
 
 \[**RandomDeveloper**\]: Is the element `E` in the set `U` or not?
 
@@ -31,7 +29,7 @@ Or:
 
 \[**BloomFilter**\]:  I am **almost** sure the element `E` is in `U`, but I cannot guarantee you that...
 
-For most of the non-critical scenarios you can think of, even the second answer is satisfactory in the light of how little space a *Bloom Filter* occupies. For example, you can check [Prof. Michael Mitzenmacher](https://en.wikipedia.org/wiki/Michael_Mitzenmacher)'s presentation ["Bloom Filters, Cuckoo Hashing, Cuckoo Filters, Adaptive Cuckoo Filters, and Learned Bloom Filters"](https://smartech.gatech.edu/handle/1853/60577), where he describes the ancient use of *Bloom Filters*: spellcheckers.
+For most of the non-critical scenarios you can think of, even the second answer is satisfactory in the light of how little space a *Bloom Filter* occupies. For example, you can check [Prof. Michael Mitzenmacher](https://en.wikipedia.org/wiki/Michael_Mitzenmacher) 's presentation ["Bloom Filters, Cuckoo Hashing, Cuckoo Filters, Adaptive Cuckoo Filters, and Learned Bloom Filters"](https://smartech.gatech.edu/handle/1853/60577), where he describes the ancient use of *Bloom Filters*: spellcheckers.
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/mitzenmacher.png){:height="75%" width="75%"}
 
@@ -39,7 +37,9 @@ So, once upon a time, when memory was scarce, one of the first spellcheckers was
 
 But, *Bloom Filters* were not part of the undergrad curricula I've taken while studying at the University, and I've rarely seen them (directly) used in practice. Even the more experienced engineers tend to ignore their properties and advantages and wrongly (or rather unjustly) replace them with *Hash Tables* or variously *Set* implementations. Again, most programming languages don't have them implemented in their standard libraries.
 
-What is particularly interesting about *Bloom Filters* is that even the most straightforward "book implementation" works decently. Compared, for example, to the extreme arts of implementing an efficient *Hash Table*, writing yourself an *efficient* *Bloom Filter* is more approachable. 
+On the brighter note, they still fit well in various back-end architectures where we need to implement *blacklists*, or as parts of complex caching systems. For a production implementation check [RedisBloom](https://docs.redis.com/latest/modules/redisbloom/).
+
+In any case, what is particularly interesting about *Bloom Filters* is that even the most straightforward "book implementation" works decently. Compared, for example, to the extreme arts of implementing an efficient *Hash Table*, writing yourself an *efficient* *Bloom Filter* is more approachable. The knowledge of writing one can fit inside our heads without checking a reference book on Data Structures and Algorithms.
 
 # How a *Bloom Filter* actually works
 
@@ -47,32 +47,37 @@ The best way to understand how *Bloom Filters* are working is to "visualize" the
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/bloomexplained.drawio.png)
 
-$$E_{1},\ E_{2},\ E_{3},\ \text{...}$$ and so on are the elements we want to add to the *Bloom Filter*. They can be anything, and as many of them necessary, given there's enough memory available.
+$$E_{1},\ E_{2},\ E_{3},\ \text{...}$$ and so on are the elements we want to add to the *Bloom Filter*. They can be anything, and as many of them are necessary, given there's enough memory available.
 
-$$h_{1}(x),\ h_{2}(x),\ h_{3}(x),\ h_{4}(x),\ \text{...}$$ and so on are (non-cryptographic) [hash functions]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#hash-functions). A *Bloom Filter* can have as many hash functions associated with it as you want, but usually in practice developers stick with a number between 4 and 8. 
+$$h_{1}(x),\ h_{2}(x),\ h_{3}(x),\ h_{4}(x),\ \text{...}$$ and so on are (non-cryptographic) [hash functions]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#hash-functions). A *Bloom Filter* can have as many hash functions associated with it as you want, but usually, in practice, software developers pick a number between 4 and 8. In the section called [Interesting ideas to explore](#interesting-ideas-to-explore), you will see why it's not necessarily needed to have separate hash functions. One or two are enough to generate the others.
 
-For practical reasons let's suppose our functions return `uint32_t` values, which are natural numbers between $$0$$ and $$2^{32}$$. 
+For practical reasons, let's suppose our functions return `uint32_t` values, which are natural numbers between $$0$$ and $$2^{32}$$. 
 
-Internally a *Bloom Filter* has an array-like memory zone associated where elements can have only two values: `0` and `1`. It's up to us how we organize this area, but the classical implementation uses a *Bit Vector* (described later in the article).
+Internally a *Bloom Filter* has an array-like memory zone associated where elements can have only two values: `0` and `1`. It's up to us how we organize this area, but the classical implementation uses a *Bit Vector* (described later in the article). 
 
 Given an element $$E$$, to insert it in the *Bloom Filter* we perform the following actions:
 1. We compute the hash values of $$E$$ by applying each of the hash functions: $$h_{1}(E),\ h_{2}(E),\ h_{3}(E),\ h_{4}(E)$$. 
-2. The hash values are `uint32_t` numbers, so we apply `% bloom_filter_size` (modulo) to find the actual cells positions inside the array. We set those positions to `1`.
+2. The hash values are `uint32_t` numbers, so we apply `% bloom_filter_size` (modulo) to find the actual cells' positions inside the array. We set those positions to `1`.
 
-So, if our *Bloom Filter* uses `4` *Hash Functions*, then for our element `E`, `4` bits in the array will be 1. In case an element is already set to `1` we don't perform any change.
+To check if an element $$E$$ is not in a Bloom Filter, we compute the hash values, and we test the bits again if they are all `1s` or not.
 
-Of course, hash colisions can happen (two distinct elements `E` can have the same hash value), and because of reduced space, the values `1` start to overlap too much with each other creating false positives. If you are curious about the math behind it, and how to calculate the probability of false positives, [the wikipedia article](https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives) is quite good:
+So, if our *Bloom Filter* uses `4` *Hash Functions*, then for our element `E`, `4` bits in the array will be 1. If an element is already set to `1` we don't perform any change.
 
+Of course, hash collisions can happen - when two distinct elements $$E_{1}$$ and $$E_{2}$$ can have the same hash value.
+
+If the *Bit Vector* size is too small, the values `1` can also start to overlap with each other, creating what we call false positives. 
+
+If you are curious about the math behind it and how to calculate the probability of false positives, [the Wikipedia article](https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives) is quite good:
 
 ![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/falsepositives.png)
 
-To check if an element $$E$$ is not in a Bloom Filter, we compute again the hash values and we test (all the corresponding) bits if they are all `1s` or not.
+$$\varepsilon$$ is the false positive rate, and to keep it under control, we can fine-tune the actual values of `k`, `n`, and `m'.
 
 # The implementation
 
 The full code of this article can be found in this [github repo](https://github.com/nomemory/bloomfilters-c):
 
-```sh
+"`sh
 git clone git@github.com:nomemory/bloomfilters-c.git
 ```
 
@@ -113,7 +118,7 @@ If `n=3`, we would be able to store `3 * 4 * 8 = 96` bits.
 
 The method to allocate memory for a new *Bit Vector* has the following signature, where `num_bits` represents the (exact) number of bits our *Bit Vector* will contain:
 
-```c
+"`c
 bit_vect *bit_vect_new(size_t num_bits) ...
 ```
 
@@ -232,7 +237,7 @@ Yet again, we need to compute we compute the `chunk_offset` and `bit_offset`, an
 
 Just like *Hash Tables* (previously explained in [this article]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1), *Bloom Filters* make heavy use of *Hash Functions*. It's not in the purpose of this article to explain how *Hash Functions* work, as I've already did my best [here]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#hash-functions). 
 
-My personal rule of thumb is to use the `sdmm` and `djb2` functions in toy implementations, and something more advanced like [MurmurHash](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp), [FNV](http://www.isthe.com/chongo/tech/comp/fnv/) or [spookyhash](http://burtleburtle.net/bob/hash/spooky.html) for serious stuff. Recently I've also played with [chunky64](https://github.com/skeeto/scratch/blob/master/misc/chunky64.c), and the results good, still I am not sure how popular is this in the real world.  
+My rule of thumb is to use the `sdmm` and `djb2` functions in toy implementations, and something more advanced like [MurmurHash](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp), [FNV](http://www.isthe.com/chongo/tech/comp/fnv/) or [spookyhash](http://burtleburtle.net/bob/hash/spooky.html) for serious stuff. Recently I've also played with [chunky64](https://github.com/skeeto/scratch/blob/master/misc/chunky64.c), and the results good, still I am not sure how popular is this in the real world.  
 
 But as I said, the two hash functions I will gonna be using in this article are [`sdbm`]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#sdbm) and [`djb2`]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1#djb2). They are extremely simple, and they work decent enough for our purpose:
 
@@ -259,7 +264,7 @@ The only improvement I would make on these two would be to increase the data rea
 
 Next, we need to make sure is that our hash functions share the same signature, so we can `typedef` them for further use:
 
-```cpp
+"`cpp
 typedef uint32_t (*hash32_func)(const void *data, size_t length);
 ```
 
@@ -331,22 +336,31 @@ void bloom_filter_free(bloom_filter *filter) {
 }
 ```
 
-For an unexperienced eye, the only thing that might look confusing is the `...` notation from the `bloom_filter_new` method signature. `bloom_filter_new` is basically a [variadic function](https://en.cppreference.com/w/c/variadic), that accepts an arbitrary number of params `num_functions`. Those params are actual hash functions (`hash32_func`).
+For an inexperienced eye, the only thing that might look confusing is the `...` notation from the `bloom_filter_new` method signature. `bloom_filter_new` is basically a [variadic function](https://en.cppreference.com/w/c/variadic), that accepts an arbitrary number of params `num_functions`. Those params are actual hash functions (`hash32_func`).
 
 ### Adding an element
 
 The code that is adding an element to the *Bloom Filter is the following*:
 
 * We iterate through all the `hash_functions`;
-* We compute the hash values and we set to `1` the correct values
+* We compute the hash values, and we set to `1` the correct values
 
 ```cpp
 void bloom_filter_put(bloom_filter *filter, const void *data, size_t length){
     for(int i = 0; i < filter->num_functions; i++) {
         uint32_t cur_hash = filter->hash_functions[i](data, length);
         bit_vect_set1(filter->vect, cur_hash % filter->vect->size);
-        filter->num_items++;
     }
+    // We've just added a new item, we incremenet the value
+    filter->num_items++;
+}
+```
+
+C doesn't support polymorphism, so to make it simple for adding a string (`char*`) to the filter, we simply write a helper function:
+
+```cpp
+void bloom_filter_put_str(bloom_filter *filter, const char *str) {
+    bloom_filter_put(filter, str, strlen(str));
 }
 ```
 
@@ -366,6 +380,9 @@ bool bloom_filter_test(bloom_filter *filter, const void *data, size_t lentgth) {
         }
     }
     return true;
+}
+bool bloom_filter_test_str(bloom_filter *filter, const char *str) {
+    return bloom_filter_test(filter, str, strlen(str));
 }
 ```
 
@@ -402,14 +419,49 @@ Output:
 1
 ```
 
-# Interesting idea to explore
+# Interesting ideas to explore
 
-TODO
+## Re-use hash functions
 
-# Articles, C implementations and References
+Following a discussion on [reddit](https://www.reddit.com/r/C_Programming/comments/teoxtb/on_implementing_bloom_filters_in_c/), [Chris Wellons](https://nullprogram.com/) suggested the fact that *Bloom Filters* don't need actual unique `k` functions. We can only have one that generates a hash value, and from that value, through *permutations* we can generate as many *new* hash values as we want:
+
+```cpp
+uint64_t hash64(void *buf, size_t len);
+uint64_t permute64(uint64_t, uint64_t key);
+
+uint64_t bufhash = hash64(buf, len);
+uint32_t hashes[K];
+for (int i = 0; i < K; i++) {
+    hashes[i] = permute64(bufhash, i);
+}
+```
+
+Where `permute64` can look like:
+
+```cpp
+uint64_t permute64(uint64_t x, uint64_t key)
+{
+    x += key;
+    x ^= x >> 30;
+    x *= 0xbf58476d1ce4e5b9U;
+    x ^= x >> 27;
+    x *= 0x94d049bb133111ebU;
+    x ^= x >> 31;
+}
+```
+
+Another interesting idea for avoiding to use multiple (separate) hash functions comes from [Building a Better Bloom Filte](https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf). The authors suggest that two hash functions $$h_{1}(x)$$, and $$h_{2}(x)$$ are enough to generate others in the form $$g_{i}(x)$$:
+
+![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/betterbloom.png)
+
+# Articles, C implementations, and References
 
 If you want to read more about how to implement *Bloom Filters* in the C language, you can check this article: ["How to write a better Bloom Filter"](https://drewdevault.com/2016/04/12/How-to-write-a-better-bloom-filter-in-C.html) by [Drew DeVault](https://drewdevault.com/).
 
 Another interesting C implementation is [bloomd](http://armon.github.io/bloomd/) which is a Network Daemon for *Bloom Filters* written by [Armon Dadgar](https://github.com/armon), and even if the project doesn't seem to be maintained anymore, it is quite an exciting piece of software to look at. 
+
+# Going further
+
+A proposed efficient alternative to Bloom Filters the [Cuckoo Filters](https://github.com/efficient/cuckoofilter), but before speaking, I need to do my homework first.
 
 
