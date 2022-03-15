@@ -4,7 +4,7 @@ permalink: /portfolio/
 classes: wide
 ---
 
-I love to write open source software. My portfolio:
+If time allows, I enjoy writing software:
 
 * [Java](#java): 
     * [`mockneat`](#mockneat) - A modern faker lib;

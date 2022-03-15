@@ -12,7 +12,7 @@ tags:
 - "lc3"
 ---
 
-This tutorial is intended for C beginners who want to do some coding practice, and in the process gain valuable insights regarding low level programming and how (some) Virtual Machines operate under the hood. 
+This tutorial is intended for C beginners who want to do some coding practice and in the process, gain valuable insights regarding low-level programming and how (some) Virtual Machines operate under the hood. 
 
 By the end of the article, we will have a working register-based VM capable of interpreting and running a limited set of ASM instructions + some bonus programs to test if everything works well.
 
@@ -28,7 +28,7 @@ The reader should already be familiar with bitwise operations, hexadecimal notat
 
 It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meiners](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
 
-*Later edit*: After publishing this article in December, [Philip Chimento](https://ptomato.wordpress.com/) was nice enough to write a Rust implementation of the same Virtual Machine. If you are curious to see how the C code looks like in another language, please [check this out](https://ptomato.wordpress.com/2022/01/10/a-little-computer/).
+*Later edit*: After publishing this article in December, [Philip Chimento](https://ptomato.wordpress.com/) was nice enough to write a Rust implementation of the same Virtual Machine. If you are curious to see how the solution looks like in another programming language, please [check this out](https://ptomato.wordpress.com/2022/01/10/a-little-computer/).
 
 # Table of contents
 
