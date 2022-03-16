@@ -1,5 +1,5 @@
 ---
-title: "Arbitrary thoughts on Tzimtzum"
+title: "Arbitrary thoughts, Tzimtzum"
 date: "2021-12-07"
 classes: wide
 comments: true
