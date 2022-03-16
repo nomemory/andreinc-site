@@ -1,10 +1,11 @@
 ---
 title: "Sieve of Eratosthenes (finding all prime numbers up to a specific integer)"
 date: "2010-12-12"
+classes: wide
+excerpt: "The algorithm of Sieve of Eratosthenes"
 categories: 
   - "c"
   - "algorithms"
-  - "programming-languages"
 tags: 
   - "algorithm"
   - "algorithms-2"
