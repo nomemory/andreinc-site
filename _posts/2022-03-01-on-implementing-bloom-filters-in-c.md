@@ -142,6 +142,8 @@ To put this into code, we will start by declaring the following macros:
 * `BITS_IN_BYTE` On most modern systems, we expect the number to be 8, but it's better to isolate this in a constant than to have [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) in our code. 
 * `BITS_IN_TYPE` is a function macro that computes the number of bits associated with a type. If we call `BITS_IN_TYPE(uint32_t)`, the result will probably be `32` on most modern systems.
 
+> Later Edit, user [nimaje](https://github.com/nimaje) on gitbub mentioned that in `limits.h` there's already a constant `CHAR_BIT` that holds the number of bits of a char. Instead of defining your own `BITS_IN_BYTE` constant, it's a better idea to use this one.
+
 Then we write the actual memory allocator, `bit_vect_new`:
 
 ```cpp
