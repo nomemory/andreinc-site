@@ -3,7 +3,7 @@ title: "Arbitrary thoughts, Tzimtzum"
 date: "2021-12-07"
 classes: wide
 comments: true
-excerpt: ""
+excerpt: "Non-technical article on Tzimtzum, because I found the topic interesting"
 categories:
 - "nontech"
 tags:
