@@ -1,9 +1,9 @@
 ---
-title: "On Tzimtzum"
+title: "Arbitrary thoughts on Tzimtzum"
 date: "2021-12-07"
 classes: wide
 comments: true
-excerpt: "Writing a simple VM for LC3 in less than 125 lines of C"
+excerpt: ""
 categories:
 - "nontech"
 tags:

@@ -137,8 +137,8 @@ To put this into code, we will start by declaring the following macros:
 #define BITS_IN_TYPE(type) (BITS_IN_BYTE * (sizeof(type)))
 ```
 
-* `BITS_IN_BYTE` plays the role of a constant and denotes the number of bits are inside a byte. On most modern systems we expect the number to be 8, but it's better to isolate this in a constant than to have [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) in our code. 
-* `BITS_IN_TYPE` is a function macro that computes the number of bits associated with a type. If we call `BITS_IN_TYPE(uint32_t)` the result will probably be 32 on most modern systems.
+* `BITS_IN_BYTE` On most modern systems, we expect the number to be 8, but it's better to isolate this in a constant than to have [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) in our code. 
+* `BITS_IN_TYPE` is a function macro that computes the number of bits associated with a type. If we call `BITS_IN_TYPE(uint32_t)`, the result will probably be `32` on most modern systems.
 
 Then we write the actual memory allocator, `bit_vect_new`:
 
@@ -301,7 +301,7 @@ It's nothing fancy, just a simple API:
 * `struct bloom_filter_s` defines the internal data-structure:
     * A `bit_vect` where we keep our `1s` and `0s`;
     * `num_items` the actual number of bits the *Bit Vector* has;
-    * `hash_functions` and `num_functions` for keeping track of the internal hash functions that will be used;
+    * `hash_functions` and `num_functions` for keeping track of the internal hash functions;
 
 ### Allocating and de-allocating memory
 
