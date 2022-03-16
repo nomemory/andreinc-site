@@ -22,9 +22,9 @@ tags:
   - "sieve"
 ---
 
-# Algorithm Description**
+# Algorithm Description
 
-**Sieve of Eratosthenes** is an ancient algorithm in mathematics that allows us to find all prime numbers up to a specific integer value.
+Sieve of Eratosthenes is an ancient algorithm in mathematics that allows us to find all prime numbers up to a specific integer value.
 
 I will not enter into too many details, as the algorithm is not very complicated. There are plenty of resources on the web describing the concept of a sieve in general and the Eratosthenes Sieve in particular.
 
