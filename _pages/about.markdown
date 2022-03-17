@@ -24,11 +24,11 @@ I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer w
 
 I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent).
 
-I keep my technical skills sharp by doing coding exercises, contributing to open-source software and reinventing the wheel. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
+I keep my technical skills sharp by doing coding exercises, contributing to open-source software, and reinventing the wheel. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
 I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site.url}}/categories/#java)/[Kotlin]({{site.url}}/categories/#kotlin), Mathematics, Computer Science curricula (algorithms and data structures).
 
-The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site).
+The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). The code in the articles is not always tested (as it should). If you see any issues with it, please open a PR, and I will make sure I will merge it. 
 
 The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml). 
 

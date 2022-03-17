@@ -468,6 +468,12 @@ If you want to read more about how to implement *Bloom Filters* in the C languag
 
 Another interesting C implementation is [bloomd](http://armon.github.io/bloomd/) which is a Network Daemon for *Bloom Filters* written by [Armon Dadgar](https://github.com/armon), and even if the project doesn't seem to be maintained anymore, it is quite an exciting piece of software to look at. 
 
+Other references:
+* [Bloom Filters - Much, much more than a space efficient hashmap!](https://boyter.org/posts/bloom-filter/)
+* [A Little Bloom Filter Theory (and a Bag of Filter Tricks)](http://cap-lore.com/code/BloomTheory.html)
+* [Bloom Filters](https://nedbatchelder.com/blog/200403/bloom_filters.html)
+
+
 # Going further
 
 A proposed efficient alternative to Bloom Filters the [Cuckoo Filters](https://github.com/efficient/cuckoofilter), but before speaking, I need to do my homework first.

@@ -26,6 +26,7 @@ If time allows, I enjoy writing software:
     * [`c-generic-pqueue`](#c-generic-pqueue) - A generic PQueue in C
     * [`chained-hash-table-c`](#chained-hash-table-c) - Chained Hashtable in C
     * [`open-adressing-hash-table-c`](#open-adressing-hash-table-c) - Open Addressing Hashtable in C
+    * [`bloomfilters-c`](https://github.com/nomemory/bloomfilters-c) - Simple C implementation for bloom filters, code associated with this [article]({{site.url}}/2022/03/01/on-implementing-bloom-filters-in-c).
 * [python](#python): 
     * [`pysert`](#pysert) - Generate random data based on templates
 
