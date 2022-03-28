@@ -169,21 +169,19 @@ Now let's see how `PHF.java` is implemented.
 
 1. We split our initial $$S$$, the set which contains all the possible keys, into virtual "buckets" $$B_{i}$$ buckets of size $$0 \le i \lt r$$. To obtain those buckets, we use a first-level hash function $$g(x)$$, so that $$B=\{ x \mid g(x)=i \}$$. <br/><br/>![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-buckets.drawio.png)
 
-2. We sort the $$B_{i}$$ buckets in descending order (according to their size, $$\mid B_{i} \mid$$), keeping their initial index for later use. <br/><br/> !![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-descending-order.drawio.png)
+2. We sort the $$B_{i}$$ buckets in descending order (according to their size, $$\mid B_{i} \mid$$), keeping their initial index for later use. <br/><br/> !![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-descending-order.drawio.png). The main idea is to start with the problematic buckets first, the ones having the most collisions. 
 
-3. We initialize an array $$T=[0, 1, 2, ..., m-1]$$ with `0` elements. $$m$$ represents the hash codes range. In our particular example, `m=15`. In the $$T$$ set we keep track of elements for which our PHF don't have a collision.
+3. We initialize an array $$T=[0, 1, 2, ..., m-1]$$ with `0` elements. In our particular example, `m=15`. In $$T$$ we keep track of elements for which our PHF don't have collisions. 
 
 4. We iterate over each bucket $$B_{i}$$ with $$i\in\{0,1...,r-1\}$$ in the order obtained at step `2.`, until $$\mid B_{i}\mid=1$$ (the size of $$B_{i}$$ is `1`)
 
     1. For each element in $$B_{i}$$, we compute $$K_{i} = \{ \phi_{l}(x) \mid x\in B_{i}\}$$ and $$l\in[0,1,..]$$, where $$\phi_{1}, \phi_{2}, \phi_{3]}, ...$$ is a family of hash functions, that or each $$l$$ it returns a different value for $$\phi_{l}(x)$$.
-    2. We stop when $$\mid K_i \mid = \mid B_i \mid$$ and $$K_i \cap \{j \mid T[j]=1\}=\emptyset$$. This means that we found $$K_{i}$$ elements for which their is no previous collisions for the current $$l$$.
+    2. We stop when $$\mid K_i \mid = \mid B_i \mid$$ and $$K_i \cap \{j \mid T[j]=1\}=\emptyset$$. This means that we found $$K_{i}$$ elements for which there's no previous collisions for the current $$l$$.
         1. For $$j\in K_i$$ we mark $$T[j]=1$$
         2. We store the value of $$\sigma(i)=l$$ . At this point we know that the elements from $$B_{i}$$ won't colide if we apply $$\phi_l{x}$$ on them.
     <br/><br/> ![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-algo.drawio.png)
 
-
-
-5. For the remaining buckets with $$\mid B_i \mid=1$$, we will look into the remaining empty slots in $$T$$, and one by one we will position into the empty slots. Storing $$\sigma(i)=-\text{position}$$. 
+5. For the remaining buckets with $$\mid B_i \mid=1$$, we will look into the remaining empty slots in $$T$$, and one by one, we will put all remaining elements. We store $$\sigma(i)=-\text{position}$$. 
 
 The last part is to find a way of computing $$H(x)$$ which is our PHF:
 $$
@@ -200,7 +198,7 @@ Visually $$H(x)$$ works like this:
 
 ![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/fct.drawio.png)
 
-Don't worry if things don't make a lot of sense now, the code is easier to implement than it seems. 
+Don't worry if things don't make a lot of sense now; the code is easier to implement than the actual presentation. 
 
 # The implementation
 
@@ -330,7 +328,7 @@ protected static int internalHash(byte[] obj, int val) {
 }
 ```
 
-At this point we introduce a class called: `PHFBucket`. The purpose of this class, is to store the original index of the bucket after the sorting we perform at `2.` of the algorithm:
+At this point, we introduce a class called: `PHFBucket`. The sole purpose of this class, is to store the original index of the bucket after step `2.`:
 
 ```java
 private static class PHFBucket implements Comparable<PHFBucket> {
@@ -510,7 +508,7 @@ public class ReadOnlyMap<K,V> {
 }
 ```
 
-Using the `ReadOnlyMap<K,V>` is quite straight-forward. We only have one method to create a `ReadOnlyMap<K,V>` as a snapshot from a "normal" read-write `Map<K,V>`:
+Using the `ReadOnlyMap<K,V>` is quite straightforward. We only have one method to create a `ReadOnlyMap<K,V>` as a snapshot from a "normal" read-write `Map<K,V>`:
 
 ```java
 public static void main(String[] args) {
@@ -567,9 +565,8 @@ public class TestReads {
         bh.consume(map.get(From.from(keys).get()));
     }
 
-    @Benchmark
     public void testGetInReadOnlyMap(Blackhole bh) {
-        bh.consume(map.get(From.from(keys).get()));
+        bh.consume(readOnlyMap.get(From.from(keys).get()));
     }
 }
 ```
@@ -578,7 +575,11 @@ The results were quite interesting:
 
 ![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/benchget.png)
 
-Even if the hash function is slower, given the higher memory locality, `ReadOnlyMap` performs a little bit faster, than a normal `HashMap<K,V>`.
+~~Even if the hash function is slower, given the higher memory locality, `ReadOnlyMap` performs a little bit faster, than a normal `HashMap<K,V>`.~~
+
+Later Edit:
+
+The initial benchmark performed was incorrect, so I've reported erroneous results: the reality is that `HashMap<K,V>` faster. 
 
 # References
 
