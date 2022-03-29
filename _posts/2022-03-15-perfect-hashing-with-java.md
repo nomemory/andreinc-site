@@ -169,21 +169,21 @@ Now let's see how `PHF.java` is implemented.
 
 1. We split our initial $$S$$, the set which contains all the possible keys, into virtual "buckets" $$B_{i}$$ buckets of size $$0 \le i \lt r$$. To obtain those buckets, we use a first-level hash function $$g(x)$$, so that $$B=\{ x \mid g(x)=i \}$$. <br/><br/>![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-buckets.drawio.png)
 
-2. We sort the $$B_{i}$$ buckets in descending order (according to their size, $$\mid B_{i} \mid$$), keeping their initial index for later use. <br/><br/> !![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-descending-order.drawio.png). The main idea is to start with the problematic buckets first, the ones having the most collisions. 
+2. We sort the $$B_{i}$$ buckets in descending order (according to their size, $$\mid B_{i} \mid$$), keeping their initial index for later use. The main idea is to start with the *problematic* buckets first (the ones having the most collisions).  <br/><br/> !![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-descending-order.drawio.png). 
 
-3. We initialize an array $$T=[0, 1, 2, ..., m-1]$$ with `0` elements. In our particular example, `m=15`. In $$T$$ we keep track of elements for which our PHF don't have collisions. 
+3. We initialize an array $$T=[0, 1, 2, ..., m-1]$$ with `0` elements. In our particular example, `m=15`. In $$T$$ we keep track of elements for which our PHF don't have collisions.
 
 4. We iterate over each bucket $$B_{i}$$ with $$i\in\{0,1...,r-1\}$$ in the order obtained at step `2.`, until $$\mid B_{i}\mid=1$$ (the size of $$B_{i}$$ is `1`)
 
-    1. For each element in $$B_{i}$$, we compute $$K_{i} = \{ \phi_{l}(x) \mid x\in B_{i}\}$$ and $$l\in[0,1,..]$$, where $$\phi_{1}, \phi_{2}, \phi_{3]}, ...$$ is a family of hash functions, that or each $$l$$ it returns a different value for $$\phi_{l}(x)$$.
+    1. For each element in $$B_{i}$$, we compute $$K_{i} = \{ \phi_{l}(x) \mid x\in B_{i}\}$$ and $$l\in[1,..]$$, where $$\phi_{1}, \phi_{2}, \phi_{3}, ...$$ is a family of hash functions, that or each $$l$$ it returns a different value for $$\phi_{l}(x)$$.
     2. We stop when $$\mid K_i \mid = \mid B_i \mid$$ and $$K_i \cap \{j \mid T[j]=1\}=\emptyset$$. This means that we found $$K_{i}$$ elements for which there's no previous collisions for the current $$l$$.
         1. For $$j\in K_i$$ we mark $$T[j]=1$$
-        2. We store the value of $$\sigma(i)=l$$ . At this point we know that the elements from $$B_{i}$$ won't colide if we apply $$\phi_l{x}$$ on them.
+        2. We store the value of $$\sigma(i)=l$$ . At this point we know that the elements from $$B_{i}$$ won't colide if we apply $$\phi_l(x)$$ on them. From a code perspective we can keep $$\sigma(i)$$ in an array. 
     <br/><br/> ![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-algo.drawio.png)
 
 5. For the remaining buckets with $$\mid B_i \mid=1$$, we will look into the remaining empty slots in $$T$$, and one by one, we will put all remaining elements. We store $$\sigma(i)=-\text{position}$$. 
 
-The last part is to find a way of computing $$H(x)$$ which is our PHF:
+The last part is to find a way of computing $$H(x)$$, which is our PHF:
 $$
 H(x) =
 \left\{
@@ -548,13 +548,17 @@ In this regard I've written the following benchmark, the tests the performance o
 @Measurement(iterations = 5, time = 10)
 public class TestReads {
 
+    @Param({"1000", "100000", "1000000", "10000000", "20000000"})
+    private int size;
+
     private Map<String, String> map;
     private ReadOnlyMap<String, String> readOnlyMap;
     private MockUnitString stringsGenerator = words().map(s -> s + ints().get()).mapToString();
-    private List<String> keys = stringsGenerator.list(20_000_000).get();                
+    private List<String> keys;
 
     @Setup(Level.Trial)
     public void initMaps() {
+        keys = stringsGenerator.list(size).get();
         this.map = new HashMap<>();
         keys.forEach(key -> map.put(key, "abc"));
         this.readOnlyMap = ReadOnlyMap.snapshot(map);
@@ -565,6 +569,7 @@ public class TestReads {
         bh.consume(map.get(From.from(keys).get()));
     }
 
+    @Benchmark
     public void testGetInReadOnlyMap(Blackhole bh) {
         bh.consume(readOnlyMap.get(From.from(keys).get()));
     }
