@@ -1,6 +1,7 @@
 ---
 title: "Hello world!"
 date: "2010-08-09"
+excerpt: "Hello world!"
 classes: wide
 categories: 
   - "c"

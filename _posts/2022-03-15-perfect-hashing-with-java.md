@@ -181,7 +181,7 @@ Now let's see how `PHF.java` is implemented.
         2. We store the value of $$\sigma(i)=l$$ . At this point we know that the elements from $$B_{i}$$ won't colide if we apply $$\phi_l(x)$$ on them. From a code perspective we can keep $$\sigma(i)$$ in an array. 
     <br/><br/> ![png]({{site.url}}/assets/images/2022-03-15-perfect-hashing-with-java/algo-algo.drawio.png)
 
-5. For the remaining buckets with $$\mid B_i \mid=1$$, we will look into the remaining empty slots in $$T$$, and one by one, we will put all remaining elements. We store $$\sigma(i)=-\text{position}$$. 
+5. For the remaining buckets with $$\mid B_i \mid=1$$, we will look into the remaining empty slots in $$T$$, and one by one, we will put all remaining elements. We store $$\sigma(i)=-\text{position}-1$$. 
 
 The last part is to find a way of computing $$H(x)$$, which is our PHF:
 $$
@@ -189,7 +189,7 @@ H(x) =
 \left\{
 	\begin{array}{ll}
 		\phi_{\sigma(g(x))}(x)  & \mbox{if } \sigma(g(x)) > 0 \\
-		-σ(g(x)) & \mbox{if } \sigma(g(x)) \leq 0
+		-σ(g(x))-1 & \mbox{if } \sigma(g(x))\leq 0
 	\end{array}
 \right.
 $$
@@ -313,8 +313,8 @@ public int hash(byte[] obj) {
     int seed = internalHash(obj, INIT_SEED) % seeds.length;
     // if σ(g(x)) <= 0
     if (seeds[seed]<=0) {
-        // we return -σ(g(x))
-        return -seeds[seed];
+        // we return -σ(g(x))-1
+        return -seeds[seed]-1;
     }
     // we return ϕ_σ(g(x))(x)
     int finalHash = internalHash(obj, seeds[seed]) % this.numBuckets;
@@ -456,7 +456,8 @@ public <T> void build(Set<T> inputElements, Function<T, byte[]> objToByteArrayMa
             occupiedIdx++;
         }
         occupied.set(occupiedIdx);
-        this.seeds[originalIndex] = -(occupiedIdx);
+        // We subtract (-1) to cover 0 cases
+        this.seeds[originalIndex] = -(occupiedIdx)-1;
     }
 }
 ```
@@ -476,7 +477,7 @@ public class ReadOnlyMap<K,V> {
     private ArrayList<V> values;
     private Function<K,byte[]> mapper;
 
-    public static final <K,V> ReadOnlyMap<K,V> snapshot(Map<K, V> map, Function<K, byte[]> mapper, double loadFactor, int keysPerBucket, int maxSeed) {
+       public static final <K,V> ReadOnlyMap<K,V> snapshot(Map<K, V> map, Function<K, byte[]> mapper, double loadFactor, int keysPerBucket, int maxSeed) {
         ReadOnlyMap<K,V> result = new ReadOnlyMap<>();
         result.phf = new PHF(loadFactor, keysPerBucket, maxSeed);
         result.phf.build(map.keySet(), mapper);
@@ -487,7 +488,6 @@ public class ReadOnlyMap<K,V> {
         result.mapper = mapper;
         map.forEach((k, v) -> {
             int hash = result.phf.hash(mapper.apply(k));
-            if (hash<=0) hash = -hash;
             result.values.set(hash, v);
         });
         return result;
