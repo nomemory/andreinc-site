@@ -44,4 +44,6 @@ I use [mathjax](https://www.mathjax.org/) for math formulas.
 
 I am open to discussing job opportunities. Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
 
+Or write me to **gnomemory** (with an @yahoo.com ending).
+
 > The opinions expressed on this blog are highly personal. 
