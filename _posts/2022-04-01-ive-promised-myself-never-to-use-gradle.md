@@ -124,6 +124,6 @@ My advice:
 
 * I still use the groovy dialect simply because there are more materials to get inspiration from. It's 2022, and things might change in the future;
 
-# Conclusion
+# Abrupt final thoughts
 
-I've promised myself not to use Gradle anymore, but I still do it. Should you use it? Yes. But please follow my advice. It will save you a few white nights. 
+I've promised myself not to use Gradle anymore, but I still do it from time to time, especially for smaller, contained, personal projects.
