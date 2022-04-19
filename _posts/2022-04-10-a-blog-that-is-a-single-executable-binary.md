@@ -499,4 +499,4 @@ All in all, `microblog.c` was an exciting experiment. The code is to be taken li
 
 # Discussion
 
-[reddit](https://www.reddit.com/r/C_Programming/comments/u6eeno/a_blog_that_is_a_single_executable_binary/), [lobste.rs](https://lobste.rs/s/oj0yi5/blog_is_single_executable_binary).
+[reddit](https://www.reddit.com/r/C_Programming/comments/u6eeno/a_blog_that_is_a_single_executable_binary/), [lobste.rs](https://lobste.rs/s/oj0yi5/blog_is_single_executable_binary), [hacker news](https://news.ycombinator.com/item?id=31081049).
