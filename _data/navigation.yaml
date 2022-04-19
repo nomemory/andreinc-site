@@ -9,8 +9,8 @@ main:
     url: /favs/         
   - title: "Portfolio"
     url: /portfolio/
-  # - title: "CV"
-  #   url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
+  - title: "CV"
+    url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
 
 
 posts_nav:
