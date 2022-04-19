@@ -65,7 +65,7 @@ As you can see, CSS is not my strongest skill.
 
 #  Adding a new blog post to the sample blog
 
-For adding new content to the blog, there's no need to touch the `microblog.c` source-code. 
+There's no need to touch the `microblog.c` source-code for adding new content to the blog. 
 
 We start by creating a new file in the `./cnt` folder called `jimihendrix`:
 
@@ -76,6 +76,8 @@ We start by creating a new file in the `./cnt` folder called `jimihendrix`:
             "<p>Jimmy Hendrix says hello</p>"
 }
 ```
+
+> Note to self: It's JIMI, not JIMMY!
 
 Then, we reference the new file in the `posts` file:
 
@@ -179,7 +181,7 @@ int main(void) {
 
 The `posts` array contains all the content of our blog. Each article is accessible by its index in the global array.
 
-At this point, to modify or add something, we would have to alter the source code and then re-compile. But what if there is a way to keep the content outside the source file? 
+To modify or add something, we would have to alter the source code and then re-compile. But what if there is a way to keep the content outside the source file? 
 
 Remember the `#include` pre-processor directive ? Well, contrary to popular belief, its usage it's not limited to header files. We can actually use it to "externalize" our content, and `#include` it just before compilation: 
 
@@ -391,11 +393,11 @@ void server_proc_req(int client_sock_fd) {
 ```
 
 We define three buffers: 
-* `rep_buff` - Here we keep the response we are sending back to the client;
+* `rep_buff` - Here is where we keep the response we are sending back to the client;
 * `req_buff` - This contains the request coming from the client;
 * `http_req_res_buff` - Here we keep the resource (`posts` index) we want to access. This is something we extract from `req_buff`.
 
-The most important functions called from `server_proc_req` are `server_receive` and `server_send`. This two methods read and write data to/from the socket.
+The most important functions called from `server_proc_req` are `server_receive` and `server_send`. These two methods read and write data to/from the socket.
 
 The code is quite straight-forward: 
 
@@ -438,9 +440,9 @@ static int server_send(int client_sock_fd, char *rep_buff) {
 
 The two methods (`server_receive` and `server_send`) are actual wrappers over `send()` and `recv()` that add additional checks on-top. 
 
-For example in `server_receive` we make sure we read bytes (`b_req`) up until we encounter `CRLF` (`http_req_is_final`) or we overflow (we read more bytes than `req_buff` can hold).
+For example, in `server_receive` we make sure we read bytes (`b_req`) up until we encounter `CRLF` (`http_req_is_final`) or we overflow (we read more bytes than `req_buff` can hold).
 
-In `server_send` we make sure that we send all the bytes from `rep_buff`. Calling `send` once doesn't guarantee that, that's why do everything in a loop, that checks how much we've sent (using `w_rep`).
+In `server_send` we make sure that we send all the bytes from `rep_buff`. Calling `send` once doesn't guarantee that; that's why we do everything in a loop that checks how manys bytes we've sent (using `w_rep`).
 
 Lastly, the methods: `set_http_rep_200`, `set_http_rep_404`, `set_http_rep_500` are all "overloaded" (if we can call them like this) for the `set_http_rep_ret` method:
 
@@ -487,7 +489,7 @@ And then adding the actual content:
 #define REP_FMT "%s%s\n"
 ```
 
-I've used `snprintf` for both string concatenations to check for possible overflows or encoding errors.
+I've used `snprintf()` for both string concatenations to check for possible overflows or encoding errors.
 
 That's all.
 
@@ -495,6 +497,6 @@ That's all.
 
 All in all, `microblog.c` was an exciting experiment. The code is to be taken lightly: like a combination of software minimalism, poorly written C (waiting for feedback, actually), and a late April's Fools Day joke. 
 
+# Discussion
 
-
-
+[reddit](https://www.reddit.com/r/C_Programming/comments/u6eeno/a_blog_that_is_a_single_executable_binary/), [lobste.rs](https://lobste.rs/s/oj0yi5/blog_is_single_executable_binary).
