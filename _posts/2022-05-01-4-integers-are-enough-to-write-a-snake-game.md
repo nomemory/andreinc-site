@@ -1,6 +1,6 @@
 ---
 title: "4 integers are enough to write a Snake Game"
-date: "2022-04-10"
+date: "2022-05-01"
 classes: wide
 comments: true
 usemathjax: true
