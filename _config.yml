@@ -61,8 +61,8 @@ defaults:
       show_date: true
       read_time: false
       comments: true
-      share: false
-      related: false
+      share: true
+      related: true
       excerpt: true
   # _pages
   - scope:
