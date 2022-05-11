@@ -12,17 +12,17 @@ tags:
 - "game"
 ---
 
->... actually you can use only 2 but this will make your life a little more miserable.
+>... actually you can use only 2, but this will make your life a little more miserable.
 
 ![png]({{site.url}}/assets/images/2022-05-01-4-integers-are-enough-to-write-a-snake-game/snake.gif)
 
 After *not* implementing a game of snake in ages, I've decided to do my best today, but with some strange and absurd limitations in mind, you know, to spice up things:
 * We will store the game map in a `uint32_t` where `1s` will form the reptile's body. The map will contain `4x8` positions. Enough to have fun!
 * We will keep another `uint64_t` as a directions array - this will be useful to move the snake around, while keeping its growing shape intact;
-* We will squeeze another four 5 bits integers in an `uint32_t` to keep the positions of the `head`, the `tail`, the `apple`, and the (current) `length`. Any input from the keyboard will also be kept here (2 bits will be enough).
-* We will keep a 8 bit (`uint8_t`) variable for looping.
+* We will squeeze another a few 5 bits values in an `uint32_t` to keep the positions of the `head`, the `tail`, the `apple`, and the (current) `length`. Any input from the keyboard will also be kept here (2 bits will be enough).
+* We will keep an 8 bit (`uint8_t`) variable for looping.
 
-Because there's no standard C-way of interacting with the keyboard, I will have to rely on `curses`, so if you want to compile the program, make sure you have the lib installed on your system. If you using the right type of operating system, chances are it's already there. If not you can certainly install it from your favorite package manager. 
+Because there's no standard C-way of interacting with the keyboard, I will have to rely on `curses`, so if you want to compile the program, make sure you have the lib installed on your system. If you're using the right type of operating system, chances are it's already there. If not you can certainly install it from your favorite package manager. 
 
 Unfortunately,`curses` uses additional memory by itself, but let's be honest, hacking with arcane escape chars and low level system functions is not fun, and certainly not something that I am willing to try by myself. Yes, it's cheating, and this article is a fraud! 
 
@@ -61,10 +61,10 @@ int8_t i = ...;
 To access the memory and set bits to zero or one, we can use the following macros:
 
 ```cpp
-#define s_is_set(b) ((map&(1<<(b)))!=0)
-#define s_tog(b) (map^=(1<<(b)))
-#define s_set_0(b) (map&=~(1<<b))
-#define s_set_1(b) (map|=(1<<b))
+#define s_is_set(b) ((map&(1<<(b)))!=0) // checks if the b bit from the map is set to 1
+#define s_tog(b) (map^=(1<<(b))) // toggles the b bit of the map (currently not used)
+#define s_set_0(b) (map&=~(1<<b)) // sets to 0 the b bit from the map
+#define s_set_1(b) (map|=(1<<b)) // sets to 1 the b bit from the map
 ```
 
 ### `vars`
@@ -85,10 +85,14 @@ To access `hpos`, `tpos`, etc. we have defined the following macros:
 ```cpp
 #define s_mask(start,len) (s_ls_bits(len)<<(start))
 #define s_prep(y,start,len) (((y)&s_ls_bits(len))<<(start))
-#define s_get(y,start,len) (((y)>>(start))&s_ls_bits(len))
+
+// Gets the the 'len' number of bits, starting from position 'start' of 'y'
+#define s_get(y,start,len) (((y)>>(start))&s_ls_bits(len)) 
+// Sets the the 'len' number of bits, starting from position 'start' of 'y' to the value 'bf'
 #define s_set(x,bf,start,len) (x=((x)&~s_mask(start,len))|s_prep(bf,start,len))
-#define s_hpos s_get(vars,0,5)
-#define s_tpos s_get(vars,5,5)
+
+#define s_hpos s_get(vars,0,5) // gets the last 5 bits of 'vars', which corresponds to s_hpos
+#define s_tpos s_get(vars,5,5) // sets the last 5 bits of 'vars', which corresonds to s_hpos
 #define s_len s_get(vars,10,5)
 #define s_apos s_get(vars,15,5)
 #define s_chdir s_get(vars,20,2)
@@ -111,10 +115,10 @@ For more information, describing the technique behind the macros, please read th
 The possible directions are mapped using the following macros:
 
 ```cpp
-#define SU 0                       
-#define SD 1                       
-#define SL 2                       
-#define SR 3
+#define SU 0 //UP                       
+#define SD 1 //DOWN                  
+#define SL 2 //LEFT                
+#define SR 3 //RIGHT
 ```
 
 Each time the snake moves inside the `map` grid, we cycle through the directions, with the following macros: 
@@ -128,8 +132,13 @@ Each time the snake moves inside the `map` grid, we cycle through the directions
 #define s_shape_add(nd) do { s_len_inc; shape<<=2; s_tdir_set(nd); } while(0);
 ```
 
-When the snake moves, without eating an apple we call `s_shape_rot` that removes the last direction, and pushes a new head (based on `s_chdir`).
-When the snake moves and eats an apple we call `s_shape_add` that increases the length, and adds pushes a new tail `s_tdir`.
+When the snake moves, without eating an apple we call the `s_shape_rot` macro that removes the last direction, and pushes a new head (based on `s_chdir`).
+
+In this regard, shape behaves like a queue:
+
+![png]({{site.url}}/assets/images/2022-05-01-4-integers-are-enough-to-write-a-snake-game/shapequeue.drawio.png)
+
+When the snake moves and eats an apple we call `s_shape_add` that increases the length, and pushes a new tail `s_tdir`.
 
 ## The game loop
 
@@ -162,6 +171,8 @@ int main(void) {
 ```    
 
 Each time a key is pressed `s_key_press` is expanded. This checks if the movement is possible, and then updates the `s_chdir` (using `s_chdir_set`).
+
+The reason `s_key_press` has two input paramameters is to exclude the opposite direction. For example if the snake is currently moving to the RIGHT (`SR`), a `SL` is not possible, and thus we break the switch. 
 
 ### The function that moves the snake:
 
@@ -206,6 +217,11 @@ static void move_snake() {
 }
 ```
 
+To validate if the snake can move or not in the grid, we've implemented the `check_*()` functions:
+* `check_l()` - we check if the X coordinate of the snake (the modulo `%8` of the `s_hpos`) is bigger than the one from the previous position;
+* `check_r()` - we check if the X coordinate of the snake (the modulo `%8` of the `s_hpos`) is smaller than the one from the previous position; 
+* `check_u()` and `check_d` work in the same way, they see if the by incrementing `s_hpos` it overflows. If it does, then it means we've exited the grid.
+
 ### The function that displays the snake
 
 This is the last function we are going to implement:
@@ -224,6 +240,75 @@ static void show_map() {
     };
 }
 ```
+
+### After the macro expands
+
+After all the macros expands, the resulting code looks like this:
+
+```c
+uint32_t map = 0x700;
+uint32_t vars = 0x20090a;
+uint64_t shape = 0x2a;
+int8_t i = 0;
+static void rnd_apple() {
+    i = (rand()&(32 -1));
+    while(((map&(1<<(i)))!=0)) i = (rand()&(32 -1));
+    (vars=((vars)&~(((1<<(5))-1)<<(15)))|(((i)&((1<<(5))-1))<<(15)));
+}
+static void show_map() {
+    wclear(stdscr);
+    i=32;
+    while(i-->0) {
+        if (i==(((vars)>>(15))&((1<<(5))-1))) { waddch(stdscr,'@'); waddch(stdscr,' '); }
+        else { waddch(stdscr,((map&(1<<(i)))!=0) ? '#':'.'); waddch(stdscr,' '); }
+        if (!(i&(8 -1))) { waddch(stdscr,'\n'); }
+    };
+}
+static void check_l() { if ((((((((vars)>>(0))&((1<<(5))-1))+1)&0x1f)&(8 -1)) < ((((vars)>>(0))&((1<<(5))-1))&(8 -1))) || ((map&(1<<((((((vars)>>(0))&((1<<(5))-1))+1)&0x1f))))!=0)) do { endwin(); exit(-1); } while(0);; }
+static void check_r() { if ((((((((vars)>>(0))&((1<<(5))-1))-1)&0x1f)&(8 -1)) > ((((vars)>>(0))&((1<<(5))-1))&(8 -1))) || ((map&(1<<((((((vars)>>(0))&((1<<(5))-1))-1)&0x1f))))!=0)) do { endwin(); exit(-1); } while(0);; }
+static void check_u() { if (((((((vars)>>(0))&((1<<(5))-1))+8)&0x1f) < (((vars)>>(0))&((1<<(5))-1))) || ((map&(1<<((((((vars)>>(0))&((1<<(5))-1))+8)&0x1f))))!=0)) do { endwin(); exit(-1); } while(0);; }
+static void check_d() { if (((((((vars)>>(0))&((1<<(5))-1))-8)&0x1f) > (((vars)>>(0))&((1<<(5))-1))) || ((map&(1<<((((((vars)>>(0))&((1<<(5))-1))-8)&0x1f))))!=0)) do { endwin(); exit(-1); } while(0);; }
+static void move_snake() {
+    if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==2) { check_l(); (vars=((vars)&~(((1<<(5))-1)<<(0)))|((((((vars)>>(0))&((1<<(5))-1))+1)&((1<<(5))-1))<<(0))); }
+    else if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==3) { check_r(); (vars=((vars)&~(((1<<(5))-1)<<(0)))|((((((vars)>>(0))&((1<<(5))-1))-1)&((1<<(5))-1))<<(0))); }
+    else if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==0) { check_u(); (vars=((vars)&~(((1<<(5))-1)<<(0)))|((((((vars)>>(0))&((1<<(5))-1))+8)&((1<<(5))-1))<<(0))); }
+    else if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==1) { check_d(); (vars=((vars)&~(((1<<(5))-1)<<(0)))|((((((vars)>>(0))&((1<<(5))-1))-8)&((1<<(5))-1))<<(0))); }
+    (map|=(1<<(((vars)>>(0))&((1<<(5))-1))));
+    if ((((vars)>>(15))&((1<<(5))-1))==(((vars)>>(0))&((1<<(5))-1))) {
+        rnd_apple();
+        do { (vars=((vars)&~(((1<<(5))-1)<<(10)))|((((((vars)>>(10))&((1<<(5))-1))+1)&((1<<(5))-1))<<(10))); shape<<=2; (shape=((shape)&~(((1<<(2))-1)<<(0)))|((((shape&3))&((1<<(2))-1))<<(0))); } while(0);;
+        return;
+    }
+    (map&=~(1<<(((vars)>>(5))&((1<<(5))-1))));
+    if ((shape&3)==2) { (vars=((vars)&~(((1<<(5))-1)<<(5)))|((((((vars)>>(5))&((1<<(5))-1))+1)&((1<<(5))-1))<<(5))); }
+    else if ((shape&3)==3) { (vars=((vars)&~(((1<<(5))-1)<<(5)))|((((((vars)>>(5))&((1<<(5))-1))-1)&((1<<(5))-1))<<(5))); }
+    else if ((shape&3)==0) { (vars=((vars)&~(((1<<(5))-1)<<(5)))|((((((vars)>>(5))&((1<<(5))-1))+8)&((1<<(5))-1))<<(5))); }
+    else if ((shape&3)==1) { (vars=((vars)&~(((1<<(5))-1)<<(5)))|((((((vars)>>(5))&((1<<(5))-1))-8)&((1<<(5))-1))<<(5))); }
+}
+
+
+int main(void) {
+    do { srand(time(0)); initscr(); keypad(stdscr, 1); cbreak(); noecho(); } while(0);;
+    rnd_apple();
+    while(1) {
+        show_map();
+        wtimeout(stdscr,80);
+        switch (wgetch(stdscr)) {
+            case 0403 : { if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==1) break; (vars=((vars)&~(((1<<(2))-1)<<(20)))|(((0)&((1<<(2))-1))<<(20))); break; };
+            case 0402 : { if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==0) break; (vars=((vars)&~(((1<<(2))-1)<<(20)))|(((1)&((1<<(2))-1))<<(20))); break; };
+            case 0404 : { if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==3) break; (vars=((vars)&~(((1<<(2))-1)<<(20)))|(((2)&((1<<(2))-1))<<(20))); break; };
+            case 0405 : { if (((shape>>((((vars)>>(10))&((1<<(5))-1))*2)&3))==2) break; (vars=((vars)&~(((1<<(2))-1)<<(20)))|(((3)&((1<<(2))-1))<<(20))); break; };
+            case 'q' : exit(0);
+        }
+        move_snake();
+        do { shape>>=2; (shape=((shape)&~(((1<<(2))-1)<<((((vars)>>(10))&((1<<(5))-1))*2)))|((((((vars)>>(20))&((1<<(2))-1)))&((1<<(2))-1))<<((((vars)>>(10))&((1<<(5))-1))*2))); } while(0);;
+        napms(200);
+    }
+    do { endwin(); exit(0); } while(0);;
+}
+```
+
+It's not a beautiful sight, but it looks mesmerizing.
 
 # Final thoughts
 

@@ -18,7 +18,7 @@ I have a *Bachelor's Degree in Electronics, Telecommunications, and Information 
 ![jpg]({{site.url}}/assets/images/about/politehnica.jpeg){:height="50%" width="50%"}
 <sup><sup><sup> Universitatea Politehnica, Bucharest, Romania</sup></sup></sup>
 
-I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer was one [of those](https://muzeuldecalculatoare.ro/2018/09/23/i-c-e-felix-hc-91/). All the lucky romanian kids from 90s had them:
+I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer was one [of those](https://muzeuldecalculatoare.ro/2018/09/23/i-c-e-felix-hc-91/). All the lucky Romanian kids from 90s had them:
 
 ![jpg]({{site.url}}/assets/images/about/hc91.jpg){:height="50%" width="50%"}<sup><sup><sup> HC91, a Romanian Microcomputer</sup></sup></sup>
 
@@ -26,7 +26,13 @@ I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I c
 
 I keep my technical skills sharp by doing coding exercises, contributing to open-source software, and reinventing the wheel. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
-I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site.url}}/categories/#java)/[Kotlin]({{site.url}}/categories/#kotlin), Mathematics, Computer Science curricula (algorithms and data structures).
+Outside of programming (and science subjects), I always had a great interest in music, chess and travelling. Unfortunately I cannot play any musical instrument, I am a [patzer](https://www.merriam-webster.com/dictionary/patzer), and I haven't travelled much in recent years. The later might change in the future, but I am not so sure about the other two.
+
+Romanian is my native language, and I am also fluent in English and French.
+
+#### `The blog`
+
+I usually blog about my interests: [C]({{site.url}}/categories/#c)/[Java]({{site.url}}/categories/#java)/[Kotlin]({{site.url}}/categories/#kotlin), Mathematics, Computer Science curricula (algorithms and data structures). Rarely I touch other subjects. 
 
 The blog source code/content is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). The code in the articles is not always tested (as it should). If you see any issues with it, please open a PR, and I will make sure I will merge it. 
 
