@@ -24,7 +24,7 @@ After *not* implementing a game of snake in ages, I've decided to do my best tod
 
 Because there's no standard C-way of interacting with the keyboard, I will have to rely on `curses`, so if you want to compile the program, make sure you have the lib installed on your system. If you're using the right type of operating system, chances are it's already there. If not you can certainly install it from your favorite package manager. 
 
-Unfortunately,`curses` uses additional memory by itself, but let's be honest, hacking with arcane escape chars and low level system functions is not fun, and certainly not something that I am willing to try by myself. Yes, it's cheating, and this article is a fraud! 
+Unfortunately, [`curses`](https://en.wikipedia.org/wiki/Curses_%28programming_library%29) uses additional memory by itself, but let's be honest, hacking with arcane escape chars and low level system functions is not fun, and certainly not something that I am willing to try by myself. Yes, it's cheating, and this article is a fraud! 
 
 Before continue reading (if you haven't stopped by now), note that the code should be taken as a twisted joke, or as an exercise in minimalism, or as both, probably a joke. Because of the aforementioned limitations, we are going to write some nasty macros to perform bitwise operations, use global variables, reuse the same counter, etc. This is not a good example of readable or elegant code.
 
@@ -77,14 +77,14 @@ To access the memory and set bits to zero or one, we can use the following macro
 * `tpos` (from bit `5` to `9`) represents the tail position of the snake as an offset from the map's LSB;
 * `len` (from bit `10` to `14`) represents the length of the snake;
 * `apos` (from bit `15` to `19`) represents the apple position as an offset from the map's LSB;
-* `chdir` (from bit `20` to `21`) represents the last key pressed, `2` bits are enough, because only arrows are registered;
-* the remaining bits are not used;
+* `chdir` (from bit `20` to `21`) represents the last key pressed, `2` bits are enough, because only arrows are registered, and there are 4 of them;
+* the remaining bits are not used. Normally we could've kept the `uint8_t` counter here, but for simplicity I've chosen to pick a separate variable;
 
-To access `hpos`, `tpos`, etc. we have defined the following macros:
+To access `hpos`, `tpos`, etc. we have defined the following macros. Each of them works like a getter/setter for the corresponding segments:
 
 ```cpp
-#define s_mask(start,len) (s_ls_bits(len)<<(start))
-#define s_prep(y,start,len) (((y)&s_ls_bits(len))<<(start))
+#define s_mask(start,len) (s_ls_bits(len)<<(start)) // creates a bitmask of len starting from position start
+#define s_prep(y,start,len) (((y)&s_ls_bits(len))<<(start)) // prepares the mask
 
 // Gets the the 'len' number of bits, starting from position 'start' of 'y'
 #define s_get(y,start,len) (((y)>>(start))&s_ls_bits(len)) 
@@ -124,11 +124,12 @@ The possible directions are mapped using the following macros:
 Each time the snake moves inside the `map` grid, we cycle through the directions, with the following macros: 
 
 ```cpp
-#define s_hdir ((shape>>(s_len*2)&3))
-#define s_tdir (shape&3)
-#define s_hdir_set(d) s_set(shape,d,s_len*2,2)
-#define s_tdir_set(d) s_set(shape,d,0,2)
-#define s_shape_rot(nd) do { shape>>=2; s_hdir_set(nd); } while(0);
+#define s_hdir ((shape>>(s_len*2)&3)) // retrieves the head direction (based on s_slen)
+#define s_tdir (shape&3) // retrieves the last 2 bits which corresponds to the tail
+#define s_hdir_set(d) s_set(shape,d,s_len*2,2) // sets the head direction
+#define s_tdir_set(d) s_set(shape,d,0,2) // sets the tail direction 
+// Macros for changing the shape each time the snake moves
+#define s_shape_rot(nd) do { shape>>=2; s_hdir_set(nd); } while(0); 
 #define s_shape_add(nd) do { s_len_inc; shape<<=2; s_tdir_set(nd); } while(0);
 ```
 
@@ -138,13 +139,15 @@ In this regard, shape behaves like a queue:
 
 ![png]({{site.url}}/assets/images/2022-05-01-4-integers-are-enough-to-write-a-snake-game/shapequeue.drawio.png)
 
-When the snake moves and eats an apple we call `s_shape_add` that increases the length, and pushes a new tail `s_tdir`.
+When the snake moves and eats an apple we call `s_shape_add` that increases the length, and pushes a new tail `s_tdir`. 
 
 ## The game loop
 
 The game loop looks like this:
 
 ```cpp
+// Some macros to make the code more readable
+// (or unreadable depending on you)
 #define s_init do { srand(time(0)); initscr(); keypad(stdscr, TRUE); cbreak(); noecho(); } while(0);
 #define s_exit(e) do { endwin(); exit(e); } while(0);
 #define s_key_press(k1, k2) if (s_hdir==k2) break; s_chdir_set(k1); break;
@@ -172,17 +175,18 @@ int main(void) {
 
 Each time a key is pressed `s_key_press` is expanded. This checks if the movement is possible, and then updates the `s_chdir` (using `s_chdir_set`).
 
-The reason `s_key_press` has two input paramameters is to exclude the opposite direction. For example if the snake is currently moving to the RIGHT (`SR`), a `SL` is not possible, and thus we break the switch. 
+The reason `s_key_press` has two input parameters is to exclude the opposite direction. For example if the snake is currently moving to the RIGHT (`SR`), a `SL` is not possible, and thus we break the switch. 
 
 ### The function that moves the snake:
 
 `move_snake()` is where most of our logic is implemented:
 
 ```cpp
-#define s_next_l s_mask5(s_hpos+1)
-#define s_next_r s_mask5(s_hpos-1)
-#define s_next_u s_mask5(s_hpos+8)
-#define s_next_d s_mask5(s_hpos-8)
+#define s_next_l s_mask5(s_hpos+1) // incrementing the offset to go right
+#define s_next_r s_mask5(s_hpos-1) // decrementing the offset to go left
+#define s_next_u s_mask5(s_hpos+8) // change row up, by adding 8 positions to the offset
+#define s_next_d s_mask5(s_hpos-8) // change row down, by removing 8 positions from the offset
+
 // Check if a left movement is possible. 
 static void check_l() { if ((s_mod_p2(s_next_l,8) < s_mod_p2(s_hpos,8)) || s_is_set(s_next_l)) s_exit(-1); }
 // Check if a right movement is possible. 
@@ -198,9 +202,9 @@ static void move_snake() {
     else if (s_hdir==SD) { check_d(); s_hpos_set(s_hpos-8); }
     // Sets the bit based on the current s_hdir and s_hpos
     s_set_1(s_hpos);
-    // If an apple is ate
+    // If an apple is eaten
     if (s_apos==s_hpos) {
-        // We generate another apple
+        // We generate another apple so we don't starve
         rnd_apple();
         // Append to the tail
         s_shape_add(s_tdir);
@@ -220,7 +224,7 @@ static void move_snake() {
 To validate if the snake can move or not in the grid, we've implemented the `check_*()` functions:
 * `check_l()` - we check if the X coordinate of the snake (the modulo `%8` of the `s_hpos`) is bigger than the one from the previous position;
 * `check_r()` - we check if the X coordinate of the snake (the modulo `%8` of the `s_hpos`) is smaller than the one from the previous position; 
-* `check_u()` and `check_d` work in the same way, they see if the by incrementing `s_hpos` it overflows. If it does, then it means we've exited the grid.
+* `check_u()` and `check_d` work in the same way, they see if the by incrementing `s_hpos` it overflows. If it does, then it means we've exited the grid. Overflows are used as features. 
 
 ### The function that displays the snake
 
@@ -230,7 +234,7 @@ This is the last function we are going to implement:
 static void show_map() {
     clear();
     i=32;
-    while(i-->0) {
+    while(i-->0) { // !! Trigger warning for sensitive people, incoming '-->0'
         // If the bit is an apple, we render the apple '@'
         if (i==s_apos) { addch('@'); addch(' '); }
         // We draw either the snake bit ('#') or the empty bit ('.')
@@ -308,7 +312,7 @@ int main(void) {
 }
 ```
 
-It's not a beautiful sight, but it looks mesmerizing.
+It's not a beautiful sight, but it looks mesmerizing. When I scroll through the code, I get ~~motion~~ bitwise sickness. 
 
 # Final thoughts
 
