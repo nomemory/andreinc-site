@@ -29,5 +29,6 @@ If time allows, I enjoy writing software:
     * [`open-adressing-hash-table-c`](https://github.com/nomemory/open-adressing-hash-table-c) - Open Addressing Hashtable in C
     * [`bloomfilters-c`](https://github.com/nomemory/bloomfilters-c) - Simple C implementation for bloom filters, code associated with this [article]({{site.url}}/2022/03/01/on-implementing-bloom-filters-in-c).
     * [`microblog-c`](https://github.com/nomemory/microblog-c) - A blog that is one executable.
+    * [`integers-snake`](https://github.com/nomemory/integers-snake) - A snake game that uses only 4 integers.
 * [python](#python): 
     * [`pysert`](https://github.com/nomemory/pysert) - Generate random data based on templates

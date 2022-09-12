@@ -4,9 +4,7 @@ main:
   - title: "Blog"
     url: /
   - title: "About"
-    url: /about/
-  - title: "Favs"
-    url: /favs/         
+    url: /about/       
   - title: "Portfolio"
     url: /portfolio/
   - title: "CV"

@@ -1,6 +1,6 @@
 ---
 title: "Bitwise black-magic. A friendly guide."
-date: "2021-11-08"
+date: "2022-07-08"
 classes: wide
 comments: true
 usemathjax: false
@@ -12,9 +12,39 @@ tags:
 - "bitwise"
 ---
 
-# XOR
+# Bitwise Operations
+
+
+
+## SHIFT RIGHT
+
+## SHIFT LEFT
+
+## XOR
+
+# Pratical Examples
+
+## Checking if two numbers are equal
+
+## Checking if a number is odd
+
+## Setting the n<sup>th</sup> bit of x
+
+## Multiplying an integer with the n<sup>th</sup> power of `2`
+
+## Dividing an integer with the n<sup>th</sup> power of `2`
 
 ## Swapping two variables
+
+## Retriving the max of two integers
+
+## Retrieving the min of two integers
+
+## Check if an integer is a power of two
+
+## 
+
+# Bonus problems solved using bitwise operations
 
 ## The solitary integer
 
@@ -36,3 +66,4 @@ int main(void) {
 
 // Output: 17
 ```
+
