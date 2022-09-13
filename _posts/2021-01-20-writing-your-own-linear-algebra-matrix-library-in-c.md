@@ -1132,7 +1132,7 @@ Compared to the previous two functions (for swapping rows) the code is slightly 
 
 ```c
 int nml_mat_col_swap_r(nml_mat *m, unsigned int col1, unsigned int col2) {
-  if (col1 >= m->num_cols || col2 >= m->num_rows) {
+  if (col1 >= m->num_cols || col2 >= m->num_cols) {
     NML_FERROR(CANNOT_SWAP_ROWS, col1, col2, m->num_cols);
     return 0;
   }
@@ -1418,7 +1418,7 @@ int nml_mat_add_r(nml_mat *m1, nml_mat *m2) {
   }
   int i, j;
   for(i = 0; i < m1->num_rows; i++) {
-    for(j = 0; j < m2->num_rows; j++) {
+    for(j = 0; j < m1->num_rows; j++) {
       m1->data[i][j] += m2->data[i][j];
     }
   }
@@ -1447,7 +1447,7 @@ int nml_mat_sub_r(nml_mat *m1, nml_mat *m2) {
   }
   int i, j;
   for(i = 0; i < m1->num_rows; i++) {
-    for(j = 0; j < m2->num_cols; j++) {
+    for(j = 0; j < m1->num_cols; j++) {
       m1->data[i][j] -= m2->data[i][j];
     }
   }
