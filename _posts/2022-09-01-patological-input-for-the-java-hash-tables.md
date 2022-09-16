@@ -1,5 +1,5 @@
 ---
-title: "Abusing Java's default hash function. Building pathological input for HashMaps."
+title: "Building pathological input for Java HashMaps - hash collisions generator"
 date: "2022-09-01"
 classes: wide
 comments: true
