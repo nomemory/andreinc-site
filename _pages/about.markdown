@@ -22,7 +22,7 @@ I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer w
 
 ![jpg]({{site.url}}/assets/images/about/hc91.jpg){:height="50%" width="50%"}<sup><sup><sup> HC91, a Romanian Microcomputer</sup></sup></sup>
 
-I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent).
+I haven't programmed professionally sincer 2017, but when I do, I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent). 
 
 I keep my technical skills sharp by doing coding exercises, contributing to open-source software, and reinventing the wheel. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
@@ -50,6 +50,11 @@ I use [mathjax](https://www.mathjax.org/) for math formulas.
 
 I am open to discussing job opportunities. Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
 
-**gnomemory** (with an @yahoo.com ending).
+`gnomemory` (with an `@yahoo.com` or `@pm.me` endings). 
+
+You can also find me on Discord (`nomemory#3352`), if you want to dirrectly contact me. Communities where I usually hangout:
+* [Multiprocess Community](https://discord.gg/vX99Fzrb);
+* [/r/programare](https://discord.gg/tbfwFCX3);
+* [The Programmer's Hangout](https://discord.gg/programming).
 
 > The opinions expressed on this blog are highly personal. 

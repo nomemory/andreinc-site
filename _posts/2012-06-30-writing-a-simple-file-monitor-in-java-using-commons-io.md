@@ -20,7 +20,7 @@ tags:
   - "monitor"
 ---
 
-Even though Java 7 comes with a low-level API to watch for file system changes (article [here](http://java.dzone.com/news/how-watch-file-system-changes)), there's also the option to use the [Commons](http://commons.apache.org/io/) IO](http://commons.apache.org/io/) library from the [Apache Foundation](http://www.apache.org/), mainly the [org.apache.commons.io.monitor](http://commons.apache.org/io/api-release/index.html?org/apache/commons/io/monitor/package-summary.html) package.
+Even though Java 7 comes with a low-level API to watch for file system changes (article [here](http://java.dzone.com/news/how-watch-file-system-changes)), there's also the option to use the [Commons IO](http://commons.apache.org/io/) library from the [Apache Foundation](http://www.apache.org/), mainly the [org.apache.commons.io.monitor](http://commons.apache.org/io/api-release/index.html?org/apache/commons/io/monitor/package-summary.html) package.
 
 The first step will be to define the location that we are going to monitor:
 

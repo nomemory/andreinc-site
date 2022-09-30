@@ -18,7 +18,7 @@ If time allows, I enjoy writing software:
     * [`open-addressing-java-maps`](https://github.com/nomemory/open-addressing-java-maps) - `Map<K,V>` implementations using Open Addressing;
     * [`mphmap`](https://github.com/nomemory/mphmap) - Minimal perfect hashing in Java
 * Kotlin
-    * [`mapneat`](#https://github.com/nomemory/mapneat) - JSON transformers;
+    * [`mapneat`](  https://github.com/nomemory/mapneat) - JSON transformers;
     * [`serverneat`](https://github.com/nomemory/serverneat) - HTTP Server Stub/Mock;
 * C: 
     * [`nml`](https://github.com/nomemory/neat-matrix-library) - Linear algebra matrix library
