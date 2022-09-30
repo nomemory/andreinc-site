@@ -99,7 +99,7 @@ compileJava.dependsOn(howIsTheWeatherInBucharest)
 
 Having the ability to write code is seductive, but it opens a Pandora's Box. The programmer's reflex to throw in some custom functions to make things work will kick in, especially if the build file is complex. And to be honest, writing your build file with a programmer's mindset is more natural than trying to circumvent the DS. 
 
-But let's take a step back, and ask ourselves if this is what we want from a build tool?! Writing quick and dirty code can spiral into writing more and more quick 'n dirty code. Other people in your extended team can add their personal quick 'n dirty code. Without the ability to properly debug the build process and the non-standard hacks people are willing to put in the build file, things can become less portable and extremely environment-dependent, or simply not idempotent. Should you be always online to build your project? Should you be inside a Private Network?
+But let's take a step back, and ask ourselves if this is what we want from a build tool?! Writing quick and dirty code can spiral into writing more and more quick 'n dirty code. Other people in your extended team can add their personal quick 'n dirty code. Without the ability to properly debug the build process and the non-standard hacks people are willing to put in the build file, things can become less portable and extremely environment-dependent or simply not idempotent. Should you be always online to build your project? Should you be inside a Private Network?
 
 Do you remember when people were creating `.sh` scripts to build things? There's a reason we've stopped doing so.
 

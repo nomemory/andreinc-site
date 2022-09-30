@@ -16,7 +16,7 @@ Recently, while browsing [lobste.rs](https://lobste.rs/), I had the chance to st
 
 It was an idea crazy enough (in a positive way) to try it myself in C.
 
-So, what if I wrote my own blogging "platform" (in the lack of a more suitable term)? But, instead of outputting a static HTML site, my *platform* outputs a single **executable binary file** compatible with any \*Nix platform. There would be no HTML files, no other assets, just a piece of source code that gets to be recompiled each time I plan to update my "content". Everything stays in memory, and my *site* is an executable.
+So, what if I wrote my own blogging "platform" (in the lack of a more suitable term)? But, instead of outputting a static HTML site, my *platform* outputs a single **executable binary file** compatible with any \*Nix platform. There would be no HTML files, no other assets, just a piece of source code that gets to be recompiled each time I plan to update my "content". Everything stays in memory, and my _site_ is (an) executable.
 
 To go entirely minimalistic, I've decided to impose myself additional rules to follow: 
 1. The software is not going to use any external dependencies other than what the C standard library and whatever the operating system is offering me (POSIX, I am looking at you!);
@@ -45,15 +45,15 @@ git clone git@github.com:nomemory/microblog-c.git
 
 # Running the sample blog
 
-To build the sample blog we just compile [`microblog.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c) and we wun it:
+To build the sample blog, we compile `microblog`.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c):
 ```sh
 >> gcc -Wall microblog.c -o microblog
 >> ./microblog
 ``` 
 
-The internal server will start serving HTTP requests on port `8080` if everything goes well. 
+If everything goes well, the internal server will start serving HTTP requests on port `8080` if everything goes well. 
 
-If you are curious to see how everything looks like, just open a browser: [http://localhost:8080](http://localhost:8080), and enjoy:
+If you are curious to see what everything looks like, open a browser: [http://localhost:8080](http://localhost:8080), and enjoy:
 
 ![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/homepage.png){:height="40%" width="40%"} 
 
@@ -65,7 +65,7 @@ As you can see, CSS is not my strongest skill.
 
 #  Adding a new blog post to the sample blog
 
-There's no need to touch the `microblog.c` source-code for adding new content to the blog. 
+There's no need to touch the `microblog.`c` source code for adding new content to the blog. 
 
 We start by creating a new file in the `./cnt` folder called `jimihendrix`:
 

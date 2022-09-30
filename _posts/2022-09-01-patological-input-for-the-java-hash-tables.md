@@ -117,7 +117,7 @@ The byte representation of 'b' is: 98
 The hashCode representation of 'b' is: 98
 ```
 
-Because of this, it's impossible to generate colliding single-character Strings (when $$N=1$$). All characters are different; thus, they have different `byte[]` representations. But the situation becomes much more enjoyable when $$N \geq 2$$. 
+Because of this, it's impossible to generate colliding single-character Strings (when $$N=1$$). All characters are different; thus, they have unique `byte[]` representations. But the situation becomes much more enjoyable when $$N \geq 2$$. 
 
 So let's take the case when $$N=2$$. Our formula for obtaining the `hashCode()` of two-character Strings becomes:
 
@@ -288,9 +288,9 @@ So let's define the set $$A=\text{\{"aa", "bB", "c#"\}}$$ containing three `Stri
 * If we compute $$A \times A$$ (the [Cartesian Product](https://en.wikipedia.org/wiki/Cartesian_product)), we will generate all the possible four letters colliding Strings (with their values based on the elements of A).
 * If we compute $$A \times A \times A$$, we will generate all the possible six letters colliding Strings (with their values based on A).
 * If we compute $$A \times A \times A \times A$$, we will generate all the possible eight letters colliding Strings (with their values based on A).
-* ...an so on
+* ... and so on
 
-If we use [guava](https://mvnrepository.com/artifact/com.google.guava/guava), there's a `Sets.cartesianProduct(Set...)` we can re-use to build our String collision generator further.
+If we use [guava](https://mvnrepository.com/artifact/com.google.guava/guava), there's a `Sets.cartesianProduct(Set...)` we can (re)use to implement the algorithm. If not, you can implement the algorithm yourself. 
 
 So our code becomes:
 
@@ -307,7 +307,7 @@ public static Set<String>  generateCollisions(Set<String> baseSet, int nTimes) {
 
 Where:
 * `baseSet` is obtained by calling the previously defined method: `getCollidingStrings()`.
-* `nTimes` is the number of times we perform the *Cartesian Product*. If, for example, `nTimes=13`, we will generate 26-character-long Strings, by doing 13 *Cartesian Products* between `baseSet`s. The number of elements generated is `2^nTimes=1594323`.
+* `nTimes` is the number of times we perform the *Cartesian Product*. If, for example, `nTimes=13`, we will generate 26-character-long Strings, by doing 13 *Cartesian Products* between `baseSet`s. The number of elements generated is `3^nTimes=1594323`.
 
 To test the code above code, let's run the following:
 
