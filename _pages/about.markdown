@@ -22,7 +22,7 @@ I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer w
 
 ![jpg]({{site.url}}/assets/images/about/hc91.jpg){:height="50%" width="50%"}<sup><sup><sup> HC91, a Romanian Microcomputer</sup></sup></sup>
 
-I haven't programmed professionally sincer 2017, but when I do, I consider myself primarily a Java/Kotlin guy, but I have a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent). 
+I haven't programmed professionally since 2017, but when I do, I consider myself primarily a Java or Kotlin guy, with a soft spot for C. I can also *speak* python and have basic conversations in C++ (although the natives accuse me of having a thick foreign accent). 
 
 I keep my technical skills sharp by doing coding exercises, contributing to open-source software, and reinventing the wheel. My most *popular* project is [www.mockneat.com](http://www.mockneat.com). 
 
