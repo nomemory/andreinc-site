@@ -9,6 +9,8 @@ main:
     url: /portfolio/
   - title: "CV"
     url: https://www.linkedin.com/in/andrei-n-ciobanu-50708611/
+  - title: "Others"
+    url: /others/
 
 
 posts_nav:

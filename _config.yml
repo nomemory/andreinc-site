@@ -28,7 +28,7 @@ author:
   name: "Andrei Ciobanu"
   avatar: "/assets/images/me.jpg"
   bio: >-
-    A random software engineer from Eastern Europe.
+    Software Engineer from Eastern Europe.
   location: "Bucharest, Romania"
   links:
     - label: GitHub
@@ -59,7 +59,7 @@ defaults:
       layout: single
       author_profile: true
       show_date: true
-      read_time: false
+      read_time: true
       comments: true
       share: true
       related: true

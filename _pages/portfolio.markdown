@@ -6,7 +6,7 @@ classes: wide
 
 If time allows, I enjoy writing software:
 
-* Java: 
+* **Java**: 
     * [`mockneat`](https://www.mockneat.com) - A modern faker lib;
     * [`neat-sample-database-generators`](https://github.com/nomemory/neat-sample-databases-generators) - Generate database data;
     * [`markovneat`](https://github.com/nomemory/markovneat) - Markov chains;
@@ -17,10 +17,10 @@ If time allows, I enjoy writing software:
     * [`jasuggest`](https://github.com/nomemory/jasuggest) - Simple auto-suggesting lib;
     * [`open-addressing-java-maps`](https://github.com/nomemory/open-addressing-java-maps) - `Map<K,V>` implementations using Open Addressing;
     * [`mphmap`](https://github.com/nomemory/mphmap) - Minimal perfect hashing in Java
-* Kotlin
+* **Kotlin**
     * [`mapneat`](  https://github.com/nomemory/mapneat) - JSON transformers;
     * [`serverneat`](https://github.com/nomemory/serverneat) - HTTP Server Stub/Mock;
-* C: 
+* *C*: 
     * [`nml`](https://github.com/nomemory/neat-matrix-library) - Linear algebra matrix library
     * [`lc3-vm`](https://github.com/nomemory/lc3-vm) - Simple register based VM 
     * [`nmlib`](https://github.com/nomemory/nmlib) - My first open source project, written 12 years ago, filled with bugs.
@@ -30,5 +30,5 @@ If time allows, I enjoy writing software:
     * [`bloomfilters-c`](https://github.com/nomemory/bloomfilters-c) - Simple C implementation for bloom filters, code associated with this [article]({{site.url}}/2022/03/01/on-implementing-bloom-filters-in-c).
     * [`microblog-c`](https://github.com/nomemory/microblog-c) - A blog that is one executable.
     * [`integers-snake`](https://github.com/nomemory/integers-snake) - A snake game that uses only 4 integers.
-* [python](#python): 
+* **python**: 
     * [`pysert`](https://github.com/nomemory/pysert) - Generate random data based on templates
