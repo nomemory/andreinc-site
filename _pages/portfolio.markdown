@@ -22,8 +22,8 @@ If time allows, I enjoy writing software:
     * [`serverneat`](https://github.com/nomemory/serverneat) - HTTP Server Stub/Mock;
 * *C*: 
     * [`nml`](https://github.com/nomemory/neat-matrix-library) - Linear algebra matrix library
-    * [`lc3-vm`](https://github.com/nomemory/lc3-vm) - Simple register based VM 
-    * [`nmlib`](https://github.com/nomemory/nmlib) - My first open source project, written 12 years ago, filled with bugs.
+    * [`lc3-vm`](https://github.com/nomemory/lc3-vm) - Simple register-based VM 
+    * [`nmlib`](https://github.com/nomemory/nmlib) - My first open source project, written 12 years ago, was filled with bugs.
     * [`c-generic-pqueue`](https://github.com/nomemory/c-generic-pqueue) - A generic PQueue in C
     * [`chained-hash-table-c`](https://github.com/nomemory/chained-hash-table-c) - Chained Hashtable in C
     * [`open-adressing-hash-table-c`](https://github.com/nomemory/open-adressing-hash-table-c) - Open Addressing Hashtable in C
