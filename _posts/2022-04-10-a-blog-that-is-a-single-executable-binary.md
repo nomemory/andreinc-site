@@ -51,7 +51,7 @@ To build the sample blog, we compile `microblog`.c`](https://github.com/nomemory
 >> ./microblog
 ``` 
 
-If everything goes well, the internal server will start serving HTTP requests on port `8080` if everything goes well. 
+If everything goes well, the internal server will start serving HTTP requests on port `8080`. 
 
 If you are curious to see what everything looks like, open a browser: [http://localhost:8080](http://localhost:8080), and enjoy:
 
