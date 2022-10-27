@@ -45,7 +45,7 @@ git clone git@github.com:nomemory/microblog-c.git
 
 # Running the sample blog
 
-To build the sample blog, we compile `microblog`.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c):
+To build the sample blog, we compile [`microblog.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c):
 ```sh
 >> gcc -Wall microblog.c -o microblog
 >> ./microblog
@@ -65,7 +65,7 @@ As you can see, CSS is not my strongest skill.
 
 #  Adding a new blog post to the sample blog
 
-There's no need to touch the `microblog.`c` source code for adding new content to the blog. 
+There's no need to touch the `microblog.c` source code for adding new content to the blog.
 
 We start by creating a new file in the `./cnt` folder called `jimihendrix`:
 
