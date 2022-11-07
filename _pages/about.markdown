@@ -60,7 +60,7 @@ I am open to discussing job opportunities. Drop me a message on [LinkedIn](https
 
 `gnomemory` (with an `@yahoo.com` or `@pm.me` endings). 
 
-You can also find me on Discord (`nomemory#3352`), if you want to dirrectly contact me. Communities where I usually hangout:
+You can also find me on Discord (`nomemory#3352`), if you want to directly contact me. Communities where I usually hangout:
 * [Multiprocess Community](https://discord.gg/vX99Fzrb);
 * [/r/programare](https://discord.gg/tbfwFCX3);
 * [The Programmer's Hangout](https://discord.gg/programming).

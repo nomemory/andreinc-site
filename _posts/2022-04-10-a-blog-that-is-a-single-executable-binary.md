@@ -45,13 +45,13 @@ git clone git@github.com:nomemory/microblog-c.git
 
 # Running the sample blog
 
-To build the sample blog, we compile `microblog`.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c):
+To build the sample blog, we compile [`microblog.c`](https://github.com/nomemory/microblog-c/blob/main/microblog.c):
 ```sh
 >> gcc -Wall microblog.c -o microblog
 >> ./microblog
 ``` 
 
-If everything goes well, the internal server will start serving HTTP requests on port `8080` if everything goes well. 
+If everything goes well, the internal server will start serving HTTP requests on port `8080`. 
 
 If you are curious to see what everything looks like, open a browser: [http://localhost:8080](http://localhost:8080), and enjoy:
 
@@ -65,7 +65,7 @@ As you can see, CSS is not my strongest skill.
 
 #  Adding a new blog post to the sample blog
 
-There's no need to touch the `microblog.`c` source code for adding new content to the blog. 
+There's no need to touch the `microblog.c` source code for adding new content to the blog.
 
 We start by creating a new file in the `./cnt` folder called `jimihendrix`:
 
