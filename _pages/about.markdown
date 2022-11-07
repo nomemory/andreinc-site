@@ -12,7 +12,7 @@ classes: wide
 ![jpg]({{site.url}}/assets/images/about/me-it2.jpg){:height="50%" width="50%"}
 <sup><sup><sup>My wife and I, Pisa, Italy, 2020?</sup></sup></sup>
 
-My name is Andrei N. Ciobanu; I live in [Bucharest](https://en.wikipedia.org/wiki/Bucharest), [Romania](https://en.wikipedia.org/wiki/Romania). I am happily married and the father of a sweet baby girl. 
+My name is Andrei N. Ciobanu; I live in [Bucharest](https://en.wikipedia.org/wiki/Bucharest), [Romania](https://en.wikipedia.org/wiki/Romania). I am happily married and the father of ~~a~~ two sweet baby girls. 
 
 ![jpg]({{site.url}}/assets/images/about/bucuresti.jpg){:height="50%" width="50%"}<sup><sup><sup> Bucharest, Romania</sup></sup></sup>
 
