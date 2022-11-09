@@ -54,8 +54,6 @@ I use [mathjax](https://www.mathjax.org/) for math formulas.
 
 #### `Contact & Collaboration` 
 
-I am open to discussing job opportunities. Drop me a message on [LinkedIn](https://www.linkedin.com/in/andrei-n-ciobanu-50708611/). 
-
 `gnomemory` (with an `@yahoo.com` or `@pm.me` endings). 
 
 You can also find me on Discord (`nomemory#3352`), if you want to directly contact me. Communities where I usually hangout:
