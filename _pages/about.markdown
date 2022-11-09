@@ -21,8 +21,6 @@ I have a *Bachelor's Degree in Electronics, Telecommunications, and Information 
 ![jpg]({{site.url}}/assets/images/about/politehnica.jpeg){:height="50%" width="50%"}
 <sup><sup><sup> Universitatea Politehnica, Bucharest, Romania</sup></sup></sup>
 
-I am an R&D Director in Qualitest Romania, dealing with various Software Development projects. In the past I've used to work for Oracle, IBM and Deloitte. 
-
 ![jpg]({{site.url}}/assets/images/about/qtest1.jpg){:height="50%" width="50%"}
 <sup><sup><sup>View from the Qualitest Office, 2022</sup></sup></sup>
 
