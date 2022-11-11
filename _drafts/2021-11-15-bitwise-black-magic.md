@@ -14,8 +14,6 @@ tags:
 
 # Bitwise Operations
 
-
-
 ## SHIFT RIGHT
 
 ## SHIFT LEFT
@@ -41,8 +39,6 @@ tags:
 ## Retrieving the min of two integers
 
 ## Check if an integer is a power of two
-
-## 
 
 # Bonus problems solved using bitwise operations
 
