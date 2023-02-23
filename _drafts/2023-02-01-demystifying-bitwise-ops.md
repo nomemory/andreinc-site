@@ -19,17 +19,19 @@ To better understand my arguments, not so long ago, [I've written a snake in C](
 
 In any case, this article is not about why we shouldn't ever touch them; on the contrary, it is about why they are cool and how they can make specific code snippets orders of magnitude faster than the "higher-level-readable-modern approach". If you are a programmer who enjoys competitive programming, knowing a little about bitwise operations (in case you don't know about them already) can significantly help you get superior execution times.
 
-Again, knowing about bitwise operations is necessary if you plan a career in system programming or embedded software development.
+Again, knowing how to deal with bitwise operations is necessary if you plan a career in system programming or embedded software development.
 
 # Number systems
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/hand.png){:height="40%" width="40%"} 
 
-Nature gifted humankind 10 fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If math is discovered by an alien specie with eight fingers, they will probably use base 8 (octal). And... to make it short, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
+Nature gifted humankind ten fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If math is discovered by an alien specie with eight fingers, they will probably use base 8 (octal). And... to make it short, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/cutealien.png){:width="30%"}
 
 In mathematics, a base refers to the number of distinct symbols we use to represent and store numbers. 
 
-In our case (decimal), those symbols are `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, and `9`. We must “recombine” the existing symbols to express more significant numbers. For example, `127` is expressed by *re-using* `1`, `2`, and `7`. The three symbols are combined to express a more significant quantity that cannot be described using mere fingers.
+In our case (decimal), those symbols are `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, and `9`. We must “recombine” the existing symbols to express more significant numbers. For example, `127` is defined by *re-using* `1`, `2`, and `7`. The three symbols are combined to express a more significant quantity that cannot be described using mere fingers.
 
 By far, the most popular number system bases are:
 
@@ -63,9 +65,9 @@ As we've said earlier, computer store numbers in binary, so better visualise how
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitrep.png)
 
-As you can see, to identify the bits (the sequence of zeroes and ones which are the acceptable symbols in binary) comprising the number, we have to find an algorithm to determine the numbers $$a_{i}$$. Luckily for us, such an algorithm exists, and it's straightforward to implement. It works the same, no matter what base we pick.
+As you can see, to identify the bits (the sequence of zeroes and ones which are the acceptable symbols in binary) comprising the number, we have to find an algorithm to determine the numbers $$a_{i}$$. Luckily, such an algorithm exists, and it's straightforward to implement. It works the same, no matter what base we pick.
 
-Based on the above picture, another important observation is that to represent the number 1078 in binary, we need at least ten memory cells (bits) for it (look at the biggest power of 2 used, which is 10). As a side rule, the fewer symbols we have for our base, the more we have to repeat existing symbols. If we want to go extreme and pick `b=1`, we will have a [Unary Numeral System](https://en.wikipedia.org/wiki/Unary_numeral_system), where representing a number `N` is equivalent to repeating the unique symbol of the system `N` times. 
+Based on the above picture, another important observation is that to represent the number 1078 in binary, we need at least ten memory cells (bits) for it (look at the most significant power of 2 used, which is 10). As a side rule, the fewer symbols we have for our base, the more we have to repeat existing symbols. If we want to go extreme and pick `b=1`, we will have a [Unary Numeral System](https://en.wikipedia.org/wiki/Unary_numeral_system), where representing a number `N` is equivalent to repeating the unique symbol of the system `N` times. 
 
 The algorithm for transitioning a number to any base $$b$$ is as follows:
 1. We convert the number to the decimal base (the one we commonly use as people);
@@ -385,7 +387,7 @@ Visually it's quite an intuitive property, so let's put `a=0x0A`, `b=0x30`, and 
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/andassoc.png)
 
-No matter how we group the operands, the results will always be the same: `0x00` because there's no column containing only `1` bits. A single `0` in a column invalidates everything. 
+No matter how we group the operands, the results will always be the same: `0x00` because there's no column containing only `1` bits. A single `0` in a column invalidates everything. Isn't this demotivational?
 
 The *commutative* property means that the order of operands doesn't affect the result. So, for example, writing `a&b` renders the same result as writing `b&a`. 
 
@@ -418,7 +420,9 @@ Explanation `0xAA` is `0b10101010`, while `0x03` is `0b00000011`. If you put the
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_or_O1.png)
 
-If we look at the columns, and there's at least one bit of `1`, the result on that column will be `1`, regardless of the possible `0` (zeroes). For this reason, `|` is both *associative* and *commutative*.
+If we look at the columns, and there's at least one bit of `1`, the result on that column will be `1`, regardless of the possible `0` (zeroes). 
+
+Just like `&`, `|` is both *associative* and *commutative*. Demonstrating this is outside the scope of this article, but put it like this, if there's a single `1` on the column, no matter how many `0` bits we may encounter, the result will always be `1`. A single `1` has the power to *change* everything. Isn't this motivational?
 
 ## Bitwise XOR
 
@@ -426,7 +430,7 @@ The `bitwise XOR` operator (`^`) is a binary operator that compares the correspo
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_xor.png)
 
-Two identical numbers `a` and `b` will always `XOR` to `0`, because all the identical bits will nullify themselves.
+Two identical numbers, `a` and `b`, will always `XOR` to `0` because all the matching bits will nullify themselves.
 
 So, if `a==b` then `a^b==0`:
 
@@ -440,11 +444,11 @@ printf("a^b=0x%x\n", a^b);
 // a^b=0x0
 ```
 
-Because we like patterns we can also `0xAA ^ 0x55 == 0xFF`, visually it's more satisfying:
+Because we like patterns we can also `0xAA ^ 0x55 == 0xFF`, visually it's more satisfying than any other example I could think of:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_xor_o1.png)
 
-Just like `&` and `|` before, `^` is both an associative and commutative operation. So, another useless, but interesting, observation we can make, is that `XOR`ing all the numbers in a loop up to a power of two (`>=2`) is always `0`:
+Like `&` and `|` before, `^` is an associative and commutative operation. So, another useless but interesting observation we can make is that `XOR`ing all the numbers in a loop up to a power of two (`>=2`) is always `0`. Philosophically speaking, `XOR` is the killer of symmetry:
 
 ```cpp
 void xoring_power_two() {
@@ -470,9 +474,15 @@ void xoring_power_two() {
 // 0x0 ^ 0x1 ^ 0x2 ^ 0x3 ^ 0x4 ^ 0x5 ^ 0x6 ^ 0x7 ^ 0x8 ^ 0x9 ^ 0xa ^ 0xb ^ 0xc ^ 0xd ^ 0xe ^ 0xf ^ 0x10 ^ 0x11 ^ 0x12 ^ 0x13 ^ 0x14 ^ 0x15 ^ 0x16 ^ 0x17 ^ 0x18 ^ 0x19 ^ 0x1a ^ 0x1b ^ 0x1c ^ 0x1d ^ 0x1e ^ 0x1f = 0x0
 ```
 
+If we picture this in our heads, this result is not surprising:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/xorkiller.png)
+
+Every bit has a pair, all pairs are `0`, `XOR`ing `0` with `0` is `0`, and everything reduces to nothing.
+
 ## Bitwise NOT
 
-In the C Programming language, the `bitwise NOT` it's a unary operator denoted by the `~` character. It works on a single operand, negating all the bits of the operand, by changing `1` to `0` and `0` to `1`.
+In the C Programming language, the `bitwise NOT` it's a unary operator denoted by the `~` character. It works on a single operand, negating all the operand bits by changing `1` to `0` and `0` to `1`.
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_not.png)
 
@@ -495,4 +505,215 @@ And visually things look like this:
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_not_01.png)
 
 ## Left Shift
+
+The left shift operation is a bitwise operation, denoted with the symbols `<<`, that shifts the bits of a binary number to the left by a specified amount of positions. 
+
+So, for example, if we want to shift the bits of `0b0000010` (or `0x02`) with three positions, we can write something like this:
+
+```cpp
+uint8_t a = 0x02;   // 0b 0000 0010 = 0x02
+uint8_t b = a << 3; // 0b 0001 0000 = 0x10 
+printf("After shift: 0x%x\n", b);
+
+// Output
+// After shift: 0x10
+```
+
+Visually things look like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_left_shift.png)
+
+When shifting bits to the left, the bits that "fall off" the left end are lost, and the resulting bits on the right are filled with zeros. 
+
+## Right Shift
+
+The right shift operation is a bitwise operation, denoted with the symbols `>>`, that shifts the bits of a binary number to the right by a given amount of positions.
+
+So for example, if we want to shift `0xAA` with `4` positions, by performing `0xAA>>4` we will obtain `0x0A`:
+
+```cpp
+uint8_t a = 0xAA;   // 1010 1010 = 0xAA
+uint8_t b = a >> 4; // 0000 1010 - 0x0A
+printf("After shift: 0x%X\n", b);
+
+// Output
+// After shift: 0xA
+```
+
+Visually things look like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_right_shift.png)
+
+# Negative numbers and their binary representation
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/elephant.png){:width="30%"}
+
+Reading through this point, you may feel an elephant lurking in the server room. We haven't touched on a vital subject: *How are signed integers represented in binary?*
+
+In the C programming language, fixed-size signed integers are represented using [*Two's Complement*](https://en.wikipedia.org/wiki/Two%27s_complement). The most significant bit of the number (also called `MSB`) is used to the sign, and the rest of the bits are used to store the number's value. The sign bit is `0` for positive numbers, and `1` for negative numbers. By convention, the number `0` is considered a positive number.
+
+In *Two's Complement*, the negative number is obtained by flipping all the bits of the positive value (`~`) of the number and then adding `1`. 
+
+For example, to obtain the binary representation of `-47` we should do the following:
+
+1. Transform `47` in binary: `00101111`;
+2. We flip the bits of `47`: `11010000`;
+3. We add `1` to the result of the previous step: `11010001`.
+
+So, `-47` in binary is `11010001`.
+
+Another example. To obtain the binary representation of `-36` we should do the following:
+
+1. We transform `36` in binary: `00100100`;
+2. We flip the bits of `36`: `11011011`;
+3. We add `1` to the result from the previous step: `11011100`.
+
+For signed integers, there's one bit less to represent the actual numerical value, because the sign bit is reserved. The maximum positive value a `int8_t` can hold is: $$2^7-1=127$$ and has the following representation:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/maxint8_t.png)
+
+The minimum value a signed integer of type `int8_t` can hold is $$-2^7=128$$. At this point, you may wonder why is that for negative we have `-128` vs. `127` for positives. This happens because `0` is considered to be positive by convention. `-128` has the following representation:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/minint8_t.png)
+
+You don't have to do any computations to determine the maximum and minimum values a signed fixed-length type can get. The limits are already defined as macro constants in `"stdint.h"`:
+
+```cpp
+#include <stdio.h>
+#include <stdint.h> // constant macros are included here
+
+int main(void) {
+    printf("int8_t is in interval: [%hhd, %hhd]\n", INT8_MIN, INT8_MAX);
+    printf("int16_t is in interval: [%hd, %hd]\n", INT16_MIN, INT16_MAX);
+    printf("int32_t is in interval: [%d, %d]\n", INT32_MIN, INT32_MAX);
+    printf("int64_t is in interval: [%lld, %lld]\n", INT64_MIN, INT64_MAX);
+    return 0;
+}
+// Output
+// int8_t is in interval: [-128, 127]
+// int16_t is in interval: [-32768, 32767]
+// int32_t is in interval: [-2147483648, 2147483647]
+// int64_t is in interval: [-9223372036854775808, 9223372036854775807]
+```
+
+# Pitfalls to avoid when using bitwise operations
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/demons.png){:width="30%"}
+
+In the C programming language, UB (a cute acronym for *Undefined Behavior*), refers to situations (usually corner cases, but not always) when the expected result after executing a piece of code is not covered by the C Standard. In those cases, compilers can choose to do things their way, by crashing, giving erroneous or platform-dependent results (worse than crashing), or trolling us with [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug). Most cases of UB are ubiquitous, while others are more subtle and hard to detect. 
+
+> In the C community, undefined behavior may be humorously referred to as "nasal demons", after a comp.std.c post that explained undefined behavior as allowing the compiler to do anything it chooses, even "to make demons fly out of your nose".
+> ([source](https://en.wikipedia.org/wiki/Undefined_behavior))
+
+Just like managing the memory yourself, there are a few things that you should take into consideration when writing C code that uses bitwise operations:
+
+**A. Do not shift bits with more (or equal) than the width of the type:**
+
+```cpp
+uint8_t a = 32;
+uint8_t b = a << 32; // undefined behavior
+                     // code compiles just fine
+                     // don't assume the number is 0x0
+```
+
+If you try to compile this simple piece of code with `-Wall` the compiler (both `clang` and `gcc`) will you warn about the potential problems, but the code will still compile:
+
+```
+bits.c:150:19: warning: left shift count >= width of type [-Wshift-count-overflow]
+  150 |     uint8_t b = a << 32; // undefined behavior
+```
+
+If I execute the code after compiling it, `b` is `0`. But don't assume it going to be `0` on all platforms or with all compilers. That's wrong.
+
+Also, don't rely on compiler warnings. They can only be raised in very specific cases. Take a look at this code that can lead to UB:
+
+```cpp
+srand(time(NULL));
+uint8_t a = 32;
+int shifter = rand();
+uint8_t b = a << shifter;
+printf("%hhu\n", b);
+```
+
+The code compiles without any warning and executes fine. The compiler couldn't determine the value of the `shifter` at compile time, so no `warning` was raised. So whenever you are performing bitwise operations (especially shifts), you'd better know what you are doing.
+
+**B. Do not shift bits using negative amounts**:
+
+```cpp
+uint8_t a = 0x1;
+uint8_t b = a << -2; // undefined behavior
+                     // code compiles just fine
+```
+
+**C.Do not shift signed integers and cause sign changes**:
+
+```cpp
+int8_t a = -1;
+int8_t b = a << 1; // undefined behavior
+                   // code compiles just fine 
+```
+
+# Printing numbers in binary by using bitwise operations
+
+In a previous section of the article, we've come up with a solution to transform numbers from one numeric system to another. Chances are we will never have to convert to base `11`. So why not write a function that transforms a number in the binary format using bitwise operations?
+
+The simplest solution I could think of is the following:
+
+```cpp
+void print_bits_simple_rec(FILE *out, uint16_t n) {
+    if (n>>1)
+        print_bits_simple_rec(out, n>>1);       
+    fprintf(out, "%d", n&0x1);                  
+}
+```
+
+`print_bits_simple_rec` is a recursive function that takes an `uint16_t` and it prints its bits. At each recursive call, we shrink the number by shifting one bit to the right (`n>>1`). We stop the recursive calls once the number reaches `0`. After all the the recursive stack is being built, we print the last bit of the number for each call (`n&0x1`).
+
+It's not the scope of this article to explain recursion, but let's see how things execute, if we call the function on `n=0b00011011`:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/print_bits_simple_rec.png)
+
+And then, once `n=0b00000001`, we start printing chracters backwards:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/print_bits_simple_rec2.png)
+
+That's one idea. Another idea is to use a *value table* where we keep the binary strings associated with all the binary numbers from `0` to `15`:
+
+```cpp
+const char* bit_rep[16] = {
+    "0000", "0001", "0010", "0011",
+    "0100", "0101", "0110", "0111",
+    "1000", "1001", "1010", "1011",
+    "1100", "1101", "1110", "1111",
+};
+```
+
+We can then write a few functions that re-use `bit_rep`. For example, if we plan to print an `uint8_t` all we need to is to write this function:
+
+```cpp
+void print_bits_uint8_t(FILE *out, uint8_t n) {
+    fprintf(out, "%s%s", bit_rep[(n >> 4) & 0xF], bit_rep[n & 0xF]);
+}
+int main(void) {
+    uint8_t n = 145;
+    print_bits_uint8_t(stdout, n);
+}
+
+// Output
+// 10010001
+```
+
+This new function works like this:
+
+* `uint8_t n` has 8 bits in total. 
+* If we split it in two halves of 4 bits each we can use `bit_rep[half1]` and `bit_rep[half2]` to print the content of `n`;
+* To split it in two halves we just have to:
+    * `(n>>4) & 0xF` to get the first 4 bits;
+    * `n & 0xF` to get the last 4 bits;
+
+If you are confused about `(n>>4) & 0xF` and `n & 0xF`, let's visualize what's happening, and how bits are moving. We will use `n=145` to exemplify.
+
+
+
+
 
