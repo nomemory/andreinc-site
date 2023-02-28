@@ -4,7 +4,7 @@ date: "2023-02-01"
 classes: wide
 comments: true
 usemathjax: true
-excerpt: "A list of computer science exercises with solutions in c, that each programmer should solve."
+excerpt: "The one and only bitwise tutorial"
 categories:
 - "c"
 tags:
@@ -17,15 +17,15 @@ Bitwise operations are a fundamental part of Computer Science. They help Softwar
 
 To better understand my arguments, not so long ago, [I've written a snake in C]({{site.url}}/2022/05/01/4-integers-are-enough-to-write-a-snake-game) that uses only bitwise operations and squeezes everything into only a handful of `uint32_t` and `uint64_t` variables. [The results (after macro expansions)]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/snake.png) are not that readable, even for an initiated eye.
 
-In any case, this article is not about why we shouldn't ever touch them; on the contrary, it is about why they are cool and how they can make specific code snippets orders of magnitude faster than the "higher-level-readable-modern approach". If you are a programmer who enjoys competitive programming, knowing a little about bitwise operations (in case you don't know about them already) can significantly help you get superior execution times.
+In any case, this article is not about why we shouldn't ever touch them; on the contrary, it is about why they are cool and how they can make specific code snippets orders of magnitude faster than the "higher-level-readable-modern approach". If you are a programmer who enjoys competitive programming, knowing bitwise operations (in case you don't know about them already) will help you write more efficient code.
 
-Again, knowing how to deal with bitwise operations is necessary if you plan a career in system programming or embedded software development.
+Again, knowing how to deal with bitwise operations is necessary if you plan a career in system programming, network programming or embedded software development.
 
 # Number systems
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/hand.png){:height="40%" width="40%"} 
 
-Nature gifted humankind ten fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If math is discovered by an alien specie with eight fingers, they will probably use base 8 (octal). And... to make it short, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
+Nature gifted humankind ten fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If an alien specie (with eight fingers) discovers mathematics, they will probably use base 8 (octal) to represent their numbers. Meanwhile, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/cutealien.png){:width="30%"}
 
@@ -277,15 +277,15 @@ To simplify things, C supports *hexadecimal literals* (but not binary!), so we c
 For example, we can write: 
 
 ```cpp
-uint32_t x = 0x3F;    // 0x3F is 63  
-                      // another way of writing: 
-                      //
-                      //            uint32_t x = 63
+uint32_t x = 0x3Fu;    // 0x3F is 63  
+                       // another way of writing: 
+                       //
+                       //            uint32_t x = 63
 
-uint32_t y = 0xABCD;  // 0xABCD is 43981
-                      // another way of writing: 
-                      //            
-                      //            uint32_t x = 43981
+uint32_t y = 0xABCDu;  // 0xABCD is 43981
+                       // another way of writing: 
+                       //            
+                       //            uint32_t x = 43981
 ```
 
 We can also print the hexadecimal representation of a number using `"%X"` (uppercase letters) or `"%x"` (lowercase letters) as the format specifier:
@@ -342,7 +342,7 @@ In the C programming language, the `bitwise AND` operator, denoted as `&` (not t
 Let's give it a try in code:
 
 ```c
-uint8_t a = 0x0A, b = 0x0B;
+uint8_t a = 0x0Au, b = 0x0Bu;
 printf("%x", a&b);
 
 // Output
@@ -376,7 +376,7 @@ The *associative* property means that the grouping of operands does not affect t
 
 ```cpp
 // Associativity "smoke test"
-uint8_t a=0x0A, b=0x30, c=0x4f;
+uint8_t a=0x0Au, b=0x30u, c=0x4Fu;
 printf("%s\n", (((a&b)&c) == (a&(b&c))) ? "True" : "False");
 
 // Output:
@@ -393,7 +393,7 @@ The *commutative* property means that the order of operands doesn't affect the r
 
 ```cpp
 // Commutativity "smoke test"
-uint8_t a=0x0A, b=0x30;
+uint8_t a=0x0Au, b=0x30u;
 printf("%s\n", ((a&b)==(b&a)) ? "True" : "False");
 
 // Output: 
@@ -409,7 +409,7 @@ The `bitwise OR` (with its symbol: `|`) is a binary operator that compares the c
 Again, let's try using `|` in our code:
 
 ```cpp
-uint8_t a = 0xAA, b=0x03;
+uint8_t a = 0xAAu, b=0x03u;
 printf("%x", a|b);
 
 // Output
@@ -435,7 +435,7 @@ Two identical numbers, `a` and `b`, will always `XOR` to `0` because all the mat
 So, if `a==b` then `a^b==0`:
 
 ```cpp
-uint8_t a = 0xAF, b=0xAF;
+uint8_t a = 0xAFu, b=0xAFu;
 printf("a==b is %s\n", (a==b) ? "True" : "False");
 printf("a^b=0x%x\n", a^b);
 
@@ -444,7 +444,7 @@ printf("a^b=0x%x\n", a^b);
 // a^b=0x0
 ```
 
-Because we like patterns we can also `0xAA ^ 0x55 == 0xFF`, visually it's more satisfying than any other example I could think of:
+Because we like patterns, we can also use `0xAA ^ 0x55 == 0xFF`, visually it's more satisfying than any other example I could think of:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwise_xor_o1.png)
 
@@ -478,7 +478,7 @@ If we picture this in our heads, this result is not surprising:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/xorkiller.png)
 
-Every bit has a pair, all pairs are `0`, `XOR`ing `0` with `0` is `0`, and everything reduces to nothing.
+Every bit has a pair; all pairs are `0`, `XOR`ing `0` with `0` is `0`, and everything reduces to nothing.
 
 ## Bitwise NOT
 
@@ -491,7 +491,7 @@ Negating `0b0001` is `0b1110`, negating `0b0000` is `0b1111` and so on...
 For example:
 
 ```cpp
-uint16_t a = 0xAAAA; // a = 1010 1010 1010 1010 == 0xAAAA
+uint16_t a = 0xAAAAu; // a = 1010 1010 1010 1010 == 0xAAAA
 uint16_t b = ~a;     // b = 0101 0101 0101 0101 == 0x5555
 printf("0x%X\n", a);
 printf("0x%X\n", b);
@@ -511,7 +511,7 @@ The left shift operation is a bitwise operation, denoted with the symbols `<<`, 
 So, for example, if we want to shift the bits of `0b0000010` (or `0x02`) with three positions, we can write something like this:
 
 ```cpp
-uint8_t a = 0x02;   // 0b 0000 0010 = 0x02
+uint8_t a = 0x02u;   // 0b 0000 0010 = 0x02
 uint8_t b = a << 3; // 0b 0001 0000 = 0x10 
 printf("After shift: 0x%x\n", b);
 
@@ -532,7 +532,7 @@ The right shift operation is a bitwise operation, denoted with the symbols `>>`,
 So for example, if we want to shift `0xAA` with `4` positions, by performing `0xAA>>4` we will obtain `0x0A`:
 
 ```cpp
-uint8_t a = 0xAA;   // 1010 1010 = 0xAA
+uint8_t a = 0xAAu;   // 1010 1010 = 0xAA
 uint8_t b = a >> 4; // 0000 1010 - 0x0A
 printf("After shift: 0x%X\n", b);
 
@@ -550,11 +550,11 @@ Visually things look like this:
 
 Reading through this point, you may feel an elephant lurking in the server room. We haven't touched on a vital subject: *How are signed integers represented in binary?*
 
-In the C programming language, fixed-size signed integers are represented using [*Two's Complement*](https://en.wikipedia.org/wiki/Two%27s_complement). The most significant bit of the number (also called `MSB`) is used to the sign, and the rest of the bits are used to store the number's value. The sign bit is `0` for positive numbers, and `1` for negative numbers. By convention, the number `0` is considered a positive number.
+In the C programming language, fixed-size signed integers are represented using [*Two's Complement*](https://en.wikipedia.org/wiki/Two%27s_complement). The most significant bit of the number (also called `MSB`) is used to the sign, and the rest of the bits are used to store the number's value. The sign bit is `0` for positive numbers and `1` for negative numbers. By convention, the number `0` is considered a positive number.
 
 In *Two's Complement*, the negative number is obtained by flipping all the bits of the positive value (`~`) of the number and then adding `1`. 
 
-For example, to obtain the binary representation of `-47` we should do the following:
+For example, to obtain the binary representation of `-47`, we should do the following:
 
 1. Transform `47` in binary: `00101111`;
 2. We flip the bits of `47`: `11010000`;
@@ -562,13 +562,13 @@ For example, to obtain the binary representation of `-47` we should do the follo
 
 So, `-47` in binary is `11010001`.
 
-Another example. To obtain the binary representation of `-36` we should do the following:
+Another example. To obtain the binary representation of `-36`, we should do the following:
 
 1. We transform `36` in binary: `00100100`;
 2. We flip the bits of `36`: `11011011`;
 3. We add `1` to the result from the previous step: `11011100`.
 
-For signed integers, there's one bit less to represent the actual numerical value, because the sign bit is reserved. The maximum positive value a `int8_t` can hold is: $$2^7-1=127$$ and has the following representation:
+For signed integers, there's one bit less to represent the actual numerical value because of the sign bit is reserved. The maximum positive value a `int8_t` can hold is: $$2^7-1=127$$ and has the following representation:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/maxint8_t.png)
 
@@ -600,9 +600,9 @@ int main(void) {
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/demons.png){:width="30%"}
 
-In the C programming language, UB (a cute acronym for *Undefined Behavior*), refers to situations (usually corner cases, but not always) when the expected result after executing a piece of code is not covered by the C Standard. In those cases, compilers can choose to do things their way, by crashing, giving erroneous or platform-dependent results (worse than crashing), or trolling us with [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug). Most cases of UB are ubiquitous, while others are more subtle and hard to detect. 
+In the C programming language, UB (a cute acronym for *Undefined Behavior*) refers to situations (usually corner cases, but not always) when the C Standard does not cover the expected result after executing a piece of code. In those cases, compilers can choose to do things their way by crashing, giving erroneous or platform-dependent results (worse than crashing), or trolling us with [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug). Most cases of UB are ubiquitous, while others are more subtle and hard to detect. 
 
-> In the C community, undefined behavior may be humorously referred to as "nasal demons", after a comp.std.c post that explained undefined behavior as allowing the compiler to do anything it chooses, even "to make demons fly out of your nose".
+> In the C community, undefined behaviour may be humorously called "nasal demons" after a comp.std.c post that explained undefined behavior as allowing the compiler to do anything it chooses, even "to make demons fly out of your nose".
 > ([source](https://en.wikipedia.org/wiki/Undefined_behavior))
 
 Just like managing the memory yourself, there are a few things that you should take into consideration when writing C code that uses bitwise operations:
@@ -616,16 +616,16 @@ uint8_t b = a << 32; // undefined behavior
                      // don't assume the number is 0x0
 ```
 
-If you try to compile this simple piece of code with `-Wall` the compiler (both `clang` and `gcc`) will you warn about the potential problems, but the code will still compile:
+If you try to compile this simple piece of code with `-Wall`, the compiler (both `clang` and `gcc`) will you warn about the potential problems, but the code will still compile:
 
 ```
 bits.c:150:19: warning: left shift count >= width of type [-Wshift-count-overflow]
   150 |     uint8_t b = a << 32; // undefined behavior
 ```
 
-If I execute the code after compiling it, `b` is `0`. But don't assume it going to be `0` on all platforms or with all compilers. That's wrong.
+If I execute the code after compiling it, `b` is `0`. But don't assume it will be `0` on all platforms or with all compilers. That's wrong.
 
-Also, don't rely on compiler warnings. They can only be raised in very specific cases. Take a look at this code that can lead to UB:
+Also, don't rely on compiler warnings. They can only be raised in particular cases. Take a look at this code that can lead to UB:
 
 ```cpp
 srand(time(NULL));
@@ -640,7 +640,7 @@ The code compiles without any warning and executes fine. The compiler couldn't d
 **B. Do not shift bits using negative amounts**:
 
 ```cpp
-uint8_t a = 0x1;
+uint8_t a = 0x1u;
 uint8_t b = a << -2; // undefined behavior
                      // code compiles just fine
 ```
@@ -653,9 +653,58 @@ int8_t b = a << 1; // undefined behavior
                    // code compiles just fine 
 ```
 
+# Mandatory Computer Science Exercise - The solitary integer
+
+Now that we understand the basics of bitwise operations let's solve a *classical* Computer Science exercise called: *The solitary integer*. If you are curious, you can probably find it on [leetcode](https://leetcode.com/) and [hackerrank](https://www.hackerrank.com/) (under the name *[The Lonely Integer](https://www.hackerrank.com/challenges/lonely-integer/problem)*).
+
+The ask is straightforward: 
+
+```
+Given an array of integer values, where all elements **but one** occur twice, 
+find the unique element, the so-called _solitary_ integer. 
+
+For example, if `L={1,2,3,3,8,1,9,2,9}`, the unique element is `8`, 
+because the rest of the elements come in pairs.
+```
+
+The first reflex to solve this exercise would be to brute force the solution by verifying each element with every other to find its pair. But the complexity of doing so is O(n<sup>2</sup>), where n is the size of the input array - not excellent. But, as a rule of thumb, if you receive a question like this at an interview and don't know how to approach it, mentioning the brute-force solution is a good starting point and can buy you some time until you come up with something better.
+
+There are of course, other alternative solutions:
+* Sorting the array in `O(nlogn)` and then iterate through it by `i+=2`. If `L[i]!=L[i+1]`, you've just found the lonely integer.
+* Using a hashtable and count the frequency of the numbers. If the frequency of a key is `1`, the problem is solved; you’ve just found the lonely integer.
+
+But all those solutions are slightly overkill if you know about `XOR`. As we've said earlier, `XOR` nullifies identical bits. We also know that `XOR` is associative and commutative. So, why don't we apply `XOR` between all the numbers? In the end, only the bits without pairs will "survive". Those surviving bits hold the answer to our problem.
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/solitary_integer_xor1.png)
+
+* The bits of `array[0]` will (eventually) nullify themselves with the bits from `array[5]` => `array[0] ^ array[1] == 0`;
+* The bits of `array[1]` will (eventually) nullify themselves with the bits from `array[7]` => `array[1] ^ array[7] == 0`;
+* The bits of `array[2]` will (eventually) nullify themselves with the bits from `array[3]` => `array[2] ^ array[3] == 0`;
+* The bits of `array[6]` will (eventually) nullify themselves with the bits from `array[8]` -> `array[6] ^ array[8] == 0`;
+* The bits of `array[4]` will remain unaltered; they represent the solution;
+
+So, the solution of exercise becomes:
+
+```cpp
+static int with_xor(int *array, size_t array_size) {
+      int result = 0;
+      for(int i = 0; i < array_size; ++i)
+          result^=array[i];
+      return result;
+}
+int main(void) {
+    int array[9] = {1,2,3,3,8,1,9,2,9};
+    printf("%d\n", with_xor(array, 9));
+    return 0;
+}
+
+// Output
+// 8
+```
+
 # Printing numbers in binary by using bitwise operations
 
-In a previous section of the article, we've come up with a solution to transform numbers from one numeric system to another. Chances are we will never have to convert to base `11`. So why not write a function that transforms a number in the binary format using bitwise operations?
+In a previous section of the article, we devised a solution to transform numbers from one numeric system to another. Chances are we will never have to convert to base `11`. So why write a function that transforms a number in the binary format using bitwise operations?
 
 The simplest solution I could think of is the following:
 
@@ -663,17 +712,17 @@ The simplest solution I could think of is the following:
 void print_bits_simple_rec(FILE *out, uint16_t n) {
     if (n>>1)
         print_bits_simple_rec(out, n>>1);       
-    fprintf(out, "%d", n&0x1);                  
+    fprintf(out, "%d", n&0x1u);                  
 }
 ```
 
-`print_bits_simple_rec` is a recursive function that takes an `uint16_t` and it prints its bits. At each recursive call, we shrink the number by shifting one bit to the right (`n>>1`). We stop the recursive calls once the number reaches `0`. After all the the recursive stack is being built, we print the last bit of the number for each call (`n&0x1`).
+`print_bits_simple_rec` is a recursive function that takes an `uint16_t` and it prints its bits. At each recursive call, we shrink the number by shifting one bit to the right (`n>>1`). We stop the recursive calls once the number reaches `0`. After the recursive stack is built, we print the last bit of the number for each call (`n&0x1`).
 
-It's not the scope of this article to explain recursion, but let's see how things execute, if we call the function on `n=0b00011011`:
+It's not the scope of this article to explain recursion, but let's see how things execute if we call the function on `n=0b00011011`:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/print_bits_simple_rec.png)
 
-And then, once `n=0b00000001`, we start printing chracters backwards:
+And then, once `n=0b00000001`, we start printing characters backwards:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/print_bits_simple_rec2.png)
 
@@ -688,11 +737,11 @@ const char* bit_rep[16] = {
 };
 ```
 
-We can then write a few functions that re-use `bit_rep`. For example, if we plan to print an `uint8_t` all we need to is to write this function:
+We can then write a few functions that re-use `bit_rep`. For example, if we plan to print an `uint8_t`, all we need to do is to write this function:
 
 ```cpp
 void print_bits_uint8_t(FILE *out, uint8_t n) {
-    fprintf(out, "%s%s", bit_rep[(n >> 4) & 0xF], bit_rep[n & 0xF]);
+    fprintf(out, "%s%s", bit_rep[n >> 4], bit_rep[n & 0xF]);
 }
 int main(void) {
     uint8_t n = 145;
@@ -706,12 +755,424 @@ int main(void) {
 This new function works like this:
 
 * `uint8_t n` has 8 bits in total. 
-* If we split it in two halves of 4 bits each we can use `bit_rep[half1]` and `bit_rep[half2]` to print the content of `n`;
-* To split it in two halves we just have to:
-    * `(n>>4) & 0xF` to get the first 4 bits;
+* If we split `n` into two halves of 4 bits each, we can use `bit_rep[half1]` and `bit_rep[half2]` to print the content of `n`;
+* To split `n` into two halves, we have to:
+    * `n>>4` to get the first 4 bits;
     * `n & 0xF` to get the last 4 bits;
 
-If you are confused about `(n>>4) & 0xF` and `n & 0xF`, let's visualize what's happening, and how bits are moving. We will use `n=145` to exemplify.
+If you are confused about `n>>4` and `n & 0xF`, let's visualise what's happening and how bits move. We will use `n=145` to exemplify.
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/print_bits_simple.png)
+
+If we consider the following:
+* One `uint16_t` variable can contain two `uint8_t` variables;
+* One `uint32_t` variable can contain two `uint16_t` variables;
+* One `uint64_t` variable can contain two `uint32_t` variables;
+
+We can then write the following code, where each function re-uses the function of the *lesser* type. The idea is the same: we split the greater type into two halves and pass it to the function associated with the lesser type.
+
+```cpp
+void print_bits_uint8_t(FILE *out, uint8_t n) {
+    fprintf(out, "%s%s", bit_rep[n >> 4], bit_rep[n & 0xFu]);
+}
+void print_bits_uint16_t(FILE *out, uint16_t n) {
+    print_bits_uint8_t(out, n >> 8); // first 8 bits
+    print_bits_uint8_t(out, n & 0xFFu); // last 8 bits
+}
+void print_bits_uint32_t(FILE *out, uint32_t n) {
+    print_bits_uint16_t(out, n >> 16); // first 16 bits
+    print_bits_uint16_t(out, n & 0xFFFFu); // last 16 bits
+}
+void print_bits_uint64_t(FILE *out, uint64_t n) {
+    print_bits_uint32_t(out, n >> 32); // first 32 bits
+    print_bits_uint32_t(out, n & 0xFFFFFFFFu); // last 32 bits
+}
+```
+
+Having separate functions for each type is not ideal, but prevalent in the C programming language. Fortunately, we can use the [`_Generic`](https://en.cppreference.com/w/c/language/generic) macro to group functions up.
+
+```cpp
+#define print_bits(where, n) _Generic((n), \
+                uint8_t: print_bits_uint8_t, \
+                int8_t: print_bits_uint8_t, \
+                uint16_t: print_bits_uint16_t, \
+                int16_t: print_bits_uint16_t, \
+                uint32_t: print_bits_uint32_t, \
+                int32_t: print_bits_uint32_t, \
+                uint64_t: print_bits_uint64_t, \
+                int64_t: print_bits_uint64_t) \
+            (where, n)
+```
+
+So now, we can simply call `print_bits()` regarding the input type (*! as long as the type is covered by a _Generic macro branch*):
+
+```cpp
+uint8_t a = 145;
+uint16_t b = 1089;
+uint32_t c = 30432;
+int32_t d = 3232;
+print_bits(stdout, a); printf("\n"); // works on uint8_t !
+print_bits(stdout, b); printf("\n"); // works on uint16_t !
+print_bits(stdout, c); printf("\n"); // works on uint32_t !
+print_bits(stdout, d); printf("\n"); // works on int32_t !
+
+// Output
+// 10010001
+// 0000010001000001
+// 00000000000000000111011011100000
+// 00000000000000000000110010100000
+```
+
+# Masking
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask.png){:width="25%"}
+
+In low-level programming, bitwise masking involves the manipulation of individual bits of a number (represented in binary) using the operations we've described in the previous sections (`&`, `|`, `~`, `^`, `>>`, `<<`). A mask is a binary pattern that is used to extract and manipulate specific bits of a given value.
+
+Using bitmasking techniques we can:
+* Set a specific bit to a value (`0` or `1`);
+* Clear a specific bit, or a *bit portion* from a number;
+* Flip the values of all the bits of a number.
+* etc.
+
+Let's take a look at the previously defined function, `print_bits_uint8_t`, that prints the binary representation of a `uint8_t`:
+
+```cpp
+void print_bits_uint8_t(FILE *out, uint8_t n) {
+    fprintf(out, "%s%s", bit_rep[n >> 4], bit_rep[n & 0xFu]);
+}
+```
+
+`0xF` is the mask we use to *select* the last `4` bits of `n`. This happens when we apply `n&0xF`: all the bits of `1` from the `mask` are used to extract *information* from `n`, and all the bits of `0` from the mask discard *information* from `n`:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask01.drawio.png)
+
+When we create the mask we can write the pattern by hand, using hexadecimal literals, or we can express them using powers of `2`. For example, if you want a simple mask for one bit on the `nth` position, we can simply write: `1<<nth`:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask02.drawio.png)
+
+We can also "flip" the mask using the `~(mask)` operation:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask03.drawio.png)
+
+To get a "contiguous" zone of `1`s we can subtract `1` from the corresponding power of twos:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask04.drawio.png)
+
+# The power of masking - Pairwise Swap
+
+In the famous book called *Cracking The Coding Interview* there's one exercise where the reader is asked to swap the even bits with the odd bits inside a number:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/crackingthecodinginterview.png)
+
+If you ignore the ask to *use as few instructions as possible* our programmer's reflex would be to:
+* Keep all the bits of the number in an array;
+* Perform swaps inside the array;
+* Recreate the numbers based on the new array configuration.
+
+Of course, there's a simpler solution that makes use of bitwise operations and the masking technique. **Spoiler alert**, we will start with the actual solution, followed by some in-depth explanations:
+
+```cpp
+uint16_t pairwise_swap(uint16_t n) {
+    return ((n&0xAAAAu)>>1) | ((n&0x5555u)<<1);
+}
+```
+
+Cryptic, but simple:
+
+```cpp
+uint16_t n = 0xBCDD;
+uint16_t n_ps = pairwise_swap(n);
+print_bits(stdout, n); printf("\n");
+print_bits(stdout, n_ps); printf("\n");
+
+// Output
+// 1011110011011101
+// 0111110011101110
+```
+
+The key to understanding the solution lies in the patterns described by the two binary numbers `0xAAAA` and `0x5555`. `0xAAAA` selects all the even bits of `n`, while `0x5555` selects all the odd bits of `n`. If we put the numbers side by side we should see that:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/pairwise.drawio.png)
+
+At this point, the information initially contained in the input number (`n=0xBCDD`) is contained in the two numbers:
+* `0xBCDD & 0x5555` will contain the odd bits of `0xBCDD`;
+* `0xBCDD & 0xAAAA` will contain the even bits of `0xBCDD`;
+
+Now we need to swap them. We will shift the even bits one position to the left, and the odd bits one position to the right, so we don't lose any. To *recombine* the two interlacing patterns back we use the `|` operation.
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/pairwise2.drawio.png)
+
+# Getting, Setting, Clearing, Toggling the `nth` bit 
+
+## Getting the `nth` bit of a number
+
+To get the `nth` bit of a number `n`, we can use the `&` and `>>` bitwise operations:
+* We shift the number `>>` with `nth` positions;
+* We apply a simple mask to `&0x1` for obtaining the last bit;
+
+Most online resources (ChatGPT included) will recommend you the following two solutions for retrieving the `nth` bit:
+
+A macro:
+
+```cpp
+#define GET_BIT(n,pos) (((n)>>(pos))&1)
+```
+
+Or a method:
+
+```cpp
+int get_bit(int num, int n) {
+    return (num >> n) & 0x1u;
+}
+```
+
+Visually, both solutions work like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/get_nth_bit.png)
+
+Depending on the context, I would probably prefer using a method instead of a macro. It's best to validate the input and make sure `n` is not negative, or bigger than the size (in bits) of `num`. Otherwise, things can lead to *UB* fast:
+
+```cpp
+inline uint8_t get_nth_bit(uint32_t num, uint32_t nth) {
+    if (nth>=32) {
+        // Catch error
+        // Log & Manage the error
+    }
+    return (num>>nth)&0x1u;
+}
+```
+
+Let's try it in practice now:
+
+
+```cpp
+int main(void) {
+    uint32_t n = 0xFFu;
+    int i = 0;   
+    printf("Printing last 8 bits:\n");
+    for(; i < 8; i++)
+        printf("%hhu", get_nth_bit(n,i));
+    printf("\nPriting the first 24 bits:\n");
+    for(; i < 32; i++) 
+        printf("%hhu", get_nth_bit(n,i));
+}
+
+// Output
+// Printing last 8 bits:
+// 11111111
+// Priting the first 24 bits:
+// 000000000000000000000000
+```
+
+## Setting up the `nth` bit of a number
+
+The bit of a number `n` can be set to `0` or `1`, and depending on the context we can end up having two functions or macros:
+
+```cpp
+#define set_nth_bit1(num, pos) ((num) |= (1 << (pos)))
+#define set_nth_bit0(num, pos) ((num) &= ~(1 << (pos)))
+
+// Or functions
+
+inline void set_nth_bit0(uint32_t *n, uint8_t nth) {
+    *n &= ~(1 << nth);
+}
+inline void set_nth_bit1(uint32_t *n, uint8_t nth) {
+    *n |= (1 << nth);
+}
+
+```
+
+Because both of the functions (and macros) can lead to *UB* it's advisable to validate `nth` to make sure it's not bigger than the length (in bits) of the type of `n` (in our case it's `uint32_t`, so it should be smaller `<` than `32`).
+
+Using the functions in code:
+
+```cpp
+uint32_t n = 0x00FFu;
+print_bits(stdout, n); printf("\n");
+
+set_nth_bit0(&n, 5);
+printf("bit 5 of n is: %hhu\n", get_nth_bit(n, 5));
+print_bits(stdout, n); printf("\n");
+
+set_nth_bit1(&n, 5);
+printf("bit 5 of n is: %hhu\n", get_nth_bit(n, 5));
+print_bits(stdout, n); printf("\n");
+
+// Output
+// 00000000000000000000000011111111
+// bit 5 of n is: 0
+// 00000000000000000000000011011111
+// bit 5 of n is: 1
+// 00000000000000000000000011111111
+```
+
+Visually, `set_nth_bit0` looks like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/set_nth_bit0.png)
+
+Applying `&` between `0` and `1` will always return `0`. So we create *a mask* for the 5th bit (`1<<5`), we flip it (`~(1<<5)`) so we get a `0` on the 5th position, and then we apply `&` (bitwise `AND`). The `1` doesn't stand a chance. 
+
+Visually, `set_nth_bit1` looks like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/set_nth_bit1.png)
+
+Applying `|` between `0` and `1` returns `1`. So we create *a mask* for the 5th bit (`1<<5`) and then we apply `|` between the mask and the number to fix the *gap*.
+
+## Toggling the `nth` bit of a number
+
+Toggling the bit of the number means changing the value of a specific bit from `0` to `1`, or from `1` to `0`, while leaving all the other bits unchanged.
+
+The first reflex would be to re-use the previously defined functions `set_nth_bit1(...)` and `set_nth_bit0(...)` to improvise something like:
+
+```cpp
+void toggle_nth_bit(uint32_t *n, uint8_t nth) {
+    if (get_nth_bit(n,nth)==0) {
+        set_nth_bit1(n, nth);
+    } else {
+        set_nth_bit0(n, nth);
+    }
+}
+```
+
+But, there's a better and simpler way, that avoids branching altogether and uses XOR:
+
+```cpp
+void toggle_nth_bit(uint32_t *n, uint8_t nth) {
+    *n ^= (1<<nth);
+}
+```
+
+The idea is quite simple, we create a mask with `1` on the `nth` position (`1<<nth`), and then we `^` (`XOR`) the number `n` with the `mask`. This will preserve all the bits of `n`, minus the `nth` bit will change values depending on its state (it will toggle).
+
+Let's visualize this, by imagining calling: `toggle_nth_bit(0xF0u, 3)`: 
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/set_nth_toggle.png)
+
+The result of `toggle_nth_bit(0xF0u, 3)` should be `0xF8`:
+
+```cpp
+uint32_t n = 0xF0u;
+toggle_nth_bit(&n, 3);
+if (n==0xF8u) {
+    printf("It works!");
+}
+
+// Output
+// It works!
+```
+
+Or we perform the inverse operation on the same bit:
+
+```cpp
+uint32_t n = 0xF8u;
+toggle_nth_bit(&n, 3);
+if (n==0xF0u) {
+    printf("It works!");
+}
+
+// Output
+// It works!
+```
+
+# Getting, Setting, Clearing, and Toggling a bit portion of a number
+
+## Clearing the last bits of a number
+
+So let's say we have a number `n`. Our task is to write a generic method that clears the last `nbits` of that number.
+
+The solution is simple:
+* We need to create a mask where all the bits are `1`, except the last `nbits` which are `0`.
+* We apply an `&` operation between `n` and the newly created mask;
+
+To create the mask we start from a value where all the bits are set to `1`. This value can be easily obtained by flipping all of the bits of `0`: `~0x0u`. Next, we simply left shift with `nbits` and, voila, the mask is ready.
+
+The code is:
+
+```cpp
+void clear_last_bits(uint32_t *n, uint8_t nbits) {
+    *n &= (~(0x0u) << nbits);
+}
+```
+
+To test it, let's try to clear the last 4 bits of `0xFF`. The result should be: `0xF0`:
+
+```cpp
+uint32_t n = 0xFFu;
+clear_last_bits(&n, 4);
+if (n==0xF0u) {
+    printf("It works!\n");
+}
+
+// Output
+// It works!
+```
+
+Visually, the operation looks like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/clear_bits.drawio.png)
+
+## Replacing multiple bits
+
+In this case, the ask is simple, let's say we have a `uint32_t`, and two bit positions `i` and `j`. We need to write a method that replaces all the bits between `i` and `j` (including `j`) from `N` with the value of `M`. In other words, `M` becomes a *substring* of `N` that starts at `i` and ends at `j`.
+
+The signature of the method should be the following:
+
+```cpp
+void replace_bits(uint32_t *n, uint32_t m, uint8_t i, uint8_t j);
+```
+
+A simple solution, that doesn't impose any validation on `i`, `j` or `m` can be:
+
+```cpp
+void replace_bits(uint16_t *n, uint16_t m, uint8_t i, uint8_t j) {
+    // Creates a mask to clear the bits from i to j inside N
+    // The mask is made out of two parts that are stiched togheter using 
+    // a bitwise OR
+    uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);
+    // Clear the bits associated with the mask
+    *n &= mask;
+    // Align the bits to be replaced
+    m <<=i;
+    // Replace the bits from n with the value of m
+    *n |= m;
+}
+```
+
+Executing the code:
+
+```cpp
+uint16_t n = 0xDCBE;
+print_bits(stdout, n); printf("\n");
+replace_bits(&n, 0x1u, 3, 6);
+print_bits(stdout, n); printf("\n");
+
+// Output
+// 1101110010111110
+// 1101110010001110
+```
+
+As you can see the bits from positions `3` to `6` (inclusive) were replaced with the value of `0x1` which is `0b001` in binary.
+
+To understand what's happening behind the scenes, we should be going through the algorithm step by step. 
+
+Firstly we need to build a mask that selects the interval defined by `i` and `j`. The mask will be created by *stitching* together the two sections (using `|`). The line creating the `mask` is: `uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);`, so let's see how things look:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/replacebits.drawio.png)
+
+The second step is to use the resulting `mask` to do the clearing. This is covered by this line: `*n &= mask;`:
+
+# References:
+
+* [Bit Twindling Hacks](https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs)
+* [Matters Computational Ideas, Algorithms, Source Code - J¨org Arndt](https://www.jjj.de/fxt/fxtbook.pdf)
+* [What USEFUL bitwise operator code tricks should a developer know about?](https://stackoverflow.com/questions/1533131/what-useful-bitwise-operator-code-tricks-should-a-developer-know-about)
+* [xtrapbits.h](https://github.com/iplinux/x11proto-trap/blob/master/xtrapbits.h)
+
+
+
+
 
 
 
