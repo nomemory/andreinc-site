@@ -4,7 +4,7 @@ date: "2023-02-01"
 classes: wide
 comments: true
 usemathjax: true
-excerpt: "The one and only bitwise tutorial"
+excerpt: "The one and only bitwise tutorial."
 categories:
 - "c"
 tags:
@@ -20,6 +20,53 @@ To better understand my arguments, not so long ago, [I've written a snake in C](
 In any case, this article is not about why we shouldn't ever touch them; on the contrary, it is about why they are cool and how they can make specific code snippets orders of magnitude faster than the "higher-level-readable-modern approach". If you are a programmer who enjoys competitive programming, knowing bitwise operations (in case you don't know about them already) will help you write more efficient code.
 
 Again, knowing how to deal with bitwise operations is necessary if you plan a career in system programming, network programming or embedded software development.
+
+{:toc}
+
+# Table of contents
+
+- [Number systems](#number-systems)
+- [A certain symmetry and patterns](#a-certain-symmetry-and-patterns)
+- [Numbers and Data Types in C](#numbers-and-data-types-in-c)
+- [Transforming numbers from the decimal to other number systems (binary, hexadecimal, etc.)](#transforming-numbers-from-the-decimal-to-other-number-systems-binary-hexadecimal-etc)
+- [Bitwise operations](#bitwise-operations)
+  * [Bitwise AND](#bitwise-and)
+  * [Bitwise OR](#bitwise-or)
+  * [Bitwise XOR](#bitwise-xor)
+  * [Bitwise NOT](#bitwise-not)
+  * [Left Shift](#left-shift)
+  * [Right Shift](#right-shift)
+- [Negative numbers and their binary representation](#negative-numbers-and-their-binary-representation)
+- [Pitfalls to avoid when using bitwise operations](#pitfalls-to-avoid-when-using-bitwise-operations)
+- [Mandatory Computer Science Exercise - The solitary integer](#mandatory-computer-science-exercise---the-solitary-integer)
+- [Printing numbers in binary by using bitwise operations](#printing-numbers-in-binary-by-using-bitwise-operations)
+- [Masking](#masking)
+- [The power of masking - Pairwise Swap](#the-power-of-masking---pairwise-swap)
+- [Getting, Setting, Clearing, Toggling the `nth` bit](#getting-setting-clearing-toggling-the-nth-bit)
+  * [Getting the `nth` bit of a number](#getting-the-nth-bit-of-a-number)
+  * [Setting up the `nth` bit of a number](#setting-up-the-nth-bit-of-a-number)
+  * [Toggling the `nth` bit of a number](#toggling-the-nth-bit-of-a-number)
+- [Getting, Setting, Clearing, and Toggling a bit portion of a number](#getting-setting-clearing-and-toggling-a-bit-portion-of-a-number)
+  * [Clearing the last bits of a number](#clearing-the-last-bits-of-a-number)
+  * [Replacing multiple bits](#replacing-multiple-bits)
+  * [Reading multiple bits](#reading-multiple-bits)
+- [Bitwise operations and their relationship with the powers of two](#bitwise-operations-and-their-relationship-with-the-powers-of-two)
+  * [Multiplying a number with a power of two](#multiplying-a-number-with-a-power-of-two)
+  * [Dividing a number with a power of two](#dividing-a-number-with-a-power-of-two)
+  * [Checking if a number is even or odd](#checking-if-a-number-is-even-or-odd)
+  * [Getting the remainder when we divide with a power of two](#getting-the-remainder-when-we-divide-with-a-power-of-two)
+  * [Determining if an integer is a power of two](#determining-if-an-integer-is-a-power-of-two)
+- [Implementing a BitSet (or BitVector)](#implementing-a-bitset-or-bitvector)
+  * [`SET_NW`](#set_nw)
+  * [`SET_W`](#set_w)
+  * [`SET_MASK`](#set_mask)
+  * [`SET_DECLARE`](#set_declare)
+  * [`SET_1` and `SET_0`](#set_1-and-set_0)
+  * [`SET_GET`](#set_get)
+  * [Using the `BitSet`](#using-the-bitset)
+- [Swapping two numbers](#swapping-two-numbers)
+- [Gray codes and permuations](#gray-codes-and-permuations)
+- [References:](#references)
 
 # Number systems
 
@@ -333,6 +380,15 @@ Additionally, you have two more operations to shift bits (right or left) inside 
 | `<<` | left `SHIFT`  |
 | `>>` | right `SHIFT` |
 
+If we apply one of the binary operators on two numbers, `A` and `B`, we obtain a third number `, C`, where `C = A OP B`.
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitwiseops.drawio.png)
+
+If $$a_{7}, a_{6}, ..., a_{0}$$ are the bits composing `A`, $$b_{7}, b_{6}, ..., b_{0}$$ are the bits composing `B`, and $$c_{7}, c_{6}, ..., c_{0}$$ are bits composing `C`, then we can say that:
+* $$c_{7} = a_{7} \text{ OP } b_{7}$$;
+* $$c_{6} = a_{6} \text{ OP } b_{6}$$;
+* ... and so on
+
 ## Bitwise AND
 
 In the C programming language, the `bitwise AND` operator, denoted as `&` (not to be confused with `&&`), is a binary operator that operates on two integer operands and returns an integer operand. The operation is performed for each pair of corresponding bits of the operands. The result is a new integer in which each bit position is set to `1` only if the corresponding bits of both operands are also `1`. Otherwise, the result bit is set to `0`. 
@@ -568,11 +624,11 @@ Another example. To obtain the binary representation of `-36`, we should do the 
 2. We flip the bits of `36`: `11011011`;
 3. We add `1` to the result from the previous step: `11011100`.
 
-For signed integers, there's one bit less to represent the actual numerical value because of the sign bit is reserved. The maximum positive value a `int8_t` can hold is: $$2^7-1=127$$ and has the following representation:
+There's one bit less to represent the actual numerical value for signed integers because the sign bit is reserved. The maximum positive value a `int8_t` can hold is: $$2^7-1=127$$ and has the following representation:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/maxint8_t.png)
 
-The minimum value a signed integer of type `int8_t` can hold is $$-2^7=128$$. At this point, you may wonder why is that for negative we have `-128` vs. `127` for positives. This happens because `0` is considered to be positive by convention. `-128` has the following representation:
+The minimum value a signed integer of type `int8_t` can hold is $$-2^7=128$$. At this point, you may wonder why is that for negative we have `-128` vs `127` for positives. This happens because `0` is considered to be positive by convention. `-128` has the following representation:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/minint8_t.png)
 
@@ -590,10 +646,10 @@ int main(void) {
     return 0;
 }
 // Output
-// int8_t is in interval: [-128, 127]
-// int16_t is in interval: [-32768, 32767]
-// int32_t is in interval: [-2147483648, 2147483647]
-// int64_t is in interval: [-9223372036854775808, 9223372036854775807]
+// int8_t is in the interval: [-128, 127]
+// int16_t is in the interval: [-32768, 32767]
+// int32_t is in the interval: [-2147483648, 2147483647]
+// int64_t is in the interval: [-9223372036854775808, 9223372036854775807]
 ```
 
 # Pitfalls to avoid when using bitwise operations
@@ -602,7 +658,7 @@ int main(void) {
 
 In the C programming language, UB (a cute acronym for *Undefined Behavior*) refers to situations (usually corner cases, but not always) when the C Standard does not cover the expected result after executing a piece of code. In those cases, compilers can choose to do things their way by crashing, giving erroneous or platform-dependent results (worse than crashing), or trolling us with [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug). Most cases of UB are ubiquitous, while others are more subtle and hard to detect. 
 
-> In the C community, undefined behaviour may be humorously called "nasal demons" after a comp.std.c post that explained undefined behavior as allowing the compiler to do anything it chooses, even "to make demons fly out of your nose".
+> In the C community, undefined behaviour may be humorously called "nasal demons" after a comp.std.c post that explained undefined behaviour as allowing the compiler to do anything it chooses, even "to make demons fly out of your nose".
 > ([source](https://en.wikipedia.org/wiki/Undefined_behavior))
 
 Just like managing the memory yourself, there are a few things that you should take into consideration when writing C code that uses bitwise operations:
@@ -645,7 +701,7 @@ uint8_t b = a << -2; // undefined behavior
                      // code compiles just fine
 ```
 
-**C.Do not shift signed integers and cause sign changes**:
+**C.Do not shift signed integers to cause sign changes**:
 
 ```cpp
 int8_t a = -1;
@@ -669,7 +725,7 @@ because the rest of the elements come in pairs.
 
 The first reflex to solve this exercise would be to brute force the solution by verifying each element with every other to find its pair. But the complexity of doing so is O(n<sup>2</sup>), where n is the size of the input array - not excellent. But, as a rule of thumb, if you receive a question like this at an interview and don't know how to approach it, mentioning the brute-force solution is a good starting point and can buy you some time until you come up with something better.
 
-There are of course, other alternative solutions:
+There are, of course, other alternative solutions:
 * Sorting the array in `O(nlogn)` and then iterate through it by `i+=2`. If `L[i]!=L[i+1]`, you've just found the lonely integer.
 * Using a hashtable and count the frequency of the numbers. If the frequency of a key is `1`, the problem is solved; you’ve just found the lonely integer.
 
@@ -827,9 +883,9 @@ print_bits(stdout, d); printf("\n"); // works on int32_t !
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask.png){:width="25%"}
 
-In low-level programming, bitwise masking involves the manipulation of individual bits of a number (represented in binary) using the operations we've described in the previous sections (`&`, `|`, `~`, `^`, `>>`, `<<`). A mask is a binary pattern that is used to extract and manipulate specific bits of a given value.
+In low-level programming, bitwise masking involves the manipulation of individual bits of a number (represented in binary) using the operations we've described in the previous sections (`&`, `|`, `~`, `^`, `>>`, `<<`). A mask is a binary pattern that extracts and manipulates specific bits of a given value.
 
-Using bitmasking techniques we can:
+Using bitmasking techniques, we can:
 * Set a specific bit to a value (`0` or `1`);
 * Clear a specific bit, or a *bit portion* from a number;
 * Flip the values of all the bits of a number.
@@ -847,7 +903,7 @@ void print_bits_uint8_t(FILE *out, uint8_t n) {
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask01.drawio.png)
 
-When we create the mask we can write the pattern by hand, using hexadecimal literals, or we can express them using powers of `2`. For example, if you want a simple mask for one bit on the `nth` position, we can simply write: `1<<nth`:
+When we create the mask, we can write the pattern by hand, using hexadecimal literals, or we can express them using powers of `2`. For example, if you want a simple mask for one bit on the `nth` position, we can write: `1<<nth`. `2^nth == 1<<nth`:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask02.drawio.png)
 
@@ -855,7 +911,7 @@ We can also "flip" the mask using the `~(mask)` operation:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask03.drawio.png)
 
-To get a "contiguous" zone of `1`s we can subtract `1` from the corresponding power of twos:
+To get a "contiguous" zone of `1`s, we can subtract `1` from the corresponding power of twos:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask04.drawio.png)
 
@@ -870,7 +926,7 @@ If you ignore the ask to *use as few instructions as possible* our programmer's 
 * Perform swaps inside the array;
 * Recreate the numbers based on the new array configuration.
 
-Of course, there's a simpler solution that makes use of bitwise operations and the masking technique. **Spoiler alert**, we will start with the actual solution, followed by some in-depth explanations:
+Of course, a simpler solution uses bitwise operations and the masking technique. **Spoiler alert**, we will start with the actual solution, followed by some in-depth explanations:
 
 ```cpp
 uint16_t pairwise_swap(uint16_t n) {
@@ -891,7 +947,7 @@ print_bits(stdout, n_ps); printf("\n");
 // 0111110011101110
 ```
 
-The key to understanding the solution lies in the patterns described by the two binary numbers `0xAAAA` and `0x5555`. `0xAAAA` selects all the even bits of `n`, while `0x5555` selects all the odd bits of `n`. If we put the numbers side by side we should see that:
+The key to understanding the solution lies in the patterns described by the binary numbers `0xAAAA` and `0x5555`. `0xAAAA` selects all the even bits of `n`, while `0x5555` selects all the odd bits of `n`. If we put the numbers side by side, we should see that:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/pairwise.drawio.png)
 
@@ -899,7 +955,7 @@ At this point, the information initially contained in the input number (`n=0xBCD
 * `0xBCDD & 0x5555` will contain the odd bits of `0xBCDD`;
 * `0xBCDD & 0xAAAA` will contain the even bits of `0xBCDD`;
 
-Now we need to swap them. We will shift the even bits one position to the left, and the odd bits one position to the right, so we don't lose any. To *recombine* the two interlacing patterns back we use the `|` operation.
+Now we need to swap them. We will shift the even bits one position to the left, and the odd bits one place to the right, so we don't lose any. To *recombine* the two interlacing patterns back, we use the `|` operation.
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/pairwise2.drawio.png)
 
@@ -931,7 +987,7 @@ Visually, both solutions work like this:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/get_nth_bit.png)
 
-Depending on the context, I would probably prefer using a method instead of a macro. It's best to validate the input and make sure `n` is not negative, or bigger than the size (in bits) of `num`. Otherwise, things can lead to *UB* fast:
+I prefer using a method instead of a macro, depending on the context. It's best to validate the input and ensure `n` is not negative or bigger than the size (in bits) of `num`. Otherwise, things can lead to *UB* fast:
 
 ```cpp
 inline uint8_t get_nth_bit(uint32_t num, uint32_t nth) {
@@ -961,13 +1017,13 @@ int main(void) {
 // Output
 // Printing last 8 bits:
 // 11111111
-// Priting the first 24 bits:
+// Printing the first 24 bits:
 // 000000000000000000000000
 ```
 
 ## Setting up the `nth` bit of a number
 
-The bit of a number `n` can be set to `0` or `1`, and depending on the context we can end up having two functions or macros:
+The bit of a number `n` can be set to `0` or `1`, and depending on the context, we can end up having two functions or macros:
 
 ```cpp
 #define set_nth_bit1(num, pos) ((num) |= (1 << (pos)))
@@ -984,7 +1040,7 @@ inline void set_nth_bit1(uint32_t *n, uint8_t nth) {
 
 ```
 
-Because both of the functions (and macros) can lead to *UB* it's advisable to validate `nth` to make sure it's not bigger than the length (in bits) of the type of `n` (in our case it's `uint32_t`, so it should be smaller `<` than `32`).
+Because both of the functions (and macros) can lead to *UB*, it's advisable to validate `nth` to make sure it's not bigger than the length (in bits) of the type of `n` (in our case it's `uint32_t`, so it should be smaller `<` than `32`).
 
 Using the functions in code:
 
@@ -1115,7 +1171,7 @@ Visually, the operation looks like this:
 
 ## Replacing multiple bits
 
-In this case, the ask is simple, let's say we have a `uint32_t`, and two bit positions `i` and `j`. We need to write a method that replaces all the bits between `i` and `j` (including `j`) from `N` with the value of `M`. In other words, `M` becomes a *substring* of `N` that starts at `i` and ends at `j`.
+In this case, the ask is simple; given an `uint16_t` and two bit indices, `i` and `j`, we need to write a method that replaces all the bits between `i` and `j` (including `j`) from `N` with the value of `M`. In other words, `M` becomes a *substring* of `N` that starts at `i` and ends at `j`.
 
 The signature of the method should be the following:
 
@@ -1123,12 +1179,12 @@ The signature of the method should be the following:
 void replace_bits(uint32_t *n, uint32_t m, uint8_t i, uint8_t j);
 ```
 
-A simple solution, that doesn't impose any validation on `i`, `j` or `m` can be:
+A simple solution that doesn't impose any validation on `i`, `j` or `m` can be:
 
 ```cpp
 void replace_bits(uint16_t *n, uint16_t m, uint8_t i, uint8_t j) {
     // Creates a mask to clear the bits from i to j inside N
-    // The mask is made out of two parts that are stiched togheter using 
+    // The mask is made out of two parts that are stitched together using 
     // a bitwise OR
     uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);
     // Clear the bits associated with the mask
@@ -1153,15 +1209,472 @@ print_bits(stdout, n); printf("\n");
 // 1101110010001110
 ```
 
-As you can see the bits from positions `3` to `6` (inclusive) were replaced with the value of `0x1` which is `0b001` in binary.
+As you can see, the bits from positions `3` to `6` (inclusive) were replaced with the value of `0x1`, which is `0b001` in binary.
 
-To understand what's happening behind the scenes, we should be going through the algorithm step by step. 
+To understand what's happening behind the scenes, we should go through the algorithm step by step. 
 
-Firstly we need to build a mask that selects the interval defined by `i` and `j`. The mask will be created by *stitching* together the two sections (using `|`). The line creating the `mask` is: `uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);`, so let's see how things look:
+Firstly we need to build a mask that selects the interval defined by `i` and `j`. The mask will be created by *stitching* together the two sections (using `|`). The line of code where we create the `mask` is: `uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);`. Visually it works like this:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/replacebits.drawio.png)
 
-The second step is to use the resulting `mask` to do the clearing. This is covered by this line: `*n &= mask;`:
+The second step is to use the resulting `mask` to clear the bits from `i` to `j` (including `j`) inside `n`: `*n &= mask;`:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/replacebits2.drawio.png)
+
+The third step is to shift the bits of `m` with `i` positions to the left to align them with the empty portion created by the `mask`. And then use `m` as a new mask: `*n |= m;`:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/replacebits3.drawio.png)
+
+## Reading multiple bits
+
+Reading multiple bits (instead of replacing them) is a similar task to the one described above. We need to write a method that works on an `uint16_t` and two bit indices `i` and `j`. We need to *extract* and return the value of all the bits between `i` and `j` (including `j`).
+
+A proposed C function might look like this:
+
+```cpp
+uint16_t get_bits(uint16_t input, uint8_t i, uint8_t j) {
+    uint16_t mask = (1 << (j - i + 1)) - 1;
+    mask <<= i;
+    return (input & mask) >> i;
+}
+```
+
+Or, if we enjoy confusing our colleagues, we can try something like this:
+
+```cpp
+uint16_t get_bits2(uint16_t input, uint8_t i, uint8_t j) {
+    uint16_t mask = (1 << (j + 1)) - (1 << i);
+    return (input & mask) >> i;
+}
+```
+
+When we try them in practice, magic unfolds:
+
+```cpp
+uint16_t n = 0xDCBE;
+print_bits(stdout, n); printf("\n");
+replace_bits(&n, 0x7u, 3, 6);
+print_bits(stdout, n); printf("\n");
+print_bits(stdout, get_bits(n, 3, 6)); printf("\n");
+print_bits(stdout, get_bits2(n, 3, 6)); printf("\n");
+
+// Output
+// 1101110010111110
+// 1101110010111110
+// 0000000000000111
+// 0000000000000111
+```
+
+It all boils down to how we've decided to implement the masking mechanisms:
+* `uint16_t mask = (1 << (j - i + 1)) - 1;  mask <<= i; // OR`
+* `uint16_t mask = (1 << (j + 1)) - (1 << i);`
+
+As you can see, in both versions (`get_bits` and `get_bits2`), we've decided to create the mask *in one go* without stitching together two sections as we did in `replace_bits`.
+
+Let's take the first version to exemplify further. If we look closer, there's no magic involved.
+
+```
+(1 << (j - i + 1))      -1
+------------------
+   power of two         -1
+```
+
+That's a power of two from which we subtract `1`. We know the bit pattern associated with that kind of number ($$2^n-1$$):
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask04.drawio.png)
+
+So, visually speaking, the mask forms like this:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/getbits01.drawio.png)
+
+* `j-i+1` gives the length of the mask (the contiguous zone of `1` bits);
+* The second shift `mask <<= i` put `1` bits to the right position.
+
+# Bitwise operations and their relationship with the powers of two
+
+There's a strong relationship between bitwise operations and mathematical operations involving powers of two. This happening shouldn't be any mystery or a surprise; after all, we use powers of two to represent the number in the binary system.
+
+## Multiplying a number with a power of two
+
+Multiplying a number $$a$$ with a power of two, $$a * 2^{n}$$, is equivalent to writing `a<<n`, shifting the bits of `a` to the right with `n` positions.
+
+There's a clear mathematical demonstration for this. If we go back to the beginning of the article and re-use the formula stated there,  we know a number in the binary system can be written as a sum of the power of twos: $$A_{2} = \sum_{i=0}^{n} a_i * 2^i$$, where $$a_{i} \in \{0, 1\}$$. If we multiply both sides of the relationship with $$2^m$$, the relationship becomes:
+
+ $$
+ 2^{m} * A_{2} = \sum_{i=0}^{n} a_i * 2^{i+m}
+ $$
+
+ We can intuitively understand that the first `m` bits of information were lost, now when we sum; we don't start with $$2^0$$ anymore, but rather with $$2^{m}$$, so that:
+
+ $$
+ 2^{m} * A_{2} = a_{0} * 2^{m} + a_{1} * 2^{m+1} + a_2*2^{m+2} + ... + a_{n} * 2^{n+m}
+ $$
+
+So, if we were to link the mathematical formula with what's happening at the bit level, let's take a look at the following picture:
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/p2mul.drawio.png)
+
+Now let's see if the compiler knows how to optimise the multiplication without explicitly telling it so. Given the following code:
+
+```cpp
+int main(void) {
+    srand(0);
+    int i = rand();
+    for(; i < (1<<12); i*=4) {
+        printf("%d\n", 1);
+    }
+    return 0;
+}
+```
+
+You can see that instead of writing `i<<=2` in the loop, we've preferred to use the more *readable* `i*=4`. If we compile the code (`gcc -O3` for `x86-64`) and look at the resulting assembly:
+
+```
+.LC0:
+        .string "%d\n"
+main:
+        push    rbx
+        xor     edi, edi
+        call    srand
+        call    rand
+        cmp     eax, 4095
+        jg      .L2
+        mov     ebx, eax
+.L3:
+        mov     esi, 1
+        mov     edi, OFFSET FLAT:.LC0
+        xor     eax, eax
+        ; Shifts the value in ebx to the left by 2 bits (multiplication by 4)
+        sal     ebx, 2
+        call    printf
+        cmp     ebx, 4095
+        jle     .L3
+.L2:
+        xor     eax, eax
+        pop     rbx
+        ret
+```
+
+You will see the compiler is smart enough to detect that one of the operands of `i*=4` is a power of two, so it uses the equivalent `>>` instruction, which is `sal ebx, 2`, where:
+
+* `sal` is an instruction that stands for *shift arithmetic left*;
+* `ebx` is the register where our `i` value is kept;
+* `2` is the number of positions we shift to.
+
+Compilers can perform this optimisation for you, so you shouldn't bother.
+
+## Dividing a number with a power of two
+
+Dividing a number $$a$$ with a power of two, $$a \div 2^{n}$$, is equivalent to writing `a>>n`. The mathematical demonstration is identical to the multiplication one so we won't write it here.
+
+But we can perform the following *smoke* test:
+
+```cpp
+uint16_t a = 100;
+if (a/2 == a>>1) {
+    printf("Yes, we are right\n");
+}
+
+// Output
+// Yes, we are right
+```
+
+Now let's look at the following code:
+
+```cpp
+int main(void) {
+    srand(NULL);
+    uint32_t n = rand(); // generates a random number
+    while(n!=0) {        // while the number is different than 0
+        n /=2;           // we divide it with 2 
+    }
+    return 0;
+}
+```
+
+If we compile the code with `gcc -O1` (for `x86-64`), the resulting assembly code is:
+
+```
+main:
+        sub     rsp, 8
+        mov     edi, 0
+        call    srand
+        ; Generate a random number and store the result in eax
+        call    rand
+        ; Test if the random number is 0 . 
+        ; If it is jump to .L2 otherwise continue
+        test    eax, eax
+        je      .L2
+.L3:
+        ; Copy the value of eax to edx
+        mov     edx, eax
+        ; Shift the value of eax to the right with 1 position
+        shr     eax
+        ; Compare the original in edx to 1 and jump back to .L3
+        cmp     edx, 1
+        ja      .L3
+.L2:
+        mov     eax, 0
+        add     rsp, 8
+        ret
+```
+
+The important line here is `shr eax`, where the compiler shifts the `eax` one position to the right. Why did it do that? In our C code, we explicitly called division `n /=2;`. Well, the compiler realised that the operand is `2`, and there's no reason to use division instead of simple `>>`. 
+
+Fun fact, if we rewrite the C code with the bitwise optimisation by replacing the line `n/=2` with the line `n>>=1`, the resulting assembly code will be identical. Compilers can perform this optimisation for you, so you shouldn't usually bother with mundane tasks like this.
+
+## Checking if a number is even or odd
+
+Suppose we contemplate the following formula, where a number can be written as:  $$A_{2} = \sum_{i=0}^{n} a_i * 2^i$$, where $$a_{i} \in \{0, 1\}$$, we will soon realise that: if we sum up powers of two in general (except $$2^{0}$$), $$A_{2}$$ will always be even. A sum of even numbers is always even (we can use $$2$$ as a common factor).
+
+So the only indicator that gives the parity of the number is $$a_{0}*2^{0}$$. $$a_{0}$$ is the least significant bit, but in another way, it's quite a critical fellow, because it provides us with the answer to one crucial question: is the number even, or is it odd?
+
+The rule is the following:
+* If $$a_{0}=1$$, thus activating $$2^{0}$$, then the number is odd;
+* If $$a_{0}=0$$, thus *deactivating* $$2^{0}$$, then the number is even;
+
+So to check the parity of a number is enough to mask it with `0x1`, and get the last bit:
+
+```cpp
+uint16_t a = 15;
+uint16_t b = 16;
+printf("a=%d is %s\n", a, a&0x1u ? "odd" : "even");
+printf("a=%d is %s\n", b, b&0x1u ? "odd" : "even");
+
+// Output
+// a=15 is odd
+// a=16 is even
+```
+
+## Getting the remainder when we divide with a power of two
+
+The modulus operation `%` is slow regarding the common architecture we are using. So whenever we can replace it with something more efficient, it's advisable to do it, even if compilers can theoretically optimise things like this for you.
+
+As a rule `(a % (1<<n))` is equivalent to `(a & ((1<<n)-1))`, where `1<<n` is the bitwise of saying $$2^n$$.
+
+If we go back to the formula, $$A_{2} = \sum_{i=0}^{n} a_i * 2^i$$, where $$a_{i} \in \{0, 1\}$$ and we divide into both sides with a power of two, $$2^m$$, we will obtain:
+
+$$ \frac{A}{2^{m}} =  a_{0} * \frac{1}{2^m} + a_{1} * \frac{1}{2^{m-1}} + a_2*\frac{1}{2^{m-2}} + ... + a_{n-1}*2^{n-m-1} + a_{n} * 2^{n-m} $$
+
+But at some point, the denominator of the fraction $$\frac{1}{2^{m-j}}$$ will become negative again so that things will turn upside down yet again. This will happen when $$j \ge m$$. So, for example if `m = 3`, we can write things like:
+
+$$ \frac{A}{2^3} = \underbrace{a_{0} * \frac{1}{2^3} + a_{1} * \frac{1}{2^2} + a_{2} * \frac{1}{2^1}}_\text{the bits composing the remainder} + \underbrace{a_{3} * 2^0 + a_4 * 2^1 + ... + a_{n} * 2^{n-3}}_{\text{The new bits composing }\frac{A}{2^3}} $$
+
+So to get the remainder, we need to select the last `3` bits (with the mask `((1<<3)-1)`) of the number:
+
+```cpp
+uint16_t pow2 = 1 << 3;
+for(int i = 1; i < 100; i++) {
+    printf("%2d mod %d=%d  %c", 
+        i, pow2, i & (pow2-1), i&0x7 ? ' ' : '\n');
+}
+
+// Output
+//  1 mod 8=1    2 mod 8=2    3 mod 8=3    4 mod 8=4    5 mod 8=5    6 mod 8=6    7 mod 8=7    8 mod 8=0  
+//  9 mod 8=1   10 mod 8=2   11 mod 8=3   12 mod 8=4   13 mod 8=5   14 mod 8=6   15 mod 8=7   16 mod 8=0  
+// 17 mod 8=1   18 mod 8=2   19 mod 8=3   20 mod 8=4   21 mod 8=5   22 mod 8=6   23 mod 8=7   24 mod 8=0  
+// 25 mod 8=1   26 mod 8=2   27 mod 8=3   28 mod 8=4   29 mod 8=5   30 mod 8=6   31 mod 8=7   32 mod 8=0  
+// 33 mod 8=1   34 mod 8=2   35 mod 8=3   36 mod 8=4   37 mod 8=5   38 mod 8=6   39 mod 8=7   40 mod 8=0  
+// 41 mod 8=1   42 mod 8=2   43 mod 8=3   44 mod 8=4   45 mod 8=5   46 mod 8=6   47 mod 8=7   48 mod 8=0  
+// 49 mod 8=1   50 mod 8=2   51 mod 8=3   52 mod 8=4   53 mod 8=5   54 mod 8=6   55 mod 8=7   56 mod 8=0  
+// 57 mod 8=1   58 mod 8=2   59 mod 8=3   60 mod 8=4   61 mod 8=5   62 mod 8=6   63 mod 8=7   64 mod 8=0  
+// 65 mod 8=1   66 mod 8=2   67 mod 8=3   68 mod 8=4   69 mod 8=5   70 mod 8=6   71 mod 8=7   72 mod 8=0  
+// 73 mod 8=1   74 mod 8=2   75 mod 8=3   76 mod 8=4   77 mod 8=5   78 mod 8=6   79 mod 8=7   80 mod 8=0  
+// 81 mod 8=1   82 mod 8=2   83 mod 8=3   84 mod 8=4   85 mod 8=5   86 mod 8=6   87 mod 8=7   88 mod 8=0  
+// 89 mod 8=1   90 mod 8=2   91 mod 8=3   92 mod 8=4   93 mod 8=5   94 mod 8=6   95 mod 8=7   96 mod 8=0  
+// 97 mod 8=1   98 mod 8=2   99 mod 8=3
+```
+
+## Determining if an integer is a power of two
+
+Without taking bitwise operations in consideration, our first reflex to check if a number is a power of two is to use *logarithms*. It's not the best solution, and you will shortly see why:
+
+```cpp
+#include <math.h>
+
+int is_power_of_two(int num) {
+    // Negative numbers are not power of two
+    // 0 is not a power of two
+    if (num <= 0) {
+        return 0; 
+    }
+    // We compute the logarithm 
+    double log2num = log2(num);
+    // We check if the logarithm is an integer
+    return (log2num == floor(log2num));
+}
+```
+
+Code looks fine, but it contains a dangerous comparison between `log2num==floor(log2num)`. The reason it's dangerous is because `double` numbers cannot be represented with exact precision, errors by approximation can *build up*, and subtle differences can appear rendering the comparison useless.
+
+If you don't believe me, let's try the following code:
+
+```cpp
+double x = 10 + 0.1 + 0.2 + 0.2; // should be 10.5
+double y = 11 - 0.2 - 0.2 - 0.1; // should be 10.5
+printf("x and y are%sequal\n", x == y ? " " : " not ");
+printf("the difference between the numbers is: %1.16f\n", x-y);
+
+// Output
+// x and y are not equal
+// the difference between the numbers is: -0.0000000000000036
+```
+
+A disputed strategy of solving this is to introduce an *epsilon* (a very small value representing tolerance), and compare doubles by aproximating equality. So instead of doing the comparison (`x==y`) directly, we can compare their difference with epsilon.
+
+```cpp
+double epsilon = 0.000001;
+if (fabs(x-y) <= epsilon) {
+    // the numbers are equal or almost equal
+}
+```
+
+This doesn't solve the problem by itself, but it can greatly reduce the numbers of errors we get.
+
+# Implementing a BitSet (or BitVector)
+
+`BitSet` or `BitVector` are used interchangeably to refer to a data structure representing a collection of bits, each of which can be 0 or 1. A `BitSet` is like a massive panel with `ON/OFF` switches. You can alter the state of those `ON/OFF` switches if you know their position (index in the set).
+
+> However, there can be some differences in the implementation and usage of the two terms based on the context they are being used. Sometimes, A `BitSet` may refer to a fixed-sized collection of bits, while `BitVector` may refer to a dynamically resizable collection of bits. 
+
+For simplicity, we will implement a `BitSet` using, you've guessed it, bitwise operations. The minimal set of operations a `BitSet` should support are:
+* Setting a bit to 0 (already covered [here](#setting-up-the-nth-bit-of-a-number));
+* Setting a bit to 1 (already covered [here](#setting-up-the-nth-bit-of-a-number));
+* Retrieving the value of the bit (already covered [here](#getting-the-nth-bit-of-a-number));
+* Resetting the `BitSet` (setting all the bits to `0`).
+
+Now that we know how to manipulate the individual bits of an integer, we can say that:
+* a `uint16_t` can be considered a `BitSet` with a size of `16`;
+* a `uint32_t` can be considered a fixed-sized `BitSet` with a size of `32`;
+* a `uint64_t` can be considered a fixed-sized `BitSet` with a size of `64`;
+
+But what if we want to have a `BitSet` of a size bigger than `64`. We don't have `uint128_t` (yet!). So we will probably have to use `4` `uint32_t` or `2` `uint64_t`. So a `BitSet` is an array of fixed-sized numbers (`uintN_t`), where we index bits by their relative position in the `BitSet`.
+
+The following diagram describes an array of 4 `uint32_t` integers, that has a total of `4*32` ON/OFF switches (bits that are 0 or 1). Each bit should be accesible relative to their position in the array, not to the relative position in their integer (words):
+
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/bitvect01.drawio.png)
+
+To implement the `BitSet` we will use C macros:
+
+```cpp
+#define SET_NW(n) (((n) + 31) >> 5)
+#define SET_W(index) ((index) >> 5)
+#define SET_MASK(index) (1U << ((index) & 31))
+
+#define SET_DECLARE(name, size) uint32_t name[SET_NW(size)] = {0}
+#define SET_1(name, index) (name[SET_W(index)] |= SET_MASK(index))
+#define SET_0(name, index) (name[SET_W(index)] &= ~SET_MASK(index))
+#define SET_GET(name, index) (name[SET_W(index)] & SET_MASK(index))
+```
+
+Ok, things can look daunting at first, so let's take each line and explain what it does.
+
+## `SET_NW`
+
+```cpp
+#define SET_NW(n) (((n) + 31) >> 5)
+```
+
+This macro can be used to determine the number of `uint32_t` words we need to represent a `BitSet` of a given size.
+
+If for example we need `47` positions, then `SET_NW(47)` will return `(47+31)>>5` which is equivalent of saying `(47+31)/32=2`. This means that our array needs at least two `uint32_t` integers to hold `47` values.
+
+## `SET_W`
+
+```cpp
+#define SET_W(index) ((index) >> 5)
+```
+
+This macro returns the index of the `uint32_t` word that contains the bit we are looking for at the given index.
+
+For example, if our `BitSet` has `64` indices (2 `uint32_t` words), calling `SET_W(35)` will return `35>>5`, which equivalent of saying `35/32=1`. So we need to look for the bit in the second `uint32_t`.
+
+## `SET_MASK`
+
+```cpp
+#define SET_MASK(index) (1U << ((index) & 31))
+```
+
+Based on a given index, this returns the mask to select that individual bit from the `uint32_t` word. `index & 31` is equivalent of saying `index % 32`. 
+
+So, if for example we call `SET_MASK(16)` it will create a mask that selects the bit `16` from the corresponding `uint32_t` word. If we call `SET_MASK(35)` it will create mask that select the bit `3` from the corresponding `uint32_t` word.
+
+`SET_MASK` works at word level, while `SET_W` works at array level.
+
+## `SET_DECLARE`
+
+```cpp
+#define SET_DECLARE(name, size) uint32_t name[SET_NW(size)] = {0};
+```
+
+This macro declare a bitset array (`uint32_t[]`) with the given `name` and `size`, and initialize it to all zeros. After declaration, the `BitSet` is a clean state, no ON/OFF switch is activated.
+
+## `SET_1` and `SET_0`
+
+```cpp
+#define SET_1(name, index) (name[SET_W(index)] |= SET_MASK(index))
+#define SET_0(name, index) (name[SET_W(index)] &= ~SET_MASK(index))
+```
+
+Those macros can be used to SET to `0` or `1` specific bits inside the `BIT_VECT`. The techniques for doing this were already described [here](#setting-up-the-nth-bit-of-a-number).
+
+## `SET_GET`
+
+```cpp
+#define SET_GET(name, index) (name[SET_W(index)] & SET_MASK(index))
+```
+
+This macro is used to check if a bit is a set or not. If the bit is set to `1`, the macro returns a non-zero value. If the bit is set to `0`, the macro returns `0`. 
+
+## Using the `BitSet`
+
+To test the newly defined "macro" `BitSet` we can use this code:
+
+```cpp
+// Declares uint32_t bitset[3] = {0};
+SET_DECLARE(bitset, 84);
+
+// Sets the bits 1 and 80 to 1
+SET_1(bitset, 1);
+SET_1(bitset, 80);
+
+printf("Is bit %d set? Answer: %s.\n", 1, SET_GET(bitset, 1) ? "YES" : "NO");
+printf("Is bit %d set? Answer: %s.\n", 2, SET_GET(bitset, 2) ? "YES" : "NO");
+printf("Is bit %d set? Answer: %s.\n", 80, SET_GET(bitset, 80) ? "YES" : "NO");
+
+//Output
+// Is bit 1 set? Answer: YES.
+// Is bit 2 set? Answer: NO.
+// Is bit 80 set? Answer: YES.
+```    
+
+# Swapping two numbers
+
+This type of bitwise trick is generally uncalled for, but it's nice to use when you want to deceive your naive colleagues.
+
+Swapping the value of two variables is normally done using an intermediary variable. This is one of the first "algorithms" we learn when we start programming:
+
+```cpp
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+int main(void) {
+    int a = 5, b = 7;
+    printf("Before swap: a=%d b=%d\n", a,b);
+    swap(&a, &b);
+    printf("After swap: a=%d b=%d\n", a,b);
+    return 0;
+}
+```
+
+But there are two other ways of achieving the same result, without the need of introducing a new variable `tmp`:
+
+// TODO finish
+
+# Gray codes and permuations
 
 # References:
 
