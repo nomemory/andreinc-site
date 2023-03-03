@@ -2051,6 +2051,10 @@ A less obvious utilisation of *Gray Codes* is that we can use them to generate p
 
 The world of bitwise tricks is much bigger than what was covered in this article. Thank you for reading up until this point. Please check the *References* section below to see more on the topic.
 
+If you are curious to see some of my code where I did use bitwise operations intensively, please check up the following two articles:
+* [4 integers are enough to write a Snake Game]({{site.url}}/2022/05/01/4-integers-are-enough-to-write-a-snake-game)
+* [Writing a simple 16 bit VM in less than 125 lines of C]({{site.url}}//2021/12/01/writing-a-simple-vm-in-less-than-125-lines-of-c)
+
 # References
 
 * [Bit Twindling Hacks](https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs)
