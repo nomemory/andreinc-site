@@ -364,7 +364,12 @@ bool is_alien_sorted(char **words, int words_len, char *order){
 }
 ```
 
-
+```cpp
+// Getting the uppercase letter position in the alpabet
+for(char i = 'A'; i <= 'Z'; i++) {
+    printf("%c --> %d\n", i, (i & '?'));
+}
+```
 
 ## Day 3 - Isomorphic Strings
 
