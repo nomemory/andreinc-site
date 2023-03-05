@@ -90,7 +90,7 @@ To see the connection between matrices and linear systems of equations, let's lo
 $$ 
 2x_{1} + x_{2} + 3x_{3} = 1 \\
 2x_{1} + 6x_{2} + 8x_{3} = 3 \\
-6x_{1} + 8x_{3} + 18x_{3} = 5
+6x_{1} + 8x_{2} + 18x_{3} = 5
 $$
 
 For this linear system composed of 3 linear equations we can associate the matrix `A[3x3]`:
