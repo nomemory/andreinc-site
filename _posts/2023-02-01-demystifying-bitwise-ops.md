@@ -4,7 +4,7 @@ date: "2023-02-01"
 classes: wide
 comments: true
 usemathjax: true
-excerpt: "A beginner friendly tutorial on bitwise operations in C"
+excerpt: "A beginner-friendly tutorial on bitwise operations in C"
 categories:
 - "c"
 tags:
