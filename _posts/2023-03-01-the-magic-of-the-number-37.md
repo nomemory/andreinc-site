@@ -50,7 +50,8 @@ def compute_vibrational_num(vp):
     n, res, vp_ret = 1, 0, vp
     while vp != 0: n, vp = 1000 * n + 1, vp - 1
     n *= 111
-    primef = Counter(list(primefac(n))).most_common(2)[0]
+    primef = Counter(list(primefac(n))).most_common(2)
+    primef = primef[1 if primef[1][0] == 7 else 0]
     magic = primef[0] ** primef[1]
     res=n//magic
     return (magic, int(res), vp_ret)
