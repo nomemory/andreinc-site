@@ -753,7 +753,7 @@ ch_val_ops ch_val_ops_string = { ch_string_cp, ch_string_free, ch_string_eq, NUL
 
 Now let's retake a look at the initial diagram and how are structures fit together with the visual representation:
 
-![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/chained_hashtable_structures.png)
+![png]({{site.url}}/assets/images/2021-10-02-hashing-and-hashtables-in-c/chained_hashtable_structures.jpg)
 
 ### The interface
 

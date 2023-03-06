@@ -78,7 +78,7 @@ Again, knowing how to deal with bitwise operations is necessary if you plan a ca
 
 Nature gifted humankind ten fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If an alien specie (with eight fingers) discovers mathematics, they will probably use base 8 (octal) to represent their numbers. Meanwhile, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
 
-![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/cutealien.png){:width="30%"}
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/cutealien.png)
 
 In mathematics, a base refers to the number of distinct symbols we use to represent and store numbers. 
 
@@ -249,6 +249,37 @@ Output:
 65535
 4294967295
 18446744073709551615
+```
+
+In the code section, there's one slight incovenience, `%hhu`, `%hu`, `%u`, etc. are not the right formats for the fixed-length types. To the right fornats are defined in `inttypes.h` as macros:
+
+```cpp
+#include <stdio.h>
+#include <stdint.h> // macros are included here
+
+int main(void) {
+    printf("%+"PRIu8"\n", UINT8_MAX);
+    printf("%+"PRIu16"\n", UINT16_MAX);
+    printf("%+"PRIu32"\n", UINT32_MAX);
+    printf("%+"PRIu64"\n", UINT64_MAX);
+    return 0;
+}
+```
+
+Funnily enough on `clang` I get warnings for using those formats, while on `gcc` everything compiles just fine, without any warnings:
+
+```cpp
+bits.c:300:26: warning: format specifies type 'unsigned char' but the argument has type 'int' [-Wformat]
+    printf("%"PRIu8"\n", UINT8_MAX);
+            ~~~~~~~      ^~~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h:107:27: note: expanded from macro 'UINT8_MAX'
+#define UINT8_MAX         255
+                          ^~~
+bits.c:301:27: warning: format specifies type 'unsigned short' but the argument has type 'int' [-Wformat]
+    printf("%"PRIu16"\n", UINT16_MAX);
+            ~~~~~~~~      ^~~~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h:108:27: note: expanded from macro 'UINT16_MAX'
+#define UINT16_MAX        65535
 ```
 
 # Transforming numbers from the decimal to other number systems (binary, hexadecimal, etc.)
@@ -606,7 +637,7 @@ Visually things look like this:
 
 # Negative numbers and their binary representation
 
-![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/elephant.png){:width="30%"}
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/elephant.png)
 
 Reading through this point, you may feel an elephant lurking in the server room. We haven't touched on a vital subject: *How are signed integers represented in binary?*
 
@@ -656,9 +687,11 @@ int main(void) {
 // int64_t is in the interval: [-9223372036854775808, 9223372036854775807]
 ```
 
+Just like in the previous example, it's advisable to use the right string formats for the family of fixed-lenght signed integers: `PRId8`, `PRId16`, etc.
+
 # Pitfalls to avoid when using bitwise operations
 
-![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/demons.png){:width="30%"}
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/demons.png)
 
 In the C programming language, UB (a cute acronym for *Undefined Behavior*) refers to situations (usually corner cases, but not always) when the C Standard does not cover the expected result after executing a piece of code. In those cases, compilers can choose to do things their way by crashing, giving erroneous or platform-dependent results (worse than crashing), or trolling us with [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug). Most cases of UB are ubiquitous, while others are more subtle and hard to detect. 
 
@@ -713,6 +746,7 @@ int8_t b = a << 1; // undefined behavior
                    // code compiles just fine 
 ```
 
+> The result of E1 << E2 is E1 left-shifted E2 bit positions; vacated bits are filled with zeros. If E1 has an unsigned type, the value of the result is E1 × 2E2, reduced modulo one more than the maximum value representable in the result type. **If E1 has a signed type and nonnegative value, and E1 × 2E2 is representable in the result type, then that is the resulting value; otherwise, the behavior is undefined.**
 # Mandatory Computer Science Exercise - The solitary integer
 
 Now that we understand the basics of bitwise operations let's solve a *classical* Computer Science exercise called: *The solitary integer*. If you are curious, you can probably find it on [leetcode](https://leetcode.com/) and [hackerrank](https://www.hackerrank.com/) (under the name *[The Lonely Integer](https://www.hackerrank.com/challenges/lonely-integer/problem)*).
@@ -885,7 +919,7 @@ print_bits(stdout, d); printf("\n"); // works on int32_t !
 
 # Masking
 
-![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask.png){:width="25%"}
+![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/mask.png)
 
 In low-level programming, bitwise masking involves the manipulation of individual bits of a number (represented in binary) using the operations we've described in the previous sections (`&`, `|`, `~`, `^`, `>>`, `<<`). A mask is a binary pattern that extracts and manipulates specific bits of a given value.
 
@@ -941,7 +975,7 @@ uint16_t pairwise_swap(uint16_t n) {
 Cryptic, but simple:
 
 ```cpp
-uint16_t n = 0xBCDD;
+uint16_t n = 0xBCDDu;
 uint16_t n_ps = pairwise_swap(n);
 print_bits(stdout, n); printf("\n");
 print_bits(stdout, n_ps); printf("\n");
@@ -1036,10 +1070,10 @@ The bit of a number `n` can be set to `0` or `1`, and depending on the context, 
 // Or functions
 
 inline void set_nth_bit0(uint32_t *n, uint8_t nth) {
-    *n &= ~(1 << nth);
+    *n &= ~(1u << nth);
 }
 inline void set_nth_bit1(uint32_t *n, uint8_t nth) {
-    *n |= (1 << nth);
+    *n |= (1u << nth);
 }
 
 ```
@@ -1100,7 +1134,7 @@ But there's a better and simpler way that avoids branching altogether and uses X
 
 ```cpp
 void toggle_nth_bit(uint32_t *n, uint8_t nth) {
-    *n ^= (1<<nth);
+    *n ^= (1u<<nth);
 }
 ```
 
@@ -1190,7 +1224,7 @@ void replace_bits(uint16_t *n, uint16_t m, uint8_t i, uint8_t j) {
     // Creates a mask to clear the bits from i to j inside N
     // The mask is made out of two parts that are stitched together using 
     // a bitwise OR
-    uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);
+    uint16_t mask = (~0x0u << (j+1)) | ((1<<i)-1);
     // Clear the bits associated with the mask
     *n &= mask;
     // Align the bits to be replaced
@@ -1203,7 +1237,7 @@ void replace_bits(uint16_t *n, uint16_t m, uint8_t i, uint8_t j) {
 Executing the code:
 
 ```cpp
-uint16_t n = 0xDCBE;
+uint16_t n = 0xDCBEu;
 print_bits(stdout, n); printf("\n");
 replace_bits(&n, 0x1u, 3, 6);
 print_bits(stdout, n); printf("\n");
@@ -1217,7 +1251,7 @@ As you can see, the bits from positions `3` to `6` (inclusive) were replaced wit
 
 To understand what's happening behind the scenes, we should go through the algorithm step by step. 
 
-Firstly we need to build a mask that selects the interval defined by `i` and `j`. The mask will be created by *stitching* together the two sections (using `|`). The line of code where we create the `mask` is: `uint16_t mask = (~0x0 << (j+1)) | ((1<<i)-1);`. Visually it works like this:
+Firstly we need to build a mask that selects the interval defined by `i` and `j`. The mask will be created by *stitching* together the two sections (using `|`). The line of code where we create the `mask` is: `uint16_t mask = (~0x0u << (j+1)) | ((1<<i)-1);`. Visually it works like this:
 
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/replacebits.drawio.png)
 
@@ -1237,7 +1271,7 @@ A proposed C function might look like this:
 
 ```cpp
 uint16_t get_bits(uint16_t input, uint8_t i, uint8_t j) {
-    uint16_t mask = (1 << (j - i + 1)) - 1;
+    uint16_t mask = (1u << (j - i + 1)) - 1;
     mask <<= i;
     return (input & mask) >> i;
 }
@@ -1247,7 +1281,7 @@ Or, if we enjoy confusing our colleagues, we can try something like this:
 
 ```cpp
 uint16_t get_bits2(uint16_t input, uint8_t i, uint8_t j) {
-    uint16_t mask = (1 << (j + 1)) - (1 << i);
+    uint16_t mask = (1u << (j + 1)) - (1 << i);
     return (input & mask) >> i;
 }
 ```
@@ -1270,8 +1304,8 @@ print_bits(stdout, get_bits2(n, 3, 6)); printf("\n");
 ```
 
 It all boils down to how we've decided to implement the masking mechanisms:
-* `uint16_t mask = (1 << (j - i + 1)) - 1;  mask <<= i; // OR`
-* `uint16_t mask = (1 << (j + 1)) - (1 << i);`
+* `uint16_t mask = (1u << (j - i + 1)) - 1;  mask <<= i; // OR`
+* `uint16_t mask = (1u << (j + 1)) - (1u << i);`
 
 As you can see, in both versions (`get_bits` and `get_bits2`), we've decided to create the mask *in one go* without stitching together two sections as we did in `replace_bits`.
 
@@ -1374,7 +1408,7 @@ Dividing a number $$a$$ with a power of two, $$a \div 2^{n}$$, is equivalent to 
 But we can perform the following *smoke* test:
 
 ```cpp
-uint16_t a = 100;
+uint16_t a = 100u;
 if (a/2 == a>>1) {
     printf("Yes, we are right\n");
 }
@@ -1440,8 +1474,8 @@ The rule is the following:
 So to check the [parity](https://en.wikipedia.org/wiki/Parity_(mathematics)) of a number is enough to mask it with `0x1`, and get the last bit:
 
 ```cpp
-uint16_t a = 15;
-uint16_t b = 16;
+uint16_t a = 15u;
+uint16_t b = 16u;
 printf("a=%d is %s\n", a, a&0x1u ? "odd" : "even");
 printf("a=%d is %s\n", b, b&0x1u ? "odd" : "even");
 
@@ -1467,7 +1501,7 @@ $$ \frac{A}{2^3} = \underbrace{a_{0} * \frac{1}{2^3} + a_{1} * \frac{1}{2^2} + a
 So to get the remainder, we need to select the last `3` bits (with the mask `((1<<3)-1)`) of the number:
 
 ```cpp
-uint16_t pow2 = 1 << 3;
+uint16_t pow2 = 1u << 3;
 for(int i = 1; i < 100; i++) {
     printf("%2d mod %d=%d  %c", 
         i, pow2, i & (pow2-1), i&0x7 ? ' ' : '\n');
@@ -1544,9 +1578,9 @@ bool is_pow2(uint16_t n) {
 And when we test it we saw that everything looks fine:
 
 ```cpp
-uint16_t a = 1<<2, 
-         b = 1<<3, 
-         c = (1<<3) + 1;
+uint16_t a = 1u<<2, 
+         b = 1u<<3, 
+         c = (1u<<3) + 1;
 
 printf("%hu is a power of two: %s.\n", a, is_pow2(a) ? "yes" : "no");
 printf("%hu is a power of two: %s.\n", b, is_pow2(b) ? "yes" : "no");
@@ -1598,7 +1632,7 @@ The programmer's reflex would be to write a function like:
 
 ```cpp
 uint32_t next_power_of_two_naive(uint32_t n) {
-    uint32_t r = 1;
+    uint32_t r = 1u;
     while(r<x) 
         r*=2; // or r<<=1
     return r;
@@ -1608,7 +1642,7 @@ uint32_t next_power_of_two_naive(uint32_t n) {
 Code works, but it's prone to errors:
 
 ```cpp
-uint32_t n1=0, n2=128, n3=7, n4=UINT32_MAX; 
+uint32_t n1=0u, n2=128u, n3=7u, n4=UINT32_MAX; 
 printf("next power of two for %u is %u\n", n1, next_power_of_two_naive(n1));
 printf("next power of two for %u is %u\n", n2, next_power_of_two_naive(n2));
 printf("next power of two for %u is %u\n", n3, next_power_of_two_naive(n3));
@@ -1639,7 +1673,7 @@ uint32_t next_power_of_two(uint32_t n) {
 Does it work better ?
 
 ```cpp
-uint32_t n1=0, n2=128, n3=7, n4=UINT32_MAX; 
+uint32_t n1=0u, n2=128u, n3=7u, n4=UINT32_MAX; 
 printf("next power of two for %u is %u\n", n1, next_power_of_two(n1));
 printf("next power of two for %u is %u\n", n2, next_power_of_two(n2));
 printf("next power of two for %u is %u\n", n3, next_power_of_two(n3));
@@ -1671,9 +1705,9 @@ uint32_t next_power_of_two(uint32_t n) {
 Now, we should also do something when the numbers are getting closer to `UINT32_MAX`. As you probably know, `UINT32_MAX` is not a power of two (it's actually `(1<<32)-1`), so searching for the next power of two, after `1<<31`, doesn't make any sense. If we let the function in the current form:
 
 ```cpp
-uint32_t n1=(1<<31)+1, 
-            n2=(1<<31)+2, 
-            n3=(1<<31)+3;
+uint32_t n1=(1u<<31)+1, 
+            n2=(1u<<31)+2, 
+            n3=(1u<<31)+3;
 
 printf("next power of two for %u is %u\n", n1, next_power_of_two(n1));
 printf("next power of two for %u is %u\n", n2, next_power_of_two(n2));
@@ -1884,8 +1918,8 @@ void swap_xor(uint8_t *a, uint8_t *b) {
 }
 
 int main(void) {
-    uint8_t a = 7;
-    uint8_t b = 13;
+    uint8_t a = 7u;
+    uint8_t b = 13u;
     printf("Before swap: a=%hhu b=%hhu\n", a, b);
     swap_xor(&a, &b);
     printf("After swap: a=%hhu b=%hhu\n", a, b);
@@ -2053,7 +2087,13 @@ The world of bitwise tricks is much bigger than what was covered in this article
 
 If you are curious to see some of my code where I did use bitwise operations intensively, please check up the following two articles:
 * [4 integers are enough to write a Snake Game]({{site.url}}/2022/05/01/4-integers-are-enough-to-write-a-snake-game)
-* [Writing a simple 16 bit VM in less than 125 lines of C]({{site.url}}//2021/12/01/writing-a-simple-vm-in-less-than-125-lines-of-c)
+* [Writing a simple 16 bit VM in less than 125 lines of C]({{site.url}}/2021/12/01/writing-a-simple-vm-in-less-than-125-lines-of-c)
+
+# Around the web
+
+This article has been discussed on:
+* [lobsters](https://lobste.rs/s/jzahvz/demystifying_bitwise_operations_gentle)
+* [hn](https://news.ycombinator.com/item?id=35010447)
 
 # References
 
@@ -2062,8 +2102,6 @@ If you are curious to see some of my code where I did use bitwise operations int
 * [What USEFUL bitwise operator code tricks should a developer know about?](https://stackoverflow.com/questions/1533131/what-useful-bitwise-operator-code-tricks-should-a-developer-know-about)
 * [Rounding up to the next power of two in C](https://jameshfisher.com/2018/03/30/round-up-power-2/)
 * [xtrapbits.h](https://github.com/iplinux/x11proto-trap/blob/master/xtrapbits.h)
-
-
 
 
 

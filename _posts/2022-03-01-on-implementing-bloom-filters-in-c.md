@@ -37,7 +37,7 @@ Or:
 
 For most of the non-critical scenarios you can think of, even the second answer is satisfactory in the light of how little space a *Bloom Filter* occupies. For example, you can check [Prof. Michael Mitzenmacher](https://en.wikipedia.org/wiki/Michael_Mitzenmacher) 's presentation ["Bloom Filters, Cuckoo Hashing, Cuckoo Filters, Adaptive Cuckoo Filters, and Learned Bloom Filters"](https://smartech.gatech.edu/handle/1853/60577), where he describes the ancient use of *Bloom Filters*: spellcheckers.
 
-![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/mitzenmacher.png){:height="75%" width="75%"}
+![png]({{site.url}}/assets/images/2022-03-01-on-implementing-bloom-filters-in-c/mitzenmacher.jpg){:height="75%" width="75%"}
 
 So, once upon a time, when memory was scarce, one of the first spellcheckers was based on a *Bloom Filter* who occupied `25KB` to determine if `210KB` of English words had possible spelling mistakes. Even if things have evolved since then, and spellcheckers don't (necessarily or exclusively) use *Bloom Filters* anymore, the numbers stand impressive. `25Kb` for a killer word editor feature in the early 90s is not that bad. 
 

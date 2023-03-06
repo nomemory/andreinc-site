@@ -57,9 +57,9 @@ If you are curious to see what everything looks like, open a browser: [http://lo
 
 ![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/homepage.png){:height="40%" width="40%"} 
 
-![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/davidbowie.png){:height="25%" width="25%"} 
+![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/davidbowie.jpg){:height="25%" width="25%"} 
 
-![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/ozzy.png){:height="25%" width="25%"} 
+![png]({{site.url}}/assets/images/2022-04-10-a-blog-that-is-a-single-executable-binary/ozzy.jpg){:height="25%" width="25%"} 
 
 As you can see, CSS is not my strongest skill.
 
