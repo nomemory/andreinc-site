@@ -78,6 +78,8 @@ Again, knowing how to deal with bitwise operations is necessary if you plan a ca
 
 Nature gifted humankind ten fingers. As a direct consequence of Nature's decision, our Math (and numbers) are almost always expressed in base 10. If an alien specie (with eight fingers) discovers mathematics, they will probably use base 8 (octal) to represent their numbers. Meanwhile, computers love base 2 (binary) because computers have only two fingers: 1 and 0, or one and none.
 
+> The [Mayan numeral system](https://en.wikipedia.org/wiki/Maya_numerals) was the system to represent numbers and calendar dates in the Maya civilization. It was a vigesimal (base-20) positional numeral system.
+
 ![png]({{site.url}}/assets/images/2023-02-01-demystifying-bitwise-ops/cutealien.png)
 
 In mathematics, a base refers to the number of distinct symbols we use to represent and store numbers. 
@@ -1486,7 +1488,7 @@ printf("a=%d is %s\n", b, b&0x1u ? "odd" : "even");
 
 ## Getting the remainder when we divide with a power of two
 
-The modulus operation `%` is slow no matter the hardware architecture we are using. So whenever we can replace it with something more efficient, it's advisable, even if compilers can theoretically optimise things like this for you.
+The modulo operation `%` is slow no matter the hardware architecture we are using. So whenever we can replace it with something more efficient, it's advisable, even if compilers can theoretically optimise things like this for you.
 
 As a rule `(a % (1<<n))` is equivalent to `(a & ((1<<n)-1))`, where `1<<n` is the bitwise of saying $$2^n$$.
 

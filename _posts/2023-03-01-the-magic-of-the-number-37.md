@@ -2,6 +2,7 @@
 title: "The so-called magic of the number 37"
 date: "2023-03-01"
 classes: wide
+usemathjax: true
 comments: true
 excerpt: "Debunking a meme"
 categories:
@@ -10,13 +11,13 @@ tags:
 - "fun"
 ---
 
-> This post is satire. 
+> This post is satire. It may also not make too much sense.
 
 Today I've seen this picture on my LinkedIn wall:
 
 ![png]({{site.url}}/assets/images/2023-03-01-the-magic-of-the-number-37/37.png){:width="50%"}
 
-And it triggered me badly. 
+And it triggered me badly. There are people in my network highly sensitive to the *divine nature* of numbers. As a math enthusiast, I won't get it.
 
 So, for all the people believing in [numerology](https://en.wikipedia.org/wiki/Numerology), let's find the numbers that carry [highly amplified or/and uber-vibrational powers](https://www.keen.com/articles/spiritual/numerology-the-cosmic-vibrations-of-numbers), more than you can imagine. 
 
@@ -86,22 +87,63 @@ The magic of the number 37
 short for Repeating Digit which carry amplified or vibrational power.
 ```
 
-But if we increase the vibrational power of the number to let's say `vp=15` we will get something significantly more powerful:
+But if we increase the vibrational power of the number to, let's say, `vp=13`, we will get something significantly more powerful:
 
 ```
-The magic of the number 15873015873015873015873015873015873015873015873
-15873015873015873015873015873015873015873015873 x 7 = 111111111111111111111111111111111111111111111111
-15873015873015873015873015873015873015873015873 x 14 = 222222222222222222222222222222222222222222222222
-15873015873015873015873015873015873015873015873 x 21 = 333333333333333333333333333333333333333333333333
-15873015873015873015873015873015873015873015873 x 28 = 444444444444444444444444444444444444444444444444
-15873015873015873015873015873015873015873015873 x 35 = 555555555555555555555555555555555555555555555555
-15873015873015873015873015873015873015873015873 x 42 = 666666666666666666666666666666666666666666666666
-15873015873015873015873015873015873015873015873 x 49 = 777777777777777777777777777777777777777777777777
-15873015873015873015873015873015873015873015873 x 56 = 888888888888888888888888888888888888888888888888
-15873015873015873015873015873015873015873015873 x 63 = 999999999999999999999999999999999999999999999999
+The magic of the number 2267573696145124716553287981859410430839
+2267573696145124716553287981859410430839 x 49 = 111111111111111111111111111111111111111111
+2267573696145124716553287981859410430839 x 98 = 222222222222222222222222222222222222222222
+2267573696145124716553287981859410430839 x 147 = 333333333333333333333333333333333333333333
+2267573696145124716553287981859410430839 x 196 = 444444444444444444444444444444444444444444
+2267573696145124716553287981859410430839 x 245 = 555555555555555555555555555555555555555555
+2267573696145124716553287981859410430839 x 294 = 666666666666666666666666666666666666666666
+2267573696145124716553287981859410430839 x 343 = 777777777777777777777777777777777777777777
+2267573696145124716553287981859410430839 x 392 = 888888888888888888888888888888888888888888
+2267573696145124716553287981859410430839 x 441 = 999999999999999999999999999999999999999999
 
-(As you can see, 15873015873015873015873015873015873015873015873 times a multiple of 7, gives a 48nthuple Rep Digit,
+(As you can see, 2267573696145124716553287981859410430839 times a multiple of 49, gives a 42nthuple Rep Digit,
 short for Repeating Digit which carry amplified or vibrational power.
 ```
 
-*I wish you to find the most vibrational number your hardware allows*
+*I wish you to find the most vibrational number your hardware allows to.*
+
+---
+
+Repdigits are natural numbers composed of instances of the same digit. The coolest repdigits are the [Mersene primes](https://en.wikipedia.org/wiki/Mersenne_prime). They are prime numbers that, when represented in binary, are composed only of `1`s.
+
+All in all, let's get back to our powerful *vibrational numbers* (whatever that means).
+
+Numbers like `11...1` can sometimes be prime, but if the number of `1` digits is a multiple of 3, we know they aren't. It's a simple proof:
+
+$$
+\underbrace{111...111}_\text{3i digits} = 10^0 + 10^1 + 10^2 + ... + 10^{3i-3} + 10^{3i-2} + 10^{3i-1}
+$$
+
+If we group the digits `3` by `3`, we'll get the following relationship:s
+
+$$
+111...111 = \underbrace{(1 + 10 + 100)}_\text{111} + ... + 10^{3i-3}*\underbrace{(1 + 10 + 100)}_\text{111}
+$$
+
+And then if we use `111` as a common factor we obtain:
+
+$$
+111...111 = 111 * (1 + ... + 10^{3i-3})
+$$
+
+But $$111=3 * 37$$, so repdigits with the number of digits of $$3$$, are always divisible with $$3$$ or $$37$$. 
+As an interesting observation, they are from time to time divisible with $$7$$ (but not always).
+
+This is how our code functions:
+* It generates numbers like `111..111`;
+* It gets their prime factors (we know for certain they are not prime);
+* Then it separates the prime factors in a "bigger" *highly vibrational number*, and keeps a multiple of `3` or `7` as the *meme* multiplier;
+
+
+
+
+
+
+
+
+
