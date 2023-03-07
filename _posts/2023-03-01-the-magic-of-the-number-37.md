@@ -1,6 +1,6 @@
 ---
 title: "The so-called magic of the number 37"
-date: "2023-02-01"
+date: "2023-03-01"
 classes: wide
 comments: true
 excerpt: "Debunking a meme"
