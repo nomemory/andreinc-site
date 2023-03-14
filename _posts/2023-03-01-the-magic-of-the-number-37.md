@@ -17,7 +17,7 @@ Today I've seen this picture on my LinkedIn wall:
 
 ![png]({{site.url}}/assets/images/2023-03-01-the-magic-of-the-number-37/37.png){:width="50%"}
 
-And it triggered me badly. There are people in my network highly sensitive to the *divine nature* of numbers. As a math enthusiast, I won't get it.
+And it triggered me badly. There are people in my network highly sensitive to the *divine nature* of numbers. As a math enthusiast, I won't get it. 
 
 So, for all the people believing in [numerology](https://en.wikipedia.org/wiki/Numerology), let's find the numbers that carry [highly amplified or/and uber-vibrational powers](https://www.keen.com/articles/spiritual/numerology-the-cosmic-vibrations-of-numbers), more than you can imagine. 
 

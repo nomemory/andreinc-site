@@ -4,6 +4,20 @@
 </script>
 {% endif %}
 
+{% if page.usep5js %}
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+</script>
+{% endif %}
+
+{% for javascript in page.custom-javascript-list %}
+    <script src="{{ javascript }}"></script>
+{% endfor %}
+
+{% for css in page.custom-css-list %}
+    <link href="{{ css }}" rel="stylesheet">
+{% endfor %}
+
 <!-- Default Statcounter code for Andreinc.net
 http://www.andreinc.net -->
 <script type="text/javascript">
