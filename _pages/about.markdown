@@ -9,9 +9,6 @@ classes: wide
 ![jpg]({{site.url}}/assets/images/about/me-it.jpg){:height="50%" width="50%"}
 <sup><sup><sup>Saint-Paul-de-Vence, France, 2019</sup></sup></sup>
 
-![jpg]({{site.url}}/assets/images/about/me-it2.jpg){:height="50%" width="50%"}
-<sup><sup><sup>My wife and I, Pisa, Italy, 2020?</sup></sup></sup>
-
 My name is Andrei N. Ciobanu; I live in [Bucharest](https://en.wikipedia.org/wiki/Bucharest), [Romania](https://en.wikipedia.org/wiki/Romania). I am happily married and the father of ~~a~~ two sweet baby girls. 
 
 ![jpg]({{site.url}}/assets/images/about/bucuresti.jpg){:height="50%" width="50%"}<sup><sup><sup> Bucharest, Romania</sup></sup></sup>
@@ -22,7 +19,7 @@ I have a *Bachelor's Degree in Electronics, Telecommunications, and Information 
 <sup><sup><sup> Universitatea Politehnica, Bucharest, Romania</sup></sup></sup>
 
 ![jpg]({{site.url}}/assets/images/about/qtest1.jpg){:height="50%" width="50%"}
-<sup><sup><sup>View from the Qualitest Office, 2022</sup></sup></sup>
+<sup><sup><sup>View from my office, 2022</sup></sup></sup>
 
 I've started programming as a kid, in BASIC. My first <sup>micro</sup>computer was one [of those](https://muzeuldecalculatoare.ro/2018/09/23/i-c-e-felix-hc-91/). All the lucky Romanian kids from 90s had them:
 
