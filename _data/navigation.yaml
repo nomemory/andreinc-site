@@ -9,6 +9,8 @@ main:
     url: /portfolio/
   - title: "Others"
     url: /others/
+  - title: "RSS"
+    url: /feed.xml
 
 
 posts_nav:
