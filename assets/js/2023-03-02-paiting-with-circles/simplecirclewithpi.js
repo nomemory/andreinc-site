@@ -1,4 +1,4 @@
-const simpleCircleRotatingTriangle = (styles) => {
+const simpleCircleWithPi = (styles) => {
 
 return (s) => {
 
@@ -13,18 +13,25 @@ return (s) => {
 
     let angle           = initialAngle;
 
-    s.setup = () => { 
+    const coefXMap = {
+        30:0, 45:0, 60:2, 90:3,
+        120:4, 135:5, 150:6, 180:7,
+        210:8, 225:9, 240:10, 270:11,
+        300:12, 315:13, 330:14, 360:15
+    };
+
+    s.setup = () => {
         // Create Canvas of given size 
         const canvas = s.createCanvas(styles.canvasX, styles.canvasY); 
-        canvas.parent('simple-circle-rotating-triangle-sketch');
+        canvas.parent('simple-circle-with-pi-sketch');
         
         s.textFont(styles.textFont);
         s.setAttributes('antialias', true);
         s.frameRate(styles.frameRate);
-    }; 
-
+    }
+    
     s.draw = () => {
-        s.background(styles.bkgColor);
+       s.background(styles.bkgColor);
 
         // Defining and drawing main circle vector + grid
         let vCircle = s.createVector(s.width/2, s.height/2);
@@ -70,24 +77,25 @@ return (s) => {
         let vAngleText = s.createVector(10, s.width-60);
         let vSineText = s.createVector(10, s.width-45);
         let vCosineText = s.createVector(10, s.width-30);
+        let thetaInPiValue = (s.radians(angleTextFix)/s.PI).toFixed(2) + "π";
         let sinThetaValue = Math.sin(s.radians(angle-90)).toFixed(2);
         let cosThetaValue = Math.cos(s.radians(angle-90)).toFixed(2);
-        pText(s, "    θ  = " + angleTextFix + "°", vAngleText.x, vAngleText.y, styles.thetaColor);
-        pText(s, "sin(θ) = " + sinThetaValue, vSineText.x, vSineText.y, styles.sineColor);
-        pText(s, "cos(θ) = " + cosThetaValue, vCosineText.x, vCosineText.y, styles.cosineColor);
-
-        // Moving radius coordinates
-        pText(s, "(", vRad.x + 2, vRad.y, styles.radiusColor);
-        pText(s, "sin(θ)", vRad.x + 7, vRad.y, styles.sineColor);
-        pText(s, ", ", vRad.x + 48, vRad.y, styles.radiusColor);
-        pText(s, "cos(θ)", vRad.x + 60, vRad.y, styles.cosineColor);
-        pText(s, ")", vRad.x + 100, vRad.y, styles.radiusColor);
-    };
+        pText(s, "        θ  = " + thetaInPiValue + " (" +angleTextFix+ "°)", vAngleText.x, vAngleText.y, styles.thetaColor);
+        pText(s, "sin(" +thetaInPiValue+ ") = " + sinThetaValue, vSineText.x, vSineText.y, styles.sineColor);
+        pText(s, "cos(" +thetaInPiValue+ ") = " + cosThetaValue, vCosineText.x, vCosineText.y, styles.cosineColor);
+        
+        if (angleTextFix in coefXMap) {
+            let el = document.getElementById("angle_" + angleTextFix);
+            el.style.color = 'red';
+            pauseLoop(s, true, 0, styles.frameRate, 2000, () => {
+                el.style.color='';
+            });
+        }
+    }
+};
 
 };
 
-}
-
-let simpleCircleRotatingTriangleSketch = 
-    new p5(simpleCircleRotatingTriangle(styles), 'simple-circle-rotating-triangle-sketch');
+let simpleCircleWithPiSketch = 
+    new p5(simpleCircleWithPi(styles), 'simple-circle-with-pi-sketch');
 

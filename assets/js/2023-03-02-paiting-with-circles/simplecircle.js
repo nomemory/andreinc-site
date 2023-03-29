@@ -1,31 +1,46 @@
 
-const simpleCircle = (s) => {
+const simpleCircle = (styles) => {
+
+return (s) => {
+    
+    const diameter = 250;
+    let radius = diameter/2;
 
     s.setup = () => { 
-        // Create Canvas of given size 
-        const canvas = s.createCanvas(300, 300); 
-        canvas.parent('simple-circle-sketch')
+        s.createCanvas(styles.canvasX-100, styles.canvasY-100);
+        s.setAttributes('antialias', true); 
         s.noLoop();
     }; 
 
     s.draw = () => {
-        s.background('white');   
+        
+        // Sets up the background color
+        s.background(styles.bkgColor);
+
         // Draw a circle
-        let center = s.createVector(s.width/2, s.width/2);     
-        let radius = 125;
-        s.circle(center.x, center.y, 2*radius);
-        // Draw the center
-        s.circle(center.x, center.y, 3); 
+        let vCircle = s.createVector(s.width/2, s.height/2);     
+        pCircle(s, vCircle.x, vCircle.y, diameter, styles.circleColor, styles.bkgColor);
+
+        // Draw a smaller circle in the center of the previous one
+        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
+
         // Draw the radius
-        let rad = s.createVector(center.x+radius, center.y);
-        s.line(center.x, center.y, rad.x, rad.y);
-        s.circle(rad.x, rad.y, 3);
+        let vRad = s.createVector(vCircle.x+radius, vCircle.y);
+        pLine(s, vCircle.x, vCircle.y, vRad.x, vRad.y, styles.lineColor);
+
+        // Draw a small circle on the initial bigger circle
+        pCircle(s, vRad.x, vRad.y, 3, styles.circleColor);
+
         // Draw the origin text
-        s.text("(a,b)", center.x-12, center.y+12);
+        let vTxtAb = s.createVector(vCircle.x - 12, vCircle.y + 12);
+        pText(s, "(a,b)", vTxtAb.x, vTxtAb.y);
+
         // Draw radius text
-        s.text("radius (r)", center.x + radius/2 - 20, center.y -12);
+        let vTxtRad = s.createVector(vCircle.x + radius/2 - 20, vCircle.y - 12);
+        pText(s, "r (radius)", vTxtRad.x, vTxtRad.y, styles.textSize, styles.textColor);
     };
+}
 
 };
 
-let simpleCircleSketch = new p5(simpleCircle, 'simple-circle-sketch');
+let simpleCircleSketch = new p5(simpleCircle(styles), 'simple-circle-sketch');

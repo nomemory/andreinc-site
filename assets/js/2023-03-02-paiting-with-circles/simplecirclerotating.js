@@ -1,66 +1,66 @@
-const simpleCircleRotating = (s) => {
+const simpleCircleRotating = (styles) => {
 
-    let p;          
-    let center;
-    let angle;
-    let gridStep;
+return (s) => {
+
+    const diam          = 200;
+    const radius        = diam/2;
+    const frequency     = 1;
+    const initialAngle  = 90;
+    const gridStep      = diam/4;
+    const arcRd1        = diam/6;
+    const arcRd2        = diam/6;
+    const arcAng        = s.radians(0);
+
+    let angle           = initialAngle;
 
     s.setup = () => { 
         // Create Canvas of given size 
-        p = simpleRotatingCircleProps(s);
-        const canvas = s.createCanvas(p.canvasX, p.canvasY); 
+        const canvas = s.createCanvas(styles.canvasX, styles.canvasY); 
         canvas.parent('simple-circle-rotating-sketch');
-        
-        s.setAttributes('antialias', true);
-        s.frameRate(p.frameRate);
-        s.textSize(p.textSize);
 
-        center = s.createVector(s.width/2, s.height/2);
-        angle = p.initialAngle;
-        gridStep = p.radius/2;
+        s.textFont(styles.textFont);
+        s.setAttributes('antialias', true);
+        s.frameRate(styles.frameRate);
     }; 
 
     s.draw = () => {
-        s.background('white');
-        
-        paintGrid(s, p.canvasX, p.canvasY, p.coordSysColor, 
-            p.gridColor, center, p.textSize, gridStep);
-        
-        // Draw the circle
-        s.stroke(p.circleColor);
-        s.noFill();
-        s.circle(center.x, center.y, 2*p.radius);
+        s.background(styles.bkgColor);
 
-        // Draw the center of the circle
-        s.fill(p.circleColor);
-        s.circle(center.x, center.y, 3);
-        s.textSize(p.textSize) 
-        s.text("(0,0)", center.x-35, center.y+15);
+        // Defining and drawing main circle vector + grid
+        let vCircle = s.createVector(s.width/2, s.height/2);
+        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
+        paintGrid(s, styles.canvasX, styles.canvasY, styles.coordSysColor, 
+            styles.gridColor, vCircle, styles.textSize, gridStep);
 
-        // Draw the moving radius
-        let rad = s.createVector(
-                center.x+Math.sin(s.radians(angle)*p.frequency)*p.radius,
-                center.y+Math.cos(s.radians(angle)*p.frequency)*p.radius
+        // Defining and drawing the moving radius
+        let vRad = s.createVector(
+            vCircle.x+Math.sin(s.radians(angle)*frequency)*radius,
+            vCircle.y+Math.cos(s.radians(angle)*frequency)*radius
         );
-        angle+=1;
-        if (angle>360) {
-            angle = 0;
-        }        
-        s.stroke(p.radiusColor);
-        s.line(center.x, center.y, rad.x, rad.y);
-        s.circle(rad.x, rad.y, 3);
+        angle++;
+        if (angle>360) angle = 0; // reset angle once the circle is complete
+        pLine(s, vCircle.x, vCircle.y, vRad.x, vRad.y, styles.radiusColor);
+        pCircle(s, vRad.x, vRad.y, 3, styles.circleColor);
 
-        // Moving coordinates
-        let xn= ((rad.x-center.x)/p.radius);
-        let yn = ((center.y-rad.y)/p.radius);
-        s.textSize(p.textSize-2)
-        s.text(" (x="+xn.toFixed(2)+", y=" + yn.toFixed(2)+")", rad.x, rad.y);
+        // Paint moving coordinates
+        let vMovCoord = s.createVector((vRad.x-vCircle.x)/radius, (vCircle.y-vRad.y)/radius);
+        pText(s, "(x="+vMovCoord.x.toFixed(2)+",y=" + vMovCoord.y.toFixed(2)+")", vRad.x, vRad.y);
+
+        // Show Radius
+        let vRadLabel = s.createVector(
+            (vCircle.x + vRad.x)/2, 
+            (vCircle.y + vRad.y)/2
+        );
+        pText(s, "r (radius)", vRadLabel.x, vRadLabel.y, styles.circleColor);
 
         // Show sum at the bottom of the canvas
-        s.textSize(p.textSize+4);
-        s.text("x² + y² = " + (xn*xn).toFixed(2) + " + " + (yn*yn).toFixed(2) + " = 1", 5, center.y + s.width/2 - 10);
+        let sqrX=(vMovCoord.x*vMovCoord.x).toFixed(2);
+        let sqrY=(vMovCoord.y*vMovCoord.y).toFixed(2);
+        pText(s, "x² + y² = " + sqrX + " + " + sqrY + " = 1", 5, vCircle.y + s.width/2 - 10);
     };
-
 };
 
-let simpleCircleRotatingSketch = new p5(simpleCircleRotating, 'simple-circle-rotating-sketch');
+}
+
+let simpleCircleRotatingSketch = 
+    new p5(simpleCircleRotating(styles), 'simple-circle-rotating-sketch');

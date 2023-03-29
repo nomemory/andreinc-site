@@ -1,46 +1,44 @@
-const rotatingPI = (s) => {
+const rotatingPi = (styles) => {
 
+return (s) => {
+
+    const canvasX = 600;
+    const canvasY = 200;
     const hLineRatio = 7/8;
-    const radiusRatio = 1/8;
-    const movingCircleColor = s.color('red');
-    const rulerColor = s.color('black');
     const diam = 100;
+    const radius = diam/2;
+    const step = radius;
     const rulerOffset = 70;
     const frameRate = 40;
+    const rulerY = canvasY * hLineRatio;
 
-    let ccenter;
-    let step;
-    let rulerY;
-    let movingCircle;
+    let vCircle;
+    let vMovCircle;
     let movingCircleAngle;
-    let xStep;
 
     s.initConditions = () => {
-        ccenter = s.createVector(rulerOffset, rulerY-diam/2);
-        movingCircle = s.createVector(ccenter.x, ccenter.y-diam/2);
+        vCircle = s.createVector(rulerOffset, rulerY-diam/2);
+        vMovCircle = s.createVector(vCircle.x, vCircle.y-diam/2);
         movingCircleAngle = 180;
     }
 
     s.circleOnRuler = () => {
-        let xCoord = (i) => i * s.PI * diam/2 + rulerOffset;
-        let numCircles = (s.width-rulerOffset)/(diam/2)/s.PI;
+        let xCoord = (i) => i * s.PI * radius + rulerOffset;
+        let numCircles = (s.width-rulerOffset) / radius / s.PI;
         for(let i = 0; i < numCircles; ++i) {
-            if (ccenter.x - rulerOffset > i * (s.PI * diam/2)) {
-                s.fill(movingCircleColor);
-                s.stroke(movingCircleColor);
-                s.circle(xCoord(i), rulerY, 5);
-                s.noFill();
+            if (vCircle.x - rulerOffset > i * (s.PI * radius)) {
+                pCircle(s, xCoord(i), rulerY, 5, styles.thetaColor, styles.thetaColor);
                 if (i!=0) {
-                    s.line(
-                        xCoord(i-1) + 5, rulerY - 10,
-                        xCoord(i) - 5, rulerY - 10
-                    )
+                    pLine(s, 
+                        xCoord(i-1) + 5, 
+                        rulerY - 10, 
+                        xCoord(i) - 5, 
+                        rulerY - 10, 
+                        styles.thetaColor, 
+                        styles.thetaColor
+                    );
                     let midPoint = xCoord(i-1) + (xCoord(i) - xCoord(i-1))/2;
-                    s.color(rulerColor)
-                    s.stroke(rulerColor);
-                    s.fill(rulerColor);
-                    s.text("π ≈ 3.14", midPoint-12, rulerY - 15);
-                    s.noFill();
+                    pText(s, "π ≈ 3.14", midPoint-12, rulerY - 15, styles.color);
                 }
             } 
         }
@@ -48,65 +46,44 @@ const rotatingPI = (s) => {
 
     s.setup = () => { 
         // Create Canvas of given size 
-        const canvas = s.createCanvas(600, 200); 
+        const canvas = s.createCanvas(canvasX, canvasY); 
         canvas.parent('rotating-PI-sketch')
-        s.frameRate(frameRate);
-        // s.noLoop();
-
-        // Init properties
-        step = diam/2;
-        rulerY = s.height * hLineRatio;
+        s.textFont(styles.textFont);
+        s.setAttributes('antialias', true);
+        s.frameRate(styles.frameRate);
         s.initConditions();
     };
 
     s.draw = () => {
-        s.background('white');  
-        s.textSize(14);
+        s.background(styles.bkgColor);      
 
-        // Draw horizontal line
-        s.stroke(rulerColor);
-        s.noFill();
-        s.line(0, rulerY, s.width, rulerY);
+        // Draw horizontal line (ruler)
+        pLine(s, 0, rulerY, s.width, rulerY, styles.coordSysColor);
 
         // Ruler on the horizontal line
         for(let i = rulerOffset, j = 0; i < s.width; i+=step, j++) {
-            s.stroke(rulerColor);
-            s.noFill();
-            s.circle(i, rulerY, 3);
-            s.stroke(rulerColor);
-            s.fill(rulerColor);
-            s.text(j, i-4, rulerY + 15);
-            s.noFill();
+            pCircle(s, i, rulerY, 3, styles.coordSysColor);
+            pText(s, j, i-4, rulerY + 15, styles.coordSysColor, styles.coordSysColor);
         }
 
-        // Draw circles
+        // Draw main moving circle
+        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
+        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
 
-        s.stroke(rulerColor);
-        s.fill(rulerColor);
-        s.noFill();
-        s.circle(ccenter.x, ccenter.y, diam);
-
-        s.fill(rulerColor);
-        s.circle(ccenter.x, ccenter.y, 3);
-
-        s.stroke(movingCircleColor);
-        s.fill(movingCircleColor);
-        s.circle(movingCircle.x, movingCircle.y, 4);
-        s.line(ccenter.x, ccenter.y, movingCircle.x, movingCircle.y);
-        // The projection of the moving circle
-        s.circle(movingCircle.x, rulerY, 4);
-        s.noFill();
+        // Draw smaller circle and its projection
+        pCircle(s, vMovCircle.x, vMovCircle.y, 4, styles.thetaColor, styles.thetaColor);
+        pCircle(s, vMovCircle.x, rulerY, 4, styles.thetaColor, styles.thetaColor);
+        pLine(s, vCircle.x, vCircle.y, vMovCircle.x, vMovCircle.y, styles.circleColor);
 
 
-        // Compute the new coordinates for the circles
-        movingCircle = s.createVector(
-            ccenter.x + Math.sin(s.radians(movingCircleAngle))*diam/2,
-            ccenter.y + Math.cos(s.radians(movingCircleAngle))*diam/2
+        // Increment the new positions for the moving circles
+        vMovCircle = s.createVector(
+            vCircle.x + Math.sin(s.radians(movingCircleAngle))*radius,
+            vCircle.y + Math.cos(s.radians(movingCircleAngle))*radius
         );
-
-        ccenter = s.createVector(
-            ccenter.x + (s.radians(1)*diam/2),
-            ccenter.y
+        vCircle = s.createVector(
+            vCircle.x + (s.radians(1)*diam/2),
+            vCircle.y
         );
 
         // Reset angle
@@ -120,7 +97,7 @@ const rotatingPI = (s) => {
 
         // Reset animation
         // Loop again
-        if (movingCircle.x>s.width-diam/2) {
+        if (vMovCircle.x>s.width-radius) {
             s.frameRate(0);
             setTimeout(() => {
                 s.frameRate(frameRate);
@@ -130,4 +107,6 @@ const rotatingPI = (s) => {
     };
 };
 
-let rotatingPISketch = new p5(rotatingPI, 'rotating-PI-sketch');
+};
+
+let rotatingPISketch = new p5(rotatingPi(styles), 'rotating-PI-sketch');

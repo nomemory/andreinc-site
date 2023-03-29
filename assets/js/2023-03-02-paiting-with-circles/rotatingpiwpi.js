@@ -1,141 +1,119 @@
-const rotatingPIwPI = (s) => {
+const rotatingPIwPI = (styles) => {
 
+return (s) => {
+
+    const canvasX = 500;
+    const canvasY = 200;
     const hLineRatio = 6/8;
-    const radiusRatio = 1/8;
-    const movingCircleColor = s.color('red');
-    const rulerColor = s.color('black');
-    const vertLineColor = s.color('silver');
-    const angleColor = s.color('green');
     const diam = 100;
+    const radius = diam/2;
+    const step = radius;
+    const rulerY = canvasY * hLineRatio;
     const rulerOffset = 70;
-    const frameRate = 40;
+
+    let tex;
+    
     const coef = [
         [1/6, "1/6 * π", "30°" ], [1/4, "1/4 * π", "45°" ], [1/3, "1/3 * π", "60°" ], [1/2, "1/2 * π", "90°"], 
         [2/3, "2/3 * π", "120°"], [3/4, "3/4 * π", "135°"], [5/6, "5/6 * π", "150°"], [1, "π", "180°"],
         [7/6, "7/6 * π", "210°" ], [5/4, "5/4 * π", "225°" ], [4/3, "4/3 * π", "240°" ], [3/2, "3/2 * π", "270°"],
-        [5/3, "5/3 * π", "300°" ], [7/4, "7/4 * π", "315°" ], [11/6, "11/6 * π", "300°"], [2, "2 * π", "360°"]
+        [5/3, "5/3 * π", "300°" ], [7/4, "7/4 * π", "315°" ], [11/6, "11/6 * π", "330°"], [2, "2 * π", "360°"]
     ];
 
-    let ccenter;
-    let step;
-    let rulerY;
-    let movingCircle;
-    let movingCircleAngle;
+    const coefXMap = {
+        30:0, 45:0, 60:2, 90:3,
+        120:4, 135:5, 150:6, 180:7,
+        210:8, 225:9, 240:10, 270:11,
+        300:12, 315:13, 330:14, 360:15
+    };
+
+    let vCircle;
+    let vMovCircle;
+    let movCircleAngle;
     let coefIdx;
 
     s.initConditions = () => {
-        ccenter = s.createVector(rulerOffset, rulerY-diam/2);
-        movingCircle = s.createVector(ccenter.x, ccenter.y-diam/2);
-        movingCircleAngle = 180;
+        vCircle = s.createVector(rulerOffset, rulerY-diam/2);
+        vMovCircle = s.createVector(vCircle.x, vCircle.y-diam/2);
+        movCircleAngle = 179;
         coefIdx = 0;
     }
 
     s.setup = () => { 
-        // Create Canvas of given size 
-        const canvas = s.createCanvas(500, 200); 
-        canvas.parent('rotating-PI-w-PI-sketch');
+        const canvas = s.createCanvas(canvasX, canvasY); 
+        canvas.parent('rotating-PI-w-PI-sketch')
+        s.textFont(styles.textFont);
         s.setAttributes('antialias', true);
-        s.frameRate(frameRate);
-        // s.noLoop();
+        s.frameRate(styles.frameRate); 
 
+        // Tex
+      
         // Init properties
-        step = diam/2;
-        rulerY = s.height * hLineRatio;
         s.initConditions();
     };
 
     s.draw = () => {
-        s.background('white');  
-        s.textSize(14);
+        s.background(styles.bkgColor);
 
-        // Draw horizontal line
-        s.stroke(rulerColor);
-        s.noFill();
-        s.line(0, rulerY, s.width, rulerY);
+        // Draw horizontal line (ruler)
+        pLine(s, 0, rulerY, s.width, rulerY, styles.coordSysColor);
 
         // Ruler on the horizontal line
         for(let i = rulerOffset, j = 0; i < s.width; i+=step, j++) {
-            s.stroke(rulerColor);
-            s.noFill();
-            s.circle(i, rulerY, 3);
-            s.stroke(rulerColor);
-            s.fill(rulerColor);
-            s.textSize(14);
-            s.text(j, i-4, rulerY + 15);
-            s.noFill();
+            pCircle(s, i, rulerY, 3, styles.coordSysColor);
+            pText(s, j, i-4, rulerY + 15, styles.coordSysColor, styles.coordSysColor);
         }
-        // Adding pi on the horizontal line
 
-        s.stroke(movingCircleColor);
-        s.fill(movingCircleColor);
-        for(let i = 0; i < coef.length; i++) {
-            s.circle(rulerOffset + coef[i][0] * s.PI * diam/2, rulerY, 3);
-        }
-        s.noFill();
-
-        // Draw circles
-        s.stroke(rulerColor);
-        s.fill(rulerColor);
-        s.noFill();
-        s.circle(ccenter.x, ccenter.y, diam);
-        s.fill(rulerColor);
-        s.circle(ccenter.x, ccenter.y, 3);
-        s.stroke(movingCircleColor);
-        s.fill(movingCircleColor);
-        s.circle(movingCircle.x, movingCircle.y, 4);
-        s.line(ccenter.x, ccenter.y, movingCircle.x, movingCircle.y);
-
-        // The projection of the moving circle
-        s.circle(movingCircle.x, rulerY, 4);
-        s.noFill();
-
-        // A horizontal line
-        s.stroke(vertLineColor)
-        s.line(ccenter.x, ccenter.y, ccenter.x, ccenter.y-diam);
-        s.noFill()
+        // Draw main circle
+        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
+        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
 
         // The moving arc
-        s.fill(angleColor);
-        s.stroke(angleColor);
-        s.arc(ccenter.x, ccenter.y, diam/4, diam/4, s.radians(270), s.radians(90-movingCircleAngle));
-        s.noFill();
-
+        s.strokeWeight(3);
+        pArc(s, vCircle.x, vCircle.y, diam, diam, 
+            s.radians(270), s.radians(90-movCircleAngle), 
+            styles.thetaColor, styles.thetaColorLight);
+        s.strokeWeight(1);
+        pLine(s, vCircle.x, vCircle.y, vMovCircle.x, vMovCircle.y, styles.coordSysColor);
+        pLine(s, vCircle.x, vCircle.y, vCircle.x, vCircle.y-radius, styles.coordSysColor);
 
         // Compute the new coordinates for the circles
-        movingCircle = s.createVector(
-            ccenter.x + Math.sin(s.radians(movingCircleAngle))*diam/2,
-            ccenter.y + Math.cos(s.radians(movingCircleAngle))*diam/2
+        // the moving one, used to define the arc
+        vMovCircle = s.createVector(
+            vCircle.x + Math.sin(s.radians(movCircleAngle))*radius,
+            vCircle.y + Math.cos(s.radians(movCircleAngle))*radius
         );
 
-        ccenter = s.createVector(
-            ccenter.x + (s.radians(1)*diam/2),
-            ccenter.y
-        );
+        // Main circle
+        vCircle = s.createVector(vCircle.x + (s.radians(1)*radius), vCircle.y);
 
-        if (movingCircleAngle==0) {
-            s.frameRate(0);
-            setTimeout(() => {
-                s.frameRate(frameRate);
-                }, 500);
+        let vMovAngle = s.createVector(
+            vCircle.x + Math.sin(s.PI/2+s.radians(movCircleAngle)/2)*radius/8,
+            vCircle.y + Math.cos(s.PI/2+s.radians(movCircleAngle)/2)*radius/8
+        );
+        let movAngleTxt = movCircleAngle < 180 ? (180-movCircleAngle) : (540-movCircleAngle);
+        pText(s, "θ=" + (movAngleTxt)+ "°", vMovAngle.x, vMovAngle.y, styles.thetaColor);
+
+        if (movCircleAngle in coefXMap) {
+            pLine(s, vCircle.x, rulerY, vCircle.x-20, rulerY+30, styles.gridColor);
+            pText(s, "θ = ("+coef[coefIdx][1] + ") → " + coef[coefIdx][2], vCircle.x-50, rulerY+40, styles.lineColor);
+            pauseLoop(s, true, 0, styles.frameRate, 2000);
+            pLine(s, rulerOffset, rulerY + 3, vCircle.x, vCircle.y + radius + 3, styles.thetaColor);
+            coefIdx++;                                        
         }
-
 
         // Reset angle
-        movingCircleAngle--;
-        if (movingCircleAngle==0) {
-            movingCircleAngle=360;
-        }
+        movCircleAngle--;
+        if (movCircleAngle==0) movCircleAngle=360;
 
-        // Reset animation
-        // Loop again
-        if (movingCircle.x>s.width-diam/2) {
-            s.frameRate(0);
-            setTimeout(() => {
-                s.frameRate(frameRate);
-                s.initConditions();
-                }, 500);
-        }
+        // Reset animation back to the initial conditions
+        pauseLoop(s, (coefIdx==16), 0, styles.frameRate, 2000, () => {
+            s.initConditions();
+        });;
+    
     };
 };
 
-let rotatingPIwPISketch = new p5(rotatingPIwPI, 'rotating-PI-w-PI-sketch');
+};
+
+let rotatingPIwPISketch = new p5(rotatingPIwPI(styles), 'rotating-PI-w-PI-sketch');

@@ -1,33 +1,95 @@
-const simpleRotatingCircleProps = (s) => {
-     // Defaults
-     return {
-        initialAngle : 90,
-        frequency : 1,
-        canvasX : 400,
-        canvasY : 400,
-        frameRate : 30,
-        radius : 100,
-        circleColor : s.color(0,0,0),
-        radiusColor : s.color(0,0,0),
-        gridColor : s.color(220,220,220),
-        coordSysColor : s.color(100,100,100),
-        textColor : s.color(0,0,0),
-        textSize : 14
-     };
-};
+const styles = {
+    canvasX : 400,
+    canvasY: 400,
+    frameRate: 30,
+    
+    bkgColor : '#F6F8FA',
+    circleColor : 'black',
+    lineColor: 'black',
+    sineColor: 'red',
+    cosineColor: 'blue',
+    imColor: 'red',
+    reColor: 'blue',
+    thetaColor: 'green',
+    thetaColorLight: '#b0ffd0',
+    gridColor: 'lightgray',
+    coordSysColor: 'gray',
+    radiusColor: 'black',
 
-function arrowHead(start, vector){
-    push()   //start new drawing state
-    var norm = createVector(vector.x, vector.y)
-    norm.normalize()
-    // applyMatrix(1,0,0,1,vector.x - start.x,vector.y - start.y)
-    applyMatrix(norm.x,norm.y,-norm.y, norm.x, vector.x - start.x,vector.y - start.y)
-  
-    triangle(0,6,12,0,0,-6)
-    pop()
+    textFont : "monospace",
+    textColor : 'black',
+    textSize : 12,
 }
 
-function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSize, gridStep) {
+// Shapes
+function pPoint(s, x, y, stroke) {
+    s.stroke(stroke);
+    s.point(x,y);
+    s.noFill();
+}
+function pCircle(s, x, y, r, stroke, fill) {
+    s.stroke(stroke);
+    if (fill!=undefined) {
+        s.fill(fill);
+    } else {
+        s.noFill();
+    }
+    s.circle(x,y,r);
+    s.noFill();
+}
+
+function pLine(s, x1, y1, x2, y2, stroke) {
+    s.stroke(stroke);
+    s.line(x1, y1, x2, y2);
+    s.noFill();
+}
+
+function pLineDashed(s, canvas, pattern, x1, y1, x2, y2, stroke) {
+    canvas.drawingContext.setLineDash(pattern);
+    s.stroke(stroke);
+    s.line(x1, y1, x2, y2);
+    s.noFill();
+    canvas.drawingContext.setLineDash([]);
+}
+
+function pText(s, text, x, y, textColor, textSize) {
+    s.push();
+    if (textSize==undefined) { textSize = styles.textSize; }
+    if (textColor==undefined) { textColor = styles.lineColor; }
+    s.textSize(textSize);
+    s.stroke(textColor);
+    s.fill(textColor);
+    s.text(text, x, y);
+    s.noFill();
+    s.pop();
+}
+
+function pArc(s, x, y, xl, yl, ang1, ang2, stroke, fill) {
+    if (fill==undefined) {
+        s.noFill();
+    } else {
+        s.fill(fill);
+    }
+    s.stroke(stroke);
+    s.arc(x, y, xl, yl, ang1, ang2);
+}
+
+function pauseLoop(s, condition, droppedRate, frameRate, timeOut, runThis) {
+    if (condition) {
+        s.frameRate(droppedRate);
+        setTimeout(() => {
+            s.frameRate(frameRate);
+            if (runThis!==undefined) {
+                runThis();
+            }
+        }, timeOut);
+    }
+}
+
+function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSize, gridStep, xLabel, yLabel) {
+    if (undefined===xLabel) { xLabel="x"; }
+    if (undefined===yLabel) { yLabel="y"; }
+
     s.stroke(coordSysColor);
     s.fill(coordSysColor);
     s.line(0, center.y, canvasY, center.y); // horizontal;
@@ -39,44 +101,44 @@ function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSi
     s.textSize(textSize);
     s.stroke(coordSysColor);
     s.fill(coordSysColor);
-    s.text("x", canvasX - 10, center.y - 10);
+    s.text(xLabel, canvasX - s.textSize() - 5, center.y - 10);
 
     s.textSize(textSize);
     s.stroke(coordSysColor);
     s.fill(coordSysColor);
-    s.text("y", center.x - 12, 15);
+    s.text(yLabel, center.x - s.textSize() - 12, 15);
 
     // Painting the grid
-    for(let i = 0; i < canvasX; i+=gridStep) {
+    for(let i = gridStep; i < canvasX; i+=gridStep) {
         s.stroke(gridColor);
         s.line(i, 0, i,canvasY); // vertical lines
     }
-    for(let i = 0; i < canvasY; i+=gridStep) {
+    for(let i = gridStep; i < canvasY; i+=gridStep) {
         s.stroke(gridColor);
         s.line(0,i,canvasX,i); // horizontal lines
     }
-    for(let i = 0; i < canvasX; i+=gridStep) {
-        for(let j = 0; j < canvasY; j+=gridStep) {
+    for(let i = gridStep; i < canvasX; i+=gridStep) {
+        for(let j = gridStep; j < canvasY; j+=gridStep) {
             s.stroke(gridColor);
             s.circle(i,j,3);
         }
     }
+    
+    let hCells = (center.x / (2*gridStep));
+    let vCells = (center.y / (2*gridStep));
+    
     s.stroke(coordSysColor);
-    s.text("1", center.x + 2*gridStep + 5, center.y + 15);
-    s.stroke(coordSysColor);
-    s.text("1", center.x + 5, center.y - 2*gridStep - 5);
-    s.stroke(coordSysColor);
-    s.text("-1", center.x - 2*gridStep - 15, center.y - 10);
-    s.stroke(coordSysColor);
-    s.text("-1", center.x - 15, center.y + 2*gridStep + 15);
-}
-
-function dropFrameRate(s, condition, mili) {
-    // Drop framerate and then recover it
-    if (condition()) {      
-        s.frameRate(1);
-        setTimeout(() => {
-            s.frameRate(p.frameRate);
-        }, mili);
+    s.text(0, center.x + 10, center.y + 15);
+    for(let i = 1; i < hCells; i++) {
+        //x gradation
+        s.stroke(coordSysColor);
+        s.text(i, center.x + i*2*gridStep + 5, center.y + 15);
+        s.text(-i, center.x - i*2*gridStep -15, center.y +15);
+    }
+    for(let i = 1; i < vCells; i++) {
+        //y gradtion
+        s.stroke(coordSysColor);
+        s.text(i, center.x + 10, center.y - i*2*gridStep - 5);
+        s.text(-i, center.x + 5, center.y + i*2*gridStep + 5);
     }
 }
