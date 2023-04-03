@@ -17,6 +17,7 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/triangleincircle.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosc.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosccos.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -281,6 +282,23 @@ At this point it will be unfair for cosine not to plot it on the same graph:
 <div id="simple-osc-cos-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleosccos.js)</sup></sup>
 
+If you put $$sin$$ and $$cos$$ on the same graph, you will soon realize they are not so different after all, they are almost the same function, with a phase shift between them.
+
+So, if we have this relationship $$sin(x + a) = cos(a)$$, which we know it's true $$\forall a$$, how do we find $$x$$? There's a visual solution to this, but we can also use a simple trigonometrical identity to find the answer.
+
+We do know that $$sin(x+a)= sin(x)*cos(a)+ cos(x)*sin(a)$$. Thus our equation becomes: $$cos(a)=sin(x)*cos(a) + cos(x)*sin(a)$$.
+
+But we know this is true, no matter how we pick $$a$$. So why don't we pick $$a=0$$ ($$sin(0)=0$$ and $$cos(0)=1$$). Replacing this in our equation, we obtain $$1=sin(x)$$.
+
+Now, let's choose $$a=\frac{\pi}{2}$$, then our relationship becomes, $$cos(\frac{\pi}{2})=sin(x)*cos(\frac{\pi}{2})+cos(x)*sin(\frac{\pi}{2})$$, which is equivalent to: $$0=cos(x)$$. 
+
+The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry $$cos$$, you are not very original, because $$sin(a+\frac{\pi}{2})=cos(a)$$... it's only a phase they say. But hey, remember I've told you sine and cosine are periodical functions, then there are multiple solutions for $$x$$, so to generalize further we can say that $$sin(a+\underbrace{(\frac{\pi}{2}+2*k*\pi)}_{x})=cos(a)$$, $$\forall k \in \mathbb{Z}$$.
+
+This is of course obvious if we plot the functions side by side:
+
+<div id="sin-cos-side-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sincosside.js)</sup></sup>
+
 # Complex numbers and circles (short math recap)
 
 Complex numbers are numbers that consist of a *real* part. An imaginary part, usually written in the form $$a+b*i$$, where $$a, b \in \mathbb{R}$$, and $$i$$ is the imaginary unit, $$i^2=-1$$ (or, for the less rigorous, $$\sqrt{i}=-1$$).
@@ -291,7 +309,6 @@ The following animation plots random imaginary numbers into the complex plane, t
 
 <div id="in-num-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/imnum.js)</sup></sup>
-
 
 # References
 

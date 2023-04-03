@@ -38,10 +38,14 @@ function pCircle(s, x, y, r, stroke, fill) {
     s.noFill();
 }
 
-function pLine(s, x1, y1, x2, y2, stroke) {
+function pLine(s, x1, y1, x2, y2, stroke, strokeWeight) {
+    if (strokeWeight!==undefined) {
+        s.strokeWeight(strokeWeight);
+    }
     s.stroke(stroke);
     s.line(x1, y1, x2, y2);
     s.noFill();
+    s.strokeWeight(1);
 }
 
 function pLineDashed(s, canvas, pattern, x1, y1, x2, y2, stroke) {
@@ -92,7 +96,7 @@ function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSi
 
     s.stroke(coordSysColor);
     s.fill(coordSysColor);
-    s.line(0, center.y, canvasY, center.y); // horizontal;
+    s.line(0, center.y, canvasX, center.y); // horizontal;
 
     s.fill(coordSysColor);
     s.stroke(coordSysColor);

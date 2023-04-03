@@ -47,8 +47,8 @@ const simpleOscCos = (styles) => {
             pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
             pCircle(s, vRadius.x, vRadius.y, 3, styles.circleColor);
             pLine(s, vCircle.x, vCircle.y, vRadius.x, vRadius.y, styles.lineColor);
-            pLine(s, vRadius.x, vRadius.y, vRadius.x, vCircle.y, styles.sineColor); // sine
-            pLine(s, vCircle.x, vCircle.y, vRadius.x, vCircle.y, styles.cosineColor); // cosine
+            pLine(s, vRadius.x, vRadius.y, vRadius.x, vCircle.y, styles.sineColor, 3); // sine
+            pLine(s, vCircle.x, vCircle.y, vRadius.x, vCircle.y, styles.cosineColor, 3); // cosine
             let vSineLabel = s.createVector(vRadius.x, (vCircle.y + vRadius.y)/2);
             const sineLabelOffset = ((angle%360) >= 180 && (angle%360)<360) ? -65 : 5;
             let angleTextFix = ((angle-90) > 0 ? (angle-90) : (270+angle))%360;
@@ -81,15 +81,16 @@ const simpleOscCos = (styles) => {
             }
             pCircle(s, vCircle.x - radius, startGridCosine, 3, styles.coordSysColor);
             pCircle(s, vCircle.x + radius, startGridCosine, 3, styles.coordSysColor);
-            //TODO numbers
+            pText(s, "1", vCircle.x+radius, startGridCosine-5, 3, styles.coordSysColor);
+            pText(s, "-1", vCircle.x-radius-3, startGridCosine-5, 3, styles.coordSysColor);
             
             // Vertical and horizontal oscilation lines
             pLine(s, vRadius.x, vRadius.y, width, vRadius.y, styles.coordSysColor); // sine
             pLine(s, vRadius.x, vRadius.y, vRadius.x, height, styles.coordSysColor); // cosine
     
             // Moving sine vertical line
-            pLine(s, vPosGridSine.x, vPosGridSine.y, vPosGridSine.x, vRadius.y, styles.sineColor); // sine
-            pLine(s, vCircle.x, vPosGridCos.y, vRadius.x, vPosGridCos.y, styles.cosineColor); // cosine
+            pLine(s, vPosGridSine.x, vPosGridSine.y, vPosGridSine.x, vRadius.y, styles.sineColor, 3); // sine
+            pLine(s, vCircle.x, vPosGridCos.y, vRadius.x, vPosGridCos.y, styles.cosineColor, 3); // cosine
             vPosGridSine.x = vPosGridSine.x + s.radians(1)*radius;
             vPosGridCos.y = vPosGridCos.y + s.radians(1)*radius;
     
@@ -100,31 +101,45 @@ const simpleOscCos = (styles) => {
                 pPoint(s, widthCircleArea/2 + radius*Math.cos(s.radians(wavAngle)), x, styles.lineColor);
             }
             if (s.radians(wavAngle)>Math.PI/2) {
+                // sine
                 let pi2X = startGridSine+(Math.PI/2)*radius;
                 pLineDashed(s, canvas, [5,5], pi2X, vCircle.y, pi2X, vCircle.y-radius, styles.coordSysColor);
                 pLineDashed(s, canvas, [5,5], pi2X, vCircle.y-radius, startGridSine, vCircle.y-radius, styles.coordSysColor);
-                pText(s, "π/2", pi2X, vCircle.y + 35, styles.textColor)       
+                pText(s, "π/2", pi2X, vCircle.y + 35, styles.textColor);
+                // cosine
+                let pi2Y = startGridCosine + (Math.PI/2)*radius;
+                pText(s, "π/2", vCircle.x + 35, pi2Y, styles.textColor);
             }
             if (s.radians(wavAngle)>Math.PI) {
+                // sine
                 let piX = startGridSine + Math.PI * radius;
                 pText(s, "π", piX, vCircle.y + 35, styles.textColor);
+                // cosine
+                let piY = startGridCosine + Math.PI * radius;
+                pLineDashed(s, canvas, [5,5], vCircle.x - radius, startGridCosine, vCircle.x - radius, piY, styles.coordSysColor);
+                pLineDashed(s, canvas, [5,5], vCircle.x - radius, piY, vCircle.x, piY, styles.coordSysColor);
+                pText(s, "π", vCircle.x + 35, piY, styles.textColor);
             }
             if (s.radians(wavAngle)>(3/2)*Math.PI) {
+                // sine
                 let tpi2X = startGridSine + Math.PI * (3/2) * radius;
                 pLineDashed(s, canvas, [5,5], tpi2X, vCircle.y + radius, startGridSine, vCircle.y+radius, styles.coordSysColor);
                 pLineDashed(s, canvas, [5,5], tpi2X, vCircle.y, tpi2X, vCircle.y + radius, styles.coordSysColor);
                 pText(s, "3π/2", tpi2X, vCircle.y - 35, styles.textColor);
+                // cosine
+                let tpi2Y = startGridCosine + Math.PI * (3/2) * radius;
+                pText(s, "3π/2", vCircle.x + 35, tpi2Y, styles.textColor);
             }
             if (s.radians(wavAngle)>2*Math.PI) {
+                // sine
                 let tpiX = startGridSine + Math.PI * 2 * radius;
                 pText(s, "2π", tpiX, vCircle.y + 35, styles.textColor);
+                // cosine
+                let tpiY = startGridCosine + Math.PI * 2 * radius;
+                pLineDashed(s, canvas, [5,5], vCircle.x + radius, startGridCosine, vCircle.x + radius, tpiY, styles.coordSysColor);
+                pLineDashed(s, canvas, [5,5], vCircle.x + radius, tpiY, vCircle.x, tpiY, styles.coordSysColor);
+                pText(s, "2π", vCircle.x - 35, tpiY, styles.textColor);
             }
-
-            // // Paine cosine
-            // wavAngle = 0;
-            // for(let x = widthCircleArea/2 + 2*radius; x < vPosGridCos.y; wavAngle++, y+=s.radians(1)*radius) {
-            //     pPoint(s, widthCircleArea/2 + radius*Math.cos(s.radians(wavAngle)), y, styles.lineColor); // cosine
-            // }
 
     
             angle++;
