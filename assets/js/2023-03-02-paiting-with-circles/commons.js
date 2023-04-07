@@ -1,7 +1,7 @@
 const styles = {
     canvasX : 400,
     canvasY: 400,
-    frameRate: 30,
+    frameRate: 60,
     
     bkgColor : '#F6F8FA',
     circleColor : 'black',
@@ -57,15 +57,15 @@ function pLineDashed(s, canvas, pattern, x1, y1, x2, y2, stroke) {
 }
 
 function pText(s, text, x, y, textColor, textSize) {
-    s.push();
-    if (textSize==undefined) { textSize = styles.textSize; }
-    if (textColor==undefined) { textColor = styles.lineColor; }
+    if (textSize==undefined) 
+        textSize = styles.textSize;
+    if (textColor==undefined) 
+        textColor = styles.lineColor;
     s.textSize(textSize);
-    s.stroke(textColor);
+    s.noStroke();
     s.fill(textColor);
     s.text(text, x, y);
     s.noFill();
-    s.pop();
 }
 
 function pArc(s, x, y, xl, yl, ang1, ang2, stroke, fill) {
@@ -145,4 +145,4 @@ function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSi
         s.text(i, center.x + 10, center.y - i*2*gridStep - 5);
         s.text(-i, center.x + 5, center.y + i*2*gridStep + 5);
     }
-}
+}   

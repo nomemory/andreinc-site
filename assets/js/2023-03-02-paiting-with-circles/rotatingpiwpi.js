@@ -116,4 +116,4 @@ return (s) => {
 
 };
 
-let rotatingPIwPISketch = new p5(rotatingPIwPI(styles), 'rotating-PI-w-PI-sketch');
+// let rotatingPIwPISketch = new p5(rotatingPIwPI(styles), 'rotating-PI-w-PI-sketch');

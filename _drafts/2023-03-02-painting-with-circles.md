@@ -2,8 +2,8 @@
 title: "Painting with Circles, Epycicles and Fourier Transforms"
 date: "2023-03-01"
 classes: wide
-usemathjax: true
-usekatex: false
+usemathjax: false
+usekatex: true
 usep5js: true
 custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/commons.js"
@@ -18,6 +18,8 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosc.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosccos.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -292,16 +294,86 @@ But we know this is true, no matter how we pick $$a$$. So why don't we pick $$a=
 
 Now, let's choose $$a=\frac{\pi}{2}$$, then our relationship becomes, $$cos(\frac{\pi}{2})=sin(x)*cos(\frac{\pi}{2})+cos(x)*sin(\frac{\pi}{2})$$, which is equivalent to: $$0=cos(x)$$. 
 
-The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry $$cos$$, you are not very original, because $$sin(a+\frac{\pi}{2})=cos(a)$$... it's only a phase they say. But hey, remember I've told you sine and cosine are periodical functions, then there are multiple solutions for $$x$$, so to generalize further we can say that $$sin(a+\underbrace{(\frac{\pi}{2}+2*k*\pi)}_{x})=cos(a)$$, $$\forall k \in \mathbb{Z}$$.
+The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry $$cos$$, you are not very original, because $$sin(a+\frac{\pi}{2})=cos(a)$$... it's only a phase they say. But hey, remember I've told you sine and cosine are periodical functions, then there are multiple solutions for $$x$$, so to generalize further we can say that $$sin(a+\underbrace{(\frac{\pi}{2}+2k\pi)}_{x})=sin(a+\frac{\pi}{2})=cos(a)$$, $$\forall k \in \mathbb{Z}$$.
 
 This is of course obvious if we plot the functions side by side:
 
 <div id="sin-cos-side-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sincosside.js)</sup></sup>
 
+Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. All in all, don't get lost in details, whenever we refer to the term *sinusoid* we refer to both sine and cosine, without discrimination. *In a world of sines, always struggle to be the cosine!*
+
+# "Customising" the sine function (sinusoids)
+
+As Software Engineers, our first reflex is to make our code more extensible and customisable, so why don't we introduce a few more parameters to our sine function so that we can "control" it's behavior further.
+
+So why don't we introduce $$y(t)$$, as a function of "time" where:
+
+$$y(t) = A * sin(2\pi ft + \varphi) = A * sin(\omega t + \varphi)$$
+
+This function is called a *sinusoidal wave*, or simply a *sinusoid*, and it often occurs in physics (and mathematics), engineering and signal processing. Altering the parameters of the function, alters the way we plot it on the Cartesian Grid.
+
+But speaking of params:
+* $$A$$ is called the *amplitutde*, and represents the maximum deviation of the function from zero. The deviation can be both negative and positive.
+* $$f$$ is called *ordinary frequency* (not in a pejorative way), and denotes the number of oscilations (the radius moving inside the circle) that occur each second of time.
+* $$\omega=2\pi f$$ is called the *angular frequency*, it's same as *ordinary frequency* but it's expressed in $$\frac{radians}{second}$$;
+* $$\varphi$$ is called *phase* (measured in radians);
+
+If we consider *time* to be the x-axis the sinusoid is:
+
+$$y=f(x)=A * sin(\omega x + \varphi)$$
+
+If we pick $$A=1$$, and $$\omega=1$$ (and $$\varphi=\frac{\pi}{2}$$) we get our $$sin$$ and $$cos$$ functions back. But in the name of science, let's see how our *sinusoid* behaves under different circumstances. 
+
+The following animation is interactive. You can choose the values of $$A=$$ 
+    <select id="sinusoid_A" onchange="updateSinusoids()">
+        <option value="0.5">0.5</option>
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+    </select>
+    , $$\omega=$$
+        <select id="sinusoid_omega" onchange="updateSinusoids()">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select> 
+    and $$\varphi=$$ 
+    <select id="sinusoid_phi" onchange="updateSinusoids()">
+        <option value="0" selected>0</option>
+        <option value="0.5">π/2</option>
+        <option value="1">π</option>
+        <option value="1.5">3π/2</option>
+    </select> 
+    to plot the sinusoid (if you pick $$\varphi=\frac{\pi}{2}$$ a cosine is plotted):
+
+<div id="sinusoids-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sinusoids.js)</sup></sup>
+
+* $$A$$ actually corresponds to the radius of the circle used to generate the oscilation. If we increase the amplitutde we increase the radius of the circle;
+* $$\omega$$ increases the frequency. This means more "waves" will be squeezed together inside the $$2\pi$$ interval than for a normal sine/cosine wave.
+* $$\varphi$$ increases the phase. If for example we set $$\varphi=\frac{\pi}{2}$$, our sine becomes a cosine.
+
+# Adding sinusoids
+
+At this point things will become more interesting. If you start suming up sinusoids, new oscillating patterns will appear. The more sinusoids we sum-up, the more complex the patterns are going to be. If we have enough sinusoids around, we can start "painting" (approximating) real-world shapes. Philosophicall speaking, if we have an infinity of sinusoids at our disposal, and with just a little mathematical imagination, we can "draw" the exact everything. And remember, it all started with the circle.
+
+But, let's take it slowly and sum-up a few sinusoids to see what's happening. Visually speaking, adding two sinusoids is just like adding two "normal" mathematical functions. 
+
+
+So let's plot two arbitrary selected sinusoids $$y_{1}(x)$$ and $$y_{2}(x)$$, where:
+* $$y_{1}(x) = \frac{1}{2} * sin(7x + \frac{\pi}{2})$$, and 
+* $$y_{2}(x) = \frac{7}{10} * sin(3x - 2)$$ .
+
+The sum $$y(x)=y_{1}(x) + y_{2}(x)$$ already looks more "fascinating".
+
+<div id="sum-simple-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumsimple.js)</sup></sup>
+
 # Complex numbers and circles (short math recap)
 
-Complex numbers are numbers that consist of a *real* part. An imaginary part, usually written in the form $$a+b*i$$, where $$a, b \in \mathbb{R}$$, and $$i$$ is the imaginary unit, $$i^2=-1$$ (or, for the less rigorous, $$\sqrt{i}=-1$$).
+Complex numbers are numbers that consist of a *real* part. An imaginary part, usually written in the form $$a+b*i$$, where $$a, b \in \mathbb{R}$$, and $$i$$ is the imaginary unit, so that $$i^2=-1$$.
 
 Complex numbers can also be represented geometrically as points in the complex plane. The real part of a complex number corresponds to the $$x$$-coordinate of the point, while the imaginary part corresponds to the $$y$$-coordinate. $$x$$ becomes $$Re$$ (gets its name from the word *Real*) and $$y$$ becomes $$Im$$ (gets its name from the word *Imaginary*).
 

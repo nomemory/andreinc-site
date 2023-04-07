@@ -82,4 +82,4 @@ return (s) => {
 
 };
 
-let triangleInCircleSketch = new p5(triangleInCircle(styles), 'triangle-in-circle-sketch');
+// let triangleInCircleSketch = new p5(triangleInCircle(styles), 'triangle-in-circle-sketch');

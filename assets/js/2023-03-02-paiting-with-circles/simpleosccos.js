@@ -87,7 +87,6 @@ const simpleOscCos = (styles) => {
             // Vertical and horizontal oscilation lines
             pLine(s, vRadius.x, vRadius.y, width, vRadius.y, styles.coordSysColor); // sine
             pLine(s, vRadius.x, vRadius.y, vRadius.x, height, styles.coordSysColor); // cosine
-    
             // Moving sine vertical line
             pLine(s, vPosGridSine.x, vPosGridSine.y, vPosGridSine.x, vRadius.y, styles.sineColor, 3); // sine
             pLine(s, vCircle.x, vPosGridCos.y, vRadius.x, vPosGridCos.y, styles.cosineColor, 3); // cosine
@@ -96,7 +95,7 @@ const simpleOscCos = (styles) => {
     
             // Paint sine
             let wavAngle = 0;
-            for(let x = heightCircleArea/2 + 2*radius; x < vPosGridSine.x; wavAngle++, x+=s.radians(1)*radius) {
+            for(let x = heightCircleArea/2 + 2*radius; x < width; wavAngle++, x+=s.radians(1)*radius) {
                 pPoint(s, x, heightCircleArea/2 - radius*Math.sin(s.radians(wavAngle)), styles.lineColor);  // sine
                 pPoint(s, widthCircleArea/2 + radius*Math.cos(s.radians(wavAngle)), x, styles.lineColor);
             }
@@ -151,7 +150,7 @@ const simpleOscCos = (styles) => {
     
     };
         
-    let simpleOscCosSketch = 
-            new p5(simpleOscCos(styles), 'simple-osc-cos-sketch');
+    // let simpleOscCosSketch = 
+    //         new p5(simpleOscCos(styles), 'simple-osc-cos-sketch');
         
         

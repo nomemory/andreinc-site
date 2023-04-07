@@ -1,4 +1,4 @@
 const circleWaves = (s) => {
 }
 
-let circleWavesSketch = new p5(circleWaves, 'circle-waves-sketch');
+// let circleWavesSketch = new p5(circleWaves, 'circle-waves-sketch');

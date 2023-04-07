@@ -48,4 +48,4 @@ return (s) => {
 
 };
 
-let imNumSketch = new p5(imNum(styles), 'in-num-sketch');
+// let imNumSketch = new p5(imNum(styles), 'in-num-sketch');

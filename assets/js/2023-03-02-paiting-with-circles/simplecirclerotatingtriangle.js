@@ -88,6 +88,6 @@ return (s) => {
 
 }
 
-let simpleCircleRotatingTriangleSketch = 
-    new p5(simpleCircleRotatingTriangle(styles), 'simple-circle-rotating-triangle-sketch');
+// let simpleCircleRotatingTriangleSketch = 
+//     new p5(simpleCircleRotatingTriangle(styles), 'simple-circle-rotating-triangle-sketch');
 

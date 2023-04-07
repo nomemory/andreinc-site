@@ -168,4 +168,4 @@ const rotatingPIwPI = (s) => {
     };
 };
 
-let rotatingPIwPISketch = new p5(rotatingPIwPI, 'rotating-PI-w-PI-sketch');
+// let rotatingPIwPISketch = new p5(rotatingPIwPI, 'rotating-PI-w-PI-sketch');

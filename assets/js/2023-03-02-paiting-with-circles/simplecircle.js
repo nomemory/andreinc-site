@@ -43,4 +43,4 @@ return (s) => {
 
 };
 
-let simpleCircleSketch = new p5(simpleCircle(styles), 'simple-circle-sketch');
+// let simpleCircleSketch = new p5(simpleCircle(styles), 'simple-circle-sketch');

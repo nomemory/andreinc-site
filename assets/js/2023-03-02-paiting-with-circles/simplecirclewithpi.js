@@ -96,6 +96,6 @@ return (s) => {
 
 };
 
-let simpleCircleWithPiSketch = 
-    new p5(simpleCircleWithPi(styles), 'simple-circle-with-pi-sketch');
+// let simpleCircleWithPiSketch = 
+//     new p5(simpleCircleWithPi(styles), 'simple-circle-with-pi-sketch');
 

@@ -2,61 +2,104 @@ const simpleCircleRotating = (styles) => {
 
 return (s) => {
 
-    const diam          = 200;
-    const radius        = diam/2;
-    const frequency     = 1;
-    const initialAngle  = 90;
-    const gridStep      = diam/4;
-    const arcRd1        = diam/6;
-    const arcRd2        = diam/6;
-    const arcAng        = s.radians(0);
+    // Constants
+    const d = 200;      // circle diameter
+    const r = d/2;      // radius
+    const frm = 30;     // fixed frame rate
+    const f = 1/10;     // frequency
 
-    let angle           = initialAngle;
+    // Angle
+    let angl = 0;
+
+    // Vectors
+    let vC, vR, vCoord, vRLab; 
+
+    // Buffers
+    let cBuff;
+
+    /**
+     * 
+     * @param {*} gridBuff The buffer 
+     * @param {*} w The width of the buffer
+     * @param {*} h The height of the buffer
+     * @param {*} o The origin of the grid as a vector
+     * @param {*} unit The size of the unit
+     * @param {*} x The label of the x axis
+     * @param {*} y The label of the y axis
+     */
+    s.paintGrid = (gridBuff, w, h, o, unit, x, y) => {
+        gridBuff.noFill();
+        gridBuff.stroke(1);
+
+        // The number of steps to paint on the bottom side of the grid
+        let yBotSteps = (h-o.y)/unit;
+        for(let i = 0; i < yBotSteps; i++) s.circle(o.x, o.y+i*unit, 3);
+        // The number of steps to paint on the top side of the grid
+        let yTopSteps = o.y/unit;
+        for(let i = 0; i < yTopSteps; i++) s.circle(o.x, o.y-i*unit, 3);
+        // Origin
+        s.circle(o.x, o.y, 3); 
+    };
 
     s.setup = () => { 
         // Create Canvas of given size 
-        const canvas = s.createCanvas(styles.canvasX, styles.canvasY); 
-        canvas.parent('simple-circle-rotating-sketch');
+        s.createCanvas(styles.canvasX, styles.canvasY); 
 
         s.textFont(styles.textFont);
-        s.setAttributes('antialias', true);
-        s.frameRate(styles.frameRate);
+        s.frameRate(frm);
+
+        // Initialise circle in the center of the canvas
+        cBuff = s.createGraphics(styles.canvasX, styles.canvasY);
+        vC = s.createVector(s.width/2, s.height/2);
+        vCoord = s.createVector(0, 0);
+        vRLab = s.createVector(0, 0);
+
+        // Draw the main circle exactly once on the buffer
+        cBuff.noFill();
+        cBuff.circle(vC.x, vC.y, d);
+        cBuff.circle(vC.x, vC.y, 3);
+
+        // Draw the grid on the buffer
+        s.paintGrid(cBuff, s.width, s.height, vC, r, "x", "y");
     }; 
 
     s.draw = () => {
         s.background(styles.bkgColor);
+        s.image(cBuff, 0, 0);
 
-        // Defining and drawing main circle vector + grid
-        let vCircle = s.createVector(s.width/2, s.height/2);
-        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
-        paintGrid(s, styles.canvasX, styles.canvasY, styles.coordSysColor, 
-            styles.gridColor, vCircle, styles.textSize, gridStep);
 
-        // Defining and drawing the moving radius
-        let vRad = s.createVector(
-            vCircle.x+Math.sin(s.radians(angle)*frequency)*radius,
-            vCircle.y+Math.cos(s.radians(angle)*frequency)*radius
+        // Painting the lines, adding a 'stroke' of 1
+        s.stroke(1);
+
+        // Updating and rendering the moving radius vector
+        vR = s.createVector(
+            vC.x+s.sin(angl*f)*r,
+            vC.y+s.cos(angl*f)*r
         );
-        angle++;
-        if (angle>360) angle = 0; // reset angle once the circle is complete
-        pLine(s, vCircle.x, vCircle.y, vRad.x, vRad.y, styles.radiusColor);
-        pCircle(s, vRad.x, vRad.y, 3, styles.circleColor);
+        s.line(vC.x, vC.y, vR.x, vR.y);
+        s.circle(vR.x, vR.y, 3);
+
+        // At this point we are painting text, so we remove the 'stroke'
+        s.noStroke();
 
         // Paint moving coordinates
-        let vMovCoord = s.createVector((vRad.x-vCircle.x)/radius, (vCircle.y-vRad.y)/radius);
-        pText(s, "(x="+vMovCoord.x.toFixed(2)+",y=" + vMovCoord.y.toFixed(2)+")", vRad.x, vRad.y);
+        vCoord.x = (vR.x-vC.x)/r;
+        vCoord.y = (vR.y-vC.y)/r;
+        s.text("(x="+vCoord.x.toFixed(2)+",y=" + vCoord.y.toFixed(2)+")", vR.x, vR.y);
 
-        // Show Radius
-        let vRadLabel = s.createVector(
-            (vCircle.x + vRad.x)/2, 
-            (vCircle.y + vRad.y)/2
-        );
-        pText(s, "r (radius)", vRadLabel.x, vRadLabel.y, styles.circleColor);
+        // Show Radius*frequency
+        vRLab.x = (vC.x + vR.x)/2;
+        vRLab.y = (vC.y + vR.y)/2;
+        s.text("r (radius)", vRLab.x, vRLab.y, styles.circleColor);
 
         // Show sum at the bottom of the canvas
-        let sqrX=(vMovCoord.x*vMovCoord.x).toFixed(2);
-        let sqrY=(vMovCoord.y*vMovCoord.y).toFixed(2);
-        pText(s, "x² + y² = " + sqrX + " + " + sqrY + " = 1", 5, vCircle.y + s.width/2 - 10);
+        let sqrX=(vCoord.x*vCoord.x).toFixed(2);
+        let sqrY=(vCoord.y*vCoord.y).toFixed(2);
+        s.text("x² + y² = " + sqrX + " + " + sqrY + " = 1", 5, vC.y + s.width/2 - 10);
+
+        angl+=f;
+        if (angl>s.TWP_PI*1/f) angl = 0; // reset angle once the circle is complete
+        s.text(s.frameRate(), s.width-50, s.height-50);
     };
 };
 

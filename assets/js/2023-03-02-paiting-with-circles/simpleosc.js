@@ -73,7 +73,7 @@ return (s) => {
 
         // Paint sinus function
         let sinAngle =0;
-        for(let x = height/2 + 2*radius; x < vPosGrid.x; sinAngle++, x+=s.radians(1)*radius) {
+        for(let x = height/2 + 2*radius; x < width; sinAngle++, x+=s.radians(1)*radius) {
             pPoint(s, x, height/2 - radius*Math.sin(s.radians(sinAngle)), styles.lineColor);            
         }
 
@@ -107,7 +107,7 @@ return (s) => {
 
 };
     
-let simpleOscSketch = 
-        new p5(simpleOsc(styles), 'simple-osc-sketch');
+// let simpleOscSketch = 
+//         new p5(simpleOsc(styles), 'simple-osc-sketch');
     
     
