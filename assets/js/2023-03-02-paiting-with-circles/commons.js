@@ -1,10 +1,12 @@
-const styles = {
-    canvasX : 400,
+const theme = {
+    canvasX: 400,
     canvasY: 400,
-    frameRate: 60,
-    
-    bkgColor : '#F6F8FA',
-    circleColor : 'black',
+    frameRate: 30,
+    frequency: 1 / 10,
+
+    bkgColor: '#F6F8FA',
+    lightCircleColor: 'silver',
+    circleColor: 'black',
     lineColor: 'black',
     sineColor: 'red',
     cosineColor: 'blue',
@@ -12,137 +14,111 @@ const styles = {
     reColor: 'blue',
     thetaColor: 'green',
     thetaColorLight: '#b0ffd0',
-    gridColor: 'lightgray',
-    coordSysColor: 'gray',
     radiusColor: 'black',
+    radiusColorLight: '#92b9b9',
 
-    textFont : "monospace",
-    textColor : 'black',
-    textSize : 12,
+    primaryAxis: '#c1d7d7',
+    secondaryAxis: '#e0ebeb',
+    intersections: '#92b9b9',
+
+    textFont: "monospace",
+    textColor: 'black',
+    textSize: 12,
 }
 
-// Shapes
-function pPoint(s, x, y, stroke) {
-    s.stroke(stroke);
-    s.point(x,y);
-    s.noFill();
-}
-function pCircle(s, x, y, r, stroke, fill) {
-    s.stroke(stroke);
-    if (fill!=undefined) {
-        s.fill(fill);
-    } else {
-        s.noFill();
-    }
-    s.circle(x,y,r);
-    s.noFill();
-}
+const addPaintGrid = (s) => {
 
-function pLine(s, x1, y1, x2, y2, stroke, strokeWeight) {
-    if (strokeWeight!==undefined) {
-        s.strokeWeight(strokeWeight);
-    }
-    s.stroke(stroke);
-    s.line(x1, y1, x2, y2);
-    s.noFill();
-    s.strokeWeight(1);
-}
+    s.paintGrid = (gridBuff, w, h, o, uSize, eUnit, props) => {
+        gridBuff.noFill();
+        gridBuff.push();
+        gridBuff.stroke(1);
 
-function pLineDashed(s, canvas, pattern, x1, y1, x2, y2, stroke) {
-    canvas.drawingContext.setLineDash(pattern);
-    s.stroke(stroke);
-    s.line(x1, y1, x2, y2);
-    s.noFill();
-    canvas.drawingContext.setLineDash([]);
-}
+        // Primary axis (OX, OY)
+        gridBuff.push();
+        gridBuff.stroke(s.color(theme.primaryAxis));
+        gridBuff.line(0, o.y, h, o.y);
+        gridBuff.line(o.x, 0, o.x, w);
+        gridBuff.pop();
 
-function pText(s, text, x, y, textColor, textSize) {
-    if (textSize==undefined) 
-        textSize = styles.textSize;
-    if (textColor==undefined) 
-        textColor = styles.lineColor;
-    s.textSize(textSize);
-    s.noStroke();
-    s.fill(textColor);
-    s.text(text, x, y);
-    s.noFill();
-}
+        // Secondary axis
+        gridBuff.stroke(s.color(theme.secondaryAxis));
+        for (let i = o.x; i < w; i += uSize)  gridBuff.line(i, 0, i, h);
+        for (let i = o.x; i >= 0; i -= uSize) gridBuff.line(i, 0, i, h);
+        for (let i = o.y; i < h; i += uSize) gridBuff.line(0, i, w, i);
+        for (let i = o.y; i > 0; i -= uSize) gridBuff.line(0, i, w, i);
 
-function pArc(s, x, y, xl, yl, ang1, ang2, stroke, fill) {
-    if (fill==undefined) {
-        s.noFill();
-    } else {
-        s.fill(fill);
-    }
-    s.stroke(stroke);
-    s.arc(x, y, xl, yl, ang1, ang2);
-}
-
-function pauseLoop(s, condition, droppedRate, frameRate, timeOut, runThis) {
-    if (condition) {
-        s.frameRate(droppedRate);
-        setTimeout(() => {
-            s.frameRate(frameRate);
-            if (runThis!==undefined) {
-                runThis();
+        // Adding units
+        if (props !== undefined && props.showUnits === true) {
+            gridBuff.push();
+            gridBuff.fill(theme.textColor);
+            if (props !== undefined && props.showX === true) {
+                for (let i = eUnit, lb = 1, q1x = (w - o.x) / uSize; i < q1x; i += eUnit, lb++) {
+                    gridBuff.text(" " + lb, (o.x + i * uSize) + 5, o.y + 15);
+                    gridBuff.push();
+                    gridBuff.noFill();
+                    gridBuff.stroke(theme.intersections);
+                    gridBuff.circle(o.x + i * uSize, o.y, 3);
+                    gridBuff.pop();
+                }
+                for (let i = eUnit, lb = 1, q2x = o.y / uSize; i < q2x; i += eUnit, lb++) {
+                    gridBuff.text("-" + lb, (o.x - i * uSize) - 15, o.y + 15);
+                    gridBuff.push();
+                    gridBuff.noFill();
+                    gridBuff.stroke(theme.intersections);
+                    gridBuff.circle(o.x - i * uSize, o.y, 3);
+                    gridBuff.pop();
+                }
             }
-        }, timeOut);
-    }
-}
-
-function paintGrid(s, canvasX, canvasY, coordSysColor, gridColor, center, textSize, gridStep, xLabel, yLabel) {
-    if (undefined===xLabel) { xLabel="x"; }
-    if (undefined===yLabel) { yLabel="y"; }
-
-    s.stroke(coordSysColor);
-    s.fill(coordSysColor);
-    s.line(0, center.y, canvasX, center.y); // horizontal;
-
-    s.fill(coordSysColor);
-    s.stroke(coordSysColor);
-    s.line(center.x, 0, center.x, canvasY); // vertical;
-
-    s.textSize(textSize);
-    s.stroke(coordSysColor);
-    s.fill(coordSysColor);
-    s.text(xLabel, canvasX - s.textSize() - 5, center.y - 10);
-
-    s.textSize(textSize);
-    s.stroke(coordSysColor);
-    s.fill(coordSysColor);
-    s.text(yLabel, center.x - s.textSize() - 12, 15);
-
-    // Painting the grid
-    for(let i = gridStep; i < canvasX; i+=gridStep) {
-        s.stroke(gridColor);
-        s.line(i, 0, i,canvasY); // vertical lines
-    }
-    for(let i = gridStep; i < canvasY; i+=gridStep) {
-        s.stroke(gridColor);
-        s.line(0,i,canvasX,i); // horizontal lines
-    }
-    for(let i = gridStep; i < canvasX; i+=gridStep) {
-        for(let j = gridStep; j < canvasY; j+=gridStep) {
-            s.stroke(gridColor);
-            s.circle(i,j,3);
+            if (props !== undefined && props.showY === true) {
+                for (let i = eUnit, lb = 1, q1y = o.y / uSize; i < q1y; i += eUnit, lb++) {
+                    gridBuff.text(" " + lb, o.x + 5, o.y - i * uSize - 5);
+                    gridBuff.push();
+                    gridBuff.noFill();
+                    gridBuff.stroke(theme.intersections);
+                    gridBuff.circle(o.x, o.y - i * uSize, 3);
+                    gridBuff.pop();
+                }
+                for (let i = eUnit, lb = 1, q2y = o.y / uSize; i < q2y; i += eUnit, lb++) {
+                    gridBuff.text("-" + lb, o.x + 5, o.y + i * uSize + 15);
+                    gridBuff.push();
+                    gridBuff.noFill();
+                    gridBuff.stroke(theme.intersections);
+                    gridBuff.circle(o.x, o.y + i * uSize, 3);
+                    gridBuff.pop();
+                }
+            }
         }
-    }
-    
-    let hCells = (center.x / (2*gridStep));
-    let vCells = (center.y / (2*gridStep));
-    
-    s.stroke(coordSysColor);
-    s.text(0, center.x + 10, center.y + 15);
-    for(let i = 1; i < hCells; i++) {
-        //x gradation
-        s.stroke(coordSysColor);
-        s.text(i, center.x + i*2*gridStep + 5, center.y + 15);
-        s.text(-i, center.x - i*2*gridStep -15, center.y +15);
-    }
-    for(let i = 1; i < vCells; i++) {
-        //y gradtion
-        s.stroke(coordSysColor);
-        s.text(i, center.x + 10, center.y - i*2*gridStep - 5);
-        s.text(-i, center.x + 5, center.y + i*2*gridStep + 5);
-    }
-}   
+
+        // The origin of the grid
+        if (props !== undefined && props.showOrigin === true) {
+            gridBuff.circle(o.x, o.y, 3);
+            gridBuff.text("0", o.x + 5, o.y + 15);
+            gridBuff.pop();
+        }
+        gridBuff.pop();
+    };
+    return s;
+};
+
+const addPauseLoop = (s) => {
+    s.pauseLoop = (condition, droppedRate, frameRate, timeOut, runThisBefore, runThisAfter) => {
+        if (condition) {
+            runThisBefore();
+            s.frameRate(droppedRate);
+            setTimeout(() => {
+                s.frameRate(frameRate);
+                if (runThis !== undefined) {
+                    runThisAfter();
+                }
+            }, timeOut);
+        }
+    };
+    return s;
+};
+
+const addShowFps = (s) => {
+    s.showFps = () => {
+        s.text(s.frameRate().toFixed(1) + "fps", s.width - 55, s.height - 5);
+    };
+    return s;
+}

@@ -1,46 +1,45 @@
 
-const simpleCircle = (styles) => {
+const simpleCircle = (s) => {
 
-return (s) => {
+    addPaintGrid(s);
     
-    const diameter = 250;
-    let radius = diameter/2;
+    const d = 250;
+    const r = d/2;
+
+    let vC, vR, vTxtAb, vTxtRad;
 
     s.setup = () => { 
-        s.createCanvas(styles.canvasX-100, styles.canvasY-100);
-        s.setAttributes('antialias', true); 
+        s.createCanvas(theme.canvasX, theme.canvasY);
+        vC = s.createVector(s.width/2, s.height/2);
+        vR = s.createVector(vC.x+r, vC.y);
+        buff = s.createGraphics(theme.canvasX, theme.canvasY);
+        vTxtAb = s.createVector(vC.x - 12, vC.y + 12);
+        vTxtRad = s.createVector(vC.x + r/2 - 20, vC.y - 12);
+        s.paintGrid(buff, s.width, s.height, vC, r/5, 5);
         s.noLoop();
     }; 
 
     s.draw = () => {
-        
         // Sets up the background color
-        s.background(styles.bkgColor);
+        s.background(theme.bkgColor);
+        s.image(buff, 0, 0);
 
         // Draw a circle
-        let vCircle = s.createVector(s.width/2, s.height/2);     
-        pCircle(s, vCircle.x, vCircle.y, diameter, styles.circleColor, styles.bkgColor);
+        s.noFill();
+        s.circle(vC.x, vC.y, d);
+        s.circle(vC.x, vC.y, 3);
+        s.circle(vR.x, vR.y, 3);
 
-        // Draw a smaller circle in the center of the previous one
-        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
-
-        // Draw the radius
-        let vRad = s.createVector(vCircle.x+radius, vCircle.y);
-        pLine(s, vCircle.x, vCircle.y, vRad.x, vRad.y, styles.lineColor);
-
-        // Draw a small circle on the initial bigger circle
-        pCircle(s, vRad.x, vRad.y, 3, styles.circleColor);
+        // // Draw the radius
+        s.stroke(1);
+        s.line(vC.x, vC.y, vR.x, vR.y);
 
         // Draw the origin text
-        let vTxtAb = s.createVector(vCircle.x - 12, vCircle.y + 12);
-        pText(s, "(a,b)", vTxtAb.x, vTxtAb.y);
-
-        // Draw radius text
-        let vTxtRad = s.createVector(vCircle.x + radius/2 - 20, vCircle.y - 12);
-        pText(s, "r (radius)", vTxtRad.x, vTxtRad.y, styles.textSize, styles.textColor);
+        s.noStroke();
+        s.fill('black');
+        s.text("(a,b)", vTxtAb.x, vTxtAb.y);
+        s.text("r (radius)", vTxtRad.x, vTxtRad.y);
     };
 }
 
-};
-
-// let simpleCircleSketch = new p5(simpleCircle(styles), 'simple-circle-sketch');
+let simpleCircleSketch = new p5(simpleCircle, 'simple-circle-sketch');

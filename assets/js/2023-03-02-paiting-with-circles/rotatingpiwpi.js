@@ -1,119 +1,111 @@
-const rotatingPIwPI = (styles) => {
+const rotatingWPi = (s) => {
 
-return (s) => {
+    addShowFps(s);
+    addPaintGrid(s);
+    addPauseLoop(s);
 
-    const canvasX = 500;
-    const canvasY = 200;
-    const hLineRatio = 6/8;
-    const diam = 100;
-    const radius = diam/2;
-    const step = radius;
-    const rulerY = canvasY * hLineRatio;
-    const rulerOffset = 70;
+    const w = 425;
+    const h = 200;
+    const d = 100;
+    const r = d / 2;  // diameter of the moving center
+    const rThet = r/2;
+    const xOff = r; // the offset of x for the grid system
 
-    let tex;
-    
-    const coef = [
-        [1/6, "1/6 * π", "30°" ], [1/4, "1/4 * π", "45°" ], [1/3, "1/3 * π", "60°" ], [1/2, "1/2 * π", "90°"], 
-        [2/3, "2/3 * π", "120°"], [3/4, "3/4 * π", "135°"], [5/6, "5/6 * π", "150°"], [1, "π", "180°"],
-        [7/6, "7/6 * π", "210°" ], [5/4, "5/4 * π", "225°" ], [4/3, "4/3 * π", "240°" ], [3/2, "3/2 * π", "270°"],
-        [5/3, "5/3 * π", "300°" ], [7/4, "7/4 * π", "315°" ], [11/6, "11/6 * π", "330°"], [2, "2 * π", "360°"]
-    ];
+    let ang = 0; // angle used for computing sin and cos
+    let vC, vM;  // center of the circle and the moving smaller circle
+    let vThet;   // vector associated with drawing theta
+    let buff;    // graphics buffer for painting the grid
 
-    const coefXMap = {
-        30:0, 45:0, 60:2, 90:3,
-        120:4, 135:5, 150:6, 180:7,
-        210:8, 225:9, 240:10, 270:11,
-        300:12, 315:13, 330:14, 360:15
-    };
-
-    let vCircle;
-    let vMovCircle;
-    let movCircleAngle;
-    let coefIdx;
-
-    s.initConditions = () => {
-        vCircle = s.createVector(rulerOffset, rulerY-diam/2);
-        vMovCircle = s.createVector(vCircle.x, vCircle.y-diam/2);
-        movCircleAngle = 179;
-        coefIdx = 0;
-    }
-
-    s.setup = () => { 
-        const canvas = s.createCanvas(canvasX, canvasY); 
-        canvas.parent('rotating-PI-w-PI-sketch')
-        s.textFont(styles.textFont);
-        s.setAttributes('antialias', true);
-        s.frameRate(styles.frameRate); 
-
-        // Tex
-      
-        // Init properties
-        s.initConditions();
+    s.setup = () => {
+        // Create Canvas of given size 
+        const canvas = s.createCanvas(w, h);
+        canvas.parent('rotating-PI-w-PI-sketch');
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
+        // Initialise vectors
+        vC = s.createVector(xOff, h / 2);
+        vM = s.createVector(
+            vC.x + s.sin(ang) * r,
+            vC.y + s.cos(ang) * r
+        );
+        vThet = s.createVector(
+            vC.x + s.sin(ang/2) * rThet,
+            vC.y + s.cos(ang/2) * rThet
+        );
+        // Circle Buffer
+        buff = s.createGraphics(w, h);
+        // Draw horizontal line
+        buff.push();
+        let vPgo = s.createVector(vC.x, vC.y + r);
+        let pGProps = {
+            showUnits: true,
+            showOrigin: true,
+            showY: false,
+            showX: true
+        };
+        s.paintGrid(buff, s.width, s.height, vPgo, r / 2, 2, pGProps);
+        buff.pop();
     };
 
     s.draw = () => {
-        s.background(styles.bkgColor);
+        s.background(theme.bkgColor);
+        s.image(buff, 0, 0);
 
-        // Draw horizontal line (ruler)
-        pLine(s, 0, rulerY, s.width, rulerY, styles.coordSysColor);
+        // Painting rotating circle
+        s.push();
+        s.noFill();
+        s.circle(vC.x, vC.y, d);
+        s.circle(vC.x, vC.y, 3);
+        s.pop();
 
-        // Ruler on the horizontal line
-        for(let i = rulerOffset, j = 0; i < s.width; i+=step, j++) {
-            pCircle(s, i, rulerY, 3, styles.coordSysColor);
-            pText(s, j, i-4, rulerY + 15, styles.coordSysColor, styles.coordSysColor);
-        }
+        // Moving circle
+        s.push();
+        s.fill(theme.thetaColor);
+        s.stroke(theme.thetaColor)
+        s.circle(vM.x, vM.y, 5);
+        s.line(vC.x, vC.y, vM.x, vM.y);
+        s.pop();
 
-        // Draw main circle
-        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
-        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
-
-        // The moving arc
+        // Green line on x-axis
+        s.push();
+        s.stroke(theme.thetaColor);
         s.strokeWeight(3);
-        pArc(s, vCircle.x, vCircle.y, diam, diam, 
-            s.radians(270), s.radians(90-movCircleAngle), 
-            styles.thetaColor, styles.thetaColorLight);
-        s.strokeWeight(1);
-        pLine(s, vCircle.x, vCircle.y, vMovCircle.x, vMovCircle.y, styles.coordSysColor);
-        pLine(s, vCircle.x, vCircle.y, vCircle.x, vCircle.y-radius, styles.coordSysColor);
+        s.line(xOff, h / 2 + r, vC.x, h / 2 + r);
+        s.pop();
 
-        // Compute the new coordinates for the circles
-        // the moving one, used to define the arc
-        vMovCircle = s.createVector(
-            vCircle.x + Math.sin(s.radians(movCircleAngle))*radius,
-            vCircle.y + Math.cos(s.radians(movCircleAngle))*radius
-        );
+        // Horizontal line going through the midle of the circle
+        s.push();
+        s.stroke(theme.primaryAxis);
+        s.line(vC.x, vC.y, vC.x, w);
+        s.pop();
 
-        // Main circle
-        vCircle = s.createVector(vCircle.x + (s.radians(1)*radius), vCircle.y);
+        // Angle
+        s.push();
+        s.stroke(theme.thetaColor);
+        s.fill(theme.thetaColorLight);
+        s.arc(vC.x, vC.y, d, d, s.HALF_PI, -s.PI-(s.HALF_PI+ang));
+        s.noStroke();
+        s.fill(theme.thetaColor);
+        let tInD = (-1)*(ang*180/s.PI).toFixed(2)
+        s.text("θ = "+ tInD+"°", vThet.x, vThet.y);
+        s.text("θ = "+ (-1)*ang.toFixed(2) + " (rad)", vC.x + 5, h/2 + r + 40);
+        s.pop();
 
-        let vMovAngle = s.createVector(
-            vCircle.x + Math.sin(s.PI/2+s.radians(movCircleAngle)/2)*radius/8,
-            vCircle.y + Math.cos(s.PI/2+s.radians(movCircleAngle)/2)*radius/8
-        );
-        let movAngleTxt = movCircleAngle < 180 ? (180-movCircleAngle) : (540-movCircleAngle);
-        pText(s, "θ=" + (movAngleTxt)+ "°", vMovAngle.x, vMovAngle.y, styles.thetaColor);
-
-        if (movCircleAngle in coefXMap) {
-            pLine(s, vCircle.x, rulerY, vCircle.x-20, rulerY+30, styles.gridColor);
-            pText(s, "θ = ("+coef[coefIdx][1] + ") → " + coef[coefIdx][2], vCircle.x-50, rulerY+40, styles.lineColor);
-            pauseLoop(s, true, 0, styles.frameRate, 2000);
-            pLine(s, rulerOffset, rulerY + 3, vCircle.x, vCircle.y + radius + 3, styles.thetaColor);
-            coefIdx++;                                        
+        if (s.mouseIsPressed) {
+            if (s.dist(s.mouseX, s.mouseY, vC.x, vC.y) < r) {
+                if (s.mouseX - r >= 0 && s.mouseX - xOff < s.TWO_PI * r) {
+                    vC.x = s.mouseX;
+                    ang = -(vC.x - xOff)/r;
+                    vM.x = vC.x + s.sin(ang) * r;
+                    vM.y = vC.y + s.cos(ang) * r;
+                    vThet.x = vC.x + s.sin(ang/2) * rThet;
+                    vThet.y = vC.y + s.cos(ang/2) * rThet;
+                }
+            }
         }
 
-        // Reset angle
-        movCircleAngle--;
-        if (movCircleAngle==0) movCircleAngle=360;
-
-        // Reset animation back to the initial conditions
-        pauseLoop(s, (coefIdx==16), 0, styles.frameRate, 2000, () => {
-            s.initConditions();
-        });;
-    
+        s.showFps();
     };
-};
+}
 
-};
-
-// let rotatingPIwPISketch = new p5(rotatingPIwPI(styles), 'rotating-PI-w-PI-sketch');
+let rotatingWPISketch = new p5(rotatingWPi, 'rotating-PI-w-PI-sketch');

@@ -1,6 +1,4 @@
-const simpleCircleWithPi = (styles) => {
-
-return (s) => {
+const simpleCircleWithPi = (s) => {
 
     const diam          = 200;
     const radius        = diam/2;
@@ -94,8 +92,6 @@ return (s) => {
     }
 };
 
-};
-
-// let simpleCircleWithPiSketch = 
-//     new p5(simpleCircleWithPi(styles), 'simple-circle-with-pi-sketch');
+let simpleCircleWithPiSketch = 
+    new p5(simpleCircleWithPi, 'simple-circle-with-pi-sketch');
 

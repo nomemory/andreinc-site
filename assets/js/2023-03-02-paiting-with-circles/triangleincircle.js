@@ -1,85 +1,92 @@
-const triangleInCircle = (styles) => {    
+let triangleInCircle = (s) => {
 
-return (s) => {
+    addPaintGrid(s);
+    addShowFps(s);
 
-    const gridStep = 40;
-    const initAngle = 120;
-    const maxAngle = 170;
-    const radius = 80;
+    const r = 100;
+    const d = 2 * r;
+    const f = theme.frequency;
+    const phase = s.HALF_PI;
+    const dotLCol = s.color(theme.radiusColorLight);
+    const sCCol = s.color(theme.circleColor);
+    const rCCol = s.color(theme.circleColor);
 
-    let angle;
-    let angleIncr;
+    let ang = 0;
+    let reset = s.PI * (1 / f);
+    let vC, vP, vPP, vThet;
+    let cBuff;
 
     s.setup = () => {
-        const canvas = s.createCanvas(styles.canvasX, styles.canvasY); 
-        s.textFont(styles.textFont);
-        s.frameRate(styles.frameRate);
-        s.setAttributes('antialias', true);
-        angle = initAngle;
-        angleIncr = +1;
+        const canvas = s.createCanvas(theme.canvasX, theme.canvasY);
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
+        // Initialising vectors
+        vC = s.createVector(s.width / 2, s.height / 2);
+        vP = s.createVector(
+            vC.x + s.sin(ang + s.PI) * r,
+            vC.y + s.cos(ang + s.PI) * r
+        );
+        vThet = s.createVector(
+            vC.x + s.sin(ang * f / 2 + s.PI) * r,
+            vC.y + s.cos(ang * f / 2 + s.PI) * r
+        );
+        vPP = s.createVector(0, 0);
+        cBuff = s.createGraphics(s.width, s.height);
+        // Painting the grid on the memory buffer
+        s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5,
+            { showUnits: true, showOrigin: true, showY: true, showX: true });
+        // Adding the circle on the memory buffer
+        cBuff.stroke(theme.lightCircleColor);
+        cBuff.circle(vC.x, vC.y, d);
     };
 
     s.draw = () => {
-        s.background(styles.bkgColor);
-        let vCenter = s.createVector(s.width/2, s.height/2);
-        paintGrid(s, styles.canvasX, 
-            styles.canvasY, 
-            styles.coordSysColor, 
-            styles.gridColor, 
-            vCenter, 
-            styles.textSize, 
-            gridStep);
-        
-        // First qudrant
-        let vSqT =  s.createVector(
-            vCenter.x + Math.sin(s.radians(angle))*radius,
-            vCenter.y + Math.cos(s.radians(angle))*radius
-        );
-        pCircle(s, vCenter.x, vCenter.y, 2 * radius, styles.gridColor);
-        pArc(s, vCenter.x, vCenter.y, radius/3, radius/3, s.radians(90-angle), s.radians(0), styles.thetaColor, styles.thetaColorLight);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vSqT.y, styles.lineColor);            
-        pLine(s, vSqT.x, vSqT.y, vSqT.x, vCenter.y, styles.lineColor);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vCenter.y, styles.lineColor);
-        pArc(s, vCenter.x, vCenter.y, radius*2, radius*2, s.radians(90-angle), s.radians(90-initAngle), styles.circleColor);
-        pText(s, "A", vSqT.x + 5, vSqT.y - 5, styles.textColor);
-        
-        // Second quadrant
-        vSqT = s.createVector(vSqT.x - 2 * Math.sin(s.radians(angle))*radius, vSqT.y);
-        pArc(s, vCenter.x, vCenter.y, radius/3, radius/3, s.radians(180), s.radians(90+angle), styles.thetaColor, styles.thetaColorLight);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vSqT.y, styles.lineColor);            
-        pLine(s, vSqT.x, vSqT.y, vSqT.x, vCenter.y, styles.lineColor);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vCenter.y, styles.lineColor);
-        pArc(s, vCenter.x, vCenter.y, radius*2, radius*2, s.radians(90+initAngle), s.radians(90+angle), styles.circleColor);
-        pText(s, "B'", vSqT.x - 5, vSqT.y - 5, styles.textColor);
-
-
-        //Third quadrant
-        vSqT = s.createVector(vSqT.x, vSqT.y - 2 * Math.cos(s.radians(angle))*radius);
-        pArc(s, vCenter.x, vCenter.y, radius/3, radius/3, s.radians(90-(angle-180)), s.radians(90+angle), styles.thetaColor, styles.thetaColorLight);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vSqT.y, styles.lineColor);            
-        pLine(s, vSqT.x, vSqT.y, vSqT.x, vCenter.y, styles.lineColor);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vCenter.y, styles.lineColor);
-        pArc(s, vCenter.x, vCenter.y, radius*2, radius*2, s.radians(90-(angle-180)), s.radians(90-(initAngle-180)), styles.circleColor);
-        pText(s, "A'", vSqT.x - 5, vSqT.y + 10, styles.textColor);
-
-        // Fourth quadrant
-        vSqT = s.createVector(vSqT.x + 2 * Math.sin(s.radians(angle))*radius, vSqT.y);
-        pArc(s, vCenter.x, vCenter.y, radius/3, radius/3, s.radians(360), s.radians(90+(angle-180)), styles.thetaColor, styles.thetaColorLight);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vSqT.y, styles.lineColor);            
-        pLine(s, vSqT.x, vSqT.y, vSqT.x, vCenter.y, styles.lineColor);
-        pLine(s, vCenter.x, vCenter.y, vSqT.x, vCenter.y, styles.lineColor);
-        pArc(s, vCenter.x, vCenter.y, radius*2, radius*2, s.radians(90+(initAngle-180)), s.radians(90+(angle-180)), styles.circleColor);
-        pText(s, "B", vSqT.x - 5, vSqT.y + 10, styles.textColor);
-
-        angle+=angleIncr;
-        if (angle==maxAngle) {
-            angleIncr=-1;
-        } else if (angle==initAngle) {
-            angleIncr=+1;
-        }
+        s.background(theme.bkgColor);
+        s.image(cBuff, 0, 0);
+        let cSin = s.sin(ang * f + phase) * r;
+        let cCos = s.cos(ang * f + phase) * r;
+        // Point
+        vP.x = vC.x + cSin;
+        vP.y = vC.y + cCos;
+        s.circle(vP.x, vP.y, 3);
+        // Point projection
+        vPP.x = vC.x - cSin;
+        vPP.y = vC.y - cCos;
+        // Update arcle
+        vThet.x = vC.x + s.sin(ang * f + s.PI) * r / 2;
+        vThet.y = vC.y + s.cos(ang * f + s.PI) * r / 2;
+        s.circle(vPP.x, vPP.y, 3);
+        // Center-point + Center-projection-point
+        s.push();
+        s.stroke(dotLCol);
+        s.line(vC.x, vC.y, vP.x, vP.y);
+        s.line(vC.x, vC.y, vPP.x, vPP.y);
+        s.pop();
+        // Growing Arcs
+        s.push();
+        s.noFill();
+        s.stroke(rCCol);
+        s.arc(vC.x, vC.y, d, d, s.HALF_PI - (ang * f + phase), 0);
+        s.arc(vC.x, vC.y, d, d, -s.HALF_PI - (ang * f + phase), -s.PI);
+        s.pop();
+        // 180 arc
+        s.push();
+        s.fill(theme.thetaColorLight);
+        s.stroke(theme.thetaColor);
+        s.arc(vC.x, vC.y, d / 6, d / 6, (3 / 2) * s.PI - (ang * f + phase), s.HALF_PI - (ang * f + phase));
+        s.pop();
+        // 180 arc text
+        s.push();
+        s.fill(theme.thetaColor);
+        s.text('θ=180°', vThet.x, vThet.y);
+        s.pop();
+        // A and A'
+        s.text('A', vP.x + 5, vP.y + 5);
+        s.text('A\'', vPP.x + 5, vPP.y + 5);
+        ang += f;
+        if ((ang + phase) > reset) ang = 0;
+        s.showFps();
     };
 };
 
-};
-
-// let triangleInCircleSketch = new p5(triangleInCircle(styles), 'triangle-in-circle-sketch');
+let triangleInCircleSketch = new p5(triangleInCircle, 'triangle-in-circle-sketch');

@@ -66,7 +66,7 @@ The key to the circle's symmetry stems from the fact that $$\forall x \in \mathb
 <div id="triangle-in-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/triangleincircle.js)</sup></sup>
 
-For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. 
+For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symetrical points, rotate them around, and you will obtain a circle.
 
 But speaking of Pythagoras, if we look closer at the *equation* defining the Circle, $$x^2 + y^2 = 1$$, we can intuitively feel there's a *strong connection* between this, the cartesian system, and the right triangle: what if $$x$$ and $$y$$ are the legs of the triangle, and the hypotenuse is $$1$$ (the radius)?
 
@@ -86,11 +86,11 @@ As the point moves around the circle in a counterclockwise direction, the values
 
 Defining `sine` and `cosine` in the context of a square triangle is limiting. What if the angle ($$\theta$$) becomes greater or equal to $$90^\circ$$? That doesn't make sense because we already have a $$90^\circ$$ angle... If we use the *Unit Circle* as the underlying foundation to think about the two functions, we don't have this problem anymore, our definition broadens, and `sine` and `cosine` suddenly make sense for $$\theta \geq 90^\circ$$. 
 
-# The number PI
+# Radians and the number $$\pi$$
 
 > Have you ever wondered why do we use $$360°$$, and not another number? What makes $$360°$$ special, compared to, let's say, $$800°$$? Here are some potential [answers](https://hsm.stackexchange.com/questions/1884/origin-of-360-degrees).
 
-In practice, we rarely see angles expressed in degrees; usually, we represent them in relation to the number $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.; where $$\pi$$ (or `PI`) is the ratio of a circle's circumference to its diameter, and it approximates `π ≈ 3.14`.
+In practice, we rarely see angles expressed in degrees; usually, we represent them in relation to the number $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.; where $$\pi$$ (or `PI`) is the ratio of a circle's circumference to its diameter, and it approximates `π ≈ 3.14`. The `radian` (or `rad`) is the *true* unit we use to measure angles. There is an intimate relationship between the `radian` and the number $$\pi$$. 
 
 Unfortunately for us, $$\pi$$ is an [*irrational number*](https://en.wikipedia.org/wiki/Irrational_number); meaning its decimal expansion never repeats or terminates. You cannot express $$\pi$$ as a ratio between two numbers. $$\pi$$ is endless. In this regard, it's scary to think we can only approximate the area or the length of a circle up to a certain decimal point; but don't worry, there are no perfect circles in the material universe, and if there are, we won't be able to tell for sure - *infinity* is disarming. 
 
@@ -101,7 +101,7 @@ If we roll a circle with a $$radius \neq 1$$ instead, the trail (*perimeter*) wi
 <div id="rotating-PI-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpi.js)</sup></sup>
 
-So, the angles expressed in degrees can also be described by their *projection* on the $$x$$ axis, like this:
+So, the angles expressed in degrees can also be described by circle's rolling *projection* on the $$x$$ axis. The following animation is interactive, hold the mouse pressed in the middle of the circle, and move it left or right to see the correspondence between radians and degrees:
 
 <div id="rotating-PI-w-PI-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpiwpi.js)</sup></sup>

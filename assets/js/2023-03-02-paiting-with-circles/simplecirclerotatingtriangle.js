@@ -1,93 +1,150 @@
-const simpleCircleRotatingTriangle = (styles) => {
+const simpleCircleRotatingTriangle = (s) => {
 
-return (s) => {
+    addPaintGrid(s);
+    addShowFps(s);
 
-    const diam          = 200;
-    const radius        = diam/2;
-    const frequency     = 1;
-    const initialAngle  = 90;
-    const gridStep      = diam/4;
-    const arcRd1        = diam/6;
-    const arcRd2        = diam/6;
-    const arcAng        = s.radians(0);
+    const d = 200;
+    const r = d / 2;
+    const f = theme.frequency;
+    const ar = d / 6;
 
-    let angle           = initialAngle;
+    let angle = 0;
+    let phase = s.HALF_PI;
+    let reset = s.TWO_PI * (1 / f);
 
-    s.setup = () => { 
+    let bTxtY1, bTxtY2, bTxtY3;
+
+    let vC, vR, vRProj, vSL, vCL, vThet;
+
+    s.setup = () => {
         // Create Canvas of given size 
-        const canvas = s.createCanvas(styles.canvasX, styles.canvasY); 
+        const canvas = s.createCanvas(theme.canvasX, theme.canvasY);
         canvas.parent('simple-circle-rotating-triangle-sketch');
-        
-        s.textFont(styles.textFont);
-        s.setAttributes('antialias', true);
-        s.frameRate(styles.frameRate);
-    }; 
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
+
+        // Initialise
+        vC = s.createVector(s.width / 2, s.height / 2);
+        vR = s.createVector(
+            vC.x + s.sin(angle * f + phase) * r,
+            vC.y + s.cos(angle * f + phase) * r
+        );
+        vThet = s.createVector(
+            vC.x + s.sin((angle * f + phase)/2) * ar,
+            vC.y + s.cos((angle * f + phase)/2) * ar
+        );
+        vRProj = s.createVector(vR.x, vC.y);
+        vSL = s.createVector(0, 0);
+        vCL = s.createVector(0, 0);
+        buff = s.createGraphics(s.width, s.width);
+        s.paintGrid(buff, s.width, s.height, vC, r/5, 5, 
+            {showUnits:true, showOrigin:true, showY: true, showX: true});
+        buff.circle(vC.x, vC.y, d);
+
+        // Initialise bottom text positions
+        bTxtY1 = s.height - 5;
+        bTxtY2 = bTxtY1 - 15;
+        bTxtY3 = bTxtY2 - 15;
+    };
 
     s.draw = () => {
-        s.background(styles.bkgColor);
+        s.background(theme.bkgColor);
+        s.image(buff, 0, 0);
 
-        // Defining and drawing main circle vector + grid
-        let vCircle = s.createVector(s.width/2, s.height/2);
-        pCircle(s, vCircle.x, vCircle.y, diam, styles.circleColor);
-        paintGrid(s, styles.canvasX, styles.canvasY, styles.coordSysColor, 
-            styles.gridColor, vCircle, styles.textSize, gridStep);
+        vR.x = vC.x + s.sin(angle * f + phase) * r;
+        vR.y = vC.y + s.cos(angle * f + phase) * r;
+        vRProj.x = vR.x;
 
-        // Defining and drawing the moving radius
-        let vRad = s.createVector(
-            vCircle.x+Math.sin(s.radians(angle)*frequency)*radius,
-            vCircle.y+Math.cos(s.radians(angle)*frequency)*radius
-        );
-        angle++;
-        if (angle>360) angle = 0; // reset angle once the circle is complete
-        pLine(s, vCircle.x, vCircle.y, vRad.x, vRad.y, styles.radiusColor);
+        // Updating movement
+        const ca = angle * f + phase;
+        const soff = (ca >= s.PI && ca < s.TWO_PI) ? -45 : 2;
+        const coff = (ca >= s.HALF_PI && ca) < 1.5 * s.TWO_PI ? 15 : -5;
+        vSL.x = vR.x + soff
+        vSL.y = (vC.y + vR.y) / 2;
+        vCL.x = (vC.x + vR.x) / 2 - 10;
+        vCL.y = vC.y + coff;
+        vThet.x = vC.x + s.sin((angle * f)/2 + phase) * ar/1.5,
+        vThet.y = vC.y + s.cos((angle * f)/2 + phase) * ar/1.5
 
-        // Draw the moving arc
-        pArc(s, vCircle.x,   // in the middle of the center
-               vCircle.y, 
-               arcRd1,   
-               arcRd2, 
-               s.radians(90-angle), 
-               arcAng, 
-               styles.thetaColor, 
-               styles.thetaColor);
+        // Drawing arc
+        s.push();
+        s.stroke(theme.thetaColor);
+        s.fill(theme.thetaColorLight);
+        s.arc(vC.x, vC.y, ar, ar, s.TWO_PI-angle*f, 0);
+        s.pop();
 
-        // Paint sine and cosine moving projections
-        let vSineProj = s.createVector(vRad.x, vCircle.y); 
-        pLine(s, vRad.x, vRad.y, vSineProj.x, vSineProj.y, styles.sineColor);
-        let vCosineProj = s.createVector(vRad.x, vCircle.y);
-        pLine(s, vCircle.x, vCircle.y, vCosineProj.x, vCosineProj.y, styles.cosineColor);
+        // Drawing arc text
+        s.push();
+        s.fill(theme.thetaColor);
+        s.text("θ", vThet.x, vThet.y);
+        s.pop();
 
-        // Moving labels for sin(θ) and cost(θ)
-        const sineLabelOffset = (angle >= 180 && angle<360) ? -32 : 2;
-        const cosLabelffset = (angle >= 90 && angle<270) ? 15 : (-5);
-        let vSineLabel = s.createVector(vRad.x + sineLabelOffset, (vCircle.y + vRad.y)/2);
-        let vCosineLabel = s.createVector((vCircle.x + vRad.x)/2-10, vCircle.y + cosLabelffset);
-        pText(s, "sin(θ)", vSineLabel.x, vSineLabel.y, styles.sineColor);
-        pText(s, "cos(θ)", vCosineLabel.x, vCosineLabel.y, styles.cosineColor);
+        // Moving radius
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.line(vC.x, vC.y, vR.x, vR.y);
+        s.circle(vR.x, vR.y, 3);
+        s.circle(vRProj.x, vRProj.y, 3);
+        s.pop();
 
-        // Bottom left-side numbers
-        let angleTextFix = (angle-90) > 0 ? (angle-90) : (270+angle);
-        let vAngleText = s.createVector(10, s.width-60);
-        let vSineText = s.createVector(10, s.width-45);
-        let vCosineText = s.createVector(10, s.width-30);
-        let sinThetaValue = Math.sin(s.radians(angle-90)).toFixed(2);
-        let cosThetaValue = Math.cos(s.radians(angle-90)).toFixed(2);
-        pText(s, "    θ  = " + angleTextFix + "°", vAngleText.x, vAngleText.y, styles.thetaColor);
-        pText(s, "sin(θ) = " + sinThetaValue, vSineText.x, vSineText.y, styles.sineColor);
-        pText(s, "cos(θ) = " + cosThetaValue, vCosineText.x, vCosineText.y, styles.cosineColor);
+        // Sine
+        s.push();
+        s.stroke(theme.sineColor);
+        s.line(vRProj.x, vRProj.y, vR.x, vR.y);
+        s.pop();
 
-        // Moving radius coordinates
-        pText(s, "(", vRad.x + 2, vRad.y, styles.radiusColor);
-        pText(s, "sin(θ)", vRad.x + 7, vRad.y, styles.sineColor);
-        pText(s, ", ", vRad.x + 48, vRad.y, styles.radiusColor);
-        pText(s, "cos(θ)", vRad.x + 60, vRad.y, styles.cosineColor);
-        pText(s, ")", vRad.x + 100, vRad.y, styles.radiusColor);
+        // Sine label
+        s.push();
+        s.fill(theme.sineColor);
+        s.text("sin(θ)", vSL.x, vSL.y);
+        s.pop();
+
+        // Cosine
+        s.push();
+        s.stroke(theme.cosineColor);
+        s.line(vRProj.x, vRProj.y, vC.x, vC.y);
+        s.pop();
+
+        // Cosine label
+        s.push();
+        s.fill(theme.cosineColor);
+        s.text("cos(θ)", vCL.x, vCL.y)
+        s.pop();
+
+        // Moving Point
+        s.push();
+        s.text("(", vR.x + 2, vR.y);
+        s.fill(theme.sineColor);
+        s.text("sin(θ)", vR.x + 7, vR.y)
+        s.fill(theme.textColor);
+        s.text(", ", vR.x + 48, vR.y);
+        s.fill(theme.cosineColor);
+        s.text("cos(θ)", vR.x + 60, vR.y);
+        s.fill(theme.textColor);
+        s.text(")", vR.x + 100, vR.y);
+        s.pop();
+
+        // // Bottom left-side numbers
+        s.push();
+        s.fill(theme.thetaColor);
+        s.text("    θ  = " + (((angle*f)*180)/s.PI).toFixed(2) + "°", 5, bTxtY3);
+        s.fill(theme.sineColor);
+        s.text("sin(θ) = " + s.sin(angle*f).toFixed(2), 5, bTxtY2);
+        s.fill(theme.cosineColor);
+        s.text("cos(θ) = " + s.cos(angle*f).toFixed(2), 5, bTxtY1);
+        s.pop();
+
+        // Reset
+        angle += f;
+        if ((angle + phase) > reset) {
+            angle = 0;
+        }
+
+        s.showFps();
     };
 
 };
 
-}
-
-// let simpleCircleRotatingTriangleSketch = 
-//     new p5(simpleCircleRotatingTriangle(styles), 'simple-circle-rotating-triangle-sketch');
+let simpleCircleRotatingTriangleSketch =
+    new p5(simpleCircleRotatingTriangle, 'simple-circle-rotating-triangle-sketch');
 
