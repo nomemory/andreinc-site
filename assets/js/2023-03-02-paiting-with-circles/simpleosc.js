@@ -1,113 +1,134 @@
-const simpleOsc = (styles) => {
+const simpleOsc = (s) => {
 
-return (s) => {
+    addPaintGrid(s);
+    addLineDashed(s);
+    addShowFps(s);
 
-    const height = 200;
-    const width = 600;
-    const radius = 40;
-    const initAngle = 90;
+    const h = 180;
+    const w = 600;
+
+    const d = 60;
+    const r = d / 2; // 40
+    const f = theme.frequency / 3; // 0.1
+    const rColor = s.color(theme.radiusColorLight);
+    let phase = s.HALF_PI;
 
     let canvas;
-    let angle = initAngle;
-    let vPosGrid, vCircle, vRadius;
-    
+    let angl = 0;
+    let vG, vC, vR, vMS;
+    let cBuff;
+    let periodPaint = false;
+
+    const paintGridProps = {
+        showUnits: true,
+        hideUnitsXNeg: true,
+        showOrigin: true,
+        showY: true,
+        showX: true,
+    };
 
     s.initConditions = () => {
-        vPosGrid = s.createVector(height/2 + 2*radius, height/2);
-        vCircle = s.createVector(height/2, height/2);
-        vRadius = s.createVector(
-            vCircle.x + Math.sin(s.radians(angle))*radius,
-            vCircle.y + Math.cos(s.radians(angle))*radius,
+        vG = s.createVector(h / 2 + r, h / 2);
+        vC = s.createVector(h / 2 - r, h / 2);
+        vR = s.createVector(
+            vC.x + s.sin(angl + phase) * r,
+            vC.y + s.cos(angl + phase) * r,
         );
-        angle = initAngle;
+        vMS = s.createVector(vG.x, vG.y);
+        cBuff = s.createGraphics(w, h);
+        s.paintGrid(cBuff, s.width, s.height, vG, r, 1, paintGridProps);
+        angl = 0;
+        periodPaint = false;
     }
 
     s.setup = () => {
         // Create Canvas of given size 
-        canvas = s.createCanvas(width, height); 
+        canvas = s.createCanvas(w, h);
         canvas.parent('simple-osc-sketch');
-        
-        s.textFont(styles.textFont);
-        s.setAttributes('antialias', true);
-        s.frameRate(styles.frameRate);
+
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
 
         s.initConditions();
     }
-    
+
     s.draw = () => {
-        s.background(styles.bkgColor);
+        s.background(theme.bkgColor);
+        s.image(cBuff, 0, 0);
+        s.noFill();
 
         // Moving Circle
-        vRadius.x = vCircle.x + Math.sin(s.radians(angle))*radius;
-        vRadius.y = vCircle.y + Math.cos(s.radians(angle))*radius;
-        pCircle(s, vCircle.x, vCircle.y, 2*radius, styles.circleColor);
-        pCircle(s, vCircle.x, vCircle.y, 3, styles.circleColor);
-        pCircle(s, vRadius.x, vRadius.y, 3, styles.circleColor);
-        pLine(s, vCircle.x, vCircle.y, vRadius.x, vRadius.y, styles.lineColor);
-        pLine(s, vRadius.x, vRadius.y, vRadius.x, vCircle.y, styles.sineColor);
-        let vSineLabel = s.createVector(vRadius.x, (vCircle.y + vRadius.y)/2);
-        const sineLabelOffset = ((angle%360) >= 180 && (angle%360)<360) ? -65 : 5;
-        let angleTextFix = ((angle-90) > 0 ? (angle-90) : (270+angle))%360;
-        pText(s, "sin("+angleTextFix+"°)", vSineLabel.x + sineLabelOffset, vSineLabel.y, styles.sineColor);
+        vR.x = vC.x + s.sin(angl + phase) * r;
+        vR.y = vC.y + s.cos(angl + phase) * r;
 
-        // Grid Lines
-        let startGrid = height/2+2*radius;
-        pLine(s, 0, vCircle.y, width, vCircle.y, styles.coordSysColor);
-        pLine(s, startGrid, 0, startGrid, height, styles.coordSysColor);
-        let hUnits = (width-startGrid)/radius;
-        for(let i = 0; i < hUnits; i++) {
-            pCircle(s, startGrid+i*radius, vCircle.y, 3, styles.coordSysColor);
-            pText(s, i, startGrid+i*radius-3, vCircle.y+15, styles.textColor);
-        }
-        pCircle(s, startGrid, vCircle.y-radius, 3, styles.coordSysColor);
-        pCircle(s, startGrid, vCircle.y+radius, 3, styles.coordSysColor);
-        pText(s, " 1", startGrid - 20, vCircle.y-radius, styles.textColor);
-        pText(s, "-1", startGrid - 20, vCircle.y+radius, styles.textColor);
-        
-        // Vertical oscilation line
-        pLine(s, vRadius.x, vRadius.y, width, vRadius.y, styles.coordSysColor);
 
-        // Moving sine vertical line
-        pLine(s, vPosGrid.x, vPosGrid.y, vPosGrid.x, vRadius.y, styles.sineColor);
-        vPosGrid.x = vPosGrid.x + s.radians(1)*radius;
+        // Horizontal lines at [-1 and 1]
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.lineDash(canvas, [3, 3], vC.x, vC.y - r, vG.x, vG.y - r);
+        s.lineDash(canvas, [3, 3], vC.x, vC.y + r, vG.x, vG.y + r);
+        s.pop();
 
-        // Paint sinus function
-        let sinAngle =0;
-        for(let x = height/2 + 2*radius; x < width; sinAngle++, x+=s.radians(1)*radius) {
-            pPoint(s, x, height/2 - radius*Math.sin(s.radians(sinAngle)), styles.lineColor);            
-        }
+        // Paint the oscilating circle
+        s.push();
+        s.noFill();
+        s.circle(vC.x, vC.y, 2 * r);    // the actual center
+        s.circle(vC.x, vC.y, 3);        // the center of the text
+        s.pop();
 
-        if (s.radians(sinAngle)>Math.PI/2) {
-            let pi2X = startGrid+(Math.PI/2)*radius;
-            pLineDashed(s, canvas, [5,5], pi2X, vCircle.y, pi2X, vCircle.y-radius, styles.coordSysColor);
-            pLineDashed(s, canvas, [5,5], pi2X, vCircle.y-radius, startGrid, vCircle.y-radius, styles.coordSysColor);
-            pText(s, "π/2", pi2X, vCircle.y + 35, styles.textColor)       
-        }
-        if (s.radians(sinAngle)>Math.PI) {
-            let piX = startGrid + Math.PI * radius;
-            pText(s, "π", piX, vCircle.y + 35, styles.textColor);
-        }
-        if (s.radians(sinAngle)>(3/2)*Math.PI) {
-            let tpi2X = startGrid + Math.PI * (3/2) * radius;
-            pLineDashed(s, canvas, [5,5], tpi2X, vCircle.y + radius, startGrid, vCircle.y+radius, styles.coordSysColor);
-            pLineDashed(s, canvas, [5,5], tpi2X, vCircle.y, tpi2X, vCircle.y + radius, styles.coordSysColor);
-            pText(s, "3π/2", tpi2X, vCircle.y - 35, styles.textColor);
-        }
-        if (s.radians(sinAngle)>2*Math.PI) {
-            let tpiX = startGrid + Math.PI * 2 * radius;
-            pText(s, "2π", tpiX, vCircle.y + 35, styles.textColor);
-        }
+        // Radius
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.line(vC.x, vC.y, vR.x, vR.y);
+        s.pop();
 
-        angle++;
-        if (vPosGrid.x > width) {
+        // The sine projection
+        s.push();
+        s.stroke(theme.sineColor);
+        s.line(vR.x, vR.y, vR.x, vC.y);
+        s.pop();
+
+        // The moving point as the sine wave progresses
+        cBuff.point(vMS.x, vMS.y);
+
+        // Red circle(s)
+        s.push();
+        s.stroke(theme.sineColor);
+        s.circle(vR.x, vR.y, 3);
+        s.circle(vMS.x, vMS.y, 3);
+        s.pop();
+
+        // Text near the red circle sin(x) = v
+        s.push();
+        s.noStroke();
+        s.fill(theme.sineColor);
+        s.text("sin(" + angl.toFixed(2) + ")=" + s.sin(angl).toFixed(2), vMS.x + 5, vMS.y + 5);
+        s.pop();
+
+        // Projection on the x-axis
+        s.push();
+        s.stroke(theme.sineColor);
+        s.line(vMS.x, vMS.y, vMS.x, vG.y);
+        s.pop();
+
+        // A dashed line to connect the vR with the vMS
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.lineDash(canvas, [3, 3], vR.x, vR.y, vMS.x, vMS.y);
+        s.pop();
+
+        // Updat the moving sine point coordinates
+        vMS.x += f * r;
+        vMS.y = h / 2 - s.sin(angl) * r;
+        angl += f;
+        if (vMS.x > w) {
+            // The sine exits the canvas, we start again
             s.initConditions();
         }
+        s.showFps();
     };
 };
 
-};
-    
-// let simpleOscSketch = 
-//         new p5(simpleOsc(styles), 'simple-osc-sketch');
-    
-    
+let simpleOscSketch =
+    new p5(simpleOsc, 'simple-osc-sketch');
+

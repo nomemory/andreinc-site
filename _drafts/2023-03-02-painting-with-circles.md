@@ -30,18 +30,13 @@ tags:
 
 # What is a Circle? (short math recap) 
 
-Two thousand four hundred years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. 
+Over ~~hundred~~ thousands years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), he says: *"The circle symbolises eternity because it has no beginning or end."*
 
-In this work [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), he says:
-* *"The circle symbolises eternity because it has no beginning or end."*
-* *"God ever geometrizes."*
+In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasize: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
 
-In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasize:
-* *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
+[Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. He was right, but in a subtler way than you would normally expect. But, enough philosophical speculation, and let's get back to basic mathematics. 
 
-[Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. In a way, this is true. And this is what this article is all about. But, enough philosophy, and let's get back to basic mathematics.
-
-Everyone knows what a circle is:
+I suppose, everyone knows what a circle is:
 
 <div id="simple-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecircle.js)</sup></sup>
@@ -66,7 +61,7 @@ The key to the circle's symmetry stems from the fact that $$\forall x \in \mathb
 <div id="triangle-in-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/triangleincircle.js)</sup></sup>
 
-For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symetrical points, rotate them around, and you will obtain a circle.
+For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symetrical points, rotate them around, and you will obtain a circle. *Opposition creates symetry*. 
 
 But speaking of Pythagoras, if we look closer at the *equation* defining the Circle, $$x^2 + y^2 = 1$$, we can intuitively feel there's a *strong connection* between this, the cartesian system, and the right triangle: what if $$x$$ and $$y$$ are the legs of the triangle, and the hypotenuse is $$1$$ (the radius)?
 
@@ -107,7 +102,6 @@ So, the angles expressed in degrees can also be described by circle's rolling *p
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpiwpi.js)</sup></sup>
 
 To transform an angle measured in degrees ($$360°$$) to radians, the algorithm is simple, we multiply the angle by $$\pi$$, and then we divide the result by $$180$$. To transform back an angle measured from radians to degrees, we do the inverse operations, multiply the angle by $$180$$, and divide everything by $$\pi$$.
-
 If we put all the information back into *The Unit Circle* animation, things are going to look like this:
 
 <div id="simple-circle-with-pi-sketch"></div>
@@ -128,7 +122,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                 <tbody>
                     <tr id="angle_30">
                         <td>$$30^\circ$$</td>
-                        <td>$$\frac{\pi}{6}$$</td>
+                        <td>$$\frac{\pi}{6}$$</td>                       
                         <td>$$\frac{1}{2}$$</td>
                         <td>$$\frac{\sqrt{3}}{2}$$</td>
                     </tr>
@@ -149,7 +143,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                         <td>$$\frac{\pi}{2}$$</td>
                         <td>$$1$$</td>
                         <td>$$0$$</td>
-                    </tr>
+                    </tr>                       
                 </tbody>
             </table>                    
         </td>
@@ -189,7 +183,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                         <td>$$-1$$</td>
                     </tr>
                 </tbody>
-            </table>                    
+            </table>                                           
         </td>
         <td> 
             <table>

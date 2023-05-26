@@ -37,7 +37,7 @@ const simpleCircle = (s) => {
         // Draw the origin text
         s.noStroke();
         s.fill('black');
-        s.text("(a,b)", vTxtAb.x, vTxtAb.y);
+        s.text("P(a,b)", vTxtAb.x, vTxtAb.y);
         s.text("r (radius)", vTxtRad.x, vTxtRad.y);
     };
 }

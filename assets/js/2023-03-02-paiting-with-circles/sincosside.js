@@ -1,95 +1,114 @@
-const sinCosSide = (styles) => {
+const sinCosSide = (s) => {
 
-return (s) => {
+    addPaintGrid(s);
+    addLineDashed(s);
+    addShowFps(s);
 
-    const width = 2*styles.canvasY;
-    const height = styles.canvasY/2;
-    const radius = styles.canvasX/8;
-    const dInc = s.radians(1)*radius;
+    const w = 800;
+    const h = w / 4;
 
-    let vCenter, vMovingSine, vMovingCosine;
-    let wavAngle = 90;
+    const d = w / 8;
+    const r = d / 2;
+    const f = theme.frequency / 3;
+    let phase = s.HALF_PI;
+    let angl = 0;
 
-    let points = [];
+    let vC, vMS, vMC;
+    let cBuff;
+    let canvas;
 
     s.initConditions = () => {
-        wavAngle = 90;
-        vCenter = s.createVector(width/2, height/2);
-        vMovingSine = s.createVector(vCenter.x - radius*(s.TWO_PI - s.HALF_PI), vCenter.y - radius);
-        vMovingCosine = s.createVector(vCenter.x - radius * s.TWO_PI, vCenter.y - radius);
+        vC = s.createVector(2 * r, h / 2);
+        vMS = s.createVector(vC.x + s.HALF_PI*r, vC.y);
+        vMC = s.createVector(vC.x, vC.y - r);
+        cBuff = s.createGraphics(w, h);
+        s.paintGrid(cBuff, w, h, vC, r, 1, {
+            showUnits: true,
+            showOrigin: true
+        });
+        // Paint the sine function in the negative area
+        let vSP = s.createVector(vC.x, vC.y + s.sin(angl) * r);
+        for (let cAngl = 0; vSP.x > 0; vSP.x -= f * r, vSP.y = vC.y + s.sin(cAngl) * r, cAngl += f) {
+            cBuff.push();
+            cBuff.stroke(theme.sineColor);
+            cBuff.point(vSP.x, vSP.y);
+            cBuff.pop();
+        }
+        // Paint the sine function in the positive area
+        vSP = s.createVector(vC.x, vC.y - s.sin(angl) * r);
+        for(let cAngl = 0; vSP.x < w; vSP.x += f * r, vSP.y = vC.y - s.sin(cAngl)*r, cAngl += f) {
+            cBuff.push();
+            cBuff.stroke(theme.sineColor);
+            cBuff.point(vSP.x, vSP.y);
+            cBuff.pop();
+        }
+        // Paint the cosine function in the negative area
+        let vCP = s.createVector(vC.x, vC.y - s.cos(angl)*r);
+        for(let cAngl =0; vCP.x > 0; vCP.x -=f*r, vCP.y = vC.y - s.cos(cAngl) * r, cAngl +=f) {
+            cBuff.push();
+            cBuff.stroke(theme.cosineColor);
+            cBuff.point(vCP.x, vCP.y);
+            cBuff.pop();
+        }
+        // Paint the cosine function in the positive area
+        vCP = s.createVector(vC.x, vC.y - s.cos(angl)*r);
+        for(let cAngl = 0; vCP.x < w; vCP.x += f*r, vCP.y = vC.y - s.cos(cAngl) *r, cAngl +=f) {
+            cBuff.push();
+            cBuff.stroke(theme.cosineColor);
+            cBuff.point(vCP.x, vCP.y);
+            cBuff.pop();
+        }
+        // Static text 
+        angl = 0;
     };
 
     s.setup = () => {
-        // Create Canvas of given size 
-        canvas = s.createCanvas(width, height);
-        canvas.parent('sin-cos-side-sketch');
-        s.textFont(styles.textFont);
-        s.frameRate(styles.frameRate);
-        s.angleMode(s.DEGREES);
-
-        // Init attributes
+        canvas = s.createCanvas(w, h);
+        canvas.parent("sin-cos-side-sketch");
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
         s.initConditions();
-
-        // Points to be drawn for sine and cosine
-        for(let x = vCenter.x, xn = vCenter.x, localAngle = 0; x < width; x+=dInc, xn-=dInc, localAngle+=1) {
-            let p = {};
-            let sV = radius*s.sin(localAngle);
-            let cV = radius*s.cos(localAngle);
-            // Corrdinates of points to be drawn on the canvas
-            // composing the sine and cos waves
-            p.sineX1 = x;
-            p.sineX2 = xn;
-            p.sineY1 = vCenter.y - sV;
-            p.sineY2 = vCenter.y + sV;
-            p.cosineX1 = x;
-            p.cosineX2 = xn;
-            p.cosineY1 = vCenter.y - cV;
-            p.cosineY2 = p.cosineY1;
-            points.push(p);
-        }
     }
 
     s.draw = () => {
-        s.background(styles.bkgColor); 
-    
-        paintGrid(s, 
-            s.width, 
-            s.height, 
-            styles.coordSysColor, 
-            styles.gridColor,
-            vCenter,
-            10,
-            radius/2
-            );
-            Math.cos
+        s.background(theme.bkgColor);
+        s.image(cBuff, 0, 0);   
 
-        for(let i = 0; i < points.length; i++) {
-            pPoint(s, points[i].sineX1, points[i].sineY1, styles.sineColor);
-            pPoint(s, points[i].sineX2, points[i].sineY2, styles.sineColor);
-            pPoint(s, points[i].cosineX1, points[i].cosineY1, styles.cosineColor);
-            pPoint(s, points[i].cosineX2, points[i].cosineY2, styles.cosineColor);
+        // Paint the moving sine and cosine circles
+        s.push();
+        s.stroke(theme.sineColor);
+        s.fill(theme.sineColor);
+        s.circle(vMS.x, vMS.y, 3);
+        s.stroke(theme.cosineColor);
+        s.fill(theme.cosineColor);
+        s.circle(vMC.x, vMC.y, 3);
+        s.pop();
 
-        }
+        // Paint line connecting the two circles
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.line(vMS.x, vMS.y, vMC.x, vMC.y);
+        s.pop();
 
-        // Moving circles on sine and cosine
-        pCircle(s, vMovingSine.x, vMovingSine.y, 3, styles.sineColor);
-        pCircle(s, vMovingCosine.x, vMovingCosine.y, 3, styles.cosineColor);
-        pText(s, "π/2", vMovingCosine.x + (vMovingSine.x - vMovingCosine.x)/2 - 5, vMovingSine.y- 5, 10, styles.textColor);
-        pLine(s, vMovingSine.x, vMovingSine.y, vMovingCosine.x, vMovingCosine.y, styles.lineColor);
+        // Paint HALF_PI label on the line
+        s.push();
+        s.text("π/2", vMS.x + (vMC.x - vMS.x)/2 - 7, vMC.y - 5);
+        s.pop();
 
-        vMovingSine.x += dInc;
-        vMovingCosine.x = vMovingSine.x - radius * s.HALF_PI;
-
-        vMovingSine.y = vCenter.y - s.sin(wavAngle) * radius;
-        vMovingCosine.y = vMovingSine.y;
-
-        wavAngle++;
-        if (vMovingCosine.x>width) 
-            s.initConditions();
+        // Incremenent and reset movement when needed
+        vMS.x += f * r;
+        vMS.y = vC.y - s.sin(angl+s.HALF_PI)*r;
+        vMC.x += f * r;
+        vMC.y = vC.y - s.cos(angl)*r;
+        angl += f;
+        if (vMS.x > w) {
+            vMS = s.createVector(vC.x + s.HALF_PI*r, vC.y);
+            vMC = s.createVector(vC.x, vC.y - r);
+            angl = 0;
+        } 
+        s.showFps();
     }
 };
 
-};
-
-// let sinCosSideSketch = 
-//     new p5(sinCosSide(styles), "sin-cos-side-sketch"); 
+let sinCosSideSketch =
+    new p5(sinCosSide, "sin-cos-side-sketch"); 
