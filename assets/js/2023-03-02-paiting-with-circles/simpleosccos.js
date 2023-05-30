@@ -123,10 +123,16 @@
         s.text("cos(" + angl.toFixed(2) + ")=" + s.cos(angl).toFixed(2), vMC.x + 5, vMC.y + 5);
         s.pop();
 
-        // Projection on the x-axis
+        // Projection on the x-axis of the sine
         s.push();
         s.stroke(theme.sineColor);
         s.line(vMS.x, vMS.y, vMS.x, vGS.y);
+        s.pop();
+
+        // Projection on the x-axis of the cosine
+        s.push();
+        s.stroke(theme.cosineColor);
+        s.line(vMC.x, vMC.y, vGC.x, vMC.y);
         s.pop();
 
         // A dashed line to connect the vR with the vMS

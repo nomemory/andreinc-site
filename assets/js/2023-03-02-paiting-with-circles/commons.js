@@ -45,6 +45,7 @@ const addPaintGrid = (s) => {
 
         gridBuff.push();
         gridBuff.noFill();
+        gridBuff.textFont(theme.textFont)
 
         // Primary axis (OX, OY)
         gridBuff.push();

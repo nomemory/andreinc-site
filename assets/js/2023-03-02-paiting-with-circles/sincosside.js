@@ -95,6 +95,14 @@ const sinCosSide = (s) => {
         s.text("π/2", vMS.x + (vMC.x - vMS.x)/2 - 7, vMC.y - 5);
         s.pop();
 
+        // Legends
+        s.push();
+        s.fill(theme.sineColor);
+        s.text("sin(x)", vC.x + 30, vC.y + 1.6*r);
+        s.fill(theme.cosineColor);
+        s.text("cos(x)", vC.x + 30, vC.y + 1.6*r + 20);
+        s.pop();
+
         // Incremenent and reset movement when needed
         vMS.x += f * r;
         vMS.y = vC.y - s.sin(angl+s.HALF_PI)*r;

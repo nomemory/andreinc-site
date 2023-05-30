@@ -1,154 +1,199 @@
-const defaultInputSinusoid = {
+let cusSinusoid = {
     freq: 2,
     phase: 0,
-    radius: 2
+    radius: 1.5
 };
 
-const sinusoids = (styles, input) => {
+const sinusoids = (s) => {
+    addPaintGrid(s);
+    addLineDashed(s);
+    addShowFps(s);
 
-return (s) => {
+    const d = 100;
+    const r = d / 2;
+    const w = 800;
+    const h = 600;
+    const tf = theme.frequency / 6;
+    let tph = s.HALF_PI;
 
-const height = 400;
-const width = 700;
-const radiusScale = 40;
-const initAngle = 0;
+    let canvas;
+    let angls = 0;
+    let anglc = 0;
 
-// Standard values for the sinusoid
-let vSCircle, vSRadius;
-const sRadius = 1;
-const sFreq = 1;
-const sPhase = 0;
-let sRadiusS = sRadius * radiusScale;
-let sAngle = initAngle;
+    let vCStd; // standard circle center
+    let vRStd; // standard circle moving radius
+    let vGStd; // the grid center for the standard circle
+    let vMStd; // moving point for the main circle
 
-// Custom values for the sinusoid
-let vCCircle, vCRadius;
-let cRadius = input.radius;
-let cFreq = input.freq;
-let cPhase = input.phase;
-let cAngle = initAngle;
-let cRadiusS = cRadius * radiusScale;
+    let vCCus; // custom circle center 
+    let vRCus; // custom circle moving radius
+    let vGCus; // the grid center for the custom circle
+    let vMCus; // moving point for the custom circle
 
-// Others
-let gridX;
-let canvas;
+    let stdBuff; // graphics buffer for the standard circle
+    let cusBuff; // graphics buffer for the custom circle
 
-// Precomputed Sinusoids
-let standardSinusoid = [];
-let customSinusoid = [];
-let ssIdx = 0;
 
-s.setup = () => {
-    canvas = s.createCanvas(width, height); 
-    canvas.parent('sinusoids-sketch');
-    
-    s.textFont(styles.textFont);
-    s.setAttributes('antialias', true);
-    s.frameRate(styles.frameRate);
+    s.initConditions = () => {
+        vCStd = s.createVector(2 * r, 2 * r);
+        vCCus = s.createVector(2 * r, 3 * r);
+        vGStd = s.createVector(vCStd.x + 2 * r, vCStd.y);
+        vGCus = s.createVector(vCCus.x + 2 * r, vCCus.y);
+        stdBuff = s.createGraphics(w, 4 * r);
+        cusBuff = s.createGraphics(w, 6 * r);
+        vMStd = s.createVector(vGStd.x, vCStd.y);
+        vMCus = s.createVector(vGCus.x, vCCus.y);
 
-    // The centers for the two circles
-    vSCircle = s.createVector(100, 60);
-    vCCircle = s.createVector(100, 260);
-    gridX = vSCircle.x + 2*sRadius*radiusScale + 50;
+        vRStd = s.createVector(
+            vCStd.x + s.sin(angls + tph) * r,
+            vCStd.y + s.cos(angls + tph) * r
+        );
+        vRCus = s.createVector(
+            vCCus.x + s.sin(angls * cusSinusoid.freq + tph + cusSinusoid.phase) * r,
+            vCCus.y + s.cos(angls * cusSinusoid.freq + tph + cusSinusoid.phase) * r
+        );
 
-    // s.initConditions();
-    vSRadius = s.createVector(
-        vSCircle.x + sRadiusS,
-        vSCircle.x,
-    );
-    vCRadius = s.createVector(
-        vCCircle.x + cRadiusS,
-        vCCircle.y
-    );
+        // Paint the grid(s) on the graphical buffers
+        s.paintGrid(stdBuff, w, 4 * r, vGStd, r, 1, {
+            showUnits: true,
+            hideUnitsXNeg: true,
+            showOrigin: true
+        });
+        s.paintGrid(cusBuff, w, 6 * r, vGCus, r, 1, {
+            showUnits: true,
+            hideUnitsXNeg: true,
+            showOrigin: true
+        });
 
-    // Precompute sinusoids
-    // Standard Sinusoid
-    let point;
-    for(let x = gridX, cAngle=-1; x < width; x+=s.radians(1)*sRadiusS, cAngle++) {
-        // standard
-        point = {};
-        point.x = x;
-        point.y = vSCircle.y - sRadiusS * Math.sin(s.radians(cAngle)*sFreq+sPhase);
-        standardSinusoid.push(point);
-        // custom
-        point = {}
-        point.x = x;
-        point.y = vCCircle.y - cRadiusS * Math.sin(s.radians(cAngle)*cFreq+cPhase);
-        customSinusoid.push(point);
+        // Paint the standard circle
+        s.push();
+        stdBuff.circle(vCStd.x, vCStd.y, 3);
+        stdBuff.circle(vCStd.x, vCStd.y, d);
+        s.pop();
 
-    }
-};
+        // Paint the custom circle
+        s.push(); s.showFps();
+        cusBuff.circle(vCCus.x, vCCus.y, 3);
+        cusBuff.circle(vCCus.x, vCCus.y, d * cusSinusoid.radius);
+        s.pop();
 
-s.draw = () => {
-    s.background(styles.bkgColor);
+        // Change the position of the custom circle relative to the 
+        // canvas not to the graphical instance
+        vCCus.y += 5 * r;
+        vGCus.y += 5 * r;
+        vRCus.y += 5 * r;
 
-    // Drawing the two circles
-    pCircle(s, vSCircle.x, vSCircle.y, 2 *  sRadiusS, styles.circleColor);
-    pCircle(s, vSCircle.x, vSCircle.y, 3, styles.circleColor); // center
-    pCircle(s, vCCircle.x, vCCircle.y, 2 * cRadiusS, styles.circleColor);
-    pCircle(s, vCCircle.x, vCCircle.y, 3, styles.circleColor); // center
-    // Drawing the text above the two circles
-    pText(s, "A = 1, ω = 1, φ = 0", vSCircle.x - 70, vSCircle.y-sRadiusS-10);
-    pText(s, "A = " + cRadius + ", ω = " + cFreq + ", φ = " + cPhase.toFixed(2), vCCircle.x - 70, vCCircle.y-cRadiusS-10);
-
-    // Drawing the moving radius for the two circles
-    pLine(s, vSCircle.x, vSCircle.y, vSRadius.x, vSRadius.y, styles.sineColor);
-    pLine(s, vCCircle.x, vCCircle.y, vCRadius.x, vCRadius.y, styles.sineColor);
-
-    // Drawing grid
-    pLine(s, gridX, 0, gridX, height, styles.gridColor);
-    pLine(s, gridX, vSCircle.y, width, vSCircle.y, styles.gridColor); // x-axis for the "standard" sinusoid
-    pLine(s, gridX, vCCircle.y, width, vCCircle.y, styles.gridColor); // x-axis for the "custom" sinusStandard Unit Circleoid
-    pCircle(s, gridX, vSCircle.y, 3, styles.coordSysColor, styles.coordSysColor); // origin of the grid for the "standard" sinusoid
-    pCircle(s, gridX, vCCircle.y, 3, styles.coordSysColor, styles.coordSysColor); // origin of the grid for the "custom" sinusoid
-    pCircle(s, gridX, vSCircle.y - sRadiusS, 3, styles.coordSysColor, styles.coordSysColor); // 1 for "standard"
-    pText(s, " 1", gridX - 20, vSCircle.y - sRadiusS);
-    pCircle(s, gridX, vSCircle.y + sRadiusS, 3, styles.coordSysColor, styles.coordSysColor); // -1 for "standard"
-    pText(s, "-1", gridX - 20, vSCircle.y + sRadiusS);
-    pCircle(s, gridX, vCCircle.y -2*sRadiusS, 3, styles.coordSysColor, styles.coordSysColor); // 2 for "custom"
-    pText(s, " 2", gridX - 20, vCCircle.y -2*sRadiusS);
-    pCircle(s, gridX, vCCircle.y -sRadiusS, 3, styles.coordSysColor, styles.coordSysColor);   // 1 for "custom"
-    pText(s, " 1", gridX - 20, vCCircle.y -sRadiusS);
-    pCircle(s, gridX, vCCircle.y + 2*sRadiusS, 3, styles.coordSysColor, styles.coordSysColor); // -2 for "custom"
-    pText(s, "-2", gridX - 20, vCCircle.y + 2*sRadiusS);
-    pCircle(s, gridX, vCCircle.y + sRadiusS, 3, styles.coordSysColor, styles.coordSysColor); // -1 for "custom"
-    pText(s, "-1", gridX - 20, vCCircle.y + sRadiusS);
-    for(let i = gridX, j = 0; i < width; i+=sRadiusS, j++) {
-        pCircle(s, i, vSCircle.y, 3, styles.coordSysColor, styles.coordSysColor);
-        pCircle(s, i, vCCircle.y, 3, styles.coordSysColor, styles.coordSysColor);
-        pText(s, j, i-3, vCCircle.y+15);
-        pText(s, j, i-3, vSCircle.y+15);
+        // Text for the two grids
+        stdBuff.push();
+        stdBuff.textFont(theme.textFont);
+        stdBuff.fill(theme.radiusColor);
+        stdBuff.text("Unit Circle: y=f(x)=sin(x), because: A=1, ω=1, φ=0", 4 * r + 25, 4 * r - 10);
+        stdBuff.pop();
+        cusBuff.push();
+        cusBuff.fill(theme.radiusColor);
+        cusBuff.textFont(theme.textFont);
+        cusBuff.text("'Custom' circle: y=f(x)=" + 
+                        cusSinusoid.radius +
+                         "*sin(" + cusSinusoid.freq +
+                         "*x+" + cusSinusoid.phase.toFixed(2) +
+                         "), where " +
+                         "A="+cusSinusoid.radius+", " +
+                         "ω="+cusSinusoid.freq+", " +
+                         "φ="+cusSinusoid.phase.toFixed(2),
+                         4 * r + 25, 6 * r - 10);
+        cusBuff.pop();
+        angls = 0, anglc = 0;
     }
 
-    // Paint sinusoids
-    // Standard sinusoid
-    for(let i = 0; i < standardSinusoid.length; i++) {
-        pPoint(s, standardSinusoid[i].x, standardSinusoid[i].y, styles.coordSysColor);
+    s.setup = () => {
+        // Create Canvas of given size 
+        canvas = s.createCanvas(w, h);
+        canvas.parent('sinusoids-sketch');
+        s.textFont(theme.textFont);
+        s.frameRate(theme.frameRate);
+        s.initConditions();
     }
-    for(let i = 0; i < customSinusoid.length; i++) {
-        pPoint(s, customSinusoid[i].x, customSinusoid[i].y, styles.coordSysColor);
-    }
-    // Moving line
-    // Standard sinusoid
-    pLine(s, standardSinusoid[ssIdx].x, standardSinusoid[ssIdx].y, vSRadius.x, vSRadius.y, styles.coordSysColor);
-    pLine(s, customSinusoid[ssIdx].x, customSinusoid[ssIdx].y, vCRadius.x, vCRadius.y, styles.coordSysColor);
-    ssIdx++;
-    if (ssIdx==standardSinusoid.length) {
-        ssIdx = 0;
-        sAngle = initAngle;
-    }
-    vSRadius.x = vSCircle.x + sRadiusS * Math.sin(Math.PI/2 + s.radians(sAngle)*sFreq+sPhase); // standard sinusoid
-    vSRadius.y = vSCircle.y + sRadiusS * Math.cos(Math.PI/2 + s.radians(sAngle)*sFreq+sPhase);
-    vCRadius.x = vCCircle.x + cRadiusS * Math.sin(Math.PI/2 + s.radians(sAngle)*cFreq+cPhase); // custom sinusoid increment
-    vCRadius.y = vCCircle.y + cRadiusS * Math.cos(Math.PI/2 + s.radians(sAngle)*cFreq+cPhase);
 
-    // Incremenet moving angle
-    sAngle++;
-}; 
-};
-};
+    s.draw = () => {
+        s.background(theme.bkgColor);
 
-// let sinusoidsSketch = new p5(sinusoids(styles, defaultInputSinusoid), "sinusoids-sketch");
+        // Paint the two graphical buffers
+        s.image(stdBuff, 0, 0);
+        s.image(cusBuff, 0, 5 * r);
+        s.noFill();
+
+        // Increment the reference for vCCus
+        s.push();
+        s.fill(theme.sineColor);
+        s.circle(vCCus.x, vCCus.y, 3);
+        s.pop();
+
+
+        // Moving radius for standard
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.line(vCStd.x, vCStd.y, vRStd.x, vRStd.y);
+        s.circle(vRStd.x, vRStd.y, 3);
+        s.pop();
+
+        // Moving radius for custom
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.line(vCCus.x, vCCus.y, vRCus.x, vRCus.y);
+        s.circle(vRCus.x, vRCus.y, 3);
+        s.pop();
+
+        // Moving Points
+        s.push();
+        stdBuff.point(vMStd.x, vMStd.y);
+        cusBuff.point(vMCus.x, vMCus.y);
+        s.pop();
+
+        // Moving text near the points
+        s.push();
+        s.fill(theme.sineColor);
+        s.text("y=f(x)=1*sin(1*x+0)", vMStd.x + 5, vMStd.y + 5);
+        s.text("y=f(x)=" + cusSinusoid.radius + "*sin(" + cusSinusoid.freq + "*x+" + cusSinusoid.phase.toFixed(2) + ")",
+            vMCus.x + 5, vMCus.y + 5 * r + 5);
+        s.pop();
+
+        // Movign red circles
+        s.push();
+        s.fill(theme.sineColor);
+        s.stroke(theme.sineColor);
+        s.circle(vMCus.x, vMCus.y + 5 * r, 3);
+        s.circle(vMStd.x, vMStd.y, 3);
+        s.pop();
+
+        // Connecting the moving red circles with the moving radiuses
+        s.push();
+        s.stroke(theme.radiusColorLight);
+        s.lineDash(canvas, [3, 3], vMStd.x, vMStd.y, vRStd.x, vRStd.y);
+        s.lineDash(canvas, [3, 3], vMCus.x, vMCus.y + 5 * r, vRCus.x, vRCus.y);
+        s.pop();
+
+        // Animation increments
+        vRStd.x = vCStd.x + s.sin(angls + tph) * r;
+        vRStd.y = vCStd.y + s.cos(angls + tph) * r;
+        vRCus.x = vCCus.x + s.sin(anglc * cusSinusoid.freq + tph + cusSinusoid.phase) * (r * cusSinusoid.radius);
+        vRCus.y = vCCus.y + s.cos(anglc * cusSinusoid.freq + tph + cusSinusoid.phase) * (r * cusSinusoid.radius);
+        vMStd.x += tf * r;
+        vMStd.y = vCStd.y - s.sin(anglc) * r;
+        vMCus.x += tf * r;
+        vMCus.y = vCCus.y - 5 * r - s.sin(anglc * cusSinusoid.freq + cusSinusoid.phase) * (r * cusSinusoid.radius);
+        angls += tf;
+        anglc += tf;
+
+        if (vMCus.x > w || vMStd.x > w) {
+            s.initConditions();
+        }
+
+        // console.log(s.frameRate());
+    }
+}
+
+let sinusoidsSketch =
+    new p5(sinusoids, 'sinusoids-sketch');
 
 const updateSinusoids = () => {
 
@@ -156,12 +201,9 @@ const updateSinusoids = () => {
     let freqEl = parseFloat(document.getElementById('sinusoid_omega').value);
     let phaseEl = parseFloat(document.getElementById('sinusoid_phi').value);
 
-    let input = {
-        radius: radiusEl,
-        freq: freqEl,
-        phase: phaseEl*Math.PI
-    };
-    
+    cusSinusoid.radius = radiusEl;
+    cusSinusoid.freq = freqEl;
+    cusSinusoid.phase = phaseEl * Math.PI
     sinusoidsSketch.remove();
-    sinusoidsSketch = new p5(sinusoids(styles, input), 'sinusoids-sketch');
-};
+    sinusoidsSketch = new p5(sinusoids, 'sinusoids-sketch');
+};    

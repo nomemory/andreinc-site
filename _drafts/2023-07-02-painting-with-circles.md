@@ -20,6 +20,8 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -317,13 +319,14 @@ If we consider *time* to be the x-axis the sinusoid is:
 
 $$y=f(x)=A * sin(\omega x + \varphi)$$
 
-If we pick $$A=1$$, and $$\omega=1$$ (and $$\varphi=\frac{\pi}{2}$$) we get our $$sin$$ and $$cos$$ functions back. But in the name of science, let's see how our *sinusoid* behaves under different circumstances. 
+If we pick $$A=1$$, and $$\omega=1$$ (and $$\varphi=0$$ or $$\varphi=\frac{\pi}{2}$$) we get our $$sin$$ and $$cos$$ functions back. But in the name of science, let's see how our *sinusoid* behaves under different circumstances. 
 
 The following animation is interactive. You can choose the values of $$A=$$ 
     <select id="sinusoid_A" onchange="updateSinusoids()">
         <option value="0.5">0.5</option>
         <option value="1">1</option>
-        <option value="2" selected>2</option>
+        <option value="1.5" selected>1.5</option>
+        <option value="2">2</option>
     </select>
     , $$\omega=$$
         <select id="sinusoid_omega" onchange="updateSinusoids()">
@@ -351,19 +354,76 @@ The following animation is interactive. You can choose the values of $$A=$$
 
 # Adding sinusoids
 
-At this point things will become more interesting. If you start suming up sinusoids, new oscillating patterns will appear. The more sinusoids we sum-up, the more complex the patterns are going to be. If we have enough sinusoids around, we can start "painting" (approximating) real-world shapes. Philosophicall speaking, if we have an infinity of sinusoids at our disposal, and with just a little mathematical imagination, we can "draw" the exact everything. And remember, it all started with the circle.
+At this point things will become more interesting. If you start suming up sinusoids, new oscillating patterns will appear. The more sinusoids we sum-up, the more complex the patterns are going to be. If we have enough sinusoids around, we can start "painting" (approximating) real-world shapes. Philosophicall speaking, if we have an infinity of sinusoids at our disposal, and with just a little mathematical imagination, we can "draw" the exact everything (*there's a catch to it!*). And remember, it all started with the circle; Aristotle was right.
 
 But, let's take it slowly and sum-up a few sinusoids to see what's happening. Visually speaking, adding two sinusoids is just like adding two "normal" mathematical functions. 
 
 
 So let's plot two arbitrary selected sinusoids $$y_{1}(x)$$ and $$y_{2}(x)$$, where:
-* $$y_{1}(x) = \frac{1}{2} * sin(7x + \frac{\pi}{2})$$, and 
-* $$y_{2}(x) = \frac{7}{10} * sin(3x - 2)$$ .
+* $$y_{1}(x) = \frac{9}{10} * sin(7x + \frac{\pi}{2})$$, and 
+* $$y_{2}(x) = \frac{12}{10} * sin(3x - 2)$$ .
 
 The sum $$y(x)=y_{1}(x) + y_{2}(x)$$ already looks more "fascinating".
 
 <div id="sum-simple-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumsimple.js)</sup></sup>
+
+We can even express "square waves" as a sum of sinusoids. Let's take for example the following formula:
+
+$$
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2x-1)fx)}{2x-1}
+$$
+
+If we expand it, and use the angular frequency ($$\omega=2\pi f$$) we will obtain something like this:
+
+$$
+y(x) =  \underbrace{\frac{4}{\pi}sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{sin((2k-1)\omega x)}}_{y_k(x)} + ...
+$$
+
+$$y_1(x), y_2(x), y_3(x), ..., y_k(x)$$ are all the individual sinusoids. If we starting adding them up *a square wave* will "unfold". The higher the $$k$$, the better the aproximation. 
+
+Choose how many sinusoids you want to use, and let's see how the functions looks like for <select id="numSins" onchange="updateSins()">
+        <option value="1">k=1</option>
+        <option value="2">k=2</option>
+        <option value="3">k=3</option>
+        <option value="4">k=4</option>
+        <option value="7" selected>k=7</option>
+        <option value="9">k=9</option>
+        <option value="15">k=15</option>
+        <option value="20">k=20</option>
+    </select> (and $$\omega$$=<select id="sinsFreq" onchange="updateSins()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>):
+
+<div id="square-wave-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewave.js)</sup></sup>
+
+Except for those small overshoot "spikes" at the corners of the square ([Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon)), adding more sinusoids in the picture makes the "square" more convincing. The reason for this phenomen stems from the fact that a "jumping" function is hard to approximate using a "smooth" and "tame" sinusoid.
+
+At this point we should get back at our circles, and see how they behave once we add more sinusoids together. Is there one circle to rule them all, or a multitde circles that are highly-connected? 
+
+Pick <select id="sumEpiSins" onchange="updateSumEpi()">
+        <option value="1">k=1</option>
+        <option value="2">k=2</option>
+        <option value="3" selected>k=3</option>
+        <option value="4">k=4</option>
+        <option value="7">k=7</option>
+        <option value="9">k=9</option>
+        <option value="15">k=15</option>
+        <option value="20">k=20</option>
+    </select> and $$\omega$$=<select id="sumEpiFreq" onchange="updateSumEpi()">
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select> to plot the circles and the corresponding $$y_k(x)$$ functions:
+
+
+<div id="sum-epi-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumepi.js)</sup></sup>
+
+
 
 # Complex numbers and circles (short math recap)
 
