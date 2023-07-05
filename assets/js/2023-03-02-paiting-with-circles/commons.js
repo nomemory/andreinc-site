@@ -163,3 +163,70 @@ const addLineDashed = (s) => {
         c.drawingContext.setLineDash([]);
     }
 }
+
+/**
+ * 
+ * @param {*} s The drawing function
+ * @param {*} vC The center of the circle creating the sinusoid
+ * @param {*} vR The current point of the moving radius
+ * @param {*} radius The radius 
+ * @param {*} angle The amplititude
+ * @param {*} ampl The amplititude
+ * @param {*} freq The frequency
+ * @param {*} phase The phase
+ * @param {*} color The color used to draw
+ * @param {*} tf The incremenet for the angle
+ * @param {*} tr 
+ */
+
+function Sinusoid(s, vC, vR, angle, ampl, freq, phase, color, tf, tr) {
+    this.s = s;
+    this.vC = vC;
+    this.vR = vR;
+    this.ampl = ampl;
+    this.freq = freq;
+    this.phase = phase;
+    this.color = color;
+    this.angle = angle;
+    this.tf = tf;
+    this.tr = tr;
+}
+
+const SinusoidPrototype = {
+    
+    drawEpi() {
+       this.s.push();
+       this.s.noFill();
+       this.s.stroke(this.color);
+       this.s.circle(this.vC.x, this.vC.y, 3);
+       this.s.circle(this.vC.x, this.vC.y, this.ampl * 2);
+       this.s.line(this.vC.x, this.vC.y, this.vR.x, this.vR.y);
+       this.s.pop();
+    },
+
+    draw() {
+        // Actual Circle 
+        this.s.push();
+        this.s.noFill();
+        this.s.stroke(this.color);
+        this.s.circle(this.vC.x, this.vC.y, 2*this.ampl*this.tr);
+        this.s.pop();
+        // Moving Radius
+        this.s.push();
+        this.s.stroke(theme.radiusColorLight);
+        this.s.line(this.vC.x, this.vC.y, this.vR.x, this.vR.y);
+        this.s.pop();
+    },
+
+    update(fromEpi) {
+        if (fromEpi!==undefined) {
+            this.vC.x = fromEpi.vR.x;
+            this.vC.y = fromEpi.vR.y;
+        }
+        this.vR.x = this.vC.x + this.ampl * this.s.sin(this.angle * this.freq + this.phase + this.s.HALF_PI) * (this.tr);
+        this.vR.y = this.vC.y + this.ampl * this.s.cos(this.angle * this.freq + this.phase + this.s.HALF_PI) * (this.tr);
+        this.angle+=this.tf;
+    }
+}
+
+Object.assign(Sinusoid.prototype, SinusoidPrototype);

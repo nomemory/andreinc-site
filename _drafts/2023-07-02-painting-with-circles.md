@@ -21,7 +21,8 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
+    # - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -32,18 +33,16 @@ tags:
 
 # What is a Circle? (short math recap) 
 
-Over ~~hundred~~ thousands years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), he says: *"The circle symbolises eternity because it has no beginning or end."*
+Over ~~a hundred~~ thousand years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work, [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), Plato says: *"The circle symbolises eternity because it has no beginning or end."*
 
-In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasize: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
+In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasizes: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
 
-[Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. He was right, but in a subtler way than you would normally expect. But, enough philosophical speculation, and let's get back to basic mathematics. 
-
-I suppose, everyone knows what a circle is:
+[Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. He was right, but in a subtler way than you would normally expect. But, enough philosophical speculation; let's get back to basic mathematics. I suppose everyone knows what a circle is:
 
 <div id="simple-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecircle.js)</sup></sup>
 
-It's a geometric figure, with a *center* point $$P(a,b)$$, and radius ($$r$$). Nothing more, nothing less. Based on this, we can come up with a *numeric definition* for the culprit:
+It's a geometric figure with a *center* point $$P(a,b)$$, and radius ($$r$$). Nothing more, nothing less. Based on this, we can come up with a *numeric definition* for the culprit:
 
 $$
 \forall (x,y) \in \mathbb{R}^{2}, (x-a)^{2} + (y-b)^{2} = r^2 \\
@@ -51,7 +50,7 @@ $$
 \text{of the centre of the Circle} 
 $$
 
-If we pick the circle's centre to be the centre of the [*Cartesian Grid*](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) $$(a=0,b=0)$$, and the circle's radius to be $$1$$, the relationship becomes $$x^2 + y^2 = 1$$. This is the [*Unit Circle*](https://en.wikipedia.org/wiki/Unit_circle), where each point is *one unit* away from the origin (centre).
+If we pick the circle's center as the center of the [*Cartesian Grid*](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) $$(a=0,b=0)$$, and the circle's radius to be $$1$$, the relationship becomes $$x^2 + y^2 = 1$$. This is the [*Unit Circle*](https://en.wikipedia.org/wiki/Unit_circle), where each point is *one unit* away from the origin (center).
 
 So (the unit) circle is composed of an infinity of dimensionless points $$P(x_{i}, y_{i})$$, for which their coordinates satisfy the simple *Pythagorean* condition: $$x_{i}^2 + y_{i}^2=1$$.
 
@@ -63,11 +62,11 @@ The key to the circle's symmetry stems from the fact that $$\forall x \in \mathb
 <div id="triangle-in-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/triangleincircle.js)</sup></sup>
 
-For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symetrical points, rotate them around, and you will obtain a circle. *Opposition creates symetry*. 
+For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant), will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symmetrical points, rotate them around, and you will obtain a circle. *Opposition creates symmetry*. 
 
-But speaking of Pythagoras, if we look closer at the *equation* defining the Circle, $$x^2 + y^2 = 1$$, we can intuitively feel there's a *strong connection* between this, the cartesian system, and the right triangle: what if $$x$$ and $$y$$ are the legs of the triangle, and the hypotenuse is $$1$$ (the radius)?
+But speaking of Pythagoras, if we look closer at the *equation* defining the Circle, $$x^2 + y^2 = 1$$, we can intuitively feel there's a *strong connection* between this, the cartesian system, and the right triangle: what if $$x$$ and $$y$$ are the legs of the triangle, and the hypotenuse is $$1$$ (hypotenuse == radius)?
 
-What it means is that we can *trap* an infinity of right triangles inside a circle. To make things simpler, we also can define `sine` and `cosine` in relationship with the *Unit Circle*:
+This means we can *trap* an infinity of right triangles inside a circle. To make things simpler, we also can define `sine` and `cosine` in relationship with the *Unit Circle*:
 
 <div id="simple-circle-rotating-triangle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js)</sup></sup>
@@ -77,11 +76,13 @@ Where:
 * The `sine` function is defined as the y-coordinate of a point on the *Unit Circle*;
 * The `cosine` function is the x-coordinate of the same point on the *Unit Circle*. 
 
-As the point moves around the circle in a counterclockwise direction, the values of the `sine` and `cosine` functions change, creating a wave-like pattern, where *the motion* of the *wave* is created by the *pulsating radius* rotating clockwise.
+As the point moves around the circle in a counterclockwise direction, the values of the `sine` and `cosine` functions change, creating a wave-like pattern, where *the wave's motion* is created by the *pulsating radius* rotating clockwise.
 
 > Because what happens on the circle stays on the circle, the equation $$x^2+y^2=1$$ is now equivalent to a fundamental trigonometrical identity: $$sin^2(x)+cos^2(x)=1$$, $$\forall (x,y) \in \mathbb{R}^{2}$$.
 
-Defining `sine` and `cosine` in the context of a square triangle is limiting. What if the angle ($$\theta$$) becomes greater or equal to $$90^\circ$$? That doesn't make sense because we already have a $$90^\circ$$ angle... If we use the *Unit Circle* as the underlying foundation to think about the two functions, we don't have this problem anymore, our definition broadens, and `sine` and `cosine` suddenly make sense for $$\theta \geq 90^\circ$$. 
+Defining `sine` and `cosine` in the context of a square triangle is limiting. What if the angle ($$\theta$$) becomes greater or equal to $$90^\circ$$? That doesn't make sense because we already have a $$90^\circ$$ angle... 
+
+If we use the *Unit Circle* as the underlying foundation to think about the two functions, we don't have this problem anymore, our definition broadens, and `sine` and `cosine` suddenly make sense for $$\theta \geq 90^\circ$$. 
 
 # Radians and the number $$\pi$$
 
@@ -89,7 +90,7 @@ Defining `sine` and `cosine` in the context of a square triangle is limiting. Wh
 
 In practice, we rarely see angles expressed in degrees; usually, we represent them in relation to the number $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.; where $$\pi$$ (or `PI`) is the ratio of a circle's circumference to its diameter, and it approximates `π ≈ 3.14`. The `radian` (or `rad`) is the *true* unit we use to measure angles. There is an intimate relationship between the `radian` and the number $$\pi$$. 
 
-Unfortunately for us, $$\pi$$ is an [*irrational number*](https://en.wikipedia.org/wiki/Irrational_number); meaning its decimal expansion never repeats or terminates. You cannot express $$\pi$$ as a ratio between two numbers. $$\pi$$ is endless. In this regard, it's scary to think we can only approximate the area or the length of a circle up to a certain decimal point; but don't worry, there are no perfect circles in the material universe, and if there are, we won't be able to tell for sure - *infinity* is disarming. 
+Unfortunately for us, $$\pi$$ is an _irrational number_, meaning its decimal expansion never repeats or terminates. You cannot express $$\pi$$ as a ratio between two numbers. $$\pi$$ is endless. In this regard, it's scary to think we can only approximate the area or the length of a circle up to a certain decimal point; but don't worry, there are no perfect circles in the material universe, and if there are, we won't be able to tell for sure - *infinity* is disarming. 
 
 To better understand "what is $$\pi$$?", let's look at the following animation. If we roll a *Unit Circle* over a *flat surface* (the $$x$$ axis), a complete rotation leaves a trail with a length equal to $$2*\pi$$. 
 
@@ -186,7 +187,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                     </tr>
                 </tbody>
             </table>                                           
-        </td>
+        </td>>
         <td> 
             <table>
                 <thead>
@@ -207,6 +208,9 @@ If we put all the information back into *The Unit Circle* animation, things are 
                     <tr id="angle_225">
                         <td>$$225^\circ$$</td>
                         <td>$$\frac{5\pi}{4}$$</td>
+    draw(buff) {
+        buff.
+    }
                         <td>$$-\frac{\sqrt{2}}{2}$$</td>
                         <td>$$-\frac{\sqrt{2}}{2}$$</td>
                     </tr>
@@ -270,17 +274,17 @@ If you like math, is good you memorize the values. If not, they can easily be de
 
 # A look into sine and cosine functions
 
-The *moving* radius inside the Unit Circle is the *moving element* that helps us plot the $$sin$$ function. Sine is like a wave that oscillates in the interval $$[-1, 1]$$, from $$-\infty$$ to $$\infty$$, regardless of the input. In a way, $$sine$$ *unrolls* the circle in/with time. Given the circle's symmetrical nature, sine is a periodical function, that repeats every $$2\pi$$ units. 
+The *moving* radius inside the Unit Circle is the *moving element* that helps us plot the $$sin$$ function. Sine is like a wave that oscillates in the interval $$[-1, 1]$$, from $$-\infty$$ to $$\infty$$, regardless of the input. In a way, $$sine$$ *unrolls* the circle in/with time. Given the circle's symmetry, sine is a *periodic function* that repeats every $$2\pi$$ unit. 
 
 <div id="simple-osc-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleosc.js)</sup></sup>
 
-At this point it will be unfair for cosine not to plot it on the same graph:
+At this point, it will be unfair for cosine not to plot it on the same graph:
 
 <div id="simple-osc-cos-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleosccos.js)</sup></sup>
 
-If you put $$sin$$ and $$cos$$ on the same graph, you will soon realize they are not so different after all, they are almost the same function, with a phase shift between them.
+If you put $$sin$$ and $$cos$$ on the same graph, you will soon realize they are not so different; they are almost the same function, with a phase shift between them.
 
 So, if we have this relationship $$sin(x + a) = cos(a)$$, which we know it's true $$\forall a$$, how do we find $$x$$? There's a visual solution to this, but we can also use a simple trigonometrical identity to find the answer.
 
@@ -290,18 +294,20 @@ But we know this is true, no matter how we pick $$a$$. So why don't we pick $$a=
 
 Now, let's choose $$a=\frac{\pi}{2}$$, then our relationship becomes, $$cos(\frac{\pi}{2})=sin(x)*cos(\frac{\pi}{2})+cos(x)*sin(\frac{\pi}{2})$$, which is equivalent to: $$0=cos(x)$$. 
 
-The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry $$cos$$, you are not very original, because $$sin(a+\frac{\pi}{2})=cos(a)$$... it's only a phase they say. But hey, remember I've told you sine and cosine are periodical functions, then there are multiple solutions for $$x$$, so to generalize further we can say that $$sin(a+\underbrace{(\frac{\pi}{2}+2k\pi)}_{x})=sin(a+\frac{\pi}{2})=cos(a)$$, $$\forall k \in \mathbb{Z}$$.
+The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry $$cos$$, you are not very original, because $$sin(a+\frac{\pi}{2})=cos(a)$$... it's only a phase, they say. Remember I've told you sine and cosine are periodic functions, so there are multiple solutions for $$x$$. To generalize further we can say that $$sin(a+\underbrace{(\frac{\pi}{2}+2k\pi)}_{x})=sin(a+\frac{\pi}{2})=cos(a)$$, $$\forall k \in \mathbb{Z}$$.
 
-This is of course obvious if we plot the functions side by side:
+This is, of course, obvious if we plot the functions side by side:
 
 <div id="sin-cos-side-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sincosside.js)</sup></sup>
 
-Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. All in all, don't get lost in details, whenever we refer to the term *sinusoid* we refer to both sine and cosine, without discrimination. *In a world of sines, always struggle to be the cosine!*
+Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. Whenever we refer to *sinusoid*, we refer to both sine and cosine without discrimination. 
+
+> *In a world of sines, always struggle to be the cosine!*
 
 # "Customising" the sine function (sinusoids)
 
-As Software Engineers, our first reflex is to make our code more extensible and customisable, so why don't we introduce a few more parameters to our sine function so that we can "control" it's behavior further.
+As Software Engineers, our first reflex is to make our code more extensible and customizable, so why don't we introduce a few more parameters to our sine function so that we can "control" its behavior further?
 
 So why don't we introduce $$y(t)$$, as a function of "time" where:
 
@@ -377,7 +383,7 @@ $$
 If we expand it, and use the angular frequency ($$\omega=2\pi f$$) we will obtain something like this:
 
 $$
-y(x) =  \underbrace{\frac{4}{\pi}sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{sin((2k-1)\omega x)}}_{y_k(x)} + ...
+y(x) =  \underbrace{\frac{4}{\pi}sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{sin((2k-1)\omega x)}}_{y_k(x)} + ...>
 $$
 
 $$y_1(x), y_2(x), y_3(x), ..., y_k(x)$$ are all the individual sinusoids. If we starting adding them up *a square wave* will "unfold". The higher the $$k$$, the better the aproximation. 
@@ -402,7 +408,7 @@ Choose how many sinusoids you want to use, and let's see how the functions looks
 
 Except for those small overshoot "spikes" at the corners of the square ([Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon)), adding more sinusoids in the picture makes the "square" more convincing. The reason for this phenomen stems from the fact that a "jumping" function is hard to approximate using a "smooth" and "tame" sinusoid.
 
-At this point we should get back at our circles, and see how they behave once we add more sinusoids together. Is there one circle to rule them all, or a multitde circles that are highly-connected? 
+At this point, we should get back at our circles, and see how they behave once we add more sinusoids together. Is there one circle to rule them all, or a multitde circles that are highly-connected? 
 
 Pick <select id="sumEpiSins" onchange="updateSumEpi()">
         <option value="1">k=1</option>
@@ -421,7 +427,7 @@ Pick <select id="sumEpiSins" onchange="updateSumEpi()">
 
 
 <div id="sum-epi-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumepi.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumepi2.js)</sup></sup>
 
 
 

@@ -11,7 +11,7 @@ const squareWave = (s) => {
     const r = d / 2;
     const w = 800;
     const h = 700;
-    const tf = theme.frequency / 20;
+    const tf = theme.frequency / 5;
     let tph = s.HALF_PI;
 
     let fBuff;  // the buffer where we plot the two sinusoids

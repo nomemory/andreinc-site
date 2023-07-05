@@ -38,6 +38,7 @@ const sumEpi = (s) => {
 
     let vRk = [];
     let vMk = [];
+    let vUoids = [];
 
     let canvas;
 

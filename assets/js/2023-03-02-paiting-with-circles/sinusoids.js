@@ -13,7 +13,7 @@ const sinusoids = (s) => {
     const r = d / 2;
     const w = 800;
     const h = 600;
-    const tf = theme.frequency / 6;
+    const tf = theme.frequency / 5;
     let tph = s.HALF_PI;
 
     let canvas;
