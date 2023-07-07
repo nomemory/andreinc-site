@@ -23,6 +23,8 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
     # - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -82,24 +84,24 @@ As the point moves around the circle in a counterclockwise direction, the values
 
 Defining `sine` and `cosine` in the context of a square triangle is limiting. What if the angle ($$\theta$$) becomes greater or equal to $$90^\circ$$? That doesn't make sense because we already have a $$90^\circ$$ angle... 
 
-If we use the *Unit Circle* as the underlying foundation to think about the two functions, we don't have this problem anymore, our definition broadens, and `sine` and `cosine` suddenly make sense for $$\theta \geq 90^\circ$$. 
+If we use the *Unit Circle* as the underlying foundation to think about the two functions, we no longer have this problem. Our definition broadens, and `sine` and `cosine` suddenly make sense for $$\theta \geq 90^\circ$$. 
 
 # Radians and the number $$\pi$$
 
 > Have you ever wondered why do we use $$360°$$, and not another number? What makes $$360°$$ special, compared to, let's say, $$800°$$? Here are some potential [answers](https://hsm.stackexchange.com/questions/1884/origin-of-360-degrees).
 
-In practice, we rarely see angles expressed in degrees; usually, we represent them in relation to the number $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.; where $$\pi$$ (or `PI`) is the ratio of a circle's circumference to its diameter, and it approximates `π ≈ 3.14`. The `radian` (or `rad`) is the *true* unit we use to measure angles. There is an intimate relationship between the `radian` and the number $$\pi$$. 
+In practice, we rarely see angles expressed in degrees; usually, we represent them in relation to the number $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.; where $$\pi$$ (or `PI`) is the ratio of a circle's circumference to its diameter, and it approximates `π ≈ 3.14`. The `radian` (or `rad`) is the *true* unit we use to measure angles. An intimate relationship exists between the `radian` and the number $$\pi$$.
 
-Unfortunately for us, $$\pi$$ is an _irrational number_, meaning its decimal expansion never repeats or terminates. You cannot express $$\pi$$ as a ratio between two numbers. $$\pi$$ is endless. In this regard, it's scary to think we can only approximate the area or the length of a circle up to a certain decimal point; but don't worry, there are no perfect circles in the material universe, and if there are, we won't be able to tell for sure - *infinity* is disarming. 
+Unfortunately for us, $$\pi$$ is *irrational*, meaning its decimal expansion never repeats or terminates. You cannot express $$\pi$$ as a ratio between two numbers. $$\pi$$ is endless. In this regard, it's scary to think we can only approximate the area or the length of a circle up to a certain decimal point; but don't worry, there are no perfect circles in the material universe, and if there are, we won't be able to tell for sure - *infinity* is disarming. 
 
 To better understand "what is $$\pi$$?", let's look at the following animation. If we roll a *Unit Circle* over a *flat surface* (the $$x$$ axis), a complete rotation leaves a trail with a length equal to $$2*\pi$$. 
 
-If we roll a circle with a $$radius \neq 1$$ instead, the trail (*perimeter*) will be $$2*\pi*r$$.
+If we roll a circle with a $$radius \neq 1$$ instead, the trail (*perimeter*) will be $$2*\pi*r$$ (where $$r$$ is the radius).
 
 <div id="rotating-PI-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpi.js)</sup></sup>
 
-So, the angles expressed in degrees can also be described by circle's rolling *projection* on the $$x$$ axis. The following animation is interactive, hold the mouse pressed in the middle of the circle, and move it left or right to see the correspondence between radians and degrees:
+So, the angles expressed in degrees can also be described by the circle's *rolling projection* on the $$x$$ axis. The following animation is interactive; hold the mouse pressed in the middle of the circle and move it left or right to see the correspondence between radians and degrees:
 
 <div id="rotating-PI-w-PI-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpiwpi.js)</sup></sup>
@@ -188,7 +190,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                 </tbody>
             </table>                                           
         </td>>
-        <td> 
+        <td>
             <table>
                 <thead>
                     <tr>
@@ -208,9 +210,6 @@ If we put all the information back into *The Unit Circle* animation, things are 
                     <tr id="angle_225">
                         <td>$$225^\circ$$</td>
                         <td>$$\frac{5\pi}{4}$$</td>
-    draw(buff) {
-        buff.
-    }
                         <td>$$-\frac{\sqrt{2}}{2}$$</td>
                         <td>$$-\frac{\sqrt{2}}{2}$$</td>
                     </tr>
@@ -301,7 +300,7 @@ This is, of course, obvious if we plot the functions side by side:
 <div id="sin-cos-side-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sincosside.js)</sup></sup>
 
-Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. Whenever we refer to *sinusoid*, we refer to both sine and cosine without discrimination. 
+Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. Whenever we refer to a *sinusoid*, we mean both sine and cosine (without discrimination).
 
 > *In a world of sines, always struggle to be the cosine!*
 
@@ -313,15 +312,15 @@ So why don't we introduce $$y(t)$$, as a function of "time" where:
 
 $$y(t) = A * sin(2\pi ft + \varphi) = A * sin(\omega t + \varphi)$$
 
-This function is called a *sinusoidal wave*, or simply a *sinusoid*, and it often occurs in physics (and mathematics), engineering and signal processing. Altering the parameters of the function, alters the way we plot it on the Cartesian Grid.
+This function is called a *sinusoidal wave*, or simply a *sinusoid*, and it often occurs in physics (and mathematics), engineering and signal processing. Altering the function's parameters alters its representation on the Cartesian Grid.
 
 But speaking of params:
-* $$A$$ is called the *amplitutde*, and represents the maximum deviation of the function from zero. The deviation can be both negative and positive.
-* $$f$$ is called *ordinary frequency* (not in a pejorative way), and denotes the number of oscilations (the radius moving inside the circle) that occur each second of time.
-* $$\omega=2\pi f$$ is called the *angular frequency*, it's same as *ordinary frequency* but it's expressed in $$\frac{radians}{second}$$;
+* $$A$$ is called the *amplitude*, representing the maximum deviation of the function from zero. The deviation can be both negative and positive.
+* $$f$$ is called *ordinary frequency* (not in a pejorative way), and denotes the number of oscillations (the radius moving inside the circle) that occur each second of time.
+* $$\omega=2\pi f$$ is called the *angular frequency*, it's the same thing as *ordinary frequency* but it's expressed in $$\frac{radians}{second}$$;
 * $$\varphi$$ is called *phase* (measured in radians);
 
-If we consider *time* to be the x-axis the sinusoid is:
+If we consider *time* to be the x-axis, the sinusoid becomes:
 
 $$y=f(x)=A * sin(\omega x + \varphi)$$
 
@@ -360,9 +359,11 @@ The following animation is interactive. You can choose the values of $$A=$$
 
 # Adding sinusoids
 
-At this point things will become more interesting. If you start suming up sinusoids, new oscillating patterns will appear. The more sinusoids we sum-up, the more complex the patterns are going to be. If we have enough sinusoids around, we can start "painting" (approximating) real-world shapes. Philosophicall speaking, if we have an infinity of sinusoids at our disposal, and with just a little mathematical imagination, we can "draw" the exact everything (*there's a catch to it!*). And remember, it all started with the circle; Aristotle was right.
+At this point, things will become more fascinating. If you start summing up sinusoids, new oscillating patterns will appear. The more sinusoids we sum up, the more complex the patterns will be. If we have enough sinusoids around to play, we can start "painting" (approximating) real-world shapes. 
 
-But, let's take it slowly and sum-up a few sinusoids to see what's happening. Visually speaking, adding two sinusoids is just like adding two "normal" mathematical functions. 
+Philosophically speaking, if we have an infinity of sinusoids at our disposal, and with just a little mathematical imagination, we can "draw" exactly everything (*there's a catch to it!*). And remember, it all started with the circle; maybe Aristotle was right.
+
+But let's take it slowly and sum up a few sinusoids to see what's happening. Visually speaking, adding two sinusoids is just like adding two "normal" mathematical functions. 
 
 
 So let's plot two arbitrary selected sinusoids $$y_{1}(x)$$ and $$y_{2}(x)$$, where:
@@ -380,15 +381,17 @@ $$
 y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2x-1)fx)}{2x-1}
 $$
 
-If we expand it, and use the angular frequency ($$\omega=2\pi f$$) we will obtain something like this:
+Don't worry if you feel the formula feels like it's being *parachuted* in the article. We will shortly see how we can rigorously determine it. But for the moment, accept it as it is.
+
+If we expand it and use the angular frequency ($$\omega=2\pi f$$), we will obtain something like this:
 
 $$
 y(x) =  \underbrace{\frac{4}{\pi}sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{sin((2k-1)\omega x)}}_{y_k(x)} + ...>
 $$
 
-$$y_1(x), y_2(x), y_3(x), ..., y_k(x)$$ are all the individual sinusoids. If we starting adding them up *a square wave* will "unfold". The higher the $$k$$, the better the aproximation. 
+$$y_1(x), y_2(x), y_3(x), ..., y_k(x)$$ are all the individual sinusoids, with a life of their own. If we add them up, *a square wave* will "unfold" (a miracle!). The higher we pick $$k$$, the better the approximation.
 
-Choose how many sinusoids you want to use, and let's see how the functions looks like for <select id="numSins" onchange="updateSins()">
+Choose how many sinusoids you want to use, and let's see how the functions look like for <select id="numSins" onchange="updateSins()">
         <option value="1">k=1</option>
         <option value="2">k=2</option>
         <option value="3">k=3</option>
@@ -406,9 +409,7 @@ Choose how many sinusoids you want to use, and let's see how the functions looks
 <div id="square-wave-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewave.js)</sup></sup>
 
-Except for those small overshoot "spikes" at the corners of the square ([Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon)), adding more sinusoids in the picture makes the "square" more convincing. The reason for this phenomen stems from the fact that a "jumping" function is hard to approximate using a "smooth" and "tame" sinusoid.
-
-At this point, we should get back at our circles, and see how they behave once we add more sinusoids together. Is there one circle to rule them all, or a multitde circles that are highly-connected? 
+Except for those small overshoot "spikes" at the corners of the square ([Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon)), adding more sinusoids in the picture makes the "square" approximation more convincing. The reason for this phenomenon stems from the fact that a "jumping" function is hard to approximate using a "smooth" and "tame" sinusoid.
 
 Pick <select id="sumEpiSins" onchange="updateSumEpi()">
         <option value="1">k=1</option>
@@ -429,18 +430,42 @@ Pick <select id="sumEpiSins" onchange="updateSumEpi()">
 <div id="sum-epi-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumepi2.js)</sup></sup>
 
+Wait a minute,  adding sinusoids means "stitching" their associated circles so that the center of each subsequent circle is moving along the previous larger one? How is that even working? The components of this marvelous "machinery" describing the behaviour of $$y(x)$$ are called [Epycicles](https://en.wikipedia.org/wiki/Deferent_and_epicycle).
 
+There's an intuitive proof to this: each epycicle corresponds to a specific sinsuoid, when we talk about combining the sinusoids, we are talking about summing their positions at each point in time, and eventually, this operation reduces to subsequent vector additions.
 
-# Complex numbers and circles (short math recap)
+Let's take a simple example by introducing three arbitrarily picked sinusoids and their associated *point vectors* (or *position vectors*): 
+* $$y_{1}(x)=1.4sin(x + 1)$$, with the associated position vector $$\vec{u_{1}}$$;
+* $$y_{2}(x)=0.8sin(2*x)$$, with the associated position vector $$\vec{u_{2}}$$;
+* $$y_{3}(x)=0.5sin(3*x)$$, with the associated position vector $$\vec{u_{3}}$$.
 
-Complex numbers are numbers that consist of a *real* part. An imaginary part, usually written in the form $$a+b*i$$, where $$a, b \in \mathbb{R}$$, and $$i$$ is the imaginary unit, so that $$i^2=-1$$.
+Their sum is $$y(x) = y_{1}(x) + y_{2}(x) + y_{3}(x) = 1.4sin(x + 1) + =0.8sin(2*x) + 0.5sin(3*x)$$. 
 
-Complex numbers can also be represented geometrically as points in the complex plane. The real part of a complex number corresponds to the $$x$$-coordinate of the point, while the imaginary part corresponds to the $$y$$-coordinate. $$x$$ becomes $$Re$$ (gets its name from the word *Real*) and $$y$$ becomes $$Im$$ (gets its name from the word *Imaginary*).
+A position vector represents the displacement from the origin $$(0, 0)$$ to a specific point in space. In our case, the vector $$(x, y_{k}(x))$$ represents the position or location of a point on the graph of the function(s) $$y_{k}(x)$$ at a particular $$x$$ value.
 
-The following animation plots random imaginary numbers into the complex plane, there's nothing particularly complicated about this:
+If we plot $$y(x)$$ on the cartesian grid we obtain something like: 
 
-<div id="in-num-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/imnum.js)</sup></sup>
+<div id="simple-yx-plot-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js)</sup></sup>
+
+At each given point $$x$$, we can say for certain that $$\vec{u} = \vec{u_{1}} + \vec{u_{2}} + \vec{u_{3}}$$. This is why "epicycles" work like this; isn't this *amazing*?
+
+Now, let's briefly forget about the cartesian representation of our sums of sinusoids. Let's concentrate on the *left side* of our sketches and follow the graphic patterns created by the epicycles. 
+
+<div id="some-epis-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/someepis.js)</sup></sup>
+
+As you can see, the shapes can become quite "iregular" and wild. With enough luck, we can paint a flower, a dog, or a sketch portrait of [Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz), or a circle (look at the last sketch).
+
+> As a side rule (easy to demonstrate trigronometrically), if you sum up sinusoids that share the same frequency, the resul will be a sinusoid. So it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency.
+
+Now quickly, can you guess the individual sinusoids behind each epicycle for each of the 4 sketches? Well, you can try guessing. First of all, you need to count how many circles each illustration has; this will give you the number of sinusoids at play. Afterward, you can assume their frequencies, depending on how fast they rotate. Additionally, based on the initial positions, you guess the phase of each sinusoid. But that's an empirical approach; who does that?
+
+What if there's a mathematical method to determine those individual sinusoids (and their associated epycicle) only by "analyzing" the path they describe as they move? 
+
+This is what we are trying to solve in this article: *Given a path of 2D points (that closes), how can we determine the sinusoids (and their associated epycicles) that are composing it ?*
+
+If we nail that, we will draw anything using a simple (subjectively saying) composition of rating circles, isn't this (again) amazing ?
 
 # References
 

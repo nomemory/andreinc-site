@@ -164,6 +164,32 @@ const addLineDashed = (s) => {
     }
 }
 
+const addArrow = (s) => {
+    s.arrow = (x1, y1, x2, y2) => {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const angle = s.atan2(dy, dx);
+
+        // Calculate the arrow size based on the distance between the two points
+        const d = s.dist(x1, y1, x2, y2);
+        const arrowSize = d / 10;
+
+        s.push();
+        s.translate(x1, y1);
+        s.rotate(angle);
+
+        // Draw the arrow body as a line
+        s.line(0, 0, d, 0);
+
+        // Draw the arrowhead as a triangle
+        s.triangle(d, 0,
+                    d - arrowSize, -arrowSize / 3,
+                    d - arrowSize, arrowSize / 3);
+
+        s.pop();
+    }
+}
+
 /**
  * 
  * @param {*} s The drawing function
@@ -193,16 +219,6 @@ function Sinusoid(s, vC, vR, angle, ampl, freq, phase, color, tf, tr) {
 }
 
 const SinusoidPrototype = {
-    
-    drawEpi() {
-       this.s.push();
-       this.s.noFill();
-       this.s.stroke(this.color);
-       this.s.circle(this.vC.x, this.vC.y, 3);
-       this.s.circle(this.vC.x, this.vC.y, this.ampl * 2);
-       this.s.line(this.vC.x, this.vC.y, this.vR.x, this.vR.y);
-       this.s.pop();
-    },
 
     draw() {
         // Actual Circle 
