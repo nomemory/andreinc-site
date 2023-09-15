@@ -71,9 +71,13 @@ const squareWave = (s) => {
         }
 
         // Painting yf on the sBuff
+        let lx = vGf.x;
+        let ly = vGf.y - s.yx(0);
         for(let cAngl = 0, px = vGf.x; px < w; px+=tf*r, cAngl+=tf) {
             sBuff.push();
-            sBuff.point(px, vGf.y - s.yx(cAngl));
+            sBuff.line(px, vGf.y - s.yx(cAngl), lx, ly);
+            lx = px;
+            ly = vGf.y - s.yx(cAngl);   
             sBuff.pop();
         }
         // Adding the labels to fBuff

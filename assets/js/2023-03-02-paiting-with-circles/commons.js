@@ -1,7 +1,7 @@
 const theme = {
     canvasX: 400,
     canvasY: 400,
-    frameRate: 30,
+    frameRate: 40,
     frequency: 1 / 10,
 
     bkgColor: '#F6F8FA',
@@ -169,23 +169,30 @@ const addArrow = (s) => {
         const dx = x2 - x1;
         const dy = y2 - y1;
         const angle = s.atan2(dy, dx);
-
-        // Calculate the arrow size based on the distance between the two points
         const d = s.dist(x1, y1, x2, y2);
         const arrowSize = d / 10;
-
         s.push();
         s.translate(x1, y1);
         s.rotate(angle);
-
-        // Draw the arrow body as a line
         s.line(0, 0, d, 0);
-
-        // Draw the arrowhead as a triangle
         s.triangle(d, 0,
                     d - arrowSize, -arrowSize / 3,
                     d - arrowSize, arrowSize / 3);
-
+        s.pop();
+    },
+    s.arrowDashed = (canvas, pattern, x1, y1, x2, y2) => {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const angle = s.atan2(dy, dx);
+        const d = s.dist(x1, y1, x2, y2);
+        const arrowSize = d / 10;
+        s.push();
+        s.translate(x1, y1);
+        s.rotate(angle);
+        s.lineDash(canvas, pattern, 0, 0, d, 0);
+        s.triangle(d, 0,
+                    d - arrowSize, -arrowSize / 3,
+                    d - arrowSize, arrowSize / 3);
         s.pop();
     }
 }
@@ -246,3 +253,83 @@ const SinusoidPrototype = {
 }
 
 Object.assign(Sinusoid.prototype, SinusoidPrototype);
+
+// -- DFT Related
+
+// Complex numbers
+function Complex(re, im) {
+    this.re = re;
+    this.im = im;
+}
+const ComplexPrototype = {
+    add(cn) {
+        this.re += cn.re;
+        this.im += cn.im;
+    },
+    prd(cn) {
+        return new Complex(
+            this.re * cn.re - this.im * cn.im,
+            this.re * cn.im + this.im * cn.re    
+        );
+    }
+}
+Object.assign(Complex.prototype, ComplexPrototype);
+
+// DFT
+
+const addDft = (s) => {
+    s.dft = (vals) => {
+        let coefs = [];
+        for(let i = 0; i < vals.length; ++i) {
+            let sum = new Complex(0, 0);
+            for(let j = 0; j < vals.length; ++j) {
+                let phi = 2 * s.PI * i * j / vals.length;
+                sum.add(vals[j].prd(new Complex(s.cos(phi), -s.sin(phi))));
+            }
+            sum.re = sum.re / vals.length;
+            sum.im = sum.im / vals.length;
+            coefs[i] = {
+                freq: i,
+                amp: s.sqrt(sum.re * sum.re + sum.im * sum.im),
+                phase: s.atan2(sum.im, sum.re)
+            };
+        }
+        return coefs;
+    },
+    s.dftFreqSort = (vals) => {
+        return s.dft(vals).sort((a, b) => b.freq - a.freq);
+    }
+    s.dftAmpSort = (vals) => {
+        return s.dft(vals).sort((a, b) => b.amp - a.amp);
+    }
+}
+  
+const addEpiCycles = (s) => {
+    s.epiCycles = (x, y, coef, rot, ang, settings) => {
+        for(let i = 0, prevX=x, prevY=y; i < coef.length; i++, prevX=x, prevY=y) {
+            x += coef[i].amp * s.cos(coef[i].freq * ang + coef[i].phase + rot);
+            y += coef[i].amp * s.sin(coef[i].freq * ang + coef[i].phase + rot);
+            s.push();
+            s.noFill();
+            s.stroke(theme.radiusColorLight);
+            s.circle(prevX, prevY, coef[i].amp * 2);
+            s.line(prevX, prevY, x, y);  
+            s.pop();
+        }
+        return s.createVector(x, y);
+    }
+}
+
+const addEpiCyclesPath = (s) => {
+    s.epiCyclesPath = (path, settings) => {
+        s.push();
+        s.beginShape();
+        s.noFill();
+        s.stroke(theme.radiusColor);
+        for (let i = 0; i < path.length; i++) {
+          s.vertex(path[i].x, path[i].y);
+        }
+        s.endShape();
+        s.pop();
+    }
+}

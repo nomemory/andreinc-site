@@ -36,19 +36,27 @@ const sumSimple = (s) => {
             showOrigin: true
         });
          // Paiting y1f and y2f on the 'fBuff'
+        let lsx = vGf.x, lsy = vGf.y - y1f(0), lcx = vGf.x, lcy = vGf.y - y2f(0);
         for(let cAngl = 0, px = vGf.x; px < w; px+=tf*r, cAngl+=tf) {
             fBuff.push();
             fBuff.stroke(theme.sineColor);
-            fBuff.point(px, vGf.y - y1f(cAngl));
+            fBuff.line(px, vGf.y - y1f(cAngl), lsx, lsy);
+            lsx = px;
+            lsy = vGf.y - y1f(cAngl);
             fBuff.stroke(theme.cosineColor);
-            fBuff.point(px, vGf.y - y2f(cAngl));
+            fBuff.line(px, vGf.y - y2f(cAngl), lcx, lcy);
+            lcx = px;
+            lcy = vGf.y - y2f(cAngl);
             fBuff.pop();
         }
         // Paiting y1f + y2f on the 'sBuff'
+        lsx = vGf.x, lsy = vGf.y - yf(0);
         for(let cAngl = 0, px = vGf.x; px < w; px+=tf*r, cAngl+=tf) {
             sBuff.push();
             sBuff.stroke(theme.thetaColor);
-            sBuff.point(px, vGf.y - yf(cAngl));
+            sBuff.line(px, vGf.y - yf(cAngl), lsx, lsy);
+            lsx = px;
+            lsy = vGf.y - yf(cAngl);
             sBuff.pop();
         }
         // Adding text to 'fBuff'

@@ -38,6 +38,8 @@ I am sure many others are waiting to be discovered (by me), so this page should 
 
 * [nullprogram.com](https://nullprogram.com/) - this is the personal blog of Chris Wellons. His articles are always a source of inspiration (check [this](https://nullprogram.com/blog/2014/12/23/) out). Bonus: his [GitHub account](https://github.com/skeeto) is full of gems!
 
+* [paritybit.ca](https://www.paritybit.ca/) - this is the personal blog of jbauer. One thing I love about it is the careful gardening of the [digital garden](https://www.paritybit.ca/garden/).
+
 * [ptomato.wordpress.com/](https://ptomato.wordpress.com/) - this is the personal blog of "Philip Chimento": well-articulated and well-documented coding adventures. 
 
 * [randomascii.wordpress.com](https://randomascii.wordpress.com) - this is the blog of Bruce Dawson: bugs, optimizations and technical anecdotes. 

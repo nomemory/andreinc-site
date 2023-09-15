@@ -33,6 +33,8 @@ const simpleCircleRotating = (s) => {
         vCoord = s.createVector(0, 0);
         vRLab = s.createVector(0, 0);
 
+        vR = s.createVector(0, 0);
+
         // Draw the main circle exactly once on the buffer
         cBuff.noFill();
         s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5,
@@ -48,10 +50,9 @@ const simpleCircleRotating = (s) => {
         s.stroke(1);
 
         // Updating and rendering the moving radius vector
-        vR = s.createVector(
-            vC.x + s.sin(angl * f) * r,
-            vC.y + s.cos(angl * f) * r
-        );
+        vR.x = vC.x + s.sin(angl * f) * r;
+        vR.y = vC.y + s.cos(angl * f) * r;
+            
         s.stroke(rColor);
         s.line(vC.x, vC.y, vR.x, vR.y);
         s.circle(vR.x, vR.y, 3);

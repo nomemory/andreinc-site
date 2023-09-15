@@ -10,12 +10,11 @@ const sinCosSide = (s) => {
     const d = w / 8;
     const r = d / 2;
     const f = theme.frequency / 3;
-    let phase = s.HALF_PI;
     let angl = 0;
-
     let vC, vMS, vMC;
     let cBuff;
     let canvas;
+    let lx, ly;
 
     s.initConditions = () => {
         vC = s.createVector(2 * r, h / 2);
@@ -28,34 +27,44 @@ const sinCosSide = (s) => {
         });
         // Paint the sine function in the negative area
         let vSP = s.createVector(vC.x, vC.y + s.sin(angl) * r);
-        for (let cAngl = 0; vSP.x > 0; vSP.x -= f * r, vSP.y = vC.y + s.sin(cAngl) * r, cAngl += f) {
+        for (let cAngl = 0, lx = vSP.x, ly = vSP.y; vSP.x > 0; vSP.x -= f * r, vSP.y = vC.y + s.sin(cAngl) * r, cAngl += f) {
             cBuff.push();
             cBuff.stroke(theme.sineColor);
-            cBuff.point(vSP.x, vSP.y);
+            cBuff.line(lx, ly, vSP.x, vSP.y);
+            lx = vSP.x;
+            ly = vSP.y;
             cBuff.pop();
         }
         // Paint the sine function in the positive area
         vSP = s.createVector(vC.x, vC.y - s.sin(angl) * r);
-        for(let cAngl = 0; vSP.x < w; vSP.x += f * r, vSP.y = vC.y - s.sin(cAngl)*r, cAngl += f) {
+        lx = vSP.x;
+        ly = vSP.y;
+        for(let cAngl = 0, lx = vSP.x, ly = vSP.y; vSP.x < w; vSP.x += f * r, vSP.y = vC.y - s.sin(cAngl)*r, cAngl += f) {
             cBuff.push();
             cBuff.stroke(theme.sineColor);
-            cBuff.point(vSP.x, vSP.y);
+            cBuff.line(vSP.x, vSP.y, lx, ly);
+            lx = vSP.x;
+            ly = vSP.y;
             cBuff.pop();
         }
         // Paint the cosine function in the negative area
         let vCP = s.createVector(vC.x, vC.y - s.cos(angl)*r);
-        for(let cAngl =0; vCP.x > 0; vCP.x -=f*r, vCP.y = vC.y - s.cos(cAngl) * r, cAngl +=f) {
+        for(let cAngl =0, lx = vCP.x, ly = vCP.y; vCP.x > 0; vCP.x -=f*r, vCP.y = vC.y - s.cos(cAngl) * r, cAngl +=f) {
             cBuff.push();
             cBuff.stroke(theme.cosineColor);
-            cBuff.point(vCP.x, vCP.y);
+            cBuff.line(vCP.x, vCP.y, lx, ly);
+            lx = vCP.x;
+            ly = vCP.y;
             cBuff.pop();
         }
         // Paint the cosine function in the positive area
         vCP = s.createVector(vC.x, vC.y - s.cos(angl)*r);
-        for(let cAngl = 0; vCP.x < w; vCP.x += f*r, vCP.y = vC.y - s.cos(cAngl) *r, cAngl +=f) {
+        for(let cAngl = 0, lx = vCP.x, ly = vCP.y; vCP.x < w; vCP.x += f*r, vCP.y = vC.y - s.cos(cAngl) *r, cAngl +=f) {
             cBuff.push();
             cBuff.stroke(theme.cosineColor);
-            cBuff.point(vCP.x, vCP.y);
+            cBuff.line(vCP.x, vCP.y, lx, ly);
+            lx = vCP.x;
+            ly = vCP.y;
             cBuff.pop();
         }
         // Static text 

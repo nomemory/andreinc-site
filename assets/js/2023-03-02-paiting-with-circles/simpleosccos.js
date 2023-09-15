@@ -17,6 +17,7 @@
     let vGS, vGC, vC, vR, vMS, vMC;
     let cBuff;
     let periodPaint = false;
+    let lastSineX, lastSineY, lastCosineX, lastCosineY;
 
     const paintGridProps = {
         showUnits: true,
@@ -40,12 +41,16 @@
             hideUnitsXNeg: true,
             showOrigin: true,
         });
+        lastSineX = vGS.x;
+        lastSineY = vGS.y;
         s.paintGrid(cBuff, 4 * r, s.height, vGC, r, 1, {
             showUnits: true,
             hideUnitsYPos: true,
             showOrigin: true,
             invertY: true
         });
+        lastCosineX = vGC.x;
+        lastCosineY = vGC.y;
         angl = 0;
         periodPaint = false;
     }
@@ -95,9 +100,13 @@
         s.pop();
 
         // The moving point as the sine wave progresses
-        cBuff.point(vMS.x, vMS.y);
+        cBuff.line(lastSineX, lastSineY, vMS.x, vMS.y);
+        lastSineX = vMS.x;
+        lastSineY = vMS.y;
         // The moving point as the cosine wave progresses
-        cBuff.point(vMC.x, vMC.y);
+        cBuff.line(lastCosineX, lastCosineY, vMC.x, vMC.y);
+        lastCosineX = vMC.x;
+        lastCosineY = vMC.y;
 
         // Red circle(s)
         s.push();

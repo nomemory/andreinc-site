@@ -33,6 +33,8 @@ const sinusoids = (s) => {
     let stdBuff; // graphics buffer for the standard circle
     let cusBuff; // graphics buffer for the custom circle
 
+    let lsx, lsy, lcx, lcy;
+
 
     s.initConditions = () => {
         vCStd = s.createVector(2 * r, 2 * r);
@@ -42,7 +44,11 @@ const sinusoids = (s) => {
         stdBuff = s.createGraphics(w, 4 * r);
         cusBuff = s.createGraphics(w, 6 * r);
         vMStd = s.createVector(vGStd.x, vCStd.y);
+        lsx = vMStd.x;
+        lsy = vMStd.y;
         vMCus = s.createVector(vGCus.x, vCCus.y);
+        lcx = vMCus.x;
+        lcy = vMCus.y;
 
         vRStd = s.createVector(
             vCStd.x + s.sin(angls + tph) * r,
@@ -145,8 +151,12 @@ const sinusoids = (s) => {
 
         // Moving Points
         s.push();
-        stdBuff.point(vMStd.x, vMStd.y);
-        cusBuff.point(vMCus.x, vMCus.y);
+        stdBuff.line(vMStd.x, vMStd.y, lsx, lsy);
+        lsx = vMStd.x;
+        lsy = vMStd.y;
+        cusBuff.line(vMCus.x, vMCus.y, lcx, lcy);
+        lcx = vMCus.x;
+        lcy = vMCus.y;
         s.pop();
 
         // Moving text near the points
@@ -188,7 +198,7 @@ const sinusoids = (s) => {
             s.initConditions();
         }
 
-        // console.log(s.frameRate());
+        s.showFps();
     }
 }
 

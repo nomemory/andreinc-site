@@ -18,6 +18,7 @@ const simpleOsc = (s) => {
     let vG, vC, vR, vMS;
     let cBuff;
     let periodPaint = false;
+    let lastSineX, lastSineY;
 
     const paintGridProps = {
         showUnits: true,
@@ -37,6 +38,8 @@ const simpleOsc = (s) => {
         vMS = s.createVector(vG.x, vG.y);
         cBuff = s.createGraphics(w, h);
         s.paintGrid(cBuff, s.width, s.height, vG, r, 1, paintGridProps);
+        lastSineX = vG.x;
+        lastSineY = vG.y;
         angl = 0;
         periodPaint = false;
     }
@@ -89,7 +92,9 @@ const simpleOsc = (s) => {
         s.pop();
 
         // The moving point as the sine wave progresses
-        cBuff.point(vMS.x, vMS.y);
+        cBuff.line(lastSineX, lastSineY, vMS.x, vMS.y);
+        lastSineX = vMS.x;
+        lastSineY = vMS.y;
 
         // Red circle(s)
         s.push();

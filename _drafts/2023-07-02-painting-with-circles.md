@@ -19,12 +19,15 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosccos.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/onenegative.js"    
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
     # - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
     - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/renums.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -35,7 +38,7 @@ tags:
 
 # What is a Circle? (short math recap) 
 
-Over ~~a hundred~~ thousand years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work, [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), Plato says: *"The circle symbolises eternity because it has no beginning or end."*
+Over ~~a hundred~~ thousand years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work, [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), Plato says: *"The circle symbolises eternity because it has no beginning or end"*.
 
 In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasizes: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
 
@@ -189,7 +192,7 @@ If we put all the information back into *The Unit Circle* animation, things are 
                     </tr>
                 </tbody>
             </table>                                           
-        </td>>
+        </td>
         <td>
             <table>
                 <thead>
@@ -335,11 +338,16 @@ The following animation is interactive. You can choose the values of $$A=$$
     </select>
     , $$\omega=$$
         <select id="sinusoid_omega" onchange="updateSinusoids()">
+        <option value="-2">-2</option>
+        <option value="-1">-1</option>
         <option value="1">1</option>
         <option value="2" selected>2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
     </select> 
     and $$\varphi=$$ 
     <select id="sinusoid_phi" onchange="updateSinusoids()">
@@ -353,9 +361,21 @@ The following animation is interactive. You can choose the values of $$A=$$
 <div id="sinusoids-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sinusoids.js)</sup></sup>
 
-* $$A$$ actually corresponds to the radius of the circle used to generate the oscilation. If we increase the amplitutde we increase the radius of the circle;
-* $$\omega$$ increases the frequency. This means more "waves" will be squeezed together inside the $$2\pi$$ interval than for a normal sine/cosine wave.
-* $$\varphi$$ increases the phase. If for example we set $$\varphi=\frac{\pi}{2}$$, our sine becomes a cosine.
+Observations:
+* The value of $$A$$ corresponds to the radius of the circle *generating* the oscilation. If we increase the amplitutde we increase the radius of the circle;
+* By increasing $$\omega$$ more "waves" will be squeezed together inside the $$2\pi$$ interval than for a normal sine/cosine wave.
+* By setting $$\varphi=\frac{\pi}{2}$$ the sine becomes a cosine.
+
+Even if it's counterintuitive from a physical sense, frequencies can have negative values. A positive angular frequency ($$\omega>0$$) is associated with counterclockwise rotation, while a negative angular frequency ($$\omega<0$$), will result in clockwise rotation. The magnitude of the angular frequency determines the speed of rotation, and it's sign determines the direction.
+
+For example, two sinusoids that are in-phase, and have the same amplitudes, but have opposite frequencies nulify themselves. 
+
+<div id="one-negative-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/onenegative.js)</sup></sup>
+
+This can be also be explained by the fact *sine* is an odd function, so that $$sin(x) = -sin(-x)$$ and $$-sin(x)=sin(-x)$$.
+
+
 
 # Adding sinusoids
 
@@ -450,22 +470,54 @@ If we plot $$y(x)$$ on the cartesian grid we obtain something like:
 
 At each given point $$x$$, we can say for certain that $$\vec{u} = \vec{u_{1}} + \vec{u_{2}} + \vec{u_{3}}$$. This is why "epicycles" work like this; isn't this *amazing*?
 
-Now, let's briefly forget about the cartesian representation of our sums of sinusoids. Let's concentrate on the *left side* of our sketches and follow the graphic patterns created by the epicycles. 
+Now, let's briefly forget about the cartesian representation of our sums of sinusoids. Let's concentrate on the *left side* of our sketches and follow the graphic patterns created by the arbitrary sinusoids represented as epicycles.
 
 <div id="some-epis-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/someepis.js)</sup></sup>
 
-As you can see, the shapes can become quite "iregular" and wild. With enough luck, we can paint a flower, a dog, or a sketch portrait of [Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz), or a circle (look at the last sketch).
+As you can see, the shapes can become quite "irregular" and wild. With enough luck, we can paint a flower, a dog, a sketch portrait of [Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz), or a circle (look at the last sketch).
 
-> As a side rule (easy to demonstrate trigronometrically), if you sum up sinusoids that share the same frequency, the resul will be a sinusoid. So it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency.
+> As a side rule (easy to demonstrate trigronometrically), if you sum up sinusoids that share the same frequency, the resul will be a sinusoid. So it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency - it's a CIRCLE.
 
-Now quickly, can you guess the individual sinusoids behind each epicycle for each of the 4 sketches? Well, you can try guessing. First of all, you need to count how many circles each illustration has; this will give you the number of sinusoids at play. Afterward, you can assume their frequencies, depending on how fast they rotate. Additionally, based on the initial positions, you guess the phase of each sinusoid. But that's an empirical approach; who does that?
+Let's start with a flower:
 
-What if there's a mathematical method to determine those individual sinusoids (and their associated epycicle) only by "analyzing" the path they describe as they move? 
+<div id="a-flower-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/aflower.js)</sup></sup>
 
-This is what we are trying to solve in this article: *Given a path of 2D points (that closes), how can we determine the sinusoids (and their associated epycicles) that are composing it ?*
+Can you guess the individual sinusoids behind each epicycle for each of the 4 sketches or the ones behind the *flower*? 
 
-If we nail that, we will draw anything using a simple (subjectively saying) composition of rating circles, isn't this (again) amazing ?
+Well, you can try guessing. First of all, you need to count how many circles each illustration has; this will give you the number of sinusoids at play. Afterward, you can assume their frequencies, depending on how fast they rotate. Additionally, based on the initial positions, you guess the phase of each sinusoid. But that's an empirical approach; who does that?
+
+What if there's a mathematical method to determine those individual sinusoids (and their associated epicycle) only by "folowing" the path they describe as they move? 
+
+# Complex numbers
+
+Before discussing the actual mathematical principle used to determine the sinusoids that sumed together approximate a given *shape*, we need to make a small detour in the marvelous world of Complex Numbers.
+
+When we think about numbers, we usually think of *real numbers* ($$\mathbb{R}$$), mainly numbers that are used to measure a continuous one-dimensional quantities. They come in *infinities*. Some of them are *natural* ($$\mathbb{N}$$), some of them are *integer* ($$\mathbb{Z}$$), some of are them are rational ($$\mathbb{Q}$$), and some are *irrational* ($$\mathbb{R}\setminus\mathbb{Q}$$), but regardless of their nature, they behave similarly. Except for the *irrationals* all others are easy to grasp and understand. Irrationals are only good for [*transcendental number*](https://en.wikipedia.org/wiki/Transcendental_number) meditation.
+
+To represent real numbers we only need the `X` axis (one dimension):
+
+<div id="renums-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/renums.js)</sup></sup>
+
+> Fun fact: We know that $$\pi$$ and $$e$$ are irrational numbers, but up until this point we don't have any proof that $$e + \pi$$ is irrational. 
+
+But there's a "problem" with *real numbers* (actually there's none), there's no *real* solution for the equation: $$x^2=-1$$. 
+* When we square a positive real nunber ($$\mathbb{R_{+}}$$), we obtain a positive number;
+* If we square 0 we obtain 0;
+* If we square a negative real number ($$\mathbb{R_{-}}$$) we obtain also a positive real number;
+
+So the natural solution was to *imagine* number like this. We've isolated the "imaginary" part in something we call $$i$$ (from *imaginary*), where $$i$$ is defined as $$i^2=-1$$, or $$i=\sqrt{-1}$$. Problem solved!?
+
+By multiplying $$i$$ with various coefficients we obtain an infinity of *imaginary* numbers ($$\mathbb{I}$$). For example $$5i$$, $$\pi i$$, $$\sqrt{7}i$$ are all imaginary numbers. Funily enough $$0*i = 0$$ can be considered both a *real* and a purely *imaginary* number. Philosophically speaking reality and imagination start and end at $$0$$. We can represent all the imaginary numbers on a `Y` axis that somehow intersects the axis of the *real* numbers in $$0$$, after all this is what *unites* them:
+
+<div id="imnums-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/imnums.js)</sup></sup>
+
+Now, we can go further, and define *complex* numbers ($$\mathbb{C}$$): they are numbers that have an imaginary part ($$\mathbb{I}$$) and a *real* part ($$\mathbb{R}$$), and we can express them as $$z=a + b*i$$. 
+
+> As an Electrical Engineer myself, I was "forced" to play a lot with Complex Numbers during my University years. Check [this video](https://www.youtube.com/watch?v=FCNHN7B9iDM) to find out why do Electrical / Electronics Engineers love them so much.
 
 # References
 
