@@ -1,4 +1,4 @@
-const simpleCircleRotatingTriangle = (s) => {
+const simpleCircleRotatingCircleCmp = (s) => {
 
     addPaintGrid(s);
     addShowFps(s);
@@ -11,17 +11,14 @@ const simpleCircleRotatingTriangle = (s) => {
     let angle = 0;
     let phase = s.HALF_PI;
     let reset = s.TWO_PI * (1 / f);
-
     let bTxtY1, bTxtY2, bTxtY3;
-
-    let buff;
-
     let vC, vR, vRProj, vSL, vCL, vThet;
+    let buff;
 
     s.setup = () => {
         // Create Canvas of given size 
         const canvas = s.createCanvas(theme.canvasX, theme.canvasY);
-        canvas.parent('simple-circle-rotating-triangle-sketch');
+        canvas.parent('simple-circle-rotating-circle-cmp-sketch');
         s.textFont(theme.textFont);
         s.frameRate(theme.frameRate);
 
@@ -40,13 +37,21 @@ const simpleCircleRotatingTriangle = (s) => {
         vCL = s.createVector(0, 0);
         buff = s.createGraphics(s.width, s.width);
         s.paintGrid(buff, s.width, s.height, vC, r/5, 5, 
-            {showUnits:true, showOrigin:true, showY: true, showX: true});
+            {
+                showUnits: true,
+                showOrigin: true,
+                showX: true,
+                yLabel: "Im",
+                xLabel: "Re",
+                complexSystem: true
+            });
         buff.circle(vC.x, vC.y, d);
 
         // Initialise bottom text positions
-        bTxtY1 = s.height - 5;
+        bTxtY1 = s.height - 20;
         bTxtY2 = bTxtY1 - 15;
         bTxtY3 = bTxtY2 - 15;
+        bTxtY4 = bTxtY3 - 15;
     };
 
     s.draw = () => {
@@ -115,25 +120,27 @@ const simpleCircleRotatingTriangle = (s) => {
 
         // Moving Point
         s.push();
-        s.text("(", vR.x + 2, vR.y);
-        s.fill(theme.sineColor);
-        s.text("sin(θ)", vR.x + 7, vR.y)
-        s.fill(theme.textColor);
-        s.text(", ", vR.x + 48, vR.y);
+        s.text("z=", vR.x + 2, vR.y);
         s.fill(theme.cosineColor);
-        s.text("cos(θ)", vR.x + 60, vR.y);
+        s.text("cos(θ)", vR.x + s.textWidth("z=") + 2, vR.y)
         s.fill(theme.textColor);
-        s.text(")", vR.x + 100, vR.y);
+        s.text("+i", vR.x + s.textWidth("z=cos(θ)") + 2, vR.y);
+        s.fill(theme.sineColor);
+        s.text("sin(θ)", vR.x + s.textWidth("z=cos(θ)+i")+2, vR.y);
         s.pop();
 
         // // Bottom left-side numbers
+        let vSin = s.sin(angle*f).toFixed(2);
+        let vCos = s.cos(angle*f).toFixed(2);
         s.push();
         s.fill(theme.thetaColor);
-        s.text("    θ  = " + (((angle*f)*180)/s.PI).toFixed(2) + "°", 5, bTxtY3);
+        s.text("    θ  = " + (((angle*f)*180)/s.PI).toFixed(2) + "°", 5, bTxtY4);
         s.fill(theme.sineColor);
-        s.text("sin(θ) = " + s.sin(angle*f).toFixed(2), 5, bTxtY2);
+        s.text("sin(θ) = " + vSin, 5, bTxtY3);
         s.fill(theme.cosineColor);
-        s.text("cos(θ) = " + s.cos(angle*f).toFixed(2), 5, bTxtY1);
+        s.text("cos(θ) = " + vCos, 5, bTxtY2);
+        s.fill(theme.radiusColor);
+        s.text("     z = " + vCos + "+i*(" + vSin + ")", 5, bTxtY1);
         s.pop();
 
         // Reset
@@ -147,6 +154,6 @@ const simpleCircleRotatingTriangle = (s) => {
 
 };
 
-let simpleCircleRotatingTriangleSketch =
-    new p5(simpleCircleRotatingTriangle, 'simple-circle-rotating-triangle-sketch');
+let simpleCircleRotatingCircleCmpSketch =
+    new p5(simpleCircleRotatingCircleCmp, 'simple-circle-rotating-circle-cmp-sketch');
 

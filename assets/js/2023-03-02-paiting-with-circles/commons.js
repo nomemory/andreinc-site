@@ -1,7 +1,7 @@
 const theme = {
     canvasX: 400,
     canvasY: 400,
-    frameRate: 40,
+    frameRate: 120,
     frequency: 1 / 10,
 
     bkgColor: '#F6F8FA',
@@ -26,21 +26,46 @@ const theme = {
     textColor: 'black',
     textSize: 12,
 }
-
+let call = 0;
 const addPaintGrid = (s) => {
 
     s.paintGrid = (gridBuff, w, h, o, uSize, eUnit, props) => {
-
+        call ++;
+        console.log("call:" + call);
         let mx = "-";
         let px = " ";
         let my = "-";
         let py = " ";
+        let xLabel = "𝔁";
+        let yLabel = "𝐲";
+        let hideXLabel = false;
+        let hideYLabel = false;
+        let hideLabels = false;
+        let complexSystem = false;
 
         if (props !== undefined && props.invertX !== undefined && props.invertX === true) {
             mx = " "; px = "-";
         }
         if (props !== undefined && props.invertY !== undefined && props.invertY === true) {
             my = " "; py = "-";
+        }
+        if (props !== undefined && props.xLabel !== undefined) {
+            xLabel = props.xLabel;
+        }
+        if (props !== undefined && props.yLabel !== undefined) {
+            yLabel = props.yLabel;
+        }
+        if (props !== undefined && props.hideLabels !== undefined) {
+            hideLabels = props.hideLabels;
+        }
+        if (props !== undefined && props.hideXLabel !== undefined) {
+            hideXLabel = props.hideXLabel;
+        }
+        if (props !== undefined && props.hideYLabel !== undefined) {
+            hideYLabel = props.hideYLabel;
+        }
+        if (props !== undefined && props.complexSystem !== undefined) {
+            complexSystem = props.complexSystem;
         }
 
         gridBuff.push();
@@ -60,6 +85,20 @@ const addPaintGrid = (s) => {
         // X AXIS -> ORIGIN RIGHT
         gridBuff.line(o.x, o.y, w, o.y);
         gridBuff.pop();
+
+        // Labels
+        if (!hideLabels) {
+            gridBuff.push();
+            gridBuff.fill(theme.primaryAxis);
+            if (hideXLabel==false) {
+                let tWidth = s.textWidth(xLabel);
+                gridBuff.text(xLabel, w-tWidth-10, o.y - 10);
+            }
+            if (hideYLabel==false) {
+                gridBuff.text(yLabel, o.x + 10, 15);
+            }
+            gridBuff.pop();
+        }
 
         // Secondary axis
         gridBuff.push();
@@ -102,7 +141,7 @@ const addPaintGrid = (s) => {
             // Y Positive Units
             if (props.hideUnitsYPos === undefined || props.hideUnitsYPos === false) {
                 for (let i = eUnit, lb = 1, q1y = o.y / uSize; i < q1y; i += eUnit, lb++) {
-                    gridBuff.text(py + lb, o.x + 5, o.y - i * uSize - 5);
+                    gridBuff.text((py + lb)+((complexSystem)?"i":""), o.x + 5, o.y - i * uSize - 5);
                     gridBuff.push();
                     gridBuff.noFill();
                     gridBuff.stroke(theme.intersections);
@@ -114,7 +153,7 @@ const addPaintGrid = (s) => {
             // Y Negative Units
             if (props.hideUnitsYNeg === undefined || props.hideUnitsYNeg === false) {
                 for (let i = eUnit, lb = 1, q2y = (h - o.y) / uSize; i < q2y; i += eUnit, lb++) {
-                    gridBuff.text(my + lb, o.x + 5, o.y + i * uSize + 15);
+                    gridBuff.text((my + lb)+((complexSystem)?"i":""), o.x + 5, o.y + i * uSize + 15);
                     gridBuff.push();
                     gridBuff.noFill();
                     gridBuff.stroke(theme.intersections);
@@ -179,6 +218,16 @@ const addArrow = (s) => {
                     d - arrowSize, -arrowSize / 3,
                     d - arrowSize, arrowSize / 3);
         s.pop();
+    },
+    s.arrowBezier = (x1, y1, x2, y2, x3, y3, x4, y4, size) => {
+        s.bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+        // arrowhead
+        let ahx1 = x4 - (x4 - x2) * size;
+        let ahy1 = y4 - (y4 - y2) * size;
+        let ahx2 = x4 - (x4 - x3) * size;
+        let ahy2 = y4 - (y4 - y3) * size;
+        s.line(x4, y4, ahx1, ahy1);
+        s.line(x4, y4, ahx2, ahy2);
     },
     s.arrowDashed = (canvas, pattern, x1, y1, x2, y2) => {
         const dx = x2 - x1;

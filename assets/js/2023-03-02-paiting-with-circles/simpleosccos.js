@@ -40,6 +40,7 @@
             showUnits: true,
             hideUnitsXNeg: true,
             showOrigin: true,
+            hideLabels: true
         });
         lastSineX = vGS.x;
         lastSineY = vGS.y;
@@ -47,7 +48,8 @@
             showUnits: true,
             hideUnitsYPos: true,
             showOrigin: true,
-            invertY: true
+            invertY: true,
+            hideLabels: true
         });
         lastCosineX = vGC.x;
         lastCosineY = vGC.y;

@@ -46,7 +46,7 @@ const oneNegative = (s) => {
         vRN = s.createVector(
             vC.x + s.sin(-angls + tph) *r,
             vC.y + s.cos(-angls + tph) *r
-        );
+        );        
         // Paint the grid(s) on the graphical buffers
         s.paintGrid(stdBuff, w, 4 * r, vG, r, 1, {
             showUnits: true,
