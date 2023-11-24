@@ -22,15 +22,18 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/onenegative.js"    
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
-    # - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
+    #  - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
+    # - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
     - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
     - "/assets/js/2023-03-02-paiting-with-circles/renums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplxnums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplerotatingcirclecmp.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplrotation.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -43,9 +46,33 @@ tags:
 
 Over ~~a hundred~~ thousand years ago, [Plato](https://en.wikipedia.org/wiki/Plato), the ancient Greek philosopher, extensively wrote about *The Circle* in his philosophical works. For him, the circle is the ultimate perfect shape because it is consistent and uniform in all directions. It's eternal because it closes and permanently opens without a beginning or an end. In this work, [Timaeus](https://en.wikipedia.org/wiki/Timaeus_(dialogue)), Plato says: *"The circle symbolises eternity because it has no beginning or end"*.
 
-In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasises: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."*
+In his best well-known Socratic Dialogue, [The Republic](https://en.wikipedia.org/wiki/Republic_(Plato)), he emphasises: *"The circle symbolises unity and wholeness because all points on the circumference are equidistant from the centre."* [Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. He was right, but in a subtler way than you (and him) would normally expect. 
 
-[Aristotle](https://en.wikipedia.org/wiki/Aristotle), a student of Plato, argued that the Circle was the basis for all the other geometrical figures. He was right, but in a subtler way than you would normally expect. But, enough philosophical speculation; let's get back to basic mathematics. I suppose everyone knows what a circle is:
+And then there are the mystics; let me tell you, mystics love *circles* just as much mathematicians do. 
+
+In Hinduism and Buddhism, [the mandalas](https://en.wikipedia.org/wiki/Mandala) are intricate geometric designs in the shape of a *circle*; they represent unity, wholeness, and the Universe. 
+
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/mandala.png) 
+<sub><sub>Mandala by [i-am-courtney](https://www.deviantart.com/i-am-courtney/gallery)</sub></sub>
+
+Native American cultures use [*Sacred Circles*](https://www.inspirationforthespirit.com/native-american-symbolic-circles/) (or *Medicine Wheels*) as ceremonial structures consisting of a *circular* alignment of rocks, representing life and the interconnectedness of all things. 
+
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/medicinewheel.jpg)
+<sub><sub>Medicine Wheel Park, Valley City, ND</sub><sub>
+
+[The Ouroboros](https://en.wikipedia.org/wiki/Ouroboros) is an ancient symbol depicting a dragon eating its own tail (recursion :P), forming a *circle*. It represents renewal and eternal life, death, and rebirth. 
+
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/Chrysopoea_of_Cleopatra_1.png)
+<sub><sub>Image from Chrysopoeia of [Cleopatra](https://en.wikipedia.org/wiki/Cleopatra_the_Alchemist)</sub></sub>
+
+In [Zen](https://en.wikipedia.org/wiki/Zen) Buddhism, the *Ensō* symbolizes absolute illumination, elegance, the Universe, and the void ([mu](https://en.wikipedia.org/wiki/Mu_(negative))). 
+
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/Enso.jpg)
+<sub><sub>Enso, [Kanjuro Shibata XX](https://en.wikipedia.org/wiki/Kanjuro_Shibata_XX)</sub></sub>
+
+And then there's nature, which loves circles in a way that is not obvious, but there are [helices](https://en.wikipedia.org/wiki/Helix) everywhere, especially if you study ["low level" biology](https://en.wikipedia.org/wiki/Nucleic_acid_double_helix).
+
+But, enough philosophical and mystical speculation, let's get back to basic mathematics. Illuminated or not, I suppose everyone knows what a circle is:
 
 <div id="simple-circle-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecircle.js)</sup></sup>
@@ -481,6 +508,8 @@ As you can see, the shapes can become quite "irregular" and wild. With enough lu
 
 > As a side rule (easy to demonstrate trigonometrically), if you sum up sinusoids that share the same frequency, the result will be a sinusoid. So, it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency - it's a CIRCLE.
 
+# A flower 
+
 Let's start with a flower:
 
 <div id="a-flower-sketch"></div>
@@ -601,17 +630,17 @@ If we chose $$x=\pi$$, then we get this exciting identity.
 
 $$e^{i\pi}+1=0$$
 
-With this simple mathematical *magic formula* we've just linked the circle (through the *irrational* number $$\pi$$ and it's associated trigonometric functions) with the imaginary ($$i$$) and with Euler's number $$e$$. And remember, we are speaking of numbers that are *irrational*, *transcendental* and *purely imaginary*. Somehow, mathematics works in areas that are not necessarily *rational* or *real* in a material sense, but are true... 
+With this simple mathematical *magic formula* we've just linked the circle (through the *irrational* number $$\pi$$ and it's associated trigonometric functions) with the imaginary ($$i$$) and with Euler's transcendental number $$e$$. Somehow, mathematics works in areas that are not necessarily *rational* or *real* in a material sense but are... ontological.
 
 > Another bold statement: Some would say that $$\pi$$ and $$e$$ don't care about the geometry of the circles, their connection comes from a *higher* more abstract place, [check this answer on quora](https://affinemess.quora.com/What-is-math-pi-math-and-while-were-at-it-whats-math-e-math?__snids__=1596646755&__nsrc__=2).
 
 > I know I am comparing apples with oranges, but sometimes it hurts me to see $$e=m*c^{2}$$ more prevalent in pop-culture than $$e^{i\pi}=-1$$.
 
-For nostalgic reasons, we can also demonstrate Euler's formula through a more standard approach, using Maclaurin series (a special case of the [Taylor series](https://en.wikipedia.org/wiki/Taylor_series)). Honestly speaking, this is not exactly a necesary step for the purpose of this article, but nevertheles it's interesting to see that there are *numerical* ways of demonostrating something that starts visually. 
+For nostalgic reasons, we can also demonstrate Euler's formula through a more standard approach, using the Maclaurin series (a particular case of the [Taylor series](https://en.wikipedia.org/wiki/Taylor_series)). This is not exactly a necessary step for this article, but it's interesting to see that there are *numerical* in which we can demonstrate something that comes intuitively. 
 
-The *Maclaurin series* is a clever way to represent a function as an infinite sums of terms. It's particular useful in mathematics to approximate various functions. Just like the Fourier series we will speak about shortly, the idea of expressing a function as an infinite sum of "well behaved" terms is very important in mathematics. It takes from us the burden of dealing with all kind of *complexities* by compromising on the accuracy of our aproximation. 
+The *Maclaurin series* is a clever way to represent a function as an infinite sum of terms. It's instrumental in mathematics to approximate various functions. Expressing a function as an infinite sum of "well-behaved" terms is crucial in mathematics. It takes from us the burden of dealing with all kinds of *complexities*, to dealing with "nicer" terms that we can compromise on their numbers.
 
-In it's general form, the Maclaurin series, for a function $$f(x)$$ looks like:
+In its general form, the Maclaurin series, for a function $$f(x)$$ is:
 
 $$f(x)=\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(0)}{n!}x^n$$
 
@@ -625,7 +654,7 @@ After we exclude the terms with $$\textcolor{red}{0}$$ and $$\textcolor{blue}{0}
 
 $$sin(x)=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n+1)!}*x^{2n+1}$$
 
-In a highly similar fasion we would be getting a very similar Maclaurin series for $$cos(x)$$:
+In a highly similar fashion we would be getting a very similar Maclaurin series for $$cos(x)$$:
 
 $$cos(x)=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n)!}*x^{2n}$$
 
@@ -649,11 +678,166 @@ And now we have it, Euler's formula, a thing to marvel:
 
 $$e^{ix}=cos(x)+i*sin(x)$$
 
+By substituting $$x \rightarrow -x$$ we will obtain a new equality:
+
+$$e^{-ix}=cos(x)-i*sin(x)$$ 
+
+If we add/subtract the two equalities, we will obtain the definition of the sine and cosine functions in their exponential form:
+
+$$cos(x) = \frac{e^{ix} + e^{-ix}}{2}$$
+
+$$sin(x) = \frac{e^{ix} - e^{-ix}}{2*i}$$
+
+Linking back Euler's equality to the complex plane, things start to look much more enjoyable. All points of the circle are determined by a functon $$z(x)$$, where: 
+
+$$z(x)=e^{ix}=\underbrace{cos(x)}_{Re(x)}+\underbrace{i*sin(x)}_{Im(x)}$$
+
+$$x$$ represents the actual angle $$\theta \in \mathbb{R}$$, so $$z(\theta)=e^{i\theta}=cos(\theta)+i*sin(\theta)$$.
+
+You've seen that we've interchanged $$x$$ with $$t$$ and $$\theta$$ throughout the article. It's confusing, but don't get confused. We are the ones to decide how to look at $$x$$, as an angle or as time. 
+
 # Complex sinusoids
 
+Remember when we "customized" the *simple sinusoid* to have more *control* over it, and we came up with this:
 
+ $$y(t) = A * sin(2\pi ft + \varphi) = A * sin(\omega t + \varphi)$$
+
+Of course, we can do the same for the *complex sinusoid*,  but with Euler's identity in mind. Given $$e^{i\theta}=cos(\theta)+i*sin(\theta)$$, we multiply each side with $$A \geq 0$$ (the *Amplitude*): 
+
+$$A*e^{i\theta}=A*(cos(\theta)+i*sin(\theta))$$
+
+If we substitute $$\theta$$ with $$\theta=\omega t + \varphi$$, where $$t$$ is the time in seconds, $$\omega$$ is the radian frequency and $$\varphi$$ is the phase (offset), we obtain what we call the *complex sinusoid*:
+
+$$s(t)=A*e^{i(\omega t + \varphi)} = A * cos(\underbrace{\omega t + \varphi}_{\theta}) + i * A * sin(\underbrace{\omega t + \varphi}_{\theta})$$
+
+Philosophically speaking, a *complex sinusoid* captures the behavior of two sinusoids (one cosine and one sine) on both its axes; on the real part, it behaves like a cosine, while on its imaginary part, it behaves like a sine, the two are *in sync* as they both depend on the free variable $$\theta$$, expressed as $$\theta=\omega t + \varphi$$.
+
+We can plot a complex sinusoid in 3D, where the Z-axis is the time, the X-axis is the real axis, and the Y-axis is the imaginary part of our complex sinusoid. The representation is going to be a particular case of a [helix](https://en.wikipedia.org/wiki/Helix). But helices aside, this idea allows us to plot whatever shapes we want in a 2D plane: we will simply project a complex "3D" function in a 2D plane (defined by the X-axis and Y-axis).
+
+Two interesting observations:
+* If we project the complex sinusoid on the plane determined by the Y-axis and Z-axis we will plot a *sine* (   the imaginary part);
+* If we project the complex sinusoid on the plane determined by the X-axis and Z-axis we will plot a *cosine* (the real part);
+
+<div id="three-d-complex-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/threedcomplex.js)</sup></sup>
+
+If we step back, we might ask what's so unique about $$\mathbb{C}$$, why the *Unit Circle* from the *Complex Plane* is suddenly more interesting than the one we've introduced at the beginning of the article. Why do we use $$\mathbb{C}$$ and not $$\mathbb{R}^{2}$$? After all, $$\mathbb{R}^{2}$$ _has_ points; they are the *same points* as in $$\mathbb{C}$$, and the circles look the same, regardless of the formalism.
+
+Well, there's a subtle *secret* to it. The points $$p_{i} \in \mathbb{R}^{2}$$ can be expressed as $$p_{i} = (x_{i}, y_{i})$$, where $$x_{i} \in \mathbb{R}$$ and $$y_{i} \in \mathbb{R}$$. They are *tuples*, like python tuples. The points $$z_{i} \in \mathbb{C}$$ are numbers, not tuples, and they can be expressed as such $$z_{i} = x_{i} + i*y_{i}$$. They *exhibit* an addition that links the imaginary part with the real part. 
+
+Multiplication with a scalar in $$\mathbb{R}^2$$ is $$\mathbb{R} \times \mathbb{R}^2 \to \mathbb{R}^2$$, while in $$\mathbb{C}$$ the multiplication is $$\mathbb{C} \times \mathbb{C} \to \mathbb{C}$$. You can divide numbers (or points) in $$\mathbb{C}$$, but you absolutely cannot divide points in $$\mathbb{R}^{2}$$. To put it briefly, because of those additional properties of $$\mathbb{C}$$, the game of calculus is much simpler on $$\mathbb{C}$$ than on the *alternative*. We operate on *numbers*, which are also *points*... [and always have been](https://www.youtube.com/watch?v=i4lMfhlr9Cs).
+
+If you've read so far, you should realize that we can use *Complex Sinusoids* to draw shapes in a 2D plane. The 2D plane we will use is the plane determined by the X-axis and the Y-axis. The other dimension, the time, that's a dimension we keep hidden. Remember [the flower](#a-flower) we've drawn a few chapters back? Well, that flower is nothing more than the projection of the sum of multiple Complex Sinusoids. 
 
 # Fourier Series
+
+*Fourier Series* is the mathematical process through which we take an arbitrary function (that needs to have a few properties) and expand it as a sum of trigonometric functions. Remember the **Maclaurin series** (for decomposing $$f(x)$$) we used to prove Euler's Identity a few chapters back: 
+
+$$f(x)=\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(0)}{n!}x^n$$
+
+It's the same concept, but our expansion will use cosines and sines this time; also, the formulas are significantly more complex. The trigonometric expansion of a function $$f(x)$$ can be written as:
+
+$$f(x)=A_{0} + \sum_{n=1}^{\infty} [A_{n} cos(\frac{2\pi nx}{P}) + B_{n} sin(\frac{2\pi nx}{P})]$$
+
+Where $$A_{n}$$ and $$B_{n}$$ are called *Fourier Coefficients* are defined by the following integrals:
+
+$$A_{0} = \frac{1}{P} \int_{- \frac{P}{2}}^{+\frac{P}{2}} f(x) dx$$
+
+$$A_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * cos(\frac{2\pi nx}{P}) dx$$
+
+$$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * sin(\frac{2\pi nx}{P}) dx$$
+
+And we are getting closer and closer to the idea we've had since the beginning:
+1. We want to use circles to draw (almost) *everything*.
+2. The essence of the circle is its associated *complex sinusoid*.
+3. Fourier series allow us to decompose a function $$f(x)$$ into sinusoidal components;
+4. Our picture, or the shape we want to draw, is exactly the $$f(x)$$ we are expanding.
+5. If we understand *Fourier Mathematics*, we can draw (almost) anything with circles.
+
+## Fourier series for the Square wave
+
+Remember the *Square Wave* we've approximated with sinusoids [in this section](#adding-sinusoids)? At that point, we used the following formula to express the *Square* as a sum of sinusoidal components:
+
+$$
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2x-1)fx)}{2x-1}
+$$
+
+Or, to keep things simpler, by substituting $$\omega=2\pi f$$:
+
+$$
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2x-1)\omega x)}{2x-1}
+$$
+
+It's time to understand how we've devised such an approximation. 
+
+In *isolation*, the *Square Wave*, $$f(x)$$ looks like this:
+
+<div id="square-wave-f-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavef.js)</sup></sup>
+
+Throughout the interval  `[0, 2L]`, $$f(x)$$ can be written as:
+
+$$
+f(x) = 2 [H(\frac{x}{L})-H(\frac{x}{L}-1)] - 1
+$$
+
+Where $$H(x)$$ is called the [*Heavisde Step Function*](https://mathworld.wolfram.com/HeavisideStepFunction.html) and has the following definition:
+
+$$
+H(x) =  \begin{cases}
+        0 & \text{if } x \lt 0 \\
+        1 & \text{if } x \ge 0 \\
+        \end{cases}
+$$
+
+If we start substituting values for $$x$$, you will see that the definition of $$f(x)$$ works just fine:
+
+
+```js
+let h = (x) => {
+    if (x == 0) return 0.5;
+    else if (x > 0) return 1
+    else return 0;
+}
+let sq = (x, L) => { return 2 * (h(x / L) - h(x / L - 1)) - 1; }
+
+let r = [];
+const L = 10;
+for (let i = 0; i <= 2*L; i+=0.5) {
+    r.push(sq(i, L));
+}
+console.log(r);
+
+// Output
+// [
+//    0,  --> starts from 0 [x = 0]
+//
+//    1,  1,  1,  1,  1,  1,  1,  1,  1,
+//    1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+//
+//    0, --> goes again through 0 [x=L]
+//
+//    -1, -1, -1, -1, -1, -1, -1, -1, -1,
+//    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+// ]
+```
+
+To determine the Fourier series $$s(x)$$ for $$f(x)$$, we will have to compute the coefficients$$A_{0}$$, $$A_{n}$$ and $$B_{n}$$. It's much simpler than you might think. 
+
+First of all, let's look at $$A_{0} = \frac{1}{2L} \int_{0}^{2L} f(x) dx$$. 
+
+Well, this coefficient is a fancy way to express the average of $$f(x)$$ over the interval (in our case `[0, 2L]`). In the same time $$A_{0}$$ is the area determined by $$f(x)$$ over `[0, 2L]` then divided by $$2L$$. But if you look at the plot again, you will see that the net area is  $$0$$, because the green area nullifies the red area, and vice-versa.
+
+<div id="square-wave-f-a0-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavefa0.js)</sup></sup>
+
+Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish.
+
+Thirdly, we need to compute:
+
+ $$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * sin(\frac{2\pi nx}{P}) dx$$
+
+ Because the square wave changes abruptly at $$L$$, we need to break the calculation on `[0, L]` and `[L, 2L]`.
 
 # Fourier Series and Complex Numbers
 
@@ -662,3 +846,4 @@ $$e^{ix}=cos(x)+i*sin(x)$$
 # References
 
 * [Radians](https://www.mathsisfun.com/geometry/radians.html)
+* [$$\mathbb{R^2}$$ vs. $$\mathbb{C}$$ ](https://math.stackexchange.com/questions/364044/difference-between-mathbb-c-and-mathbb-r2)

@@ -1,8 +1,8 @@
 const theme = {
     canvasX: 400,
     canvasY: 400,
-    frameRate: 120,
-    frequency: 1 / 10,
+    frameRate: 20,
+    frequency: 20/100,
 
     bkgColor: '#F6F8FA',
     lightCircleColor: 'silver',
@@ -21,6 +21,9 @@ const theme = {
     primaryAxis: '#c1d7d7',
     secondaryAxis: '#e0ebeb',
     intersections: '#92b9b9',
+
+    lightGreen: '#e0fcee',
+    lightRed: '#fcb8b8',
 
     textFont: "monospace",
     textColor: 'black',
