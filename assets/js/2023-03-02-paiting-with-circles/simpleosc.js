@@ -8,16 +8,13 @@ const simpleOsc = (s) => {
     const w = 600;
 
     const d = 60;
-    const r = d / 2; // 40
-    const f = theme.frequency / 3; // 0.1
-    const rColor = s.color(theme.radiusColorLight);
-    let phase = s.HALF_PI;
+    const r = d / 2;
+    const f = theme.frequency;
 
     let canvas;
-    let angl = 0;
+    let angl = s.HALF_PI;
     let vG, vC, vR, vMS;
     let cBuff;
-    let periodPaint = false;
     let lastSineX, lastSineY;
 
     const paintGridProps = {
@@ -32,26 +29,23 @@ const simpleOsc = (s) => {
         vG = s.createVector(h / 2 + r, h / 2);
         vC = s.createVector(h / 2 - r, h / 2);
         vR = s.createVector(
-            vC.x + s.sin(angl + phase) * r,
-            vC.y + s.cos(angl + phase) * r,
+            vC.x + s.sin(angl) * r,
+            vC.y + s.cos(angl) * r,
         );
+        angl = s.HALF_PI;
         vMS = s.createVector(vG.x, vG.y);
         cBuff = s.createGraphics(w, h);
         s.paintGrid(cBuff, s.width, s.height, vG, r, 1, paintGridProps);
         lastSineX = vG.x;
         lastSineY = vG.y;
-        angl = 0;
-        periodPaint = false;
     }
 
     s.setup = () => {
         // Create Canvas of given size 
         canvas = s.createCanvas(w, h);
         canvas.parent('simple-osc-sketch');
-
         s.textFont(theme.textFont);
         s.frameRate(theme.frameRate);
-
         s.initConditions();
     }
 
@@ -61,9 +55,10 @@ const simpleOsc = (s) => {
         s.noFill();
 
         // Moving Circle
-        vR.x = vC.x + s.sin(angl + phase) * r;
-        vR.y = vC.y + s.cos(angl + phase) * r;
-
+        vR.x = vC.x + s.sin(angl) * r;
+        vR.y = vC.y + s.cos(angl) * r;
+        vMS.x += f * r;
+        vMS.y = vR.y;
 
         // Horizontal lines at [-1 and 1]
         s.push();
@@ -107,7 +102,7 @@ const simpleOsc = (s) => {
         s.push();
         s.noStroke();
         s.fill(theme.sineColor);
-        s.text("sin(" + angl.toFixed(2) + ")=" + s.sin(angl).toFixed(2), vMS.x + 5, vMS.y + 5);
+        s.text("sin(" + (angl-s.HALF_PI).toFixed(2) + ")=" + s.sin(angl-s.HALF_PI).toFixed(2), vMS.x + 5, vMS.y + 5);
         s.pop();
 
         // Projection on the x-axis
@@ -123,8 +118,6 @@ const simpleOsc = (s) => {
         s.pop();
 
         // Updat the moving sine point coordinates
-        vMS.x += f * r;
-        vMS.y = h / 2 - s.sin(angl) * r;
         angl += f;
         if (vMS.x > w) {
             // The sine exits the canvas, we start again

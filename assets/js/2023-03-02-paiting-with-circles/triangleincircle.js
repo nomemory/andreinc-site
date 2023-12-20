@@ -6,13 +6,11 @@ let triangleInCircle = (s) => {
     const r = 100;
     const d = 2 * r;
     const f = theme.frequency;
-    const phase = s.HALF_PI;
     const dotLCol = s.color(theme.radiusColorLight);
-    const sCCol = s.color(theme.circleColor);
     const rCCol = s.color(theme.circleColor);
 
-    let ang = 0;
-    let reset = s.PI * (1 / f);
+    let ang = s.HALF_PI;
+    let reset = s.PI + s.HALF_PI;
     let vC, vP, vPP, vThet;
     let cBuff;
 
@@ -23,18 +21,22 @@ let triangleInCircle = (s) => {
         // Initialising vectors
         vC = s.createVector(s.width / 2, s.height / 2);
         vP = s.createVector(
-            vC.x + s.sin(ang + s.PI) * r,
-            vC.y + s.cos(ang + s.PI) * r
+            vC.x + s.sin(ang) * r,
+            vC.y + s.cos(ang) * r
         );
         vThet = s.createVector(
-            vC.x + s.sin(ang * f / 2 + s.PI) * r,
-            vC.y + s.cos(ang * f / 2 + s.PI) * r
+            vC.x + s.sin(ang) * r,
+            vC.y + s.cos(ang) * r
         );
         vPP = s.createVector(0, 0);
         cBuff = s.createGraphics(s.width, s.height);
         // Painting the grid on the memory buffer
-        s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5,
-            { showUnits: true, showOrigin: true, showY: true, showX: true });
+        s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5, {
+            showUnits: true,
+            showOrigin: true,
+            showY: true,
+            showX: true
+        });
         // Adding the circle on the memory buffer
         cBuff.stroke(theme.lightCircleColor);
         cBuff.circle(vC.x, vC.y, d);
@@ -43,8 +45,8 @@ let triangleInCircle = (s) => {
     s.draw = () => {
         s.background(theme.bkgColor);
         s.image(cBuff, 0, 0);
-        let cSin = s.sin(ang * f + phase) * r;
-        let cCos = s.cos(ang * f + phase) * r;
+        let cSin = s.sin(ang) * r;
+        let cCos = s.cos(ang) * r;
         // Point
         vP.x = vC.x + cSin;
         vP.y = vC.y + cCos;
@@ -53,8 +55,8 @@ let triangleInCircle = (s) => {
         vPP.x = vC.x - cSin;
         vPP.y = vC.y - cCos;
         // Update arcle
-        vThet.x = vC.x + s.sin(ang * f + s.PI) * r / 2;
-        vThet.y = vC.y + s.cos(ang * f + s.PI) * r / 2;
+        vThet.x = vC.x + s.sin(ang) * r / 2;
+        vThet.y = vC.y + s.cos(ang) * r / 2;
         s.circle(vPP.x, vPP.y, 3);
         // Center-point + Center-projection-point
         s.push();
@@ -66,14 +68,14 @@ let triangleInCircle = (s) => {
         s.push();
         s.noFill();
         s.stroke(rCCol);
-        s.arc(vC.x, vC.y, d, d, s.HALF_PI - (ang * f + phase), 0);
-        s.arc(vC.x, vC.y, d, d, -s.HALF_PI - (ang * f + phase), -s.PI);
+        s.arc(vC.x, vC.y, d, d, s.HALF_PI - (ang), 0);
+        s.arc(vC.x, vC.y, d, d, -s.HALF_PI - (ang), -s.PI);
         s.pop();
         // 180 arc
         s.push();
         s.fill(theme.thetaColorLight);
         s.stroke(theme.thetaColor);
-        s.arc(vC.x, vC.y, d / 6, d / 6, (3 / 2) * s.PI - (ang * f + phase), s.HALF_PI - (ang * f + phase));
+        s.arc(vC.x, vC.y, d / 6, d / 6, (3 / 2) * s.PI - (ang), s.HALF_PI - (ang));
         s.pop();
         // 180 arc text
         s.push();
@@ -84,7 +86,8 @@ let triangleInCircle = (s) => {
         s.text('A', vP.x + 5, vP.y + 5);
         s.text('A\'', vPP.x + 5, vPP.y + 5);
         ang += f;
-        if ((ang + phase) > reset) ang = 0;
+
+        if (ang > reset) ang = s.HALF_PI;
         s.showFps();
     };
 };

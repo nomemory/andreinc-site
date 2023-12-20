@@ -8,16 +8,15 @@ const simpleCircleWithPi = (s) => {
     const d = 200;
     const r = d / 2;
     const ar = d / 8;
-    const f = theme.frequency;
+    const f = theme.frequency/2;
     const rColor = s.color(theme.radiusColorLight);
-    const t = 0.00001;
+    const t = 0.03;
     const delay = 3000;
 
     // Angle
-    let angl = 0;
+    let angl = s.HALF_PI;
     let ci = 0;
-    let phase = s.HALF_PI;
-    let reset = s.TWO_PI * (1 / f);
+    let reset = s.TWO_PI + s.HALF_PI;
 
     // Vectors
     let vC, vR, vThet, vSL, vCL;
@@ -55,12 +54,12 @@ const simpleCircleWithPi = (s) => {
         cBuff = s.createGraphics(s.width, s.height);
         vC = s.createVector(s.width / 2, s.height / 2);
         vR = s.createVector(
-            vC.x + s.sin(angl * f + phase) * r,
-            vC.y + s.cos(angl * f + phase) * r
+            vC.x + s.sin(angl) * r,
+            vC.y + s.cos(angl) * r
         );
         vThet = s.createVector(
-            vC.x + s.sin((angl * f + phase) / 2) * ar,
-            vC.y + s.cos((angl * f + phase) / 2) * ar
+            vC.x + s.sin((angl) / 2) * ar,
+            vC.y + s.cos((angl) / 2) * ar
         );
         vCL = s.createVector(0, 0);
         vSL = s.createVector(0, 0);
@@ -77,10 +76,10 @@ const simpleCircleWithPi = (s) => {
         s.image(cBuff, 0, 0);
 
         // Updating and rendering the moving radius vector
-        vR.x = vC.x + s.sin(angl * f + phase) * r;
-        vR.y = vC.y + s.cos(angl * f + phase) * r;
-        vThet.x = vC.x + s.sin((angl * f) / 2 + phase) * ar;
-        vThet.y = vC.y + s.cos((angl * f) / 2 + phase) * ar;
+        vR.x = vC.x + s.sin(angl) * r;
+        vR.y = vC.y + s.cos(angl) * r;
+        vThet.x = vC.x + s.sin((angl) / 2) * ar;
+        vThet.y = vC.y + s.cos((angl) / 2) * ar;
 
         s.stroke(rColor);
         s.line(vC.x, vC.y, vR.x, vR.y);
@@ -90,7 +89,7 @@ const simpleCircleWithPi = (s) => {
         s.push();
         s.stroke(theme.thetaColor);
         s.fill(theme.thetaColorLight);
-        s.arc(vC.x, vC.y, ar, ar, s.TWO_PI - angl * f, 0);
+        s.arc(vC.x, vC.y, ar, ar, s.HALF_PI-angl, 0);
         s.pop();
 
         // Drawing arc text
@@ -105,10 +104,12 @@ const simpleCircleWithPi = (s) => {
 
         // Updating the movement by incrementing the angle
         angl += f;
-        if (angl > reset) angl = 0; // reset angle ostopAnglesnce the circle is complete
+        if (angl > reset) {
+            angl = s.HALF_PI; // reset angle ostopAnglesnce the circle is complete
+        }
 
         // Stop for a moment and highlight
-        if (Math.abs(angl * f - rad[degr[ci]][0]) < t) {
+        if (Math.abs((angl-s.HALF_PI) - rad[degr[ci]][0]) < t) {
             let el = document.getElementById("angle_" + degr[ci]);
             el.style.color = 'red';
 
@@ -125,9 +126,8 @@ const simpleCircleWithPi = (s) => {
             s.pop();
 
             // Draw sine label and cosinelabels
-            const ca = angl * f + phase;
-            const soff = (ca >= s.PI && ca < s.TWO_PI) ? -45 : 2;
-            const coff = (ca >= s.HALF_PI && ca) < 1.5 * s.TWO_PI ? 15 : -5;
+            const soff = (angl >= s.PI && angl < s.TWO_PI) ? -45 : 2;
+            const coff = (angl >= s.HALF_PI && angl) < 1.5 * s.TWO_PI ? 15 : -5;
             vSL.x = vR.x + soff
             vSL.y = (vC.y + vR.y) / 2;
             vCL.x = (vC.x + vR.x) / 2 - 10;

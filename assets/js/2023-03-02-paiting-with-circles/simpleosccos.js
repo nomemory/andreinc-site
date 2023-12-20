@@ -8,15 +8,13 @@
     const w = 400;
 
     const d = 60;
-    const r = d / 2; // 40
-    const f = theme.frequency / 3; // 0.1
-    let phase = s.HALF_PI;
+    const r = d / 2;
+    const f = theme.frequency;
 
     let canvas;
     let angl = 0;
     let vGS, vGC, vC, vR, vMS, vMC;
     let cBuff;
-    let periodPaint = false;
     let lastSineX, lastSineY, lastCosineX, lastCosineY;
 
     const paintGridProps = {
@@ -30,8 +28,8 @@
         vGS = s.createVector(4 * r, vC.y);
         vGC = s.createVector(vC.x, 4 * r);
         vR = s.createVector(
-            vC.x + s.sin(angl + phase) * r,
-            vC.y + s.cos(angl + phase) * r,
+            vC.x + s.sin(angl) * r,
+            vC.y + s.cos(angl) * r,
         );
         vMS = s.createVector(vGS.x, vGS.y);
         vMC = s.createVector(vGC.x, vGC.y);
@@ -51,10 +49,9 @@
             invertY: true,
             hideLabels: true
         });
-        lastCosineX = vGC.x;
+        lastCosineX = vGC.x+r;
         lastCosineY = vGC.y;
-        angl = 0;
-        periodPaint = false;
+        angl = s.HALF_PI;
     }
 
     s.setup = () => {
@@ -73,8 +70,14 @@
         s.noFill();
 
         // Moving Circle
-        vR.x = vC.x + s.sin(angl + phase) * r;
-        vR.y = vC.y + s.cos(angl + phase) * r;
+        vR.x = vC.x + s.sin(angl) * r;
+        vR.y = vC.y + s.cos(angl) * r;
+        // Moving sine
+        vMS.x += f * r;
+        vMS.y = vC.y + s.cos(angl) * r;
+        // Moving cosine
+        vMC.x = vC.x + s.sin(angl) * r;
+        vMC.y += f * r
 
         // Paint the oscilating circle 
         s.push();
@@ -124,14 +127,14 @@
         s.push();
         s.noStroke();
         s.fill(theme.sineColor);
-        s.text("sin(" + angl.toFixed(2) + ")=" + s.sin(angl).toFixed(2), vMS.x + 5, vMS.y + 5);
+        s.text("sin(" + (angl-s.HALF_PI).toFixed(2) + ")=" + s.sin(angl-s.HALF_PI).toFixed(2), vMS.x + 5, vMS.y + 5);
         s.pop();
 
         // Text near the blue circle cos(x) = v
         s.push();
         s.noStroke();
         s.fill(theme.cosineColor);
-        s.text("cos(" + angl.toFixed(2) + ")=" + s.cos(angl).toFixed(2), vMC.x + 5, vMC.y + 5);
+        s.text("cos(" + (angl-s.HALF_PI).toFixed(2) + ")=" + s.cos(angl-s.HALF_PI).toFixed(2), vMC.x + 5, vMC.y + 5);
         s.pop();
 
         // Projection on the x-axis of the sine
@@ -158,17 +161,8 @@
         s.lineDash(canvas, [3, 3], vR.x, vR.y, vMC.x, vMC.y);
         s.pop();
 
-        // Updat the moving sine point coordinates
-        // moving sine
-        vMS.x += f * r;
-        vMS.y = vC.y - s.sin(angl) * r;
-        // moving cosine
-        vMC.x = vC.x + s.cos(angl) * r;
-        vMC.y += f * r
         // increment angle
         angl += f;
-        // console.log(vMC);
-        // console.log(vMS);
         if (vMS.x > w) {
             // The sine exits the canvas, we start again
             s.initConditions();

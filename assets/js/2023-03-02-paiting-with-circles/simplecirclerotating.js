@@ -10,11 +10,14 @@ const simpleCircleRotating = (s) => {
     const rColor = s.color(theme.radiusColorLight);
 
     // Angle
-    let angl = 0;
-    let reset = s.TWP_PI * (1 / f);
+    let angl = s.HALF_PI;
+    let reset = s.TW0_PI + s.HALF_PI;
 
     // Vectors
-    let vC, vR, vCoord, vRLab;
+    let vC; // the center of the cartesian grid
+    let vR; // the point on the circle that moves
+    let vCoord;
+    let vRLab;
 
     // Buffers
     let cBuff;
@@ -23,7 +26,6 @@ const simpleCircleRotating = (s) => {
         // Create Canvas of given size 
         const canvas = s.createCanvas(theme.canvasX, theme.canvasY);
         canvas.parent("simple-circle-rotating-sketch");
-
         s.textFont(theme.textFont);
         s.frameRate(theme.frameRate);
 
@@ -32,13 +34,16 @@ const simpleCircleRotating = (s) => {
         vC = s.createVector(s.width / 2, s.height / 2);
         vCoord = s.createVector(0, 0);
         vRLab = s.createVector(0, 0);
-
         vR = s.createVector(0, 0);
 
         // Draw the main circle exactly once on the buffer
         cBuff.noFill();
-        s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5,
-            { showUnits: true, showOrigin: true, showY: true, showX: true });
+        s.paintGrid(cBuff, s.width, s.height, vC, r / 5, 5, {
+            showUnits: true,
+            showOrigin: true,
+            showY: true,
+            showX: true
+        });
         cBuff.circle(vC.x, vC.y, d);
     };
 
@@ -50,9 +55,9 @@ const simpleCircleRotating = (s) => {
         s.stroke(1);
 
         // Updating and rendering the moving radius vector
-        vR.x = vC.x + s.sin(angl * f) * r;
-        vR.y = vC.y + s.cos(angl * f) * r;
-            
+        vR.x = vC.x + s.sin(angl) * r;
+        vR.y = vC.y + s.cos(angl) * r;
+
         s.stroke(rColor);
         s.line(vC.x, vC.y, vR.x, vR.y);
         s.circle(vR.x, vR.y, 3);
@@ -76,7 +81,7 @@ const simpleCircleRotating = (s) => {
         s.text("x² + y² = " + sqrX + " + " + sqrY + " = 1", 5, s.height - 5);
 
         angl += f;
-        if (angl > reset) angl = 0; // reset angle once the circle is complete
+        if (angl > reset) angl = s.HALF_PI; // reset angle once the circle is complete
         s.showFps();
     };
 };

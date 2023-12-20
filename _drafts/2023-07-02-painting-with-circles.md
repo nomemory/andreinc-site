@@ -34,6 +34,14 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/squarewavean.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/squarewavebn.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/tightfourier.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/theboxfunction.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/theboxfunctionft.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/ftanima.js"
+
 comments: true
 excerpt: "The nature of reality"
 categories:
@@ -427,7 +435,7 @@ The sum $$y(x)=y_{1}(x) + y_{2}(x)$$ already looks more "fascinating".
 We can even express "square waves" as a sum of sinusoids. Let's take, for example, the following formula:
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2x-1)fx)}{2x-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2k-1)fx)}{2k-1}
 $$
 
 Don't worry if you feel the formula feels like it's being *parachuted* in the article. We will shortly see how we can rigorously determine it. But for the moment, accept it as it is.
@@ -712,11 +720,11 @@ $$s(t)=A*e^{i(\omega t + \varphi)} = A * cos(\underbrace{\omega t + \varphi}_{\t
 
 Philosophically speaking, a *complex sinusoid* captures the behavior of two sinusoids (one cosine and one sine) on both its axes; on the real part, it behaves like a cosine, while on its imaginary part, it behaves like a sine, the two are *in sync* as they both depend on the free variable $$\theta$$, expressed as $$\theta=\omega t + \varphi$$.
 
-We can plot a complex sinusoid in 3D, where the Z-axis is the time, the X-axis is the real axis, and the Y-axis is the imaginary part of our complex sinusoid. The representation is going to be a particular case of a [helix](https://en.wikipedia.org/wiki/Helix). But helices aside, this idea allows us to plot whatever shapes we want in a 2D plane: we will simply project a complex "3D" function in a 2D plane (defined by the X-axis and Y-axis).
+We can plot a complex sinusoid in 3D, where the Z-axis is the time, the X-axis is the real axis, and the Y-axis is the imaginary part of our complex sinusoid. The representation is going to be a particular case of a [helix](https://en.wikipedia.org/wiki/Helix). But helices aside, this idea allows us to plot whatever shapes we want in a 2D plane: we will project a complex "3D" function in a 2D plane (defined by the X-axis and Y-axis).
 
 Two interesting observations:
-* If we project the complex sinusoid on the plane determined by the Y-axis and Z-axis we will plot a *sine* (   the imaginary part);
-* If we project the complex sinusoid on the plane determined by the X-axis and Z-axis we will plot a *cosine* (the real part);
+* If we project the complex sinusoid on the plane determined by the Y-axis and Z-axis, we will plot a *sine* (the Imaginary part);
+* If we project the complex sinusoid on the plane determined by the X-axis and Z-axis, we will plot a *cosine* (the Real part);
 
 <div id="three-d-complex-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/threedcomplex.js)</sup></sup>
@@ -735,9 +743,17 @@ If you've read so far, you should realize that we can use *Complex Sinusoids* to
 
 $$f(x)=\sum_{n=0}^{\infty}\frac{\frac{d^n}{dx^n}f(0)}{n!}x^n$$
 
-It's the same concept, but our expansion will use cosines and sines this time; also, the formulas are significantly more complex. The trigonometric expansion of a function $$f(x)$$ can be written as:
+It's the same concept, but our expansion will use cosines and sines this time.
 
-$$f(x)=A_{0} + \sum_{n=1}^{\infty} [A_{n} cos(\frac{2\pi nx}{P}) + B_{n} sin(\frac{2\pi nx}{P})]$$
+We can make an even more artistic observation. Do you remember the [Pink Floyd's](https://en.wikipedia.org/wiki/Pink_Floyd) album cover for the [*Dark Side of The Moon*](https://en.wikipedia.org/wiki/The_Dark_Side_of_the_Moon):
+
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/darksideofthemoon.jpg)
+
+Imagine our function $$f(x)$$ is the light itself, [the prism](https://en.wikipedia.org/wiki/Prism_(optics)) is essentially *Fourier Mathematics*, and the spectral colors emanating from the prism are our sines and cosines. 
+
+If we were to keep the analogy (it's only an analogy!) and write the formula, this would look like this:
+
+$$\underbrace{f(x)}_{\text{ light itself}}=\underbrace{A_{0} + \sum_{n=1}^{\infty} [A_{n} cos(\frac{2\pi nx}{P}) + B_{n} sin(\frac{2\pi nx}{P})]}_{\text{the spectral components}}$$
 
 Where $$A_{n}$$ and $$B_{n}$$ are called *Fourier Coefficients* are defined by the following integrals:
 
@@ -747,25 +763,40 @@ $$A_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * cos(\frac{2\pi
 
 $$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * sin(\frac{2\pi nx}{P}) dx$$
 
-And we are getting closer and closer to the idea we've had since the beginning:
-1. We want to use circles to draw (almost) *everything*.
-2. The essence of the circle is its associated *complex sinusoid*.
-3. Fourier series allow us to decompose a function $$f(x)$$ into sinusoidal components;
-4. Our picture, or the shape we want to draw, is exactly the $$f(x)$$ we are expanding.
-5. If we understand *Fourier Mathematics*, we can draw (almost) anything with circles.
+The integer $$n$$ from the formulas represents the number of cycles the corresponding sinusoid makes in the interval $$P$$.
+
+With the help of Euler's Formula and by changing the sine and cosine functions in their exponential forms, we can also express the Fourier Series of a function as a sum of *Complex Sinusoids*:
+
+$$f(x) = \sum_{n=-N}^{N} C_{n} e ^ {i2\pi \frac{n}{P}x}$$
+
+Where:
+
+$$
+C_{n} = \begin{cases}
+            A_{0} & \text{if } n = 0 \\
+            \frac{1}{2} (A_{n} - i * B_{n}) &  \text{if } n > 0 \\
+            \frac{1}{2} (A_{n} + i * B_{n}) & \text{if } n < 0 \\
+        \end{cases}
+$$
+
+If we do additional substitutions, the final form of $$C_{n}$$ is:
+
+$$
+C_{n} = \frac{1}{P} \int_{-\frac{P}{2}}^{\frac{P}{2}} e^{-i2\pi\frac{n}{P}x} f(x) dx
+$$
 
 ## Fourier series for the Square wave
 
 Remember the *Square Wave* we've approximated with sinusoids [in this section](#adding-sinusoids)? At that point, we used the following formula to express the *Square* as a sum of sinusoidal components:
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2x-1)fx)}{2x-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2k-1)fx)}{2k-1}
 $$
 
-Or, to keep things simpler, by substituting $$\omega=2\pi f$$:
+Or, to keep things simpler, by substituting $$\omega=2\pi f$$ ($$\omega$$ is the angular frequency):
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2x-1)\omega x)}{2x-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2k-1)\omega x)}{2k-1}
 $$
 
 It's time to understand how we've devised such an approximation. 
@@ -822,26 +853,229 @@ console.log(r);
 // ]
 ```
 
-To determine the Fourier series $$s(x)$$ for $$f(x)$$, we will have to compute the coefficients$$A_{0}$$, $$A_{n}$$ and $$B_{n}$$. It's much simpler than you might think. 
+To determine the Fourier series $$s(x)$$ for $$f(x)$$, we will have to compute the coefficients$$A_{0}$$, $$A_{n}$$ and $$B_{n}$$. It's much simpler than you might think for this well-behaved but unnatural function. I am calling it *unnatural* because it has a nice discontinuity, a gap, a thing that doesn't appear in *nature*, at least if we are in the camp that the nature of our Universe is continuous and infinities are ontological. 
 
-First of all, let's look at $$A_{0} = \frac{1}{2L} \int_{0}^{2L} f(x) dx$$. 
+It's worth mentioning that the *Fourier Expansion* for smooth functions usually converges to the initial functions (sooner or later), still, for functions with *discontinuities*, we will probably be dealing with *mere approximations*.
 
-Well, this coefficient is a fancy way to express the average of $$f(x)$$ over the interval (in our case `[0, 2L]`). In the same time $$A_{0}$$ is the area determined by $$f(x)$$ over `[0, 2L]` then divided by $$2L$$. But if you look at the plot again, you will see that the net area is  $$0$$, because the green area nullifies the red area, and vice-versa.
+First of all, let's look at $$A_{0} = \frac{1}{2L} \int_{0}^{2L} f(x) dx$$. Notice how we've changed the interval from $$[-\frac{P}{2}, \frac{P}{2}]$$ to $$[0, 2L]$$ to match our example. This will be reflected in the formulas.
+
+Well, this coefficient ($$A_{0}$$) is a fancy way to express the average of $$f(x)$$ over the interval (in our case `[0, 2L]`). In the same time $$A_{0}$$ is the area determined by $$f(x)$$ over `[0, 2L]` then divided by $$2L$$. But if you look at the plot again, you will see that the net area is  $$0$$, because the green area (S1) nullifies the red area (S2), regardless of $$L$$.
 
 <div id="square-wave-f-a0-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavefa0.js)</sup></sup>
 
-Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish.
+Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish. 
+
+Visually speaking, regardless of how you pick $$n$$ or $$L$$, the net area determined by the $$A_{n}$$ integral will always be zero. It's visually obvious if we *plot* $$A_n$$. For example plotting $$A_{1}$$, $$A_{2}$$, $$A_{3}$$, $$A_{4}$$ looks like this:
+
+<div id="square-wave-f-an-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavean.js)</sup></sup>
+
+Similar symmetrical patterns will emerge if you increase the $$n$$ in $$A_{n}$$ and plot them.
 
 Thirdly, we need to compute:
 
- $$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * sin(\frac{2\pi nx}{P}) dx$$
+ $$B_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * sin(\frac{\pi nx}{L}) dx$$
 
- Because the square wave changes abruptly at $$L$$, we need to break the calculation on `[0, L]` and `[L, 2L]`.
+ If we plot a $$B_{1}$$, $$B_{2}$$, $$B_{3}$$ and, let's say, $$B_{4}$$ we can intuitively *feel* what's happening with $$B_{n}$$:
 
-# Fourier Series and Complex Numbers
+<div id="square-wave-f-bn-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavebn.js)</sup></sup>
 
-# The code
+If you have a keen eye for geometrical representations, you will notice that every even $$B_{n}$$ is also 0. The red and green areas nullify, so the net area described by the integral is $$0$$. The odd terms will be $$2 * \text{something}$$, so let's calculate that $$\text{something}$$.
+
+We will need to split the integral on two sub-intervals $$[0, L]$$ and $$[L, 2L]$$ (there's a *chasm* at $$L$$), but given the fact $$f(x)$$ and $$sin(x)$$ are odd, $$B_{n}$$ can we written as:
+
+ $$B_{n} = 2 * [\frac{1}{L} \int_{0}^{L} f(x) * sin(\frac{\pi nx}{L}) dx]$$
+
+We can now perform [u-substition](https://en.wikipedia.org/wiki/Integration_by_substitution), so we can write:
+
+$$B_{n} = \frac{2}{L} \int_{0}^{nL\pi} \frac{sin(\frac{u}{L})}{n\pi}du$$
+
+After we take the constant out, we compute the integral, use the intervals, and take into consideration the periodicity of cosine:
+
+$$B_{n} = \frac{2}{n\pi}(1-(-1)^n)$$
+
+And now we see it, $$B_{n}$$ is exactly $$0$$ if $$n$$ is even, and $$B_{n}=2 * \frac{2}{n\pi}$$ is $$n$$ is odd.
+
+Putting all back into the master formula of the *Fourier Series*:
+
+$$f(x)=\underbrace{A_{0}}_{0} + \sum_{n=1}^{\infty} [\underbrace{A_{n} cos(\frac{\pi nx}{L})}_{0} + B_{n} sin(\frac{\pi nx}{L})]$$
+
+Things become:
+
+$$f(x)=\frac{4}{\pi} \sum_{n=1,3,5...}^{+\infty} (\frac{1}{n} * sin(\frac{\pi nx}{L}))$$
+
+If we substitute $$n \rightarrow 2k-1$$ and consider, we obtain the initial formula:
+
+$$f(x)=\frac{4}{\pi} \sum_{k=1}^{+\infty} (\frac{sin(\frac{\pi (2k-1)x}{L})}{(2k-1)})$$
+
+To obtain the initial formula, we susbtitute $$L \rightarrow \frac{1}{2f}$$, and $$2\pi f \rightarrow \omega$$, basically we create an interdependence between $$L$$ (half of the interval) and $$\omega$$, $$L=\frac{\pi}{\omega}$$:
+
+$$
+f(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2k-1)\omega x)}{2k-1}
+$$
+
+Unfortunately, there's no way we can go to $$+\infty$$, so let's consider $$s(x)$$ as an approximation of $$f(x)$$ that depends on $$n$$.
+
+$$
+s(x) = \frac{4}{\pi}\sum_{k=1}^{n}\frac{sin((2k-1)\omega x)}{2k-1} \approx f(x)
+$$
+
+In the next animation, you will see that by increasing $$n$$, the accuracy of our approximation gets better and better, and the *gaps* are slowly closed:
+
+<div id="tight-fourier-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourier.js)</sup></sup>
+
+To understand how adding more coefficients improves the approximation, let's look back again at a few of our coefficients $$s_{1}(x)$$, $$s_{2}(x)$$, $$s_{3}(x)$$, $$s_{4}(x)$$ and $$s_{5}(x)$$ (we will pick $$\omega=\frac{\pi}{2}$$, so that $$2L=1$$):
+
+$$s_{1}(x) = \frac{4}{\pi} sin(\frac{\pi x}{2})$$
+
+$$s_{2}(x) = \frac{4}{3\pi} sin(\frac{3\pi x}{2})$$
+
+$$s_{3}(x) = \frac{4}{5\pi} sin(\frac{5\pi x}{2})$$
+
+$$s_{4}(x) = \frac{4}{7\pi} sin(\frac{7\pi x}{2})$$
+
+$$s_{5}(x) = \frac{4}{9\pi} sin(\frac{9\pi x}{2})$$
+
+Each of the 5 terms is a sinusoid, with $$\frac{4}{\pi}$$, $$\frac{4}{3\pi}$$, etc. amplitudes, and $$\frac{\pi}{2}$$, $$\frac{3\pi}{2}$$, etc. frequencies.
+
+So, if we were to approximate a *Square Wave* with its fifth partial sum (the red dot), we would obtain something like this:
+
+<div id="tight-fourier-avg-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js)</sup></sup>
+
+Notice how *obsessed* the *red dot* is with the *blue dot* (the actual function) and how closely it follows it. 
+
+We can always add more terms to the partial sum to help the *red dot* in its *holy mission*, improving the approximation until nobody cares anymore.
+
+# Fourier transform
+
+There's only one limitation to what *Fourier series* can do: they only work on periodic functions. 
+
+So, we must introduce a new concept that allows us to shift from the bounded interval $$P=2*L$$ on which *Fourier Series* works to the infinite domain of $$\mathbb{R}$$. This concept is called a *Fourier Transform*.
+
+So let's consider a periodic function $$f(x)$$ with period $$P$$ again. In exponential form, the *Fourier Series* representation of $$f(x)$$ is:
+
+$$
+f(x) = \sum_{n=-\infty}^{\infty} C_{n} e ^ {i2\pi \frac{n}{P}x} \\
+C_{n} = \frac{1}{P} \int_{-\frac{P}{2}}^{\frac{P}{2}} e^{-i2\pi\frac{n}{P}x} f(x) dx 
+$$
+
+Let's be *imaginative* and substitute $$\triangle f = \frac{1}{P}$$
+
+Our relationships become:
+
+$$
+f(x) = \sum_{n=-\infty}^{\infty} C_{n} e ^ {i2\pi n \triangle fx} \\
+C_{n} = \triangle f \int_{-\frac{P}{2}}^{\frac{P}{2}} f(x) e^{-i2\pi n \triangle fx} dx 
+$$
+
+Substituting $$C_{n}$$ in the first relationship becomes:
+
+$$
+f(x) = \sum_{n=-\infty}^{\infty} [\int_{-\frac{P}{2}}^{\frac{P}{2}} f(x) e^{-i2\pi n \triangle fx} dx] e ^ {i2\pi n \triangle fx} \triangle f\\
+$$
+
+The above formula looks scary; I have to admit that. But it's just an intermediary step, and I promise things will become much simpler.
+
+We've said we want to extend the *Fourier Series* to $$\infty$$ and back. So let's assume $$P$$ approaches infinity: $$P \rightarrow \infty$$. Then, our $$\triangle f$$ becomes a continuous variable $$f$$, and summation becomes integration.
+
+$$
+f(x) = \lim\limits_{P \to \infty} \{\sum_{n=-\infty}^{\infty} [\int_{-\frac{P}{2}}^{\frac{P}{2}} f(x) e^{-i2\pi n \triangle fx} dx] e ^ {i2\pi n \triangle fx} \triangle f\}
+$$
+
+If we substitute the ordinary frequency with the angular frequency ($$\omega=2\pi f$$), our relationship is:
+
+$$
+f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} [\underbrace{\int_{-\infty}^{\infty} f(x) e^{-i\omega x} dx}_{F(\omega)}] * e ^ {i\omega x} d\omega
+$$
+
+So, a function $$f(x)$$ can be written as:
+
+$$
+f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i\omega x} d\omega \\
+F(\omega) = \int_{-\infty}^{\infty} f(x) * e^{-i\omega x} dx
+$$
+
+Think of $$F(\omega)$$ as the $$C_{n}$$ coefficients of the *Fourier Series*. $$F( \omega )$$ is *Fourier Transform*, a continuum generalization of the $$C_{n}$$of the *Fourier Series*.
+
+If you prefer to use the *ordinary frequency*, $$f$$, there is a cleaner formula for this. Engineers usually prefer $$\omega$$:
+
+$$
+f(x) = \int_{-\infty}^{\infty} F(f) e^{i2\pi fx} df \\
+F(f) = \int_{-\infty}^{\infty} f(x) * e^{-i2\pi fx} dx
+$$
+
+$$F(\omega)$$ allows us to look at a function from a different angle. No, there's no pun; it's **literally** a different *angle*.
+
+# The Fourier Transform of the Box Function
+
+The math can look a little overwhelming. And it's hard to make a visual connection without seeing how the *Fourier Transform* works in practice.
+
+Let's define the *Box Function*, $$g(x)$$:
+
+$$
+g(x) = \begin{cases}
+           A &  \text{if } -\frac{1}{2} \lt x \lt \frac{1}{2} \\
+           0 & \text{otherwise} \\
+        \end{cases}
+$$
+
+It looks like this:
+
+<div id="the-box-function-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/theboxfunction.js)</sup></sup>
+
+The *Fourier Transform* of $$g(x)$$, $$G(\omega)$$, can be written as:
+
+$$
+G(\omega) = \int_{-\infty}^{+\infty} g(x) * e^{-i\omega x} dx
+$$
+
+Because the function *operates* only between $$(-\frac{1}{2}, \frac{1}{2})$$ we can *restrict* the integral to:
+
+$$
+G(\omega) = \int_{-\frac{1}{2}}^{\frac{1}{2}} A * e^{-i\omega x} dx = A * \frac{e^{-i\omega x}}{-i\omega}\Bigr|_{-\frac{1}{2}}^{\frac{1}{2}} = A * \frac{e^{\frac{i\omega}{2}} - e^{\frac{-i\omega}{2}}}{i\omega}
+$$
+
+If you look closer, the result looks suspiciously similar to the sine function expressed in exponential form: $$sin(x) = \frac{e^{ix} - e^{-ix}}{2*i}$$. So we can safely say:
+
+$$
+G(\omega) = A * \frac{2}{\omega} * sin(\frac{\omega}{2}) = A * \frac{sin(\frac{\omega}{2})}{\frac{\omega}{2}}
+$$
+
+For the mathematically inclined, the function $$G(\omega)$$ is continuous at $$0$$, don't worry about that.
+
+Plotting $$G(\omega)$$ gives us the following graph:
+
+<div id="the-box-function-ft-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/theboxfunctionft.js)</sup></sup>
+
+If we do the inverse *Fourier Transform*, we can express $$g(x)$$ as:
+
+$$
+g(x)=\frac{1}{2\pi}\int_{-\infty}^{+\infty} G(\omega) * e ^{i\omega x} d\omega
+$$
+
+Remember how a [*Complex Sinsuoid*](#complex-sinusoids) is written as $$A * e^{i(\omega x + \varphi)}$$. Then, if we look at our *Fourier Transform*, we can see that it is a continuous sum of *complex inusoids* over infinity:
+
+$$
+g(x)=\frac{1}{2\pi}\int_{-\infty}^{+\infty} \underbrace{G(\omega) * e ^{i\omega x}}_{\text{complex sinusoid(s)}} d\omega
+$$
+
+This Wikipedia animation best describes the math formula:
+
+![Transform](https://upload.wikimedia.org/wikipedia/commons/a/a3/Continuous_Fourier_transform_of_rect_and_sinc_functions.gif)
+
+Or my take on it:
+
+<div id="ft-anima-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/ftanima.js)</sup></sup>
+
+# Discrete Fourier Transform
+
 
 # References
 

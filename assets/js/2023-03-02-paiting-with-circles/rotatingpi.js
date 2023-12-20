@@ -8,7 +8,7 @@ const rotatingPi = (s) => {
     const h = 175;
     const d = 100;
     const r = d / 2; // diameter of the moving center
-    const f = theme.frequency / 3; // we slow down by /3
+    const f = theme.frequency; // we slow down by /3
     const xOff = r; // the offset of x for the grid system
 
     let ang = 0; // angle used for computing sin and cos
@@ -24,8 +24,8 @@ const rotatingPi = (s) => {
         // Initialise vectors
         vC = s.createVector(xOff, h / 2);
         vM = s.createVector(
-            vC.x + s.sin(ang * f) * r,
-            vC.y + s.cos(ang * f) * r
+            vC.x + s.sin(ang) * r,
+            vC.y + s.cos(ang) * r
         );
         // Circle Buffer
         buff = s.createGraphics(w, h);
@@ -69,9 +69,9 @@ const rotatingPi = (s) => {
 
         // Updating values
         vC.x += f * r;
-        vM.x = vC.x + s.sin(ang * f) * r;
-        vM.y = vC.y + s.cos(ang * f) * r;
-        ang--;
+        vM.x = vC.x + s.sin(ang) * r;
+        vM.y = vC.y + s.cos(ang) * r;
+        ang-=f;
         if (vC.x > (s.TWO_PI * r) + xOff) {
             // Once the rolling is > 2*PI
             // We display for 3000ms the text label 2*π

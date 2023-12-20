@@ -9,19 +9,19 @@ const sinCosSide = (s) => {
 
     const d = w / 8;
     const r = d / 2;
-    const f = theme.frequency / 3;
+    const f = theme.frequency;
     let angl = 0;
     let vC, vMS, vMC;
     let cBuff;
     let canvas;
-    let lx, ly;
 
     s.initConditions = () => {
         vC = s.createVector(2 * r, h / 2);
-        vMS = s.createVector(vC.x + s.HALF_PI*r, vC.y);
+        vMS = s.createVector(vC.x + s.HALF_PI*r, vC.y -r);
         vMC = s.createVector(vC.x, vC.y - r);
         cBuff = s.createGraphics(w, h);
-        s.paintGrid(cBuff, w, h, vC, r, 1, {
+        s.paintGrid(cBuff, w, h, vC, r, 1,
+        {
             showUnits: true,
             showOrigin: true
         });

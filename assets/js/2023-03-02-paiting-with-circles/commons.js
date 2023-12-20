@@ -1,8 +1,8 @@
 const theme = {
     canvasX: 400,
     canvasY: 400,
-    frameRate: 20,
-    frequency: 20/100,
+    frameRate: 15,
+    frequency: 0.05,
 
     bkgColor: '#F6F8FA',
     lightCircleColor: 'silver',
@@ -28,19 +28,17 @@ const theme = {
     textFont: "monospace",
     textColor: 'black',
     textSize: 12,
+    webGLFont: '/assets/js/2023-03-02-paiting-with-circles/consola-mono.ttf',
 }
-let call = 0;
 const addPaintGrid = (s) => {
 
     s.paintGrid = (gridBuff, w, h, o, uSize, eUnit, props) => {
-        call ++;
-        console.log("call:" + call);
         let mx = "-";
         let px = " ";
         let my = "-";
         let py = " ";
-        let xLabel = "𝔁";
-        let yLabel = "𝐲";
+        let xLabel = "x";
+        let yLabel = "y";
         let hideXLabel = false;
         let hideYLabel = false;
         let hideLabels = false;
@@ -88,20 +86,6 @@ const addPaintGrid = (s) => {
         // X AXIS -> ORIGIN RIGHT
         gridBuff.line(o.x, o.y, w, o.y);
         gridBuff.pop();
-
-        // Labels
-        if (!hideLabels) {
-            gridBuff.push();
-            gridBuff.fill(theme.primaryAxis);
-            if (hideXLabel==false) {
-                let tWidth = s.textWidth(xLabel);
-                gridBuff.text(xLabel, w-tWidth-10, o.y - 10);
-            }
-            if (hideYLabel==false) {
-                gridBuff.text(yLabel, o.x + 10, 15);
-            }
-            gridBuff.pop();
-        }
 
         // Secondary axis
         gridBuff.push();
@@ -169,11 +153,28 @@ const addPaintGrid = (s) => {
         // The origin of the grid
         if (props !== undefined && props.showOrigin === true) {
             gridBuff.push();
+            gridBuff.fill(theme.radiusColor);
+            gridBuff.textFont(theme.textFont);
             gridBuff.circle(o.x, o.y, 3);
             gridBuff.text("0", o.x + 5, o.y + 15);
             gridBuff.pop();
         }
         gridBuff.pop();
+
+        // Labels
+        if (!hideLabels) {
+            gridBuff.push();
+            gridBuff.fill(theme.radiusColor);
+            gridBuff.textFont(theme.textFont);
+            if (hideXLabel==false) {
+                let tWidth = s.textWidth(xLabel);
+                gridBuff.text(xLabel, w-tWidth-10, o.y - 10);
+            }
+            if (hideYLabel==false) {
+                gridBuff.text(yLabel, o.x + 10, 15);
+            }
+            gridBuff.pop();
+        }
     };
 };
 
@@ -220,6 +221,20 @@ const addArrow = (s) => {
         s.triangle(d, 0,
                     d - arrowSize, -arrowSize / 3,
                     d - arrowSize, arrowSize / 3);
+        s.pop();
+    },
+    s.arrowCt = (x1, y1, x2, y2, size) => {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const angle = s.atan2(dy, dx);
+        const d = s.dist(x1, y1, x2, y2);;
+        s.push();
+        s.translate(x1, y1);
+        s.rotate(angle);
+        s.line(0, 0, d, 0);
+        s.triangle(d, 0,
+                    d - size, -size / 3,
+                    d - size, size / 3);
         s.pop();
     },
     s.arrowBezier = (x1, y1, x2, y2, x3, y3, x4, y4, size) => {

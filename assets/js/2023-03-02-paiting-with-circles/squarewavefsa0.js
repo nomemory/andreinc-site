@@ -14,13 +14,14 @@ const sqaureWaveFA0 = (s) => {
     let vG;
     let buff;
 
-    let i = 1;
+    let i = 0.5;
+    let inc = 1;
 
     s.setup = () => {
         canvas = s.createCanvas(w, h);
         canvas.parent('square-wave-f-a0-sketch');
         s.textFont(theme.textFont);
-        s.frameRate(theme.frameRate);
+        s.frameRate(theme.frameRate / 3);
         vG = s.createVector(w / 4, h / 2);
         buff = s.createGraphics(w, 8 * r);
         s.paintGrid(buff, w, 8 * r, vG, r, 2, {
@@ -34,6 +35,9 @@ const sqaureWaveFA0 = (s) => {
         buff.text("-1", vG.x - 15, vG.y + 3 * r);
         buff.circle(vG.x, vG.y + 3 * r, 3);
         buff.text(" 0", vG.x - 15, vG.y - 3);
+        buff.text("A0=S1+S2", r / 2, vG.y - 2 * r);
+        buff.fill(theme.cosineColor);
+        buff.text("f(x)", vG.x+30 , vG.y-3*r-10);
         buff.pop();
     }
 
@@ -47,17 +51,16 @@ const sqaureWaveFA0 = (s) => {
         s.line(vG.x, vG.y - 3 * r, vG.x + 4 * r * i, vG.y - 3 * r);
         s.line(vG.x + 4 * r * i, vG.y + 3 * r, vG.x + 8 * r * i, vG.y + 3 * r);
         s.pop();
-    
+
         // numbers
         // Ls on X
-
         s.push();
         s.lineDash(canvas, [4, 4], vG.x, vG.y + 3 * r, vG.x, vG.y);
         s.lineDash(canvas, [4, 4], vG.x + 8 * r * i, vG.y, vG.x + 8 * r * i, vG.y - 3 * r);
         s.lineDash(canvas, [4, 4], vG.x - 4 * r * i, vG.y + 3 * r, vG.x, vG.y + 3 * r);
         s.lineDash(canvas, [4, 4], vG.x + 8 * r * i, vG.y - 3 * r, vG.x + 12 * r * i, vG.y - 3 * r);
         s.lineDash(canvas, [4, 4], vG.x, vG.y, vG.x, vG.y - 3 * r); //?
-        s.lineDash(canvas, [4, 4], vG.x + 8 * r*i, vG.y + 3 * r, vG.x + 8 * r * i, vG.y);
+        s.lineDash(canvas, [4, 4], vG.x + 8 * r * i, vG.y + 3 * r, vG.x + 8 * r * i, vG.y);
         s.lineDash(canvas, [4, 4], vG.x + 4 * r * i, vG.y - 3 * r, vG.x + 4 * r * i, vG.y + 3 * r);
         s.strokeWeight(0);
         s.fill(theme.lightGreen);
@@ -70,15 +73,22 @@ const sqaureWaveFA0 = (s) => {
         s.fill(theme.textColor);
         s.circle(vG.x + 2 * r * i, vG.y, 3);
         s.circle(vG.x + 4 * r * i, vG.y, 3);
+        s.text("L=" + i.toFixed(2), vG.x + 4 * r * i + 5, vG.y - 10);
         s.circle(vG.x + 6 * r * i, vG.y, 3);
         s.circle(vG.x + 8 * r * i, vG.y, 3);
+        s.text("S1", vG.x + 2 * r * i / 2, vG.y - 1.5 * r);
+        s.text("S2", vG.x + 6 * r * i, vG.y + 1.5 * r);
         s.pop();
+        s.showFps();
 
-        s.pauseLoop(true, 0, theme.frameRate, 3000, () => { }, () => {
-            i+=0.25;
-            console.log(i);
-        })
-        if (i == 1.5) i = 0;
+        // Animation increments
+        i += 0.01 * inc;
+        if (i > 1.5) {
+            inc *= -1
+        }
+        else if (i < 0.5) {
+            inc *= -1;
+        }
     }
 }
 

@@ -43,7 +43,12 @@ const sqaureWaveF = (s) => {
         buff.text("L/2", vG.x + 2 * r, vG.y + 15);
         buff.circle(vG.x + 2 * r, vG.y, 3);
         buff.text("L", vG.x + 4 * r + 5, vG.y + 15);
-        buff.circle(vG.x + 4 * r, vG.y, 3);
+        buff.push();
+        buff.fill(theme.cosineColor);
+        buff.stroke(theme.cosineColor);
+        buff.circle(vG.x + 4 * r, vG.y, 7);
+        buff.pop();
+        buff.fill(theme.textColor);
         buff.text("3L/2", vG.x + 6 * r, vG.y + 15);
         buff.circle(vG.x + 6 * r, vG.y, 3);
         buff.text("2L", vG.x + 8 * r + 5, vG.y + 15);
@@ -54,6 +59,9 @@ const sqaureWaveF = (s) => {
         buff.text("-1", vG.x - 15, vG.y + 3 * r);
         buff.circle(vG.x, vG.y + 3 * r, 3);
         buff.text(" 0", vG.x - 15, vG.y - 3);
+        // f(x)
+        buff.fill(theme.cosineColor);
+        buff.text("f(x)", vG.x + 40, vG.y-3*r-10);
         buff.pop();
         s.image(buff, 0, 0);
 

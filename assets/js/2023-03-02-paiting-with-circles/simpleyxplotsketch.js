@@ -23,6 +23,7 @@ const simpleYxPlot = (s) => {
 
     let sinusoids = [];
     let movingPointEpy;
+    let lMp;
 
     let canvas;
 
@@ -42,6 +43,7 @@ const simpleYxPlot = (s) => {
         sinusoids[2] = new Sinusoid(s, sinusoids[1].vR, s.createVector(sinusoids[1].vR.x + r, sinusoids[1].vR.y), 0, 0.5, 3, 0, ykcolors[2], tf, r);
 
         movingPointEpy = s.createVector(vGf.x, sinusoids[2].vR.y);
+        lMp = s.createVector(vGf.x, sinusoids[2].vR.y);
     };
 
     s.setup = () => {
@@ -98,9 +100,11 @@ const simpleYxPlot = (s) => {
         s.push();
         s.fill(theme.radiusColor);
         s.circle(movingPointEpy.x, movingPointEpy.y, 3);
-        fBuff.point(movingPointEpy.x, movingPointEpy.y);
+        lMp.x = movingPointEpy.x;
+        lMp.y = movingPointEpy.y;
         movingPointEpy.x += sinusoids[2].tf * r;
         movingPointEpy.y = sinusoids[2].vR.y;
+        fBuff.line(movingPointEpy.x, movingPointEpy.y, lMp.x, lMp.y);
         s.pop();
 
         // Connect the moving point with the suming vector
