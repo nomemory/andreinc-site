@@ -15,9 +15,9 @@ tags:
 
 The *newest* family member started walking and talking, which is/was delightful. My second *newest* family member started to pose simple questions requiring complicated answers, which is always challenging. 
 
-Software Engineering wise, I am not precisely a *Professional* Software Engineer anymore since I switched to management years ago. But for reasons I am too afraid to admit, I still practice a technical hobby called *Recreational Programming*. This means that I program for fun in my limited spare time (a few hours a week), it makes me feel nostalgic for the years when programming was not a job.
+Software Engineering-wise, I am not precisely a *Professional* Software Engineer anymore since I switched to management years ago. But for reasons I am too afraid to admit, I still practice a technical hobby called *Recreational Programming*<sup>1</sup>. This means that I program for fun in my limited spare time (a few hours a week); it makes me feel nostalgic for the years when programming was not a job.
 
-In 2023, I haven't achieved much and blogged little, but I did a few things I am proud of:
+In 2023, I didn't achieve much and blogged little, but I did a few things I am proud of:
 
 * I've finished and published an article I drafted and archived long ago called [*Demystifying bitwise_ operations in C*]({{site.url}}/2023/02/01/demystifying-bitwise-ops). Unexpectedly, It became pretty popular and got to the [first page of hn](https://news.ycombinator.com/item?id=35010447), which is always lovely, but not a purpose in itself. I also had to pay 50$ to Netlify because of the traffic it created: I've forgot to compress the pictures and diagrams. Lesson learned. 
 * I've curated and solved a list of [leetcode](https://leetcode.com/) (or leetcode-like) coding challenges. I haven't yet published this list (it sits in an excel file), and I am not sure I will even publish it, because I don't think it's that useful for anyone other than me. Solving lots of exercises consistently through 2023 helped me improve my programming self-esteem. I've also recapped concepts I haven't touched in years (e.g., [tries](https://en.wikipedia.org/wiki/Trie), [heaps](https://en.wikipedia.org/wiki/Heap_(data_structure)), [backtracking](https://en.wikipedia.org/wiki/Backtracking), and [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming)). I highly recommend you do the same, even if you don't plan to interview at MAANG or similar. My list of exercises was built around [this roadmap](https://neetcode.io), so check that site if you don't already know about it.
@@ -25,6 +25,7 @@ In 2023, I haven't achieved much and blogged little, but I did a few things I am
 * I've watched (the pen & paper way) two online calculus courses as my knowledge of the subject began fading away. I also discovered two tools I wish were available when I was still in school: [desmos](https://www.desmos.com/calculator) and [symbolab](https://www.desmos.com/calculator). They are so helpful. There's no excuse for being terrible at math nowadays, except for lousy teachers, but you have YouTube to fix that. 
 * I found myself lost (again) in the rabbit hole called [*Fourier Analysis*](https://en.wikipedia.org/wiki/Fourier_analysis). The last time I got caught there was in Uni, but out of desperation to pass exams, I lost myself in grinding math without understanding the subject at a deeper level. I still don't **fully** get it, but at least I can *Fourier my way out of it* with a [low pass filter](https://en.wikipedia.org/wiki/Low-pass_filter). 
 * I've switched from MAC to Linux at home and am amazed at how things have improved since 2012, when I last used Linux Mint. Everything works smoothly, and even if things are not as polished, I feel I'm in complete control of my *computational* life. 
+* I returned to using an RSS reader to get to valuable content hidden in the contemporary web's noise.
 * I have shown interest in AI and LLMs for work-related tasks (outside the area of creative programming). I also dabbled into cloud technologies, but that's not something I can develop on my blog. 
 
 From a *cultural* perspective, 2023 was thin. I haven't read much, or seen impactful movies (with a few notable exceptions):
@@ -69,7 +70,5 @@ Music-wise, in 2023, I experimented with different genres I hadn't touched befor
 35. [The Strokes - Heart In A Cage](https://www.youtube.com/watch?v=3dyNbMVfeyM)
 
 Bye 2023!
-
 ---
-
-I've first heard about *Recreational Programming* by watching [@tsoding](https://www.youtube.com/tsoding), and it made sense.
+<sup>1</sup>I've first heard about *Recreational Programming* by watching [@tsoding](https://www.youtube.com/tsoding), and it made sense.
