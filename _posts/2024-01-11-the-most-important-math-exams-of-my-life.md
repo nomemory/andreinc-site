@@ -13,6 +13,29 @@ tags:
 - "2023"
 ---
 
+# Table of contents
+
+- [The system is flawed](#the-system-is-flawed)
+- [The system is simple](#the-system-is-simple)
+- [My first important exam - Capacitate (2001)](#my-first-important-exam-capacitate-2001)
+   * [The subjects](#the-subjects)
+   * [Translation into English + Solutions](#translation-into-english-solutions)
+      + [First Part (Partea 1)](#first-part-partea-1)
+      + [Second Part (Partea 2)](#second-part-partea-2)
+      + [Third Part (Partea 3)        ](#third-part-partea-3)
+- [The second important exam - *Bacalaureat* (2005)](#the-second-important-exam-bacalaureat-2005)
+   * [The Syllabus](#the-syllabus)
+   * [The Exercises](#the-exercises)
+   * [Translation into English to Solutions](#translation-into-english-to-solutions)
+      + [Subiectul 1](#subiectul-1)
+      + [Subiectul 2](#subiectul-2)
+      + [Subiectul 3](#subiectul-3)
+      + [Subiectul 4](#subiectul-4)
+- [The third exam - *Admiterea la Politehnica* (2005)](the-third-exam---admiterea-la-politehnica-2005)
+   * [The subjects](#the-subjects-1)
+   * [The translations + solutions](#the-translations-solutions)
+- [Conclusions](#conclusions)
+
 # The system is flawed
 
 The Romanian public education system, which, by the way, is free for everyone (Universities included), has its flaws. However, it is still one of the best in the world for making a handful of kids proficient in mathematics and sciences. It's a system of contrasts. On the one hand, you have a bunch of *Elite Schools* and Universities that put a lot of emphasis on scientific education, and on the other hand, you have the "average" Public Schools creating kids that can barely read, do simple arithmetics, or understand a simple text. Every middle-class parent that cares about the education of its children wants to send their children to an *Elite Public School*. The average school is actually below average, and Private Schools don't have the best reputation, are too expensive, or are not that popular. The term *Elite* is not formalised, but there are "unofficial" rankings about how good the school is. 
@@ -439,7 +462,7 @@ Considering the matrices: $$I=\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$, $$
     * We apply the limit on the last relationship:  $$lim_{n \rightarrow \infty}\int_{0}^{x}\frac{1}{1+\sqrt{t}}dt=\lim_{n \rightarrow \infty}(x+\frac{(-1)*x^{\frac{1}{2}+1}}{\frac{1}{2}+1}+...+\frac{(-1)^{n}*x^{\frac{n}{2}+1}}{\frac{n}{2}+1})+\underbrace{lim_{n \rightarrow \infty}((-1)^{n+1}\int_{0}^{x}\frac{(\sqrt{t})^{n+1}}{1+\sqrt{t}})dt}_{0}$$
     * Our relationship is proved.
 
-# The third exam - *Admiterea la Politehnica*
+# The third exam - *Admiterea la Politehnica* (2005)
 
 A good Baccalaureat grade was insufficient to get admitted to the [UPB](https://www.wikiwand.com/en/Politehnica_University_of_Bucharest). You had to pass an additional admission exam. This one was a little harder than the *Bacaluareat*, but not impossible. The catch was not to make any mistakes. Any wrong answer could've been fatal. 
 
