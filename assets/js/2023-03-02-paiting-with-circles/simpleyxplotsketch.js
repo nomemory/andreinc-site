@@ -9,9 +9,10 @@ const simpleYxPlot = (s) => {
     const r = d / 2;
     const w = 900;
     const h = 600;
-    const tf = theme.frequency / 7;
+    const tf = theme.frequency
+        ;
 
-    let sBuff;  // the buffer where we plot the sum of the two sinusoids
+    let fBuff;  // the buffer where we plot the sum of the two sinusoids
     let vGf;    // the center of the grid for the sinusoids y1(x), ..., yk(x)
     let vCf;    // the center of all the circles from the functions grid
 

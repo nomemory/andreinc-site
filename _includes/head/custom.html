@@ -25,6 +25,14 @@
     <script src="{{ javascript }}"></script>
 {% endfor %}
 
+{% for javascript in page.custom-async-javascript-list %}
+    <script src="{{ javascript }}" async></script>
+{% endfor %}
+
+{% for javascript in page.custom-defer-javascript-list %}
+    <script src="{{ javascript }}" defer></script>
+{% endfor %}
+
 {% for css in page.custom-css-list %}
     <link href="{{ css }}" rel="stylesheet">
 {% endfor %}
@@ -36,7 +44,7 @@ var sc_project=7153286;
 var sc_invisible=0;
 var sc_security="b3053c1d";
 var scJsHost = "https://";
-document.write("<sc"+"ript type='text/javascript' src='" +
+document.write("<script type='text/javascript' src='" +
 scJsHost+
 "statcounter.com/counter/counter.js'></"+"script>");
 </script>

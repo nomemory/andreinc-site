@@ -15,7 +15,8 @@ const threeDComplex = (s) => {
     }
 
     s.setup = () => {
-        s.createCanvas(800, 500, s.WEBGL);
+        const canvas = s.createCanvas(800, 500, s.WEBGL);
+        canvas.parent('three-d-complex-sketch');
         s.frameRate(30);
         s.textFont(cfont);
         f = 0.03;
@@ -59,7 +60,8 @@ const threeDComplex = (s) => {
         // Draw the spiral
         s.push();
         s.stroke('gray');
-        s.beginShape(s.POINTS);
+        s.beginShape();
+        s.noFill();
         for (let i = 0; i < points.length; i += 1) {
             s.vertex(points[i][0], points[i][1], points[i][2]);
         }
@@ -71,7 +73,8 @@ const threeDComplex = (s) => {
         s.stroke(theme.sineColor);
         s.translate(2 * r, 0, 0);
         s.rotateY(s.PI / 2);
-        s.beginShape(s.POINTS);
+        s.beginShape();
+        s.noFill();
         for (let i = 0; i < points.length; i++) {
             s.vertex(-points[i][2], points[i][1]);
         }
@@ -83,7 +86,8 @@ const threeDComplex = (s) => {
         s.stroke(theme.cosineColor);
         s.translate(0, 2 * r, 0);
         s.rotateX(s.HALF_PI);
-        s.beginShape(s.POINTS);
+        s.beginShape();
+        s.noFill();
         for (let i = 0; i < points.length; i++) {
             s.vertex(points[i][0], points[i][2]);
         }

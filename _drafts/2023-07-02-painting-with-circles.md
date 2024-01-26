@@ -7,6 +7,7 @@ usekatex: true
 usep5js: true
 custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/commons.js"
+custom-defer-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/simplecircle.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotating.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js"
@@ -18,20 +19,21 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosc.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleosccos.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/sineparity.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/cosineparity.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
     - "/assets/js/2023-03-02-paiting-with-circles/onenegative.js"    
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
-    #  - "/assets/js/2023-03-02-paiting-with-circles/sumepi.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
-    # - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
+    # # - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
+    # - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
     - "/assets/js/2023-03-02-paiting-with-circles/renums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplxnums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplerotatingcirclecmp.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplrotation.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
+    # - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavean.js"
@@ -40,7 +42,7 @@ custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js"
     - "/assets/js/2023-03-02-paiting-with-circles/theboxfunction.js"
     - "/assets/js/2023-03-02-paiting-with-circles/theboxfunctionft.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/ftanima.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/fmachinery.js"
 
 comments: true
 excerpt: "The nature of reality"
@@ -49,6 +51,12 @@ categories:
 tags:
 - "fun"
 ---
+
+# Disclaimer
+
+I started working on this article almost one year ago (on and off) in my (now) limited spare time. Inspired by [this video](https://www.youtube.com/watch?v=r6sGWTCMz2k), and having my *math passion* re-ignited, I just wanted to draw some epicycles and then let them fly into the wild. Applying the formulas is simple, so I assumed I would finish fast and jump into a different rabbit hole. But then I decided to write a more extensive article, sharing my findings, creating the visuals I never had, and hopefully coming up with something more original than drawing Homer Simpson with circles.
+
+So I took a few steps back and focused on the *unit circle*, the number $$\pi$$, complex numbers, and the beautiful identity that powers our world: Euler's identity. 
 
 # What is a Circle? (short math recap) 
 
@@ -345,9 +353,31 @@ Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sin
 
 > *In a world of sines, always struggle to be the cosine!*
 
+# The parity of the sine and cosine functions
+
+The *parity* of mathematical functions generally refers to whether a function is *even*, *odd*, or *neither*. If it's *even* or *odd*, it has a few remarkable properties that can be useful in various contexts, especially in mathematical analysis (or calculus).
+
+A function $$f(x)$$ is *even* if it satisfies a simple condition: $$f(x)=f(-x)$$, for all of its domain. From a geometrical standpoint, the function's graph is symmetric concerning the $$y$$ axis. For example, $$f(x)=x^2$$ is even.
+
+A function $$f(x)$$ is *odd* if it satisfies the condition: $$-f(x)=f(-x)$$ for all the domain of $$f$$. Thus, the function is symmetrical with respect to the origin. For example, $$f(x)=x^3$$ is odd.
+
+Following the same idea, $$f(x)=x+\pi$$ is neither odd nor even.
+
+On the other hand, we've said the circle is the *essence* of symmetry, so we would typically expect that the *sine* and the *cosine* are *symmetrical* to... something.
+
+Well, the intuition is correct. The *cosine* is *even*, meaning $$cos(x)=cos(-x)$$:
+
+<div id="cosine-parity-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/cosineparity.js)</sup></sup>
+
+And the *sine* is odd, meaning $$sin(-x)=-sin(x)$$, or $$sin(x)=-sin(-x)$$:
+
+<div id="sine-parity-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sineparity.js)</sup></sup>
+
 # "Customising" the sine function (sinusoids)
 
-As Software Engineers, our first reflex is to make our code more extensible and customisable, so why don't we introduce a few more parameters to our sine function so that we can "control" its behavior further?
+As Software Engineers, our first reflex is to make our code more extensible and customizable, so why don't we introduce a few more parameters to our sine function so that we can "control" its behavior further?
 
 So why don't we introduce $$y(t)$$, as a function of "time" where:
 
@@ -412,7 +442,6 @@ For example, two sinusoids in phase and with the same amplitudes but opposite fr
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/onenegative.js)</sup></sup>
 
 This can also be explained by the fact *sine* is an odd function, so that $$sin(x) = -sin(-x)$$ and $$-sin(x)=sin(-x)$$.
-
 
 # Adding sinusoids
 
@@ -950,6 +979,75 @@ Notice how *obsessed* the *red dot* is with the *blue dot* (the actual function)
 
 We can always add more terms to the partial sum to help the *red dot* in its *holy mission*, improving the approximation until nobody cares anymore.
 
+## Fourier series of the triangle wave
+
+Without dealing with all the associated math, the *Fourier Series* decomposition for a triangle-wave is:
+
+$$
+s(x)=\frac{8}{\pi^2}\sum_{k=1}^{N}\frac{(-1)^{k-1}}{(2k-1)^2}*sin((2k-1)x)
+$$
+
+Let's compute the first terms six terms of the $$\sum$$, so that:
+
+$$
+s(x) \approx s_1(x) + s_2(x) + s_3(x) + s_4(x) + s_5(x) + s_6(x)
+$$
+
+Where:
+* The first term is $$s_1(x)=\frac{8}{\pi^2}*sin(x)$$, where $$A=\frac{8}{\pi^2}$$, $$\omega=1$$, $$\varphi=0$$;
+* The second term is $$s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)$$, where $$A=-\frac{8}{3^2\pi^2}$$, $$\omega=3$$, $$\varphi=0$$;
+* The third term is $$s_3(x)=\frac{8}{5^2\pi^2}*sin(5x)$$, where $$A=\frac{8}{5^2\pi^2}$$, $$\omega=5$$, $$\varphi=0$$;
+* The fourth term is $$s_4(x)=-\frac{8}{7^2\pi^2}*sin(7x)$$, where $$A=-\frac{8}{7^2\pi^2}$$, $$\omega=7$$, $$\varphi=0$$;
+* The fourth term is $$s_5(x)=\frac{8}{9^2\pi^2}*sin(9x)$$, where $$A=\frac{8}{9^2\pi^2}$$, $$\omega=9$$, $$\varphi=0$$;
+* The fourth term is $$s_6(x)=-\frac{8}{11^2\pi^2}*sin(11x)$$, where $$A=-\frac{8}{11^2\pi^2}$$, $$\omega=11$$, $$\varphi=0$$;
+
+A keen eye will see will observe the following, $$s_2(x)$$, $$s_4(x)$$, $$s_6(x)$$ and all the even terms are *negative*. A negative amplitude doesn't make too much sense. What are we going to do with the *minus sign*?
+
+We have two options:
+1. Because $$sin(-x)=-sin(x)$$, nobody stops us to make the *frequency* negative. For example, $$s_2(x)=\frac{8}{3^2\pi^2}*sin(-3x)$$, so that the $$\omega=-3$$. But again, why would we want a *negative frequency*.
+2. We can use $$\vert A \vert$$ and shift the signal with $$\pi$$, so that $$\varphi=\pi$$. 
+
+The two options are equivalent, so we can write $$s_2(x)$$ (and all the others) in both ways:
+
+$$
+s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)
+$$
+ 
+$$
+s_2(x)=\frac{8}{3^2\pi^2}*sin(3x + \pi)
+$$
+
+If we put the *sinusoids* side by side, we will see they are identical:
+
+
+
+## Fourier series of a sawtooth function
+
+A reverse-sawtooth function can be expressed as:
+
+$$
+s(x)=\frac{2}{\pi}\sum_{k=1}^{N}(-1)^k*\frac{sin(kx)}{k}
+$$
+
+## A Fourier Series Machinery
+
+To better visualize what's happening, let's look at a *Fourier Series Machinery* and how the *circles move* to create *~~beautiful~~ practical patterns*. 
+
+You can pick the shape of the desired signal from here: <select id="fm-wave" onchange="updateFmWave()">
+        <option value="sawtooth" selected>sawtooth wave</option>
+        <option value="triangle">triangle wave</option>
+        <option value="square">square wave</option>
+    </select> and the sketch will change accordingly.
+
+<div id="fmachinery-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/fmachinery.js)</sup></sup>
+
+So imagine putting a bunch of spinning circles on a stick, and remember that each circle spins at a different frequency than all the others - this is the marvelous *Fourier Machinery*. 
+
+For the waves I've *handpicked*, the phases are always 0 for each sinusoid, but in practice, you will see that this is not always the case. If you look at the sketch above, you will also notice that the frequencies ($$\omega$$) for each circle are not in order; sometimes negative frequencies are intercalated with positive frequencies, or some frequencies are completely missing:
+
+So let's *fix* this and construct a *real Fourier Series Machinery* that will give you complete control over the behavior of your sinusoids:
+
 # Fourier transform
 
 There's only one limitation to what *Fourier series* can do: they only work on periodic functions. 
@@ -1070,9 +1168,6 @@ This Wikipedia animation best describes the math formula:
 ![Transform](https://upload.wikimedia.org/wikipedia/commons/a/a3/Continuous_Fourier_transform_of_rect_and_sinc_functions.gif)
 
 Or my take on it:
-
-<div id="ft-anima-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/ftanima.js)</sup></sup>
 
 # Discrete Fourier Transform
 

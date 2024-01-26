@@ -12,8 +12,7 @@ const sumEpi = (s) => {
     const r = d / 2;
     const w = 800;
     const h = 700;
-    const tf = theme.frequency / 7;
-    let tph = s.HALF_PI;
+    const tf = theme.frequency;
 
     let fBuff;  // the buffer where we plot the two sinusoids
     let sBuff;  // the buffer where we plot the sum of the two sinusoids
@@ -42,6 +41,8 @@ const sumEpi = (s) => {
     let sinusoidEpy = [];
     let movingPoints = [];
     let movingPointEpy;
+    let sinLp = [];
+    let sinEpyLp;
 
     let canvas;
 
@@ -105,7 +106,7 @@ const sumEpi = (s) => {
                 sinusoidEpy[i] = new Sinusoid(
                         s, 
                         sinusoidEpy[i-1].vR, 
-                        s.createVector(sinusoidEpy[i-1].x + r, sinusoidEpy[i-1].y), 
+                        s.createVector(sinusoidEpy[i-1].vR.x + sinusoidEpy[i-1].ampl, sinusoidEpy[i-1].vR.y), 
                         0, 
                         4/(s.PI*(2*(i+1)-1)), 
                         (2*(i+1)-1)*sumEpiOmega,
@@ -116,7 +117,7 @@ const sumEpi = (s) => {
                     );  
             }                 
         }
-        movingPointEpy = s.createVector(vGs.x, sinusoidEpy[sumEpiK-1].vR.y);
+        movingPointEpy = s.createVector(vGs.x, vGs.y);
 
         // Adding text to the two buffers 
         fBuff.push();
@@ -131,6 +132,12 @@ const sumEpi = (s) => {
         sBuff.text("to the actual sum of the sinusoids", r, sBuff.height-15);
         sBuff.text("The sum of sinusoids y(x) =  y1(x) + y2(x) +  ... + yk(x) + ...", vGs.x + r + 5, sBuff.height-30);
         sBuff.pop();
+
+        // Last point for sinusoids
+        for (let i = 0; i < sumEpiK; i++) {
+            sinLp[i] = s.createVector(vGf.x, vGf.y);
+        }
+        sinEpyLp = s.createVector(vGs.x, vGs.y);
     };
 
     s.setup = () => {
@@ -154,7 +161,9 @@ const sumEpi = (s) => {
             // Draw moving point(s)
             fBuff.push();
             fBuff.stroke(sinusoids[i].color);
-            fBuff.point(movingPoints[i].x, movingPoints[i].y);
+            fBuff.line(movingPoints[i].x, movingPoints[i].y, sinLp[i].x, sinLp[i].y);
+            sinLp[i].x = movingPoints[i].x;
+            sinLp[i].y = movingPoints[i].y;
             fBuff.pop();
             // Draw moving circle on s
             s.push();
@@ -171,13 +180,21 @@ const sumEpi = (s) => {
             movingPoints[i].y = sinusoids[i].vR.y;
         }
         // The sum of functions y(x) = y1(x), y2(x), y3(x) ... and so on
-        for(let i = 0; i < sumEpiK; i++) {
+        for (let i = 0; i < sumEpiK; i++) {
+            if (i!=0) {
+                sinusoidEpy[i].update(sinusoidEpy[i-1]);
+            } else {
+                sinusoidEpy[i].update();
+            }
             sinusoidEpy[i].draw();
             if (i==sumEpiK-1) {
                 // Draw moving points
                 sBuff.push();
                 sBuff.stroke(theme.radiusColor);
-                sBuff.point(movingPointEpy.x, movingPointEpy.y - 7*r);
+                // sBuff.point(movingPointEpy.x, movingPointEpy.y - 7*r);
+                sBuff.line(movingPointEpy.x, movingPointEpy.y - 7 * r, sinEpyLp.x, sinEpyLp.y - 7 * r);
+                sinEpyLp.x = movingPointEpy.x;
+                sinEpyLp.y = movingPointEpy.y;
                 sBuff.pop();
                 // Draw a moving circle on s
                 s.push();
@@ -191,11 +208,6 @@ const sumEpi = (s) => {
                 // Increment moving point
                 movingPointEpy.x += sinusoidEpy[i].tf * r;
                 movingPointEpy.y = sinusoidEpy[i].vR.y;
-            }
-            if (i!=0) {
-                sinusoidEpy[i].update(sinusoidEpy[i-1]);
-            } else {
-                sinusoidEpy[i].update();
             }
             s.push();
             sBuff.stroke(theme.radiusColorLight);

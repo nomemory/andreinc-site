@@ -98,6 +98,7 @@ const squareWave = (s) => {
         s.textFont(theme.textFont);
         s.frameRate(theme.frameRate);
         s.initConditions();
+        s.noLoop();
     }
 
 

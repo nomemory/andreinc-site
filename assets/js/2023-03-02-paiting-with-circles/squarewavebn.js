@@ -18,10 +18,7 @@ const sqaureWaveBn = (s) => {
     let buff3, buff3T;
     let buff4, buff4T;
 
-    let inc = 1;
-    const f = 0.01;
-    let cL = 1.5 * r;
-    let i = 0.75;
+    let cL = 4 * r;
 
     s.setup = () => {
         canvas = s.createCanvas(w, h);
@@ -38,9 +35,7 @@ const sqaureWaveBn = (s) => {
         buff2 = s.coefficientBuf(1.5, 2);
         buff3 = s.coefficientBuf(1.5, 3);
         buff4 = s.coefficientBuf(1.5, 4);
-    }
 
-    s.draw = () => {
         s.background(theme.bkgColor);
         s.image(buff1, 0, 0);
         s.image(buff2, 500, 0);
@@ -54,12 +49,7 @@ const sqaureWaveBn = (s) => {
         s.drawFsq(buff3, buff3T, cL, 3);
         s.drawFsq(buff4, buff4T, cL, 4);
 
-        i += f * inc;
-        cL += i * inc;
-
-        if (i > 1.35 || i < 0.75) {
-            inc *= -1
-        }
+        s.noLoop();
     }
 
     s.h = (x) => {

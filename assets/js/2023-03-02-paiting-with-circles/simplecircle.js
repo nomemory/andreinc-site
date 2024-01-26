@@ -9,7 +9,8 @@ const simpleCircle = (s) => {
     let vC, vR, vTxtAb, vTxtRad;
 
     s.setup = () => { 
-        s.createCanvas(theme.canvasX, theme.canvasY);
+        let canvas = s.createCanvas(theme.canvasX, theme.canvasY);
+        canvas.parent('simple-circle-sketch');
         vC = s.createVector(s.width/2, s.height/2);
         vR = s.createVector(vC.x+r, vC.y);
         buff = s.createGraphics(theme.canvasX, theme.canvasY);

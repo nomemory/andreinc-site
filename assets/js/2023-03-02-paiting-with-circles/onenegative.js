@@ -7,7 +7,7 @@ const oneNegative = (s) => {
     const r = d / 2;
     const w = 800;
     const h = 300;
-    const tf = theme.frequency / 5;
+    const tf = theme.frequency;
     let tph = s.HALF_PI;
 
     let canvas;

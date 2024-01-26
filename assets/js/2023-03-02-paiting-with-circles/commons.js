@@ -1,7 +1,7 @@
 const theme = {
     canvasX: 400,
     canvasY: 400,
-    frameRate: 15,
+    frameRate: 20,
     frequency: 0.05,
 
     bkgColor: '#F6F8FA',

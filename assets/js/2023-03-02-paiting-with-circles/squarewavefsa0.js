@@ -13,15 +13,13 @@ const sqaureWaveFA0 = (s) => {
     let canvas;
     let vG;
     let buff;
-
-    let i = 0.5;
-    let inc = 1;
+    let i = 1.2;
 
     s.setup = () => {
         canvas = s.createCanvas(w, h);
         canvas.parent('square-wave-f-a0-sketch');
         s.textFont(theme.textFont);
-        s.frameRate(theme.frameRate / 3);
+        s.frameRate(theme.frameRate/theme.frameRate);
         vG = s.createVector(w / 4, h / 2);
         buff = s.createGraphics(w, 8 * r);
         s.paintGrid(buff, w, 8 * r, vG, r, 2, {
@@ -39,9 +37,7 @@ const sqaureWaveFA0 = (s) => {
         buff.fill(theme.cosineColor);
         buff.text("f(x)", vG.x+30 , vG.y-3*r-10);
         buff.pop();
-    }
 
-    s.draw = () => {
         s.background(theme.bkgColor);
         s.image(buff, 0, 0);
 
@@ -79,16 +75,8 @@ const sqaureWaveFA0 = (s) => {
         s.text("S1", vG.x + 2 * r * i / 2, vG.y - 1.5 * r);
         s.text("S2", vG.x + 6 * r * i, vG.y + 1.5 * r);
         s.pop();
-        s.showFps();
 
-        // Animation increments
-        i += 0.01 * inc;
-        if (i > 1.5) {
-            inc *= -1
-        }
-        else if (i < 0.5) {
-            inc *= -1;
-        }
+        s.noLoop();
     }
 }
 
