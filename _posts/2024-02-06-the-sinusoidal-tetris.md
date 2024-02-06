@@ -21,7 +21,7 @@ tags:
 Let's play Tetris, but with a twist. No geometrical figures will *fall from the sky*. Instead, you control a [sinusoid](https://en.wikipedia.org/wiki/Sine_wave), defined by: $$f(x)=A*sin(\omega x + \varphi)$$:
 
 <div id="tetris-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-02-06-the-sinusoidal-tetris/tetris.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}/assets/js/2024-02-06-the-sinusoidal-tetris/tetris.js)</sup></sup>
 
 Controls
 * To increase the angular frequency, $$\omega$$, press: `s`;
@@ -40,4 +40,4 @@ Remember, each time *you win some, you lose some*. Don't be a loser.
 
 <sup>This game is a joke I put together during a weekend. I'm sorry for the graphics.</sup>
 
-<sup>Playing on mobile it's not supported, you need to play it in a proper browser.</sup>
+<sup>Playing on mobile it's not supported, you need to play it in a proper browser. I will add some on-screen buttons in the next *release*.</sup>
