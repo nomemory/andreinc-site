@@ -8,6 +8,7 @@ usep5js: true
 custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/commons.js"
 custom-defer-javascript-list:
+    - "/assets/js/2023-03-02-paiting-with-circles/tetris.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecircle.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotating.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js"
@@ -40,6 +41,9 @@ custom-defer-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavebn.js"
     - "/assets/js/2023-03-02-paiting-with-circles/tightfourier.js"
     - "/assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/tighttriangle.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/pishift.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/tightsawtooth.js"
     - "/assets/js/2023-03-02-paiting-with-circles/theboxfunction.js"
     - "/assets/js/2023-03-02-paiting-with-circles/theboxfunctionft.js"
     - "/assets/js/2023-03-02-paiting-with-circles/fmachinery.js"
@@ -56,7 +60,20 @@ tags:
 
 I started working on this article almost one year ago (on and off) in my (now) limited spare time. Inspired by [this video](https://www.youtube.com/watch?v=r6sGWTCMz2k), and having my *math passion* re-ignited, I just wanted to draw some epicycles and then let them fly into the wild. Applying the formulas is simple, so I assumed I would finish fast and jump into a different rabbit hole. But then I decided to write a more extensive article, sharing my findings, creating the visuals I never had, and hopefully coming up with something more original than drawing Homer Simpson with circles.
 
-So I took a few steps back and focused on the *unit circle*, the number $$\pi$$, complex numbers, and the beautiful identity that powers our world: Euler's identity. 
+So I took a few steps back and focused on the *unit circle*, the number $$\pi$$, complex numbers, and the beautiful identity that powers our world: Euler's identity. The jump to *Fourier Mathematics* was only natural. 
+
+This article ended up being a high-level introduction to Fourier Analysis. It will take you through some of the math involved; we are going to write some code, and eventually, it will probably fall short. There's too much to cover in a single blog post. It assumes the reader understands $$\frac{d}{dx}$$ derivatives, $$\int$$ integrals and basic trigonometry. 
+
+# The *Fourier Experiments*
+
+## Sinusoidal Tetris
+
+This is the first experiment, a game that plays like Tetris, but there's a catch: there are no square shapes, only sinusoids. To survive, you need to keep the original *signal* closer to zero. If your signal *spikes* too much, you lose. Each sinusoid adds something and removes something if configured wisely. Normally, [*you win some, you lose some*](https://www.youtube.com/watch?v=3mbvWn1EY6g), unless you train your brain to compute Fourier Series for arbitrary functions in real-time. If so, you win!
+
+<div id="tetris-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tetris.js)</sup></sup>
+
+If you don't understand what is happening in this game, don't worry, if you reach the end of the article, you should have an overview of all the ~~simple~~ math involved.
 
 # What is a Circle? (short math recap) 
 
@@ -655,7 +672,7 @@ In simple terms, after we derivate $$f(x)$$ 4 times ($$f'(x), f''(x), f'''(x), f
 
 But what is a derivative of a function at a certain point? It's the rate of change of that function at that particular point. But we've just said that the derivative of $$e^{ix}$$ is equivalent to a *rotation*. I hope you see where I am going: the rate of change is rotational. It means that we can intuitively feel that the function $$e^{ix}$$ describes an actual... circle. There's no other possible solution. So we can boldly affirm that $$e^{ix} = cos(x) + i*sin(x)$$ (which is the formula discovered by Euler).
 
-Of course, this is not a rigorous demonstration; we were simply bold and appealed on your *visual intuition* (if there's such a thing).
+Of course, this is not a rigorous demonstration; we were bold and appealed to your *visual intuition* (if there's such a thing).
 
 # Euler's formula, the connection between $$e$$, $$\pi$$ and $$i$$
 
@@ -675,7 +692,7 @@ With this simple mathematical *magic formula* we've just linked the circle (thro
 
 For nostalgic reasons, we can also demonstrate Euler's formula through a more standard approach, using the Maclaurin series (a particular case of the [Taylor series](https://en.wikipedia.org/wiki/Taylor_series)). This is not exactly a necessary step for this article, but it's interesting to see that there are *numerical* in which we can demonstrate something that comes intuitively. 
 
-The *Maclaurin series* is a clever way to represent a function as an infinite sum of terms. It's instrumental in mathematics to approximate various functions. Expressing a function as an infinite sum of "well-behaved" terms is crucial in mathematics. It takes from us the burden of dealing with all kinds of *complexities*, to dealing with "nicer" terms that we can compromise on their numbers.
+The *Maclaurin series* is a clever way to represent a function as an infinite sum of terms. It's instrumental in mathematics to approximate various functions. Expressing a function as an infinite sum of "well-behaved" terms is crucial in mathematics. 
 
 In its general form, the Maclaurin series, for a function $$f(x)$$ is:
 
@@ -707,7 +724,7 @@ We know that $$i^2=-1$$, $$i^3=-i$$, $$i^4=1$$, $$i^5=i$$, ...:
 
 $$e^{ix}=1+ix-\frac{x^2}{2!}-\frac{ix^3}{3!}+\frac{x^4}{4!}+\frac{ix^5}{5!}+...$$
 
-Once we group and factor the terms that contain $$i$$, things become:
+Once we group and factor, the terms that contain $$i$$, things become:
 
 $$e^{ix}=\underbrace{(1-\frac{x^2}{2!}+\frac{x^4}{4!}+...)}_{cos(x)=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n)!}*x^{2n}}+ i * \underbrace{(x-\frac{x^3}{3!}+\frac{x^5}{5!}+...)}_{\sin(x)=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n+1)!}*x^{2n+1}}$$
 
@@ -939,7 +956,7 @@ If we substitute $$n \rightarrow 2k-1$$ and consider, we obtain the initial form
 
 $$f(x)=\frac{4}{\pi} \sum_{k=1}^{+\infty} (\frac{sin(\frac{\pi (2k-1)x}{L})}{(2k-1)})$$
 
-To obtain the initial formula, we susbtitute $$L \rightarrow \frac{1}{2f}$$, and $$2\pi f \rightarrow \omega$$, basically we create an interdependence between $$L$$ (half of the interval) and $$\omega$$, $$L=\frac{\pi}{\omega}$$:
+To obtain the initial formula, we substitute $$L \rightarrow \frac{1}{2f}$$, and $$2\pi f \rightarrow \omega$$, basically we create an interdependence between $$L$$ (half of the interval) and $$\omega$$, $$L=\frac{\pi}{\omega}$$:
 
 $$
 f(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2k-1)\omega x)}{2k-1}
@@ -987,6 +1004,11 @@ $$
 s(x)=\frac{8}{\pi^2}\sum_{k=1}^{N}\frac{(-1)^{k-1}}{(2k-1)^2}*sin((2k-1)x)
 $$
 
+Plotting the function $$s(x)$$, we will see that things converge smoothly and fast. As soon as $$n$$ approaches $$6$$, we can already observe the triangle:
+
+<div id="tight-triangle-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tighttriangle.js)</sup></sup>
+
 Let's compute the first terms six terms of the $$\sum$$, so that:
 
 $$
@@ -998,16 +1020,18 @@ Where:
 * The second term is $$s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)$$, where $$A=-\frac{8}{3^2\pi^2}$$, $$\omega=3$$, $$\varphi=0$$;
 * The third term is $$s_3(x)=\frac{8}{5^2\pi^2}*sin(5x)$$, where $$A=\frac{8}{5^2\pi^2}$$, $$\omega=5$$, $$\varphi=0$$;
 * The fourth term is $$s_4(x)=-\frac{8}{7^2\pi^2}*sin(7x)$$, where $$A=-\frac{8}{7^2\pi^2}$$, $$\omega=7$$, $$\varphi=0$$;
-* The fourth term is $$s_5(x)=\frac{8}{9^2\pi^2}*sin(9x)$$, where $$A=\frac{8}{9^2\pi^2}$$, $$\omega=9$$, $$\varphi=0$$;
-* The fourth term is $$s_6(x)=-\frac{8}{11^2\pi^2}*sin(11x)$$, where $$A=-\frac{8}{11^2\pi^2}$$, $$\omega=11$$, $$\varphi=0$$;
+* The fifth term is $$s_5(x)=\frac{8}{9^2\pi^2}*sin(9x)$$, where $$A=\frac{8}{9^2\pi^2}$$, $$\omega=9$$, $$\varphi=0$$;
+* The sixth term is $$s_6(x)=-\frac{8}{11^2\pi^2}*sin(11x)$$, where $$A=-\frac{8}{11^2\pi^2}$$, $$\omega=11$$, $$\varphi=0$$;
 
-A keen eye will see will observe the following, $$s_2(x)$$, $$s_4(x)$$, $$s_6(x)$$ and all the even terms are *negative*. A negative amplitude doesn't make too much sense. What are we going to do with the *minus sign*?
+A keen eye will see will observe the that $$s_2(x)$$, $$s_4(x)$$, $$s_6(x)$$ and all the even terms are *negative*. 
+
+A negative amplitude doesn't make too much sense, at least not in a physical sense. What are we going to do with the *minus sign*?
 
 We have two options:
-1. Because $$sin(-x)=-sin(x)$$, nobody stops us to make the *frequency* negative. For example, $$s_2(x)=\frac{8}{3^2\pi^2}*sin(-3x)$$, so that the $$\omega=-3$$. But again, why would we want a *negative frequency*.
+1. Because $$sin(-x)=-sin(x)$$, nobody stops us to make the *frequency* negative. For example, $$s_2(x)=\frac{8}{3^2\pi^2}*sin(-3x)$$, so that the $$\omega=-3$$. But again, why would we want a *negative frequency*? This also doesn't make sense in a physical sense.
 2. We can use $$\vert A \vert$$ and shift the signal with $$\pi$$, so that $$\varphi=\pi$$. 
 
-The two options are equivalent, so we can write $$s_2(x)$$ (and all the others) in both ways:
+In practice, we will go with 2. as it's more practical and gives us more control, but the two options are equivalent so that we can write $$s_2(x)$$ in both ways:
 
 $$
 s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)
@@ -1017,17 +1041,30 @@ $$
 s_2(x)=\frac{8}{3^2\pi^2}*sin(3x + \pi)
 $$
 
-If we put the *sinusoids* side by side, we will see they are identical:
+Visually speaking, the results will not be surprising if we plot $$sin(-x)$$ and $$sin(x+\pi)$$ side by side; the two are equivalent:
 
+<div id="pi-shift-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/pishift.js)</sup></sup>
 
+If we consider this, the even terms of $$s(x)$$ will become:
+
+* $$s_2(x)=\frac{8}{3^2\pi^2}*sin(3x+\pi)$$ ;
+* $$s_4(x)=\frac{8}{7^2\pi^2}*sin(7x+\pi)$$ ;
+* $$s_6(x)=\frac{8}{11^2\pi^2}*sin(11x+\pi)$$ ;
+* ...and so on
 
 ## Fourier series of a sawtooth function
 
-A reverse-sawtooth function can be expressed as:
+Shamelessly skipping the math demonstration, a reverse-sawtooth function has the following form:
 
 $$
 s(x)=\frac{2}{\pi}\sum_{k=1}^{N}(-1)^k*\frac{sin(kx)}{k}
 $$
+
+Plotting $$s(x)$$, while increasing $$n$$, things look like this:
+
+<div id="tight-sawtooth-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightsawtooth.js)</sup></sup>
 
 ## A Fourier Series Machinery
 
@@ -1042,11 +1079,11 @@ You can pick the shape of the desired signal from here: <select id="fm-wave" onc
 <div id="fmachinery-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/fmachinery.js)</sup></sup>
 
-So imagine putting a bunch of spinning circles on a stick, and remember that each circle spins at a different frequency than all the others - this is the marvelous *Fourier Machinery*. 
+...A bunch of spinning circles on a stick, where each circle corresponds to exactly one term of the series - this is the marvelous *Fourier Series Machinery*. 
 
-For the waves I've *handpicked*, the phases are always 0 for each sinusoid, but in practice, you will see that this is not always the case. If you look at the sketch above, you will also notice that the frequencies ($$\omega$$) for each circle are not in order; sometimes negative frequencies are intercalated with positive frequencies, or some frequencies are completely missing:
+![img]({{site.url}}/assets/images/2023-07-02-painting-with-circles/fmachinery.jpg) 
 
-So let's *fix* this and construct a *real Fourier Series Machinery* that will give you complete control over the behavior of your sinusoids:
+If we run our signal through the *Fourier Series Machinery*, we will obtain *The Amplitude* ($$A$$) and *The Phase* ($$\varphi$$) for each Frequency ($$\omega$$) from $$1$$ to $$N$$. Isn't it amazing? And it all comes down to a bunch of spinning circles... on a stick.
 
 # Fourier transform
 

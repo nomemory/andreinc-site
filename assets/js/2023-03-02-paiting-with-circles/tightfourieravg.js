@@ -12,15 +12,14 @@ const tightFourierAvg = (s) => {
     const L = r;
     const step = r;
 
-    let canvas;
-    let vG;
-    let buff;
+    let vG, vC;
+    let buff, buff2;
 
     let cs = [];
     let angl = 0;
 
     s.setup = () => {
-        canvas = s.createCanvas(w, h);
+        const canvas = s.createCanvas(w, h);
         canvas.parent('tight-fourier-avg-sketch');
         s.textFont(theme.textFont);
         s.textSize(theme.textSize);

@@ -8,7 +8,7 @@ const complRotation = (s) => {
     const d = 200;
     const r = d / 2;
     const f = theme.frequency;
-    let vC;
+    let vC, buff;
 
     const ic = new Complex(0, 1);
 
@@ -44,19 +44,23 @@ const complRotation = (s) => {
             // First quadrant
             let zx1 = vC.x + fqz[i].n.re;
             let zy1 = vC.y - fqz[i].n.im;
+
             buff.push();
             buff.fill(fqz[i].color);
             buff.stroke(fqz[i].color);
             buff.circle(zx1, zy1, 7);
+            buff.pop();
+            
             s.push();
             s.stroke(fqz[i].color);
             s.lineDash(canvas, [3,3], vC.x, vC.y, zx1, zy1);
             s.pop();
-            buff.pop();
+
             buff.push();
             buff.fill(fqz[i].color);
             buff.text(fqz[i].label, zx1 + 5, zy1);
             buff.pop();
+
             // Second quadrant
             nc = fqz[i].n.prd(ic);
             let zx2 = vC.x + nc.re;

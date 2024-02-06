@@ -11,13 +11,12 @@ const theBoxFunction = (s) => {
     const imp = 6 * 2 * r;
     const t = r;
 
-    let canvas;
     let vG;
     let buff;
 
     s.setup = () => {
         // Create Canvas of given size 
-        canvas = s.createCanvas(w, h);
+        const canvas = s.createCanvas(w, h);
         canvas.parent('the-box-function-sketch');
         s.textFont(theme.textFont);
         s.frameRate(theme.frameRate);

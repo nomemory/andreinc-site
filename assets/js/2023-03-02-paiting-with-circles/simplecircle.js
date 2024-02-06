@@ -6,7 +6,7 @@ const simpleCircle = (s) => {
     const d = 250;
     const r = d/2;
 
-    let vC, vR, vTxtAb, vTxtRad;
+    let vC, vR, vTxtAb, vTxtRad, buff;
 
     s.setup = () => { 
         let canvas = s.createCanvas(theme.canvasX, theme.canvasY);
