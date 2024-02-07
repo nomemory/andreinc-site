@@ -36,10 +36,8 @@ To win, you need to survive. The $$\sum$$ of your sinusoids shouldn't spike outs
 
 Remember, each time *you win some, you lose some*. Don't be a loser.
 
-There's a heathen path of alternating phases; everything stagnates. Don't follow this path, or you will spend an eternity in boredom.
+There is *The Path of Alternating Phases* - when everything stagnates. This is boredom. Be a winner; fight the signal.
 
 ---
 
 <sup>This game is a joke I put together during a weekend. I'm sorry for the graphics.</sup>
-
-<sup>Playing on mobile it's not supported, you need to play it in a proper browser. I will add some on-screen buttons in the next *release*.</sup>
