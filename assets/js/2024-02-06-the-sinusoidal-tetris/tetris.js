@@ -45,15 +45,21 @@ const tetris = (s) => {
     const cBuffW = 4 * unit; // the circle buffer width
     const cBuffH = 6 * unit; // the height of the circle buffer
     const cBuffBorderStrokeWeight = 1; // the line weight of the circle buffer
-    const sBuffW = 4 * unit;
-    const sBuffH = 4 * unit;
-    const sBuffBorderStrokeWeight = 1;
+    const sBuffW = 4 * unit; // the score buffer width
+    const sBuffH = 4 * unit; // the score buffer height
+    const sBuffBorderStrokeWeight = 1; // the stroke for the scorebuffer
+    const kBuffW = 13 * unit; // the width of the keyboard buffer
+    const kBuffH = unit; // the height of the keyboard buffer
+    const kBuffBorderStrokeWeight = 1; // the stroke of the kbuff
+    const kBuffNumKeys = 7;
+    const kBuffKW = kBuffW / kBuffNumKeys;
+
 
     // Buffers orientation
     const mBuffTTO = s.createVector(0, 0); // translation vector for the mainbuffer
     const gBuffTTO = s.createVector(6 * unit, 2 * unit); // translation vector for the game buffer
     const cBuffTTO = s.createVector(unit, 2 * unit); // translation vector for the circle buffer
-    const sBuffTTO = s.createVector(unit, 10  * unit); // translation vector for the score buffer
+    const sBuffTTO = s.createVector(unit, 10 * unit); // translation vector for the score buffer
 
     const defDropSinsA = 1; // default amplitude of the dropping sinusoid
     const defDropSinsFreq = 1; // default frequency of the dropping sinsuoid
@@ -85,12 +91,14 @@ const tetris = (s) => {
         mBuffBorder: 'black',
         cBuffBorder: 'black',
         sBuffBorder: 'black',
+        kBuffBorder: 'black',
         cBuffGraphLine: '#c1d7d7',
         dropSinsCircle: 'red',
         dropSinsCirclePhase: '#b0ffd0',
         dropSinsCircleCenter: 'green',
         dropSinsMovingPoint: 'green',
         dropSinsRadius: '#c1d7d7',
+        keyHighlight: '#c1d7d7',
         dropSins: 'red',
         dropSinsOX: '#c1d7d7',
         residSins: 'black',
@@ -128,6 +136,7 @@ const tetris = (s) => {
     let gBuff; // a game buffer
     let cBuff; // the circle buffer
     let sBuff;  // the score buffer
+    let kBuff;  // the keyboard buffer
     let cDropSins; // information about the current dropping sinusoid
     let cResidSins = []; // the resiudes
     let cResidMax = 0;
@@ -137,6 +146,7 @@ const tetris = (s) => {
     let lStage = 0; // last stage
     let cStage = 0; // current stage
     let cScore = 0; // current score
+    let mInside = []; // for keeping track of rect is inside the rectangular
 
     // Computes the samples for the dropping sinusoid
     let computeDropSinsSamples = (dS) => {
@@ -251,6 +261,11 @@ const tetris = (s) => {
     let initScoreBuffer = () => {
         sBuff = s.createGraphics(sBuffW, sBuffH);
         drawBorderToBuff(sBuff, sBuffW, sBuffH, colors.sBuffBorder, sBuffBorderStrokeWeight);
+    }
+
+    let initKeyBuffer = () => {
+        kBuff = s.createGraphics(kBuffW, kBuffH);
+        drawBorderToBuff(kBuff, kBuffW, kBuffH, colors.kBuffBorder, kBuffBorderStrokeWeight);
     }
 
     /**
@@ -395,11 +410,11 @@ const tetris = (s) => {
         drawBorderToBuff(sBuff, sBuffW, sBuffH, colors.sBuffBorder, sBuffBorderStrokeWeight);
         sBuff.push();
         sBuff.fill(colors.textColor);
-        sBuff.text("Current Score: " + (cScore/1000).toFixed(2), 10, unit / 2);
-        sBuff.text("Current Stage: " + cStage, 10, 2* unit / 2);
-        sBuff.text("Current Speed: " + dropInc, 10, 3* unit / 2);
-        sBuff.text("Last Game Score: " + (lScore/1000).toFixed(2), 10, 4* unit / 2);
-        sBuff.text("Last Game Stages:" + lStage, 10, 5* unit / 2);
+        sBuff.text("Current Score: " + (cScore / 1000).toFixed(2), 10, unit / 2);
+        sBuff.text("Current Stage: " + cStage, 10, 2 * unit / 2);
+        sBuff.text("Current Speed: " + dropInc, 10, 3 * unit / 2);
+        sBuff.text("Last Game Score: " + (lScore / 1000).toFixed(2), 10, 4 * unit / 2);
+        sBuff.text("Last Game Stages:" + lStage, 10, 5 * unit / 2);
         sBuff.pop();
     }
 
@@ -439,51 +454,114 @@ const tetris = (s) => {
         return cResidMax > gBuffH / 2;
     }
 
-    s.keyPressed = () => {
-        if (s.keyCode == keys.p) {
-            cDropSins.pos.y = canH / 2;
+    let dropNow = () => {
+        cDropSins.pos.y = canH / 2;
+    }
+
+    let ampInc = () => {
+        if (cDropSins.amp < dropSinsMaxA) {
+            cDropSins.amp += dropSinsAInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    };
+
+    let ampDec = () => {
+        if (cDropSins.amp > dropSinsMinA) {
+            cDropSins.amp -= dropSinsAInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    };
+
+    let freqInc = () => {
+        if (cDropSins.freq < dropSinsMaxFreq) {
+            cDropSins.freq += dropSinsFreqInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    };
+
+    let freqDec = () => {
+        if (cDropSins.freq > dropSinsMinFreq) {
+            cDropSins.freq -= dropSinsFreqInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    };
+
+    let phaseInc = () => {
+        if (cDropSins.phase < dropSinsMaxPhase) {
+            cDropSins.phase += dropSinsPhaseInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    }
+
+    let phaseDec = () => {
+        if (cDropSins.phase > dropSinsMinPhase) {
+            cDropSins.phase -= dropSinsPhaseInc;
+            computeDropSinsSamples(cDropSins);
+            computeDropSinsMovingRadius(cDropSins);
+        }
+    }
+
+    let buttonChange = () => {
+        for (let i = 0; i < kBuffNumKeys-1; i++) {
+            if (mInside[i].isMousePressed(s.mouseX, s.mouseY)) {
+                mInside[i].action();
+                mInside[i].highlight();
+            }
         }
     }
 
     let keyboardChange = () => {
-        if (s.keyIsDown(keys.a)) {
-            if (cDropSins.amp < dropSinsMaxA) {
-                cDropSins.amp += dropSinsAInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        } else if (s.keyIsDown(keys.z)) {
-            if (cDropSins.amp > dropSinsMinA) {
-                cDropSins.amp -= dropSinsAInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        } else if (s.keyIsDown(keys.s)) {
-            if (cDropSins.freq < dropSinsMaxFreq) {
-                cDropSins.freq += dropSinsFreqInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        } else if (s.keyIsDown(keys.x)) {
-            if (cDropSins.freq > dropSinsMinFreq) {
-                cDropSins.freq -= dropSinsFreqInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        } else if (s.keyIsDown(keys.q)) {
-            if (cDropSins.phase < dropSinsMaxPhase) {
-                cDropSins.phase += dropSinsPhaseInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        } else if (s.keyIsDown(keys.w)) {
-            if (cDropSins.phase > dropSinsMinPhase) {
-                cDropSins.phase -= dropSinsPhaseInc;
-                computeDropSinsSamples(cDropSins);
-                computeDropSinsMovingRadius(cDropSins);
-            }
-        }
+        if (s.keyIsDown(keys.a)) ampInc()
+        else if (s.keyIsDown(keys.z)) ampDec()
+        else if (s.keyIsDown(keys.s)) freqInc();
+        else if (s.keyIsDown(keys.x)) freqDec();
+        else if (s.keyIsDown(keys.q)) phaseInc();
+        else if (s.keyIsDown(keys.w)) phaseDec();
     };
+
+    const mpActions = [ampInc, ampDec, freqInc, freqDec, phaseInc, phaseDec, dropNow]
+    let initMInside = () => {
+        for (let i = 0; i < kBuffNumKeys; i++) {
+            mInside[i] = {
+                isMousePressed: (x, y) => {
+                    return (x > (unit + i * kBuffKW)) && (x < (unit + (i + 1) * kBuffKW)) && (y > 14.5 * unit) && (y < 15.5 * unit)
+                },
+                action: mpActions[i],
+                highlight: () => {
+                    kBuff.push();
+                    kBuff.fill(colors.keyHighlight);
+                    kBuff.rect(i * kBuffKW, 0, kBuffKW, unit);
+                    kBuff.pop();
+                }
+            }
+            console.log(mpActions[i]);
+        }
+    }
+
+    const mpLabels = ["A++", "A--", "ω++", "ω--", "φ++", "φ--", "drop"];
+    let drawKeyBuffer = () => {
+        kBuff.clear();
+        kBuff.push();
+        kBuff.noFill();
+        kBuff.stroke(colors.textColor);
+        for (let i = 0; i < kBuffNumKeys; i++) {
+            kBuff.rect(i * kBuffKW, 0, kBuffKW, unit);
+            kBuff.push();
+            kBuff.noStroke();
+            kBuff.fill(colors.textColor);
+            kBuff.textSize(15);
+            kBuff.text(mpLabels[i], i * kBuffKW + 30, unit / 2);
+            console.log(i * kBuffKW + 30);
+            kBuff.pop();
+        }
+        kBuff.pop();
+    }
+
 
     // -----------------------------------------------------------------------
     // p5.js functions
@@ -498,10 +576,13 @@ const tetris = (s) => {
         initGameBuffer();
         initCircleBuffer();
         initScoreBuffer();
+        initKeyBuffer();
+        initMInside();
 
         drawCircleBuffer();
         drawGameBuffer();
         drawScoreBuffer();
+        drawKeyBuffer();
     }
 
     s.draw = () => {
@@ -510,6 +591,7 @@ const tetris = (s) => {
         s.image(gBuff, 6 * unit, 2 * unit);
         s.image(cBuff, unit, 2 * unit);
         s.image(sBuff, unit, 10 * unit);
+        s.image(kBuff, unit, 14.5 * unit);
 
         if (cGameState === gameStates.DROP) {
             // Drawing the dropping sinusoid
@@ -521,6 +603,12 @@ const tetris = (s) => {
             cDropSins.angl += increment;
             // Check key movements
             keyboardChange();
+            // Button change
+            if (s.mouseIsPressed) {
+                buttonChange();
+            } else {
+                drawKeyBuffer();
+            }
             // If dropped move to the merging state 
             if (dropped()) {
                 drawScoreBuffer();
@@ -562,6 +650,25 @@ const tetris = (s) => {
             }
         }
     }
+
+    s.keyPressed = () => {
+        if (s.keyCode == keys.p) {
+            dropNow();
+        }
+    }
+
+    s.mouseReleased = () => {
+        if (mInside[6].isMousePressed(s.mouseX, s.mouseY)) {
+            mInside[6].action();
+        }
+    }
+
+    s.touchReleased = () => {
+        if (mInside[6].isMousePressed(s.mouseX, s.mouseY)) {
+            mInside[6].action();
+        }
+    }
+
 
     // -----------------------------------------------------------------------
     // General, non-game related utilities
