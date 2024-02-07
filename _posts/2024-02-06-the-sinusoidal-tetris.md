@@ -7,7 +7,8 @@ usekatex: true
 usep5js: true
 custom-defer-javascript-list:
     - "/assets/js/2024-02-06-the-sinusoidal-tetris/tetris.js"
-  
+custom-css-list:
+    - "/assets/css/2024-02-06-the-sinusoidal-tetris/tetris.css"
 comments: true
 excerpt: "A tetris game with a twist"
 categories:
