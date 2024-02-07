@@ -539,7 +539,6 @@ const tetris = (s) => {
                     kBuff.pop();
                 }
             }
-            console.log(mpActions[i]);
         }
     }
 
@@ -556,7 +555,6 @@ const tetris = (s) => {
             kBuff.fill(colors.textColor);
             kBuff.textSize(15);
             kBuff.text(mpLabels[i], i * kBuffKW + 30, unit / 2);
-            console.log(i * kBuffKW + 30);
             kBuff.pop();
         }
         kBuff.pop();
