@@ -1,5 +1,5 @@
 
 body {
     user-select: none;
-    touch-action: none; 
+    touch-action: manipulation;
 }
