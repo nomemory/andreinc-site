@@ -1,4 +1,5 @@
 
 body {
-    user-select: none; 
+    user-select: none;
+    touch-action: none; 
 }

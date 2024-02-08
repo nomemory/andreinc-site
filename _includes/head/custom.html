@@ -35,6 +35,10 @@
     <link href="{{ css }}" rel="stylesheet">
 {% endfor %}
 
+{%  if page.noScale %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum scale=1.0, user-scalable=0">
+{% endif %}
+
 <!-- Default Statcounter code for Andreinc.net
 http://www.andreinc.net -->
 <script type="text/javascript">
