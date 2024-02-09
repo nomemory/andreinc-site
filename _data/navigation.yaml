@@ -7,8 +7,6 @@ main:
     url: /about/       
   - title: "Portfolio"
     url: /portfolio/
-  - title: "Others"
-    url: /others/
   - title: "RSS"
     url: /feed.xml
 
