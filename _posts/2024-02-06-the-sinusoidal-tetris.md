@@ -21,8 +21,16 @@ tags:
 
 Let's play Tetris, but with a twist. No geometrical figures will *fall from the sky*. Instead, you control a [sinusoid](https://en.wikipedia.org/wiki/Sine_wave), defined by: $$f(x)=A*sin(\omega x + \varphi)$$:
 
+|--|--|
+| <input type="checkbox" id="suggestions" name="suggestions" value="yes" checked> | Free suggestions in the beginning. If you follow all of them, you win. |
+| <input type="checkbox" id="turnBased" name="turnBased" value="no"> | Turn-Based Mode (the sinusoid doesn't drop automatically) |
+
+---
+
 <div id="tetris-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}/assets/js/2024-02-06-the-sinusoidal-tetris/tetris.js)</sup></sup>
+
+---
 
 Controls
 * To increase the angular frequency, $$\omega$$, press: `s`;
@@ -33,11 +41,15 @@ Controls
 * To decrease the phase: $$\varphi$$, press: `w`;
 * To *drop* the sinusoid, press `p`;
 
-To win, you need to survive. The $$\sum$$ of your sinusoids shouldn't spike outside the canvas. If you are a savant, you can compute the *Fourier Series* coefficients in your head and keep the signal at 0. Good luck! 
+---
 
-Remember, each time *you win some, you lose some*. Don't be a loser.
+To win the game, you need to reduce the signal as close to zero as possible. It's hard but not impossible. There's a current threshold of `unit * 0.3`. Surviving is not winning. Your purpose is to get as close to zero as possible. The *Path of the Alternating Phases* is boredom.
 
-There is *The Path of Alternating Phases* - when everything stagnates. This is boredom. Be a winner; fight the signal.
+You lose if the original signal spikes outside the game buffer (canvas).
+
+A professional player turns off the suggestions, now enabled by default.
+
+You can enable the turn-based mode to think about your next steps.
 
 ---
 

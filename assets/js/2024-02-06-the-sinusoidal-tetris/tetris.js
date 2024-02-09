@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
  */
 
+suggestions = true;
+dropInc = 0.2;
+
 const tetris = (s) => {
 
     // -----------------------------------------------------------------------
@@ -53,6 +56,10 @@ const tetris = (s) => {
     const kBuffBorderStrokeWeight = 1; // the stroke of the kbuff
     const kBuffNumKeys = 7;
     const kBuffKW = kBuffW / kBuffNumKeys;
+    const defeatW = 200;
+    const defeatH = 100;
+    const numResids = 4;
+    const winThresh = unit / 3;
 
 
     // Buffers orientation
@@ -65,7 +72,6 @@ const tetris = (s) => {
     const defDropSinsFreq = 1; // default frequency of the dropping sinsuoid
     const defDropSinsPhase = 0; // default phase of the dropping sinusoid
     const defDropSinsAngl = 0; // default angle of the dropping sinsuoid
-    const dropInc = 0.5; // the increment used for the dropping animation, increase if you want to make the game harder
     const dropSinsFreqInc = 0.1; // the frequency increase increment when we press the key
     const dropSinsAInc = 0.1; // the amplitude increase increment when we press the key
     const dropSinsPhaseInc = 0.1; // the phase increase increment when we press the key
@@ -78,7 +84,7 @@ const tetris = (s) => {
     const dropSinsMinPhase = 0; // the minimum phase accepted
     const dropSinsCenterDiam = 3; // the diameter of the center of circle
     const defDropSinsX = cBuffW / 2; // default value of the center (X) of the dropping sin
-    const defDropSinsY = dropSinsMaxA * radius; // default value of the center (Y) of the dropping sin
+    const defDropSinsY = dropSinsMaxA * radius; // default value of the center (Y) of the dropping sin 
 
     const arrowHead = 7; // the size of the head of the arrow
     const twoSqrt = Math.sqrt(2).toFixed(2); // needed to compute the position of the arrow
@@ -106,7 +112,13 @@ const tetris = (s) => {
         mergePlus: 'green',
         mergeMinus: 'red',
         conLine: '#c1d7d7',
-        textColor: 'black'
+        textColor: 'black',
+        defeatColor: 'lightgray',
+        defeatBorderColor: 'black',
+        defeatTextColor: 'red',
+        winColor: 'lightgray',
+        winBorderColor: 'black',
+        winTextColor: 'green'
     };
 
     // Key codes
@@ -124,7 +136,9 @@ const tetris = (s) => {
     // used to draw the animation
     const gameStates = Object.freeze({
         DROP: 1,
-        MERGE: 2
+        MERGE: 2,
+        DEFEAT: 3,
+        WIN: 4
     });
 
     // -----------------------------------------------------------------------
@@ -139,14 +153,16 @@ const tetris = (s) => {
     let kBuff;  // the keyboard buffer
     let cDropSins; // information about the current dropping sinusoid
     let cResidSins = []; // the resiudes
-    let cResidMax = 0;
+    let cResidSinsSugg = []; // suggested sinusoids for winning the game
+    let cResidMax = 0; 
     let cMergeIdx = 0; // used for the merge animation
     let cGameState = gameStates.DROP; // the default state when the game starts
     let lScore = 0; // last score
     let lStage = 0; // last stage
     let cStage = 0; // current stage
     let cScore = 0; // current score
-    let mInside = []; // for keeping track of rect is inside the rectangular
+    let mInside = []; // for keeping track of rect is inside the rectangul
+    let hofg = true;
 
     // Computes the samples for the dropping sinusoid
     let computeDropSinsSamples = (dS) => {
@@ -193,7 +209,7 @@ const tetris = (s) => {
     // Constructor-like function to create a random sinusoid
     let createRandomDropSins = () => {
         return createDropSins(
-            random(dropSinsMinA, dropSinsMaxA),
+            random(dropSinsMinA, dropSinsMaxA*0.7),
             random(dropSinsMinFreq, dropSinsMaxFreq),
             random(dropSinsMinPhase, dropSinsMaxPhase),
             {
@@ -207,8 +223,17 @@ const tetris = (s) => {
     // Constructor-like function to creat the residue signal
     let createRandomResidSins = () => {
         let r = new Array(dropSinsSamplesLen).fill(0);
-        for (let j = 0; j < 2; j++) {
+        cResidSinsSugg = [];
+        for (let j = 0; j < numResids; j++) {
             const dS = createRandomDropSins();
+            // let createDropSins = (amp, freq, phase, pos, angl) => {
+            cResidSinsSugg.push(createDropSins(
+                dS.amp,
+                dS.freq,
+                dS.phase + s.PI,
+                dS.pos,
+                dS.angl
+            ));
             for (let i = 0; i < dropSinsSamplesLen; i += 1) {
                 r[i] += dS.samples[i];
                 if (Math.abs(r[i]) > cResidMax) {
@@ -227,6 +252,7 @@ const tetris = (s) => {
     }
 
     let mergeResidSinsWithDropSins = () => {
+        cResidMax = 0;
         for (let i = 0; i < dropSinsSamplesLen; i++) {
             cResidSins[i] += cDropSins.samples[i];
             cScore += gBuffH / 2 - Math.abs(cResidSins[i]);
@@ -235,6 +261,7 @@ const tetris = (s) => {
             }
         }
         cStage++;
+        cResidSinsSugg.pop();
     }
 
     let initCanvas = () => {
@@ -339,6 +366,20 @@ const tetris = (s) => {
         }
         s.endShape();
         s.pop();
+        // draw the suggested sinusoid
+        let cSugg = cResidSinsSugg[cResidSinsSugg.length - 1];
+        if (cSugg !== undefined && suggestions) {
+            s.push();
+            s.translate(gBuffTTO.x, gBuffTTO.y);
+            s.stroke(colors.conLine);
+            s.noFill();
+            s.beginShape();
+            for (let i = 0, cx = 0; i < dropSinsSamplesLen; i++, cx += increment) {
+                s.vertex(cx * radius, cDropSins.pos.y - 2 * unit - cSugg.samples[i]);
+            }
+            s.endShape();
+            s.pop();
+        }
         // draw the amplitude text
         s.push();
         s.fill(colors.textColor);
@@ -442,6 +483,42 @@ const tetris = (s) => {
         gBuff.pop();
     }
 
+    let drawDefeat = () => {
+        gBuff.push();
+        gBuff.fill(colors.defeatColor);
+        gBuff.stroke(colors.defeatBorderColor);
+        const x = (gBuffW - defeatW) / 2;
+        const y = (gBuffH - defeatH) / 2;
+        gBuff.rect(x, y, defeatW, defeatH);
+        gBuff.pop();
+        gBuff.push();
+        gBuff.fill(colors.defeatTextColor);
+        gBuff.text("You've lost!", x + 10, y + 15);
+        gBuff.text("There's no shame in losing", x + 10, y + 30);
+        gBuff.text("Your total score was:" + (cScore / 1000).toFixed(2), x + 10, y + 45);
+        gBuff.text("You survived " + cStage + " stages", x + 10, y + 60);
+        gBuff.text("To continue press DROP", x + 10, y + 90);
+        gBuff.pop();
+    }
+
+    let drawWin = () => {
+        gBuff.push();
+        gBuff.fill(colors.winColor);
+        gBuff.stroke(colors.winBorderColor);
+        const x = (gBuffW - defeatW) / 2;
+        const y = (gBuffH - defeatH) / 2;
+        gBuff.rect(x, y, defeatW, defeatH);
+        gBuff.pop();
+        gBuff.push();
+        gBuff.fill(colors.winTextColor);
+        gBuff.text("You win!", x + 10, y + 15);
+        gBuff.text("You are the master of sinusoids", x + 10, y + 30);
+        gBuff.text("Your total score was:" + (cScore / 1000).toFixed(2), x + 10, y + 45);
+        gBuff.text("You finished the game in " + cStage + " stages", x + 10, y + 60);
+        gBuff.text("To continue press DROP", x + 10, y + 90);
+        gBuff.pop();
+    }
+
     let dropped = () => {
         return cDropSins.pos.y >= canH / 2;
     }
@@ -454,8 +531,38 @@ const tetris = (s) => {
         return cResidMax > gBuffH / 2;
     }
 
+    let win = () => {
+        return cResidMax < winThresh;
+    }
+
+    let newGameReset = () => {
+        cDropSins = createDefaultDropSins();
+        cResidMax = 0;
+        cResidSins = createRandomResidSins();
+        drawGameBuffer();
+        lScore = cScore;
+        lStage = cStage;
+        cScore = 0;
+        cStage = 1;
+    }
+
     let dropNow = () => {
-        cDropSins.pos.y = canH / 2;
+        if (cGameState === gameStates.DROP) {
+            cDropSins.pos.y = canH / 2;
+        } else if (cGameState === gameStates.MERGE) {
+            // Hasten the drop so we can skip the animation
+            for (; cMergeIdx < dropSinsSamplesLen; cMergeIdx++) {
+                drawMerge();
+            }
+        } else if (cGameState === gameStates.DEFEAT) {
+            newGameReset();
+            drawScoreBuffer();
+            cGameState = gameStates.DROP;
+        } else if (cGameState === gameStates.WIN) {
+            newGameReset();
+            drawScoreBuffer();
+            cGameState = gameStates.DROP;
+        }
     }
 
     let ampInc = () => {
@@ -491,23 +598,23 @@ const tetris = (s) => {
     };
 
     let phaseInc = () => {
-        if (cDropSins.phase < dropSinsMaxPhase) {
-            cDropSins.phase += dropSinsPhaseInc;
-            computeDropSinsSamples(cDropSins);
-            computeDropSinsMovingRadius(cDropSins);
-        }
+        // if (cDropSins.phase < dropSinsMaxPhase) {
+        cDropSins.phase += dropSinsPhaseInc;
+        computeDropSinsSamples(cDropSins);
+        computeDropSinsMovingRadius(cDropSins);
+        // }    
     }
 
     let phaseDec = () => {
-        if (cDropSins.phase > dropSinsMinPhase) {
-            cDropSins.phase -= dropSinsPhaseInc;
-            computeDropSinsSamples(cDropSins);
-            computeDropSinsMovingRadius(cDropSins);
-        }
+        // if (cDropSins.phase > dropSinsMinPhase) {
+        cDropSins.phase -= dropSinsPhaseInc;
+        computeDropSinsSamples(cDropSins);
+        computeDropSinsMovingRadius(cDropSins);
+        // }
     }
 
     let buttonChange = () => {
-        for (let i = 0; i < kBuffNumKeys-1; i++) {
+        for (let i = 0; i < kBuffNumKeys - 1; i++) {
             if (mInside[i].isMousePressed(s.mouseX, s.mouseY)) {
                 mInside[i].action();
                 mInside[i].highlight();
@@ -591,6 +698,14 @@ const tetris = (s) => {
         s.image(sBuff, unit, 10 * unit);
         s.image(kBuff, unit, 14.5 * unit);
 
+        if (defeat() && cGameState !== gameStates.DEFEAT) {
+            cGameState = gameStates.DEFEAT;
+        }
+
+        if (win() && cGameState !== gameStates.WIN) {
+            cGameState = gameStates.WIN;
+        }
+
         if (cGameState === gameStates.DROP) {
             // Drawing the dropping sinusoid
             drawDropSins();
@@ -633,19 +748,13 @@ const tetris = (s) => {
                 drawScoreBuffer();
                 // We reset the merge animation for next time
                 cMergeIdx = 0;
-                if (defeat()) {
-                    cDropSins = createDefaultDropSins();
-                    cResidMax = 0;
-                    cResidSins = createRandomResidSins();
-                    drawGameBuffer();
-                    lScore = cScore;
-                    lStage = cStage;
-                    cScore = 0;
-                    cStage = 1;
-                }
                 // We change the actual state of the animation
                 cGameState = gameStates.DROP;
             }
+        } else if (cGameState === gameStates.DEFEAT) {
+            drawDefeat();
+        } else if (cGameState === gameStates.WIN) {
+            drawWin();
         }
     }
 
@@ -673,21 +782,6 @@ const tetris = (s) => {
     // -----------------------------------------------------------------------
 
     /**
-     * Caching the sine values for some performance gains
-     */
-    const sinVals = {};
-
-    let cSin = (x) => {
-        if (x in sinVals) {
-            return sinVals[x];
-        }
-        // Math.sin is a little faster than p5js sin
-        // At least on Chrome
-        sinVals[x] = Math.sin(x);
-        return sinVals[x];
-    }
-
-    /**
      * Surronds an image buffer with a line border
      */
     let drawBorderToBuff = (buff, w, h, color, strokeWeight) => {
@@ -712,7 +806,6 @@ const tetris = (s) => {
         }
         buff.endShape();
         buff.pop();
-
         // vertical
         let vSteps = buffW / unit;
         buff.push();
@@ -756,3 +849,14 @@ const tetris = (s) => {
 
 let tetrisSketch =
     new p5(tetris, tetris.canPId);
+
+const suggBtn = document.querySelector("#suggestions");
+const turnBtn = document.querySelector("#turnBased");
+
+suggBtn.onclick = () => {
+    suggestions = suggBtn.checked;
+};
+
+turnBtn.onclick = () => {
+    dropInc = turnBtn.checked ? 0 : 0.2;
+}
