@@ -47,7 +47,7 @@ To win the game, you need to reduce the signal as close to zero as possible. It'
 
 You lose if the original signal spikes outside the game buffer (canvas).
 
-A professional player turns off the suggestions, now enabled by default.
+A professional player turns off the suggestions, now enabled by default. If you are a savant, you can compute the *Fourier Series Coefficients* in your head and cancel the signal like noise.
 
 You can enable the turn-based mode to think about your next steps.
 
