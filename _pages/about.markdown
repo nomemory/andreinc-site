@@ -32,9 +32,7 @@ I played with computers, programming languages, and technology since childhood. 
 
 ![jpg]({{site.url}}/assets/images/about/hc91.jpg){:height="50%" width="50%"}<sup><sup><sup> HC91, a Romanian Microcomputer</sup></sup></sup>
 
-
-
-Regarding tech skills, I consider myself a generalist rather than a specialist. I know some stuff about low-level programming. I know stuff about building modern back-end systems. I've used many libraries and frameworks and reinvented the wheel several times.
+I consider myself a generalist rather than a specialist. I know some stuff about low-level programming. I know stuff about building modern back-end systems. I've used many libraries and frameworks and reinvented the wheel several times.
 
 ![jpg]({{site.url}}/assets/images/about/qtest1.jpg){:height="50%" width="50%"}
 <sup><sup><sup>View from my office, 2022</sup></sup></sup>
@@ -43,7 +41,19 @@ Romanian is my native language, and I am fluent in English and French. I *almost
 
 #### `The blog`
 
-I blog because I want to remain connected with the *programming world*. I am not a professional programmer anymore (a thing that can change in the future), so this blogging activity is more recreational than I want to admit.
+I blog because I genuinely like programming and math. 
+
+My most popular articles so far are:
+
+* [(2021) Implementing Hash Tables in C]({{site.url}}/2021/10/02/implementing-hash-tables-in-c-part-1) + [hn discussion](https://news.ycombinator.com/item?id=28889442)
+* [(2021) A tale of Java Hash Tables]({{site.url}}/2021/11/08/a-tale-of-java-hash-tables) + [hn discussion](https://news.ycombinator.com/item?id=29319151)
+* [(2021) Writing a simple 16 bit VM in less than 125 lines of C]({{site.url}}/2021/12/01/writing-a-simple-vm-in-less-than-125-lines-of-c) + [hn discussion](https://news.ycombinator.com/item?id=29492183)
+* [(2022) A blog that is a single executable binary]({{site.url}}/2022/04/10/a-blog-that-is-a-single-executable-binary) + [hn discussion](https://news.ycombinator.com/item?id=31081049)
+* [(2023) Demystifying bitwise operations, a gentle C tutorial]({{site.url}}/2023/02/01/demystifying-bitwise-ops) + [hn discussion](https://news.ycombinator.com/item?id=35010447)
+* [(2024) The math exams of my life]({{site.url}}/2024/01/09/the-most-important-math-exams-of-my-life) + [hn discussion](https://news.ycombinator.com/item?id=39081894)
+* [(2024) The sinusoidal tetris]({{site.url}}/2024/02/06/the-sinusoidal-tetris) + [hn discussion](https://news.ycombinator.com/item?id=28889442)
+
+... it's a work in progress
 
 #### `Tools`
 

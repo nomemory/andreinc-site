@@ -6,6 +6,8 @@ classes: wide
 
 It is a list of random photos with generous filtering applied. Filter them more, and they become album covers for indie bands:
 
+---
+
 * [![img](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/darth.jpeg){:height="50%" width="50%"}](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/darth.jpeg)
 <sup>*The Darth*</sup>
 
@@ -63,3 +65,5 @@ It is a list of random photos with generous filtering applied. Filter them more,
 
 * [![img](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/work.jpeg){:height="50%" width="50%"}](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/work.jpeg)
 <sup>The Work</sup>
+
+---
