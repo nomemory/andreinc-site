@@ -32,24 +32,26 @@ I played with computers, programming languages, and technology since childhood. 
 
 ![jpg]({{site.url}}/assets/images/about/hc91.jpg){:height="50%" width="50%"}<sup><sup><sup> HC91, a Romanian Microcomputer</sup></sup></sup>
 
-My skills list includes C Programming, Java, python, and JavaScript. I have also flirted with C++, Kotlin, golang, and, to a lesser extent, Haskell and Scala. I am also somewhat proficient in math, at least in certain areas.
+
+
+Regarding tech skills, I consider myself a generalist rather than a specialist. I know some stuff about low-level programming. I know stuff about building modern back-end systems. I've used many libraries and frameworks and reinvented the wheel several times.
 
 ![jpg]({{site.url}}/assets/images/about/qtest1.jpg){:height="50%" width="50%"}
 <sup><sup><sup>View from my office, 2022</sup></sup></sup>
 
-Romanian is my native language, and I am fluent in English and French.
+Romanian is my native language, and I am fluent in English and French. I *almost speak* a fourth language; I will put it here once I become fluent.
 
 #### `The blog`
 
-I usually blog about my interests: programming and math.
-
-Everything is hosted on [github/nomemory/andreinc-site](https://github.com/nomemory/andreinc-site). The code in the articles is not always tested (as it should). If you see any issues with it, please open a PR, and I will make sure I will merge it. 
-
-The [RSS feed](https://en.wikipedia.org/wiki/RSS) for this blog is available [here]({{site.url}}/feed.xml). 
+I blog because I want to remain connected with the *programming world*. I am not a professional programmer anymore (a thing that can change in the future), so this blogging activity is more recreational than I want to admit.
 
 #### `Tools`
 
-The blog is powered by [jekyll](https://jekyllrb.com/), [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/) and [netlify](https://www.netlify.com/). The comments system is based on [utterances](https://utteranc.es/).
+Blog:
+* [jekyll](https://jekyllrb.com/);
+* [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/);
+* [netlify](https://www.netlify.com/);
+* [utterances](https://utteranc.es/).
 
 I create the "visuals" with [draw.io](https://drawio-app.com/). 
 
