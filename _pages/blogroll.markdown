@@ -14,7 +14,7 @@ If you have a personal blog, I recommend you create your *blogroll* section. You
 
 ---
 
-Email me if you know of blogs like those listed here (see [/about/]({{site.url}}/about) for my address). 
+You can email me if you know similar blogs (see [/about/]({{site.url}}/about) for my address). 
 
 ---
 
