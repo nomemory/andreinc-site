@@ -6,7 +6,7 @@ classes: wide
 
 [In 2023]({{site.url}}/2023/03/10/social-media-quit), I boldly decided to quit (or reduce) the time lost on various Social Media Sites. 
 
-As a natural consequence, I decided to create *my own social media feed* by traveling back to the 2000s, installing an RSS Reader (called unimaginatively [Feeder](https://f-droid.org/packages/com.nononsenseapps.feeder/)), and curating a list of blogs that I found interesting. I've become my own algoritm.
+As a natural consequence, I decided to create *my own social media feed* by traveling back to the 2000s, installing an RSS Reader (called unimaginatively [Feeder](https://f-droid.org/packages/com.nononsenseapps.feeder/)), and curating a list of blogs that I found interesting. I've become my own algorithm.
 
 I usually find blogs I like by scrolling the top page of [hn](https://news.ycombinator.com/) or [lobste.rs](https://lobste.rs/). Unfortunately, there's no other way. Searching for quality blogs online is almost impossible. They never pop up on the first page of any search engine.
 
