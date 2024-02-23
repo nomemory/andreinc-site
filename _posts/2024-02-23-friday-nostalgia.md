@@ -16,10 +16,9 @@ While exploring the vast chambers of GitHub, I stumbled upon an [old repository]
 
 With a rush of adrenaline, I made the daring decision to clone the repository and build that game of *torture*. And it worked. It's called `./opensuplaplex` now.
 
----
+<video width="640" height="480" controls>
+  <source src="https://raw.githubusercontent.com/nomemory/andreinc-site/main/vids/supaplex.webm" type="video/mp4">
+</video>
 
-![]()
-
-
-
+<sup>This is me beating the 3rd level.</sup>
 
