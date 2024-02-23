@@ -1,9 +1,9 @@
 ---
-title: "A selection of algebra problems from the Romanian Math Olympiad for 9th graders (age 14-15)"
-date: "2024-01-09"
+title: "20 algebra problems selected from the Romanian Math Olympiad"
+date: "2024-02-23"
 classes: wide
 comments: true
-excerpt: "A selection of 50 math problems from the Romanian Math Olympiad (solutions included)."
+excerpt: "A selection of 20 math problems from the Romanian Math Olympiad (solutions included)."
 usekatex: true
 categories:
 - "nontech"
@@ -12,7 +12,9 @@ tags:
 - "2023"
 ---
 
-This a selection of *cute*, *non-trivial* algebra problems (with a hint of *number theory*) *compiled* from the Romanian Math Olympiad for 9<sup>th</sup> graders (14-15) years old. The solutions are surprising and involve a good understanding of algebraic concepts, pattern spotting, or tricks that, in the long run, help students develop excellent mathematical intuition. 
+# Introduction
+
+This a selection of *cute*, *non-trivial* algebra problems (with a hint of *number theory*) *compiled* from the Romanian Math Olympiad (regional phase)for 8<sup>th</sup>, 9<sup>th</sup>, and 10<sup>th</sup> graders (13-15) years old. The solutions are surprising and involve a good understanding of algebraic concepts, pattern spotting, or tricks that, in the long run, help students develop [mathematical intuition](https://en.wikipedia.org/wiki/Logical_intuition#:~:text=Logical%20Intuition%2C%20or%20mathematical%20intuition,to%20solve%20mathematical%20challenges%20efficiently.). 
 
 Depending on your passion for mathematics (or competitive mathematics), the problems should pose enough difficulty to keep you entertained for a few hours. If you are stuck with one problem, try to read the hint instead of going straight to the answer.
 
@@ -25,6 +27,18 @@ In case you want to solve them by yourself, do a short recap on the following su
 * [Cauchy–Bunyakovsky–Schwarz Inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality);
 * [Hermite's Identity](https://en.wikipedia.org/wiki/Hermite%27s_identity);
 * [Monotonic functions](https://en.wikipedia.org/wiki/Monotonic_function).
+
+# Additional note(s)
+
+I have a few notebooks containing solutions for various Math problems I've solved over the years (recreational mathematics).  If time allows, I will publish more lists covering more topics. Currently, I am in the process of grouping them into categories.
+
+![img]({{site.url}}/assets/images/2024-03-10-23-algebra-problems-part-1/notebook.jpeg){:height="75%" width="75%"}
+
+<sup><sup>"Screenshot" from one my notebooks.</sup></sup>
+
+The problems are from the "Regional" Phase of the Romanian Math Olympiad. The truly difficult problems are usually the ones from the "National" phase. I am planning to publish a list of those as well. 
+
+Another important aspect is that I am not a *mathematician*, so if you see that solutions are incorrect or have better solutions, please send me some feedback.
 
 # The Problems
 
@@ -129,6 +143,16 @@ $$
 
 ---
 
+**20.** <sup><sup>medium</sup></sup> If $$a,b,c \in (1, \infty) or a,b,c \in (0,1)$$. Prove:
+
+$$
+log_a(bc) + log_b(ca) + log_c(ab) \ge 4(log_{ab}(c) + log_{bc}(a) + log_{ca}b)
+$$
+
+<sup><sup>[Hint](#hint-20) &  [Answer](#answer-20)</sup></sup>
+
+---
+
 # Hints
 
 ## Hint 1.
@@ -208,6 +232,10 @@ Work on the expressions involving logarithms. Consider changing the base of the 
 ## Hint 19.
 
 This exercise is easy, so it doesn't deserve a hint.
+
+## Hint 20.
+
+Consider changing the base of the logarithms to a common one.
 
 # Answers
 
@@ -988,4 +1016,23 @@ $$z=xy^2+x-1$$, and $$z=2xy-1$$.
 
 We can write $$xy^2+x-1=2xy-1$$. Eventually, this relationship becomes equivalent to $$x(y-1)^2$$. But because $$x \neq 0 \Rightarrow y=1$$.
 
-If $$y=1$$, then $$x=\frac{z+y}{2}.
+If $$y=1$$, then $$x=\frac{z+y}{2}$$.
+
+## Answer 20.
+
+We pick a base $$d$$ in the interval of $$a,b,c$$. Basically we as for Problem 18.
+
+After we do the substitution, we need to prove:
+
+$$
+\frac{y+z}{x} + \frac{z+x}{y} + \frac{x+y}{z} \ge \frac{4x}{y+z} + \frac{4y}{z+x} + \frac{4z}{x+y}.
+$$
+
+Then, we need to prove that inequality holds true for:
+
+$$
+\frac{y+z}{x} \ge \frac{4x}{y+z}
+$$
+
+Which is easy to prove using AM-GM inequality.
+
