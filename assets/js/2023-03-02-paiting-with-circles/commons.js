@@ -33,6 +33,8 @@ const theme = {
 const addPaintGrid = (s) => {
 
     s.paintGrid = (gridBuff, w, h, o, uSize, eUnit, props) => {
+        gridBuff.push();
+        gridBuff.noFill();
         let mx = "-";
         let px = " ";
         let my = "-";
@@ -175,6 +177,7 @@ const addPaintGrid = (s) => {
             }
             gridBuff.pop();
         }
+        gridBuff.pop();
     };
 };
 

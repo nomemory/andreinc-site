@@ -4,7 +4,7 @@ date: "2024-01-09"
 classes: wide
 comments: true
 excerpt: "A nostalgic math adventure"
-usemathjax: true
+usekatex: true
 categories:
 - "nontech"
 - "personal"

@@ -27,6 +27,11 @@ Let's play Tetris, but with a twist. No geometrical figures will *fall from the 
 
 ---
 
+|--|--|
+| <input type="checkbox" id="suggestions" name="suggestions" value="yes" checked> | Free suggestions in the beginning. If you follow all of them, you win. |
+| <input type="checkbox" id="turnBased" name="turnBased" value="no"> | Turn-Based Mode (the sinusoid doesn't drop automatically) |
+
+
 <div id="tetris-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}/assets/js/2024-02-06-the-sinusoidal-tetris/tetris.js)</sup></sup>
 

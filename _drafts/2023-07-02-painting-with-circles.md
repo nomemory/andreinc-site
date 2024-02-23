@@ -25,6 +25,7 @@ custom-defer-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
     - "/assets/js/2023-03-02-paiting-with-circles/onenegative.js"    
     - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/dropsinusoid.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
@@ -64,16 +65,6 @@ So I took a few steps back and focused on the *unit circle*, the number $$\pi$$,
 
 This article ended up being a high-level introduction to Fourier Analysis. It will take you through some of the math involved; we are going to write some code, and eventually, it will probably fall short. There's too much to cover in a single blog post. It assumes the reader understands $$\frac{d}{dx}$$ derivatives, $$\int$$ integrals and basic trigonometry. 
 
-# The *Fourier Experiments*
-
-## Sinusoidal Tetris
-
-This is the first experiment, a game that plays like Tetris, but there's a catch: there are no square shapes, only sinusoids. To survive, you need to keep the original *signal* closer to zero. If your signal *spikes* too much, you lose. Each sinusoid adds something and removes something if configured wisely. Normally, [*you win some, you lose some*](https://www.youtube.com/watch?v=3mbvWn1EY6g), unless you train your brain to compute Fourier Series for arbitrary functions in real-time. If so, you win!
-
-<div id="tetris-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tetris.js)</sup></sup>
-
-If you don't understand what is happening in this game, don't worry, if you reach the end of the article, you should have an overview of all the ~~simple~~ math involved.
 
 # What is a Circle? (short math recap) 
 
@@ -478,6 +469,12 @@ The sum $$y(x)=y_{1}(x) + y_{2}(x)$$ already looks more "fascinating".
 <div id="sum-simple-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumsimple.js)</sup></sup>
 
+To make it easier to visualize, let's add random sinusoids to an existing one (with $$A=1$$, $$\omega=1$$, $$\varphi=1$$)  and observe the *beautiful* patterns that are created:
+
+
+<div id="drop-sinusoid-sketch"></div>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/dropsinusoid.js)</sup></sup>
+
 We can even express "square waves" as a sum of sinusoids. Let's take, for example, the following formula:
 
 $$
@@ -561,6 +558,8 @@ Now, let's briefly forget about the cartesian representation of our sums of sinu
 As you can see, the shapes can become quite "irregular" and wild. With enough luck, we can paint a flower, a dog, a sketch portrait of [Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz), or a circle (look at the last sketch).
 
 > As a side rule (easy to demonstrate trigonometrically), if you sum up sinusoids that share the same frequency, the result will be a sinusoid. So, it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency - it's a CIRCLE.
+
+# Adding sinusoids - The sinusoidal tetris
 
 # A flower 
 
