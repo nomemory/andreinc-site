@@ -14,7 +14,9 @@ tags:
 
 # Introduction
 
-This a selection of *cute*, *non-trivial* algebra problems (with a hint of *number theory*) *compiled* from the Romanian Math Olympiad (regional phase)for 8<sup>th</sup>, 9<sup>th</sup>, and 10<sup>th</sup> graders (13-15) years old. The solutions are surprising and involve a good understanding of algebraic concepts, pattern spotting, or tricks that, in the long run, help students develop [mathematical intuition](https://en.wikipedia.org/wiki/Logical_intuition#:~:text=Logical%20Intuition%2C%20or%20mathematical%20intuition,to%20solve%20mathematical%20challenges%20efficiently.). 
+This a selection of *cute*, *non-trivial* algebra problems (with a hint of *number theory*) *compiled* from the Romanian Math Olympiad (regional phase or *faza judeteana*) for 8<sup>th</sup>, 9<sup>th</sup>, and 10<sup>th</sup> graders (13-15 years old). 
+
+The solutions are surprising and involve a good understanding of algebraic concepts, pattern spotting, or tricks that, in the long run, help students develop [mathematical intuition](https://en.wikipedia.org/wiki/Logical_intuition#:~:text=Logical%20Intuition%2C%20or%20mathematical%20intuition,to%20solve%20mathematical%20challenges%20efficiently.). 
 
 Depending on your passion for mathematics (or competitive mathematics), the problems should pose enough difficulty to keep you entertained for a few hours. If you are stuck with one problem, try to read the hint instead of going straight to the answer.
 
@@ -27,6 +29,8 @@ In case you want to solve them by yourself, do a short recap on the following su
 * [Cauchy–Bunyakovsky–Schwarz Inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality);
 * [Hermite's Identity](https://en.wikipedia.org/wiki/Hermite%27s_identity);
 * [Monotonic functions](https://en.wikipedia.org/wiki/Monotonic_function).
+
+The main topic of this problem set is: "Inequalities".
 
 # Additional note(s)
 
