@@ -1,5 +1,5 @@
 ---
-title: "20 algebra problems selected from the Romanian Math Olympiad (Part 1)"
+title: "20 algebra problems selected from the Romanian Olympiad (Part 1)"
 date: "2024-02-23"
 classes: wide
 comments: true
