@@ -337,7 +337,7 @@ $$\underbrace{[\frac{x+1}{5}]}_{\in \mathbb{Z}}+\underbrace{[\frac{x-1}{2}]}_{\i
 
 We can safely say that $$\frac{x-1}{2}=k \in \mathbb{Z}$$.
 
-We substitute $$x=2k-1$$ in the original relation:
+We substitute $$x=2k+1$$ in the original relation:
 
 $$[\frac{2*k+1+1}{5}] + [\frac{2*k+1-1}{2}] = k \Leftrightarrow $$
 
@@ -351,7 +351,25 @@ Because $$[\frac{2k+2}{5}] = 0$$, then:
 
  $$-1 \leq k \lt \frac{3}{2}$$
 
- There are $$3$$ numbers $$k \in \mathbb{Z}$$ that satisfy the relationship: $$\{-1,0,1\}$$. The final answer is $$3$$.
+There are $$3$$ numbers $$k \in \mathbb{Z}$$ that satisfy the relationship: $$\{-1,0,1\}$$. 
+
+But, $$x=2k+1 \Rightarrow  x \in \{-1, 1, 3\}$$.
+
+Testing our solutions:
+
+$$
+x = -1 \Rightarrow [\frac{-1+1}{5}] = \{ \frac{-1-1}{2} \} \Leftrightarrow [0] = \{ -1 \} \text{ is true}
+$$
+
+$$
+x = 1 \Rightarrow [\frac{1+1}{5}] = \{ \frac{1-1}{2} \} \Leftrightarrow [\frac{2}{5}] = \{ 0 \} \text{ is true}
+$$
+
+$$
+x = 1 \Rightarrow [\frac{3+1}{5}] = \{ \frac{3-1}{2} \} \Leftrightarrow [\frac{4}{5}] = \{ 1 \} \text{ is true}
+$$
+
+So the cardinality is $$3$$.
 
 # Answer 4.
 

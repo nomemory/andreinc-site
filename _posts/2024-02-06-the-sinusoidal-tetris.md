@@ -21,10 +21,6 @@ tags:
 
 Let's play Tetris, but with a twist. No geometrical figures will *fall from the sky*. Instead, you control a [sinusoid](https://en.wikipedia.org/wiki/Sine_wave), defined by: $$f(x)=A*sin(\omega x + \varphi)$$:
 
-|--|--|
-| <input type="checkbox" id="suggestions" name="suggestions" value="yes" checked> | Free suggestions in the beginning. If you follow all of them, you win. |
-| <input type="checkbox" id="turnBased" name="turnBased" value="no"> | Turn-Based Mode (the sinusoid doesn't drop automatically) |
-
 ---
 
 |--|--|
