@@ -66,4 +66,7 @@ It is a list of random photos with generous filtering applied. Filter them more,
 * [![img](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/work.jpeg){:height="50%" width="50%"}](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/work.jpeg)
 <sup>The Work</sup>
 
+* [![img](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/kiss.jpeg){:height="50%" width="50%"}](https://raw.githubusercontent.com/nomemory/andreinc-site/main/photos/kiss.jpeg)
+<sup>The Kiss</sup>
+
 ---
