@@ -1,6 +1,6 @@
 ---
 title: "A surprising matrix problem"
-date: "2024-02-23"
+date: "2024-03-14"
 classes: wide
 comments: true
 excerpt: "A surprising math problem from the Spanish Math Olympiad of 1988"
