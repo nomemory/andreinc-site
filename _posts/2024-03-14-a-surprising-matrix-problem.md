@@ -12,7 +12,7 @@ tags:
 - "matrix"
 ---
 
-In this short article I will discuss a *cute* mathematical problem that I discovered while reading ["Polya's Footsteps: Miscellaneous Mathematical Expositions"](https://www.amazon.com/Polyas-Footsteps-Miscellaneous-Mathematical-Expositions/dp/0883853264) by the Canadian mathematician [Ross Honsberger](https://en.wikipedia.org/wiki/Ross_Honsberger). If you're not familiar with Honsberger's work, he is a well-known author in the field of [recreational mathematics](https://en.wikipedia.org/wiki/Recreational_mathematics). The one and only [Edsger W. Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra), referred to Honsberger's work as "delightful".
+In this short article I will discuss a *cute* mathematical problem that I discovered while reading ["Polya's Footsteps: Miscellaneous Mathematical Expositions"](https://www.amazon.com/Polyas-Footsteps-Miscellaneous-Mathematical-Expositions/dp/0883853264) by the Canadian mathematician [Ross Honsberger](https://en.wikipedia.org/wiki/Ross_Honsberger). If you're not familiar with Honsberger's work, he is a well-known author in the field of [recreational mathematics](https://en.wikipedia.org/wiki/Recreational_mathematics). The one and only [Edsger W. Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra) referred to Honsberger's work as "delightful".
 
 The problem was asked during the First Round of the Spanish Math Olympiad in 1988, and if you own the book, you can find it at page 9.
 
