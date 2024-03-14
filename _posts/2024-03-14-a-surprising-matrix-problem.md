@@ -140,6 +140,6 @@ A=\begin{pmatrix}
 \end{pmatrix}
 $$
 
-We observe that the sum, $$S_A$$, is constant: $$S_A^1=1+9+17$$, $$S_A^2=5+9+13$$, $$S_A^3=9+17+1$$, etc. They are all 27.
+We observe that the sum, $$S_A$$, is constant: $$S_A^1=1+9+17$$, $$S_A^2=5+9+13$$, etc. They are all 27.
 
 Proving this is an exercise left for the reader.
