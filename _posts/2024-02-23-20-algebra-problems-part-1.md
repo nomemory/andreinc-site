@@ -265,7 +265,7 @@ If you have a keen eye for observations, you notice the numbers $$3,7,11,...,199
 
 $$S=-(3+0*4)-(3+1*4)-(3+2*4)-...-(3+49*4) \Leftrightarrow $$
 
-$$S=-3*50-4(0+1+2+...+49) \Leftrightarrow $$https://en.wikipedia.org/wiki/Rearrangement_inequality
+$$S=-3*50-4(0+1+2+...+49) \Leftrightarrow $$
 
 The infinite series whose terms are natural numbers,  $$1+2+3+...+n$$, is divergent. But we know the $$nth$$ partial sum of the series to be: $$\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$$, so:
 
