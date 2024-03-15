@@ -61,7 +61,7 @@ For a $$3 \times 3$$ matrix, the sum is $$S_A=15$$, no matter what we do.
 
 At this point, it's worth noting that if we examin things from a column perspective, each time we select numbers from a different column. Similarly, if we look at it from a row perspective, each time we select a number from a different row than the previous ones.
 
-So, the intuition says there's something to do with the positions of the numbers and not the numbers themselves.
+So, the intuition says there's something to do with the positions of the numbers and not the numbers themselves. That would be incorrect, but it led me in the right direction.
 
 For example, if we pick a matrix $$B$$ that's *slightly different* than $$A$$, and comes in the form:
 
@@ -98,7 +98,7 @@ So if consider $$a_1, a_2, ..., a_n$$ the chosen elements from $$S_A$$ and the c
 * $$a_4 = b_4 + 3*n$$ ;
 * ... and so on
 
-Is we sum $$S_A = a_1 + a_2 + ... + a_n$$ we obtain:
+If we sum $$S_A = a_1 + a_2 + ... + a_n$$ we obtain:
 
 $$
 S_A = (b_1+0*n) + (b_2 + n) + (b_3 + 2*n) + ... + (b_n + (n-1)*n) \Leftrightarrow \\ 

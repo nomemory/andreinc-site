@@ -11,8 +11,6 @@ main:
     url: /photos/
   - title: Blogroll
     url: /blogroll
-  - title: Links
-    url: /links/
   - title: "RSS"
     url: /feed.xml
 
