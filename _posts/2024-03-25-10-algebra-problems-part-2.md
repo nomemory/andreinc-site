@@ -3,7 +3,7 @@ title: "10 algebra problems selected from the Romanian Olympiad (Part 2)"
 date: "2024-03-25"
 classes: wide
 comments: true
-excerpt: "A selection of math problems involving limits."
+excerpt: "A selection of non-trivial algebra problems."
 usekatex: true
 categories:
 - "nontech"
