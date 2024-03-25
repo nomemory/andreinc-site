@@ -1,6 +1,6 @@
 ---
 title: "Painting with Circles, Epycicles and Fourier Transforms"
-date: "2023-03-01"
+date: "2024-03-19"
 classes: wide
 usemathjax: false
 usekatex: true
@@ -59,11 +59,7 @@ tags:
 
 # Disclaimer
 
-I started working on this article almost one year ago (on and off) in my (now) limited spare time. Inspired by [this video](https://www.youtube.com/watch?v=r6sGWTCMz2k), and having my *math passion* re-ignited, I just wanted to draw some epicycles and then let them fly into the wild. Applying the formulas is simple, so I assumed I would finish fast and jump into a different rabbit hole. But then I decided to write a more extensive article, sharing my findings, creating the visuals I never had, and hopefully coming up with something more original than drawing Homer Simpson with circles.
-
-So I took a few steps back and focused on the *unit circle*, the number $$\pi$$, complex numbers, and the beautiful identity that powers our world: Euler's identity. The jump to *Fourier Mathematics* was only natural. 
-
-This article ended up being a high-level introduction to Fourier Analysis. It will take you through some of the math involved; we are going to write some code, and eventually, it will probably fall short. There's too much to cover in a single blog post. It assumes the reader understands $$\frac{d}{dx}$$ derivatives, $$\int$$ integrals and basic trigonometry. 
+I began working on this article almost one year ago (on and off) in my (now) limited spare time. Inspired by [this video](https://www.youtube.com/watch?v=r6sGWTCMz2k), and having my *math passion* re-ignited, I planned to draw some epicycles and be done with it. Applying the formulas is simple, so I assumed I would finish fast and jump into a different rabbit hole. But then I decided to write a more extensive article, sharing my findings, creating the visuals I never had, and hopefully coming up with something more original than drawing Homer Simpson with circles.
 
 
 # What is a Circle? (short math recap) 

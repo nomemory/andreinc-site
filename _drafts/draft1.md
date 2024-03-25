@@ -1,17 +1,3 @@
----
-title: "Know your limits"
-date: "2024-03-08"
-classes: wide
-comments: true
-excerpt: "A selection of math problems involving limits."
-usekatex: true
-categories:
-- "nontech"
-- "math"
-tags:
-- "2023"
----
-
 # The Problems
 
 ---
@@ -73,4 +59,3 @@ $$
 Of course, nothing stops us from using [L'Hospital](https://en.wikipedia.org/wiki/L'H%C3%B4pital's_rule).
 
 The final answer is $$\frac{9}{4}$$.
-
