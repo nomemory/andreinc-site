@@ -16,7 +16,7 @@ tags:
 
 This article is a continuation of [my previous selection]({{site.url}}/2024/02/23/20-algebra-problems-part-1) of non-trivial algebra problems from the Romanian Math Olympiad for high-school students. However, this time I have included a few harder problems from the National Phase that would definitely provide a challenge to any reader.
 
-Personally, I found problems **5.** and **9.** to be the hardest. 
+Personally, I found problems **5.** and **9.** to be the most difficult.
 
 # The Problems
 
