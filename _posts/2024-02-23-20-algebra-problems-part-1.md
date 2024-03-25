@@ -36,6 +36,8 @@ The main topic of this problem set is: "Inequalities".
 
 # Additional note(s)
 
+> There's a follow-up article - [here]({{site.url}}/2024/03/25/10-algebra-problems-part-2).
+
 I have a few notebooks containing solutions for various Math problems I've solved over the years (recreational mathematics).  If time allows, I will publish more lists covering more topics. Currently, I am in the process of grouping them into categories.
 
 ![img]({{site.url}}/assets/images/2024-03-10-23-algebra-problems-part-1/notebook.jpeg){:height="75%" width="75%"}
