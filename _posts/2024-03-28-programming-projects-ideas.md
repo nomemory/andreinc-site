@@ -1,6 +1,6 @@
 ---
 title: "My list of challenging software projects some programmers should try"
-date: "2024-03-27"
+date: "2024-03-28"
 classes: wide
 comments: true
 excerpt: "Unsolicited advice"
@@ -97,7 +97,7 @@ When implementing the HTTP protocol, keep in mind that you don't have to cover e
 * Gain an understanding of how TCP and Networking Programming work.
 
 If mentioning C has offended you, you can always rewrite the project in Rust. That would be new.
-
+Or w
 ---
 
 # Write an esoteric programming language
