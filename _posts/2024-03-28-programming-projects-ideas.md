@@ -9,7 +9,7 @@ categories:
 - "programming"
 - "career"
 tags:
-- "2023"
+- "2024"
 
 ---
 
@@ -96,8 +96,8 @@ When implementing the HTTP protocol, keep in mind that you don't have to cover e
 * Learn about `fork()`, `pthreads`, and all the other low-level knowledge you don't usually have to deal with, except in your Operating Systems course.
 * Gain an understanding of how TCP and Networking Programming work.
 
-If mentioning C has offended you, you can always rewrite the project in Rust. That would be new.
-Or w
+If mentioning C has offended you, you can always rewrite the project in Rust. That would be *new*.
+
 ---
 
 # Write an esoteric programming language
@@ -153,7 +153,7 @@ Why don't you try implementing something different:
 1. Write a markdown language that is not precisely markdown but something alien.
 
 2. Extend an existing markdown implementation. You can get inspiration from [LiaScript](https://liascript.github.io/) or [R Markdown](https://rmarkdown.rstudio.com/).
-It's ok to tell the users
+
 ---
 
 # Write a static site-generator
