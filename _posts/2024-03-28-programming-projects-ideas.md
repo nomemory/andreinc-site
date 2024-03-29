@@ -42,6 +42,8 @@ You can also check other articles on this topic:
 - [Approximate the reality with polynomials](#approximate-reality-with-polynomials)
 - [A calculator for symbolic differentiation](#a-calculator-for-symbolic-differentiation)
 - [A slot machine](#a-slot-machine)
+- [Write a game engine for text-based adventures](#write-a-game-engine-for-text-based-games)
+- [A tiling window manager](#write-a-tiling-window-manager)
 
 ---
 
@@ -246,6 +248,30 @@ I wouldn't put to much effort into the graphics. It's not like you want to contr
 * Why don't you write a $$\pi$$ slot machine that uses the decimals of $$\pi$$ to give prizes.
 * Why don't you use a Game Of Life Slot Machine, where you stop on specific cell configurations and give prizes;
 * Why don't you build a Sinusoidal Slot Machine (you can get inspiration from a previous project of mine called [The Sinusoidal Tetris]({{site.url}}/2024/02/06/the-sinusoidal-tetris)).
+
+# Write a game engine for text-based games
+
+<sup>This idea was suggested by @snej on the [lobste.rs](https://lobste.rs/s/5fsjpu/my_list_challenging_software_projects)</sup>
+
+Few of our generation have played *text-based* games, and it's fine - we need to put our hardware to better use than rendering fonts in a terminal. 
+
+But there was a time when games like [Zork](https://playclassic.games/games/adventure-dos-games-online/the-hitchhikers-guide-to-the-galaxy/play/) or [Colossal Cave](https://rickadams.org/adventure/advent/) were extremely popular. 
+
+So why don't you build a game engine for text-based adventures? 
+
+Make the engine *cross-platform* - allow the game to work in the terminal, browser, or an [SDL](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) window.
+
+Or leave it terminal only. There are beautiful TUI libraries nowadays, so you don't have to stay cursed because you are stuck with [ncurses](https://en.wikipedia.org/wiki/Ncurses):
+
+* [bubbletea](https://github.com/charmbracelet/bubbletea)
+* [CursedGL](https://github.com/saccharineboi/CursedGL)
+* ... or check out [this list](https://github.com/rothgar/awesome-tuis?tab=readme-ov-file).
+
+# Write a Tiling Window Manager
+
+Now that [Wayland](https://en.wikipedia.org/wiki/Wayland_(protocol)) is almost here, I am sure there's a lot of *new* room for creativity. Look at [sway](https://swaywm.org/).
+
+Ok, writing a [Tiling Window Manager](https://en.wikipedia.org/wiki/Tiling_window_manager) is not the most approachable project you can think of. But at the same time, you can keep things simple. For example, XMonad, when launched, had roughly 1000 lines of code. 
 
 
 
