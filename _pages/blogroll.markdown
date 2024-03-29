@@ -14,6 +14,8 @@ I usually find blogs I like by scrolling the top page of [hn](https://news.ycomb
 
 A good source of finding good information is now [https://www.marginalia.nu/](https://www.marginalia.nu/). The [Website Explorer](https://explore.marginalia.nu/view) is an excellent way of accessing *the alternative indie internet*.
 
+Another interesting source is [https://bukmark.club/](https://bukmark.club/).
+
 If you have a personal blog, I recommend you create your *blogroll* section. Your readers will appreciate it. Accessing quality content has become challenging in recent years. Publishing a list of sites you truly like & follow & subscribe to is helpful for everyone.
 
 ---

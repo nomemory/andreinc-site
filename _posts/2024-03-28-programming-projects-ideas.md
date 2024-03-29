@@ -68,7 +68,7 @@ By the end of the project, you will likely become more comfortable with network 
 
 Bonus: Thoroughly testing your DHT will be a journey in itself.
 
-<sup>Don't get motivated if you get stuck or the result is terrible!</sup>
+<sup>Don't get demotivated if you get stuck or the result is terrible!</sup>
 
 ---
 
@@ -86,7 +86,6 @@ Once you have a working calculator, start exploring crazy ideas:
 6. Can you write a module that gives the user random insights about numbers?
 
 ---
-
 
 # Write your own HTTP Server in C + POSIX
 
