@@ -16,18 +16,28 @@ This section is a work in progress, and if the number of links increases, I will
 
 # Algorithms and Data Structures
 * [Animated Algorithms](https://www.hellointerview.com/learn/code)
+* [Competitive Programmer's Handbook, Antti Laaksonen](https://github.com/pllk/cphb/)
+    * Also on [GitHub](https://github.com/pllk/cphb/).
 * [Great Ideas in Theoretical Computer Science](https://www.cs251.com/)
+* [Notes on Data Structures and Programming Techniques, James Aspnes](http://www.cs.yale.edu/homes/aspnes/classes/223/notes.html)
+    * A free book. Data Structures and algorithms using the C programming language.
 
-# Art & Computers
+# Art & Computers & Mathematics
+* [A stacked clock](https://www.danieldjohnson.com/2014/06/30/stacked-clock/)
 * [bleuje's animations](https://bleuje.com/animationsite/)
     * Fantastic animations since 2017
 * [Finite Curve](https://www.finitecurve.com/)
     * Draws any photo with a single line.
 * [Glitch2](https://akx.github.io/glitch2/)
     * Glitch images in creative ways.
+* [Jean-Michel Jarre’s Classic ‘Oxygene 4’ Recreated With 19KB Of Javascript](https://www.synthtopia.com/content/2022/12/27/jean-michel-jarres-classic-oxygene-4-recreated-with-19kb-of-javascript/)
 * [junkiyoshi.com/](https://junkiyoshi.com/)
     * Personal site of Jun Kiyoshi. Computer-generated art.
+* [Motion Cells](https://www.danieldjohnson.com/2014/06/30/motion-cells/)
+    * Drawing lines by following a changing vector field.
 * [Unicode Maze Generator](https://www.vidarholen.net/cgi-bin/labyrinth?w=39&h=24)
+* [Visualising the beauty of PI](https://towardsdatascience.com/visualizing-the-beauty-of-pi-cfeb1dfdd749)
+* [Virtual Insanity but it's played on an oscilloscope](https://www.youtube.com/watch?v=zGlZqDHqhR0)
 * [Weavesilk](http://weavesilk.com/)
 * [Zoomquilt](https://zoomquilt.org/)
 
@@ -55,6 +65,8 @@ This section is a work in progress, and if the number of links increases, I will
 # C Programming
 * [Beej's Guide](https://beej.us/guide/)
     * C tutorials
+* [Cosmopolitan C](https://justine.lol/cosmopolitan/index.html)
+    * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine. Instead, it reconfigures stock GCC and Clang to output a POSIX-approved polyglot format that runs natively on Linux + Mac + Windows + FreeBSD + OpenBSD + NetBSD + BIOS on AMD64 and ARM64 with the best possible performance. 
 * [The lost art of structure packing](http://www.catb.org/esr/structure-packing/)
     * Nice technical essay by [Eric S. Raymond](https://en.wikipedia.org/wiki/Eric_S._Raymond).
 
@@ -86,11 +98,22 @@ This section is a work in progress, and if the number of links increases, I will
 * [Truncate](https://truncate.town/)
     * A words strategy game
 
+# Math
+* [Calculus Made Easy, Silvanus P. Thompson](https://calculusmadeeasy.org/)
+* [Concursuri de Matematica](http://www.mategl.com/download.htm)
+    * Exercises from various Romanian Math contests. Resources are in Romanian.
+* [Gift Exchange Archive](https://g4gexchangearchive.omeka.net/items)
+    * Recreational mathematics and puzzles.
+* [How do calculators compute sine](https://androidcalculator.com/how-do-calculators-compute-sine/)
+
 # Operating Systems
 * [copy.sh/v86/](http://copy.sh/v86/)
     * Run operating systems in your browser.
 * [Temple OS](https://templeos.org/)
     * God's operating system.
+
+# Programming Languages
+* [Build your own LISP](https://www.buildyourownlisp.com/contents)
 
 # Tools
 * [carbon](https://carbon.now.sh/)
