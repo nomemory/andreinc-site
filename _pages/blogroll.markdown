@@ -16,6 +16,8 @@ A good source of finding good information is now [https://www.marginalia.nu/](ht
 
 Another interesting source is [https://bukmark.club/](https://bukmark.club/).
 
+And there is the [hackernews blogroll](https://dm.hn/).
+
 If you have a personal blog, I recommend you create your *blogroll* section. Your readers will appreciate it. Accessing quality content has become challenging in recent years. Publishing a list of sites you truly like & follow & subscribe to is helpful for everyone.
 
 ---
@@ -32,17 +34,20 @@ You can email me if you know of similar blogs (see [/about/]({{site.url}}/about)
 | [amygoodchild.com/](https://www.amygoodchild.com/) | Amy is an artist based in London |
 | [ar.al/](https://ar.al/) | The personal blog of Aral Balkan |
 | [artem.krylysov.com/blog/](https://artem.krylysov.com/blog/) | The blog of Artem Krylysov. |
+| [artojonsson.com/](https://www.artojonsson.com/) | The personal blog of Arto Jonsson. | 
 | [antirez.com/](http://antirez.com/) | Antirez!? |
 | [apieceofthepi.substack.com/](https://apieceofthepi.substack.com/) | An entertaining blog about mathematics, by [Richard Green](https://math.colorado.edu/~rmg/). |
 | [ariadne.space/](https://ariadne.space/) | Free software developer and internet jackalope extraordinaire. |
 | [arne.me/](https://arne.me/) | A developer, podcaster & dad based near Frankfurt, Germany. |
 | [attractivechaos.wordpress.com/](https://attractivechaos.wordpress.com/) | This is an [anonymous blog](https://attractivechaos.wordpress.com/about/). I am unsure if the (unknown) author plans to maintain it further, but here is where some particular questions of mine [found the answers](https://attractivechaos.wordpress.com/2019/12/28/deletion-from-hash-tables-without-tombstones/). |
 | [austinhenley.com/](https://austinhenley.com/) | Austin Z. Henley, computer scientist, AI researcher. |
+| [avi.im/blag/](https://avi.im/blag/) | Hey there👋 I am v. |
 | [baatz.io/notes/](https://baatz.io/notes/) | The personal blog of Carl Baatz. |
 | [begriffs.com/](https://begriffs.com/) | This is the personal blog of [Joe Nelson](https://github.com/begriffs): cool projects, [anecdotes](https://begriffs.com/posts/2018-11-15-c-portability.html), [parsing and lexing](https://begriffs.com/posts/2021-11-28-practical-parsing.html), postgres, [postgrest](https://begriffs.com/posts/2015-10-02-postgrest-workshop.html), and much more! |
 | [benhoyt.com](https://benhoyt.com/writings/) | This is Ben Hoyt's personal site. The articles about [GoAWK](https://github.com/benhoyt/goawk) are some of my favorites. |
 | [bernsteinbear.com/blog/](https://bernsteinbear.com/blog/) | The blog of a human programmer. |
 | [betterwithout.ai/](https://betterwithout.ai/) | An highly opinionated blog. |
+| [bleuje.com/](https://bleuje.com/about/) | Personal blog of Etienne Jacob. | 
 | [blog.bayindirh.io/](https://blog.bayindirh.io/) | `tail -f /dev/brain0` |
 | [blog.bonnieeisenman.com/](https://blog.bonnieeisenman.com/) | Software engineer, author, knitter, Esperantist. Bonnie Eisenman |
 | [blog.codinghorror.com/](https://blog.codinghorror.com/) | Cthulhu. |
@@ -57,12 +62,14 @@ You can email me if you know of similar blogs (see [/about/]({{site.url}}/about)
 | [bryanbraun.com/](https://www.bryanbraun.com/) | The personal blog of Bryan Braun. |
 | [ciechanow.ski/](https://ciechanow.ski/) | Hard to explain, but of a different league. |
 | [confusedbit.dev/](https://confusedbit.dev/) | Valentin Tolmer explains complex things with simple words. |
+| [coryd.dev/](https://coryd.dev/) | The personal blog of Cory Dransfeldt. |
 | [cprimozic.net/blog/](https://cprimozic.net/blog/) | The personal blog of Casey Primozic. |
 | [dansalva.to/blog/](https://dansalva.to/blog/) | A guy best known for creating Doki Doki Literature Club and FrankerFaceZ. |
 | [death.andgravity.com/](https://death.andgravity.com/) | Adrians talks python. |
 | [defn.io/](https://defn.io/) | You've reached Bogdan Popa's personal website. |
 | [drewdevault.com/](https://drewdevault.com/) | this is the personal blog of Drew DeVault: open source, [the hare programming language](https://harelang.org/), [unpopular opinions](https://drewdevault.com/2022/10/03/Does-Rust-belong-in-Linux.html) and [a good sense of humor](https://drewdevault.com/2021/11/16/Cash-for-leftpad.html) |
 | [ericlathrop.com/](https://www.ericlathrop.com/) | Eric Lathrop's blog. |
+| [eternodevir.com/](https://eternodevir.com/) | Vinicius Moraes' corner of the Internet. |
 | [eukaryotewritesblog.com/](https://eukaryotewritesblog.com/) | As the title says. |
 | [gabrielistrate.wordpress.com/](https://gabrielistrate.wordpress.com/) | Gabriel Istrate's blog. Romanian teacher and researcher. Blog is in Romanian. |
 | [bearblog.dev/blog/](https://herman.bearblog.dev/blog/) | Herman's bear blog. |
@@ -74,6 +81,7 @@ You can email me if you know of similar blogs (see [/about/]({{site.url}}/about)
 | [j3s.sh](https://j3s.sh) | The (*minismallist*) good-looking personal site of Jes Olson. Talks about Free Software and other tech topics. [Here](https://j3s.sh/thought/my-website-is-one-binary.html) is where I found the motivation for writing [this]({{site.url}}/2022/04/10/a-blog-that-is-a-single-executable-binary) |
 | [jmmv.dev/](https://jmmv.dev/blog.html) | The personal blog of Julio Merino. Programming languages and operating systems. |
 | [junkiyoshi.com/](https://junkiyoshi.com/) | Mathematical art. |
+| [justinmiller.io/](https://justinmiller.io/) | Justin Miller, maker, programmer, photographer, and traveler. |
 | [jvns.ca/](https://jvns.ca/) | Julia Evan's blog. |
 | [keybits.net/](https://www.keybits.net/) | Tom Atkins' site. |
 | [lemire.me](https://lemire.me/blog/) | The blog of Daniel Lemire, a science professor at the University of Quebec. He sure loves optimizations. |
@@ -102,12 +110,14 @@ You can email me if you know of similar blogs (see [/about/]({{site.url}}/about)
 | [qubyte.codes/blog/](https://qubyte.codes/blog/) | The personal blog of Mark Stanley Everitt. |
 | [randomascii.wordpress.com](https://randomascii.wordpress.com) | This is the blog of Bruce Dawson: bugs, optimizations and technical anecdotes. |
 | [rednafi.com/](https://rednafi.com/) | Ahoy, fellow nightcrawlers! I’m Redowan Delowar, also known as “rednafi” on most platforms. |
+| [rickadams.org/](https://rickadams.org/) | After 40 years as a computer programmer and game developer—and the passing of his wife of 47 years—Rick has retired and is now living in Ye Olde Folks Home, where he still tinkers with tech and likes to write these amusing and/or thoughtful tales about his storied life. |
 | [rknight.me/blog/](https://rknight.me/blog/) | The personal blog of Robb Knight. | 
 | [ruudvanasseldonk.com/](https://ruudvanasseldonk.com/) | Hi, I am Ruud. I love to create beautiful things with elegant code. I particularly like low-level optimisation for bare metal performance and systems programming, but I also enjoy high-level functional programming. Sometimes I write about that. I am mildly allergic to buzzwords. |
-| [skeptical-science.com/](http://skeptical-science.com/) | Skeptics united. |
 | [schneier.com/](https://www.schneier.com/) | Bruce Schneier is an internationally renowned security technologist, called a “security guru” by The Economist. |
-| [susam.net/blog/](https://susam.net/blog/) | The personal blog of Susam Pal. |
+| [seancoates.com/](https://seancoates.com/) |  Sean Coates blogs (active) brews shares is about the Web, beer, and other stuff. |
 | [sharats.me/](https://sharats.me/) | Shrikant says *Namaste!* |
+| [skeptical-science.com/](http://skeptical-science.com/) | Skeptics united. |
+| [susam.net/blog/](https://susam.net/blog/) | The personal blog of Susam Pal. |
 | [thenumb.at/](https://thenumb.at/) | The personal blog of Max Slater. |
 | [ttntm.me/](https://ttntm.me/) | Tom's personal website, Tom is a software developer from Austria. |
 | [tsev.dev/](https://tsev.dev/) | https://tsev.dev/ |
@@ -121,6 +131,7 @@ You can email me if you know of similar blogs (see [/about/]({{site.url}}/about)
 | [wilw.dev/blog/](https://wilw.dev/blog/) | The personal site of Will Webberley. |
 | [wingolog.org/](http://wingolog.org/) | Personal blog of Andy Wingo. |
 | [xeiaso.net](https://xeiaso.net/blog) | This is the personal site of Xe Iaso. The articles here have a high level of geekiness and [humor](https://xeiaso.net/blog/sleeping-the-technical-interview). |
+| [yequari.com/blog/](https://yequari.com/blog/) | I write code and occasionally blog posts.|
 | [yurichev.org/](https://yurichev.org/blog.html) | CS, math, reverse engineering, SAT/SMT solvers, cryptography, tinkering with *NIX... |
 | [zellic.io/blog/](https://www.zellic.io/blog/) | Zelic research blog. |
 | [zserge.com/](https://zserge.com/) | The personal blog of Serge Zaitsev. |
