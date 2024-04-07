@@ -122,7 +122,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine.
 * [So you think you know C? (Test)](https://wordsandbuttons.online/so_you_think_you_know_c.html)
     * A lot of programmers claim they know C. Well, it has the most famous syntax, it has been there for 52 years, and it’s not cluttered with obscure features. It’s easy! 
-[* [So you think you know C? (Ebook)](https://wordsandbuttons.online/SYTYKC.pdf)
+* [So you think you know C? (Ebook)](https://wordsandbuttons.online/SYTYKC.pdf)
     * ...And Ten More Short Essays on Programming Languages
 * The C Donuts:
     * [Have a donut (2006)](https://www.a1k0n.net/2006/09/15/obfuscated-c-donut.html)
@@ -166,6 +166,8 @@ This section is a work in progress, and if the number of links increases, I will
 # Games
 * [A dark room](http://adarkroom.doublespeakgames.com/)
     * One interesting text-adventure game
+* [Bonsai Builder](https://vandervasgenerator.itch.io/bonsaibuilder)
+    * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
 * [Collosal Cave Adventure Page](https://rickadams.org/adventure/)
     * You can play the game [here](https://rickadams.org/adventure/advent/)
     * The user would thus be a part of an ongoing story in a fantasy setting — in this case, an exploration of [Colossal Cave in Kentucky](https://en.wikipedia.org/wiki/Colossal_Cavern). But this Colossal Cave, though remarkably similar to its real-life counterpart, was also very different: *Magic was afoot in the cave...*
