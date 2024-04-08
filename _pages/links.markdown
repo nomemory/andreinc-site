@@ -212,6 +212,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Uiua lets you write code that is as short as possible while remaining readable, so you can focus on problems rather than ceremony.
 
 # Essays
+* [Algorithms interviews: theory vs. practice](https://danluu.com/algorithms-interviews/)
+    * "When I ask people at trendy big tech companies why algorithms quizzes are mandatory, the most common answer I get is something like "we have so much scale, we can't afford to have someone accidentally write an O(n^2) algorithm and bring the site down."
 * [Either your estimates suck or your job does ](https://wordsandbuttons.online/either_your_estimates_suck_or_your_job_does.html)
     * "Luckily, most estimates never come true, and I have a dozen polynomial models to show you why."
 * [Glory is only 11MB/s away](https://thmsmlr.com/cheap-infra)
