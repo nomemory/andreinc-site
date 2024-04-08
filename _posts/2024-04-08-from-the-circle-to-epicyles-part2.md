@@ -30,6 +30,8 @@ tags:
 
 This is the second part of the article that started [here]({{site.url}}/2024/04/08/from-the-circle-to-epicycles-part1).
 
+This is more like a draft.
+
 ---
 
 # Contents
