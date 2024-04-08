@@ -9,7 +9,7 @@ const someEpis = (s) => {
     const r = d / 2;
     const w = 800;
     const h = 700;
-    const tf = theme.frequency / 10;
+    const tf = theme.frequency;
 
     let buff1, buff2, buff3, buff4;
     let vC1, vC2, vC3, vC4;

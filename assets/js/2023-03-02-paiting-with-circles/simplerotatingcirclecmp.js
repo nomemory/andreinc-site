@@ -25,18 +25,18 @@ const simpleCircleRotatingCircleCmp = (s) => {
         // Initialise
         vC = s.createVector(s.width / 2, s.height / 2);
         vR = s.createVector(
-            vC.x + s.sin(angle * f + phase) * r,
-            vC.y + s.cos(angle * f + phase) * r
+            vC.x + s.sin(angle + phase) * r,
+            vC.y + s.cos(angle + phase) * r
         );
         vThet = s.createVector(
-            vC.x + s.sin((angle * f + phase)/2) * ar,
-            vC.y + s.cos((angle * f + phase)/2) * ar
+            vC.x + s.sin((angle + phase) / 2) * ar,
+            vC.y + s.cos((angle + phase) / 2) * ar
         );
         vRProj = s.createVector(vR.x, vC.y);
         vSL = s.createVector(0, 0);
         vCL = s.createVector(0, 0);
         buff = s.createGraphics(s.width, s.width);
-        s.paintGrid(buff, s.width, s.height, vC, r/5, 5, 
+        s.paintGrid(buff, s.width, s.height, vC, r / 5, 5,
             {
                 showUnits: true,
                 showOrigin: true,
@@ -58,8 +58,8 @@ const simpleCircleRotatingCircleCmp = (s) => {
         s.background(theme.bkgColor);
         s.image(buff, 0, 0);
 
-        vR.x = vC.x + s.sin(angle * f + phase) * r;
-        vR.y = vC.y + s.cos(angle * f + phase) * r;
+        vR.x = vC.x + s.sin(angle + phase) * r;
+        vR.y = vC.y + s.cos(angle + phase) * r;
         vRProj.x = vR.x;
 
         // Updating movement
@@ -70,14 +70,14 @@ const simpleCircleRotatingCircleCmp = (s) => {
         vSL.y = (vC.y + vR.y) / 2;
         vCL.x = (vC.x + vR.x) / 2 - 10;
         vCL.y = vC.y + coff;
-        vThet.x = vC.x + s.sin((angle * f)/2 + phase) * ar/1.5,
-        vThet.y = vC.y + s.cos((angle * f)/2 + phase) * ar/1.5
+        vThet.x = vC.x + s.sin((angle) / 2 + phase) * ar / 1.5,
+            vThet.y = vC.y + s.cos((angle) / 2 + phase) * ar / 1.5
 
         // Drawing arc
         s.push();
         s.stroke(theme.thetaColor);
         s.fill(theme.thetaColorLight);
-        s.arc(vC.x, vC.y, ar, ar, s.TWO_PI-angle*f, 0);
+        s.arc(vC.x, vC.y, ar, ar, s.TWO_PI - angle, 0);
         s.pop();
 
         // Drawing arc text
@@ -126,15 +126,15 @@ const simpleCircleRotatingCircleCmp = (s) => {
         s.fill(theme.textColor);
         s.text("+i", vR.x + s.textWidth("z=cos(θ)") + 2, vR.y);
         s.fill(theme.sineColor);
-        s.text("sin(θ)", vR.x + s.textWidth("z=cos(θ)+i")+2, vR.y);
+        s.text("sin(θ)", vR.x + s.textWidth("z=cos(θ)+i") + 2, vR.y);
         s.pop();
 
         // // Bottom left-side numbers
-        let vSin = s.sin(angle*f).toFixed(2);
-        let vCos = s.cos(angle*f).toFixed(2);
+        let vSin = s.sin(angle).toFixed(2);
+        let vCos = s.cos(angle).toFixed(2);
         s.push();
         s.fill(theme.thetaColor);
-        s.text("    θ  = " + (((angle*f)*180)/s.PI).toFixed(2) + "°", 5, bTxtY4);
+        s.text("    θ  = " + (((angle) * 180) / s.PI).toFixed(2) + "°", 5, bTxtY4);
         s.fill(theme.sineColor);
         s.text("sin(θ) = " + vSin, 5, bTxtY3);
         s.fill(theme.cosineColor);

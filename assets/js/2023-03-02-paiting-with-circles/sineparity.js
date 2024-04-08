@@ -18,7 +18,7 @@ let sineParity = (s) => {
         const canvas = s.createCanvas(theme.canvasX, theme.canvasY);
         canvas.parent('sine-parity-sketch');
         s.textFont(theme.textFont);
-        s.frameRate(theme.frameRate / 4);
+        s.frameRate(theme.frameRate);
         // Initialising vectors
         vC = s.createVector(s.width / 2, s.height / 2);
         vP = s.createVector(
