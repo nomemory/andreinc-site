@@ -91,6 +91,7 @@ I can't entirely agree with everything the following people are writing.
 | [healeycodes.com/](https://healeycodes.com/) | The personal blog of Andrew Healey. |
 | [hondu.co/](https://hondu.co/) | Javier Honduvilla Coto, a Software Engineer from Madrid living in London. |
 | [hookrace.net/](https://hookrace.net/) | Blog of [Dennis Felsing](https://dennis.felsing.org/). [Dennis believes God writes Haskell.](https://hookrace.net/blog/god-writes-haskell/) |
+| [isohedral.ca/](https://isohedral.ca/) | The website of Craig S. Kaplan. |
 | [jaylittle.com/](https://jaylittle.com/) | The blog of Jay Little. |
 | [j3s.sh](https://j3s.sh) | The (*minismallist*) good-looking personal site of Jes Olson. Talks about Free Software and other tech topics. [Here](https://j3s.sh/thought/my-website-is-one-binary.html) is where I found the motivation for writing [this]({{site.url}}/2022/04/10/a-blog-that-is-a-single-executable-binary) |
 | [jmmv.dev/](https://jmmv.dev/blog.html) | The personal blog of Julio Merino. Programming languages and operating systems. |

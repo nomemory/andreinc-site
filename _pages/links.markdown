@@ -11,17 +11,18 @@ This section is a work in progress, and if the number of links increases, I will
 ---
 
 - [Algorithms and Data Structures](#algorithms-and-data-structures)
-- [Art & Computers & Mathematics](#art-computers-mathematics)
+- [Art & Computers & Mathematics](#art--computers--mathematics)
 - [Blogging](#blogging)
 - [Books](#books)
 - [C Programming](#c-programming)
+- [Command Line](#command-line)
+- [Esoteric](#esoteric)
 - [Essays](#essays)
 - [Funny](#funny)
 - [Games](#games)
 - [Math](#math)
 - [Low Level](#low-level)
 - [Others](#others)
-- [Programming Languages](#programming-languages)
 - [Tools](#tools)
 - [Webrings & Blogrolls](#webrings-blogrolls)
 - [Wikipedia & TIL](#wikipedia-til)
@@ -51,6 +52,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A collection of practice problems for Competitive Programming contests.
 * [Great Ideas in Theoretical Computer Science](https://www.cs251.com/)
     * This course is about the rigorous study of computation, which is a fundamental component of our universe, the societies we live in, the new technologies we discover, as well as the minds we use to understand these things. 
+* [neetcode.io](https://neetcode.io/)
+    * A selection of interview leetcode questions + video solutions nicely explained.
 * [Notes on Data Structures and Programming Techniques, James Aspnes](http://www.cs.yale.edu/homes/aspnes/classes/223/notes.html)
     * A free book. Data Structures and algorithms using the C programming language.
     * It should be more popular.
@@ -93,6 +96,12 @@ This section is a work in progress, and if the number of links increases, I will
     * While many have attempted over the years to recreate Jean-Michel Jarre‘s classic Oxygène 4 using classic and vintage gear, Dittytoy user srtuss is the first that we’re aware of to do it using mind-bullets, aka 19KB of Javascript code.
 * [junkiyoshi.com/](https://junkiyoshi.com/)
     * Personal site of Jun Kiyoshi. Computer-generated art.
+* [Labyrnth](https://www.astrolog.org/labyrnth.htm)
+    * "I love Mazes and Labyrinths! That includes creating them, solving them, sharing with other enthusiasts, and most everything else. This site is dedicated to Mazes and Labyrinths, and features interactive Maze software, information on the movie "Labyrinth", galleries of Mazes, pictures of life size Mazes and Labyrinths, and more. Labyrinthink! :-)"
+* [Labyrinths and Mazes](https://www.dgp.toronto.edu/~karan/maze/)
+    * Labyrinths and mazes cradle millennia of legend and lore in their twisted articulations and are often considered mankind's first creation borne purely of human imagination. 
+* [Le Jeune Renard](https://lejeunerenard.com)
+    * "Sean Zellmer is a creative technologist whose goal is for you to discover the complexity of reality. He gives abstract concepts and objects form via technology, opening a window into a different dimension and building a semantic bridge to you."
 * [Mandelbox](https://acko.net/files/dump/mandelbox.html)
     * Mandelbox in Jelly.
 * [Mario Carillo](https://marioecg.com/)
@@ -112,6 +121,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Not exactly art, but you can consider it so.
 * [The story about Little Bird](https://exp-my-little-storybook.lusion.co/)
     * Crossing the river.
+* [Travelling Salesman Art](https://www2.oberlin.edu/math/faculty/bosch/tspart-page.html)
+    * Bonus: [a short tutorial](https://www2.oberlin.edu/math/faculty/bosch/making-tspart-page.html) on how to do your own.
 * [Weavesilk](http://weavesilk.com/)
     * Interactive generative art. It has a soothing effect.
 * [Zoomquilt](https://zoomquilt.org/)
@@ -152,6 +163,10 @@ This section is a work in progress, and if the number of links increases, I will
 # C Programming
 * [Beej's Guide](https://beej.us/guide/)
     * Quality C tutorials, i would defintely check: [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/), [Beej's Guide to C Programming](https://beej.us/guide/bgc/), and [Beej's Quick Guide to GDB](https://beej.us/guide/bggdb/).
+* [Blinky Pointer](http://cslibrary.stanford.edu/104/)
+    * This is how students were learning about `*pointers`.
+* [Build your own LISP](https://www.buildyourownlisp.com/contents)
+    * Learn C by building your own LISP.
 * [C Puzzles](http://www.gowrikumar.com/c/index.php)
 * [Cosmopolitan C](https://justine.lol/cosmopolitan/index.html)
     * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine.
@@ -173,6 +188,28 @@ This section is a work in progress, and if the number of links increases, I will
     * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior.
 * [Why people were enthused about gcc early on in its life?](https://utcc.utoronto.ca/~cks/space/blog/unix/GccEarlyEnthusiasm)
     * "What they didn't have was a good compiler."
+
+# Command Line
+* [lsix](https://github.com/hackerb9/lsix)
+    * Like `ls`, but for images. Shows thumbnails in terminal using sixel graphics.
+* [thirsty](https://github.com/kalbhor/thirsty)
+    * "If you're like me and you spend a lot of time programming with the command line open, chances are that you forget about everything for hours, which includes drinking water. At the end of the day I used to realise that I had not consumed enough water. Hence I created a bash/zsh script to remind me to drink water right on my command line."
+
+# Esoteric
+* [esolangs](https://esolangs.org/wiki/Main_Page)
+    * This wiki is dedicated to the fostering and documentation of programming languages designed to be unique, difficult to program in, or just plain weird.
+* [How to write a self-printing program](https://igoro.com/archive/how-to-write-a-self-printing-program/)
+    * "A self-printing program – also called a quine – is a program that prints out its own source code."
+* [Quine Relay](https://github.com/mame/quine-relay)
+    * QR.rb is a Ruby program that generates a Rust program that generates a Scala program that generates ...(through 128 languages in total)... a REXX program that generates the original Ruby code again.
+* [Self-printing Game of Life in C#](https://igoro.com/archive/self-printing-game-of-life-in-c/)
+    * "I wrote a little C# program that contains a Game-of-Life grid. The program advances the game grid to the next generation and prints out a copy of itself, with the grid updated. You can take the output, compile it with a C# compiler, run it, and you’ll get the next generation of the game. You can iterate the process, or change the initial grid state manually."
+* [tio.run](https://tio.run)
+    * TIO is a family of online interpreters for an evergrowing list of practical and recreational programming languages. It knows how to run a few of the most popular esoteric programming languages.
+* [tryapl](https://tryapl.org/)
+    * APL is an array-oriented programming language that will change the way you think about problems and data.
+* [uiua](https://www.uiua.org/)
+    * Uiua lets you write code that is as short as possible while remaining readable, so you can focus on problems rather than ceremony.
 
 # Essays
 * [Either your estimates suck or your job does ](https://wordsandbuttons.online/either_your_estimates_suck_or_your_job_does.html)
@@ -197,6 +234,7 @@ This section is a work in progress, and if the number of links increases, I will
 # Funny
 * [Can you tell an assembly language when you see one?](https://wordsandbuttons.online/can_you_tell_an_assembly_language_when_you_see_one.html)
     * "In fact, I'm not even sure that anyone can easily tell assembly code from some high-level code without googling. Can you?"
+* [Complaints Medieval Monks Scribbled in the Margins of Illuminated Manuscripts](https://www.themarginalian.org/2012/03/21/monk-complaints-manuscripts)
 * [Connnnngratulations! This project won China 2014 State Science and Technology Prizes ! FIRST PRIZE!!!!! ](https://github.com/iiordanov/remote-desktop-clients/issues/39)
 * [Make Front-End Shit Again](https://makefrontendshitagain.party/)
     * Multiple sites of pixel proportions.
@@ -260,6 +298,8 @@ This section is a work in progress, and if the number of links increases, I will
 # Math
 * [A journey and a method for drawing spheres](https://medium.com/@refik/a-journey-and-a-method-for-drawing-spheres-5b24246ca479)
     * I am not a big fan of medium articles, but this one is good.
+* [A truly incredible fact about the number 37](https://grossack.site/2023/11/08/37-median.html)
+    * "37, the median value for the second prime factor of an integer; thus the probability that the second prime factor of an integer chosen at random is smaller than 37 is approximately 0.5"
 * [Calculus Made Easy, Silvanus P. Thompson](https://calculusmadeeasy.org/)
 * [Concursuri de Matematica](http://www.mategl.com/download.htm)
     * Exercises from various Romanian Math contests. Resources are in Romanian.
@@ -273,6 +313,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Recreational mathematics and puzzles.
 * [How do calculators compute sine](https://androidcalculator.com/how-do-calculators-compute-sine/)
     * You would be surprised.
+* [How efficient is Morse Code](https://www.johndcook.com/blog/2017/02/08/how-efficient-is-morse-code/)
+    * Spoiler alert: not so efficient.
 * [How to fold a Julia Fractal](https://acko.net/blog/how-to-fold-a-julia-fractal/)
     * "Everything in mathematics is a choice."
 * [Is two to the power of infinity more than infinity?](https://igoro.com/archive/is-two-to-the-power-of-infinity-more-than-infinity/)
@@ -300,13 +342,14 @@ This section is a work in progress, and if the number of links increases, I will
     * "If you had to come up with a way to represent signed integers in 32-bits, how would you do it?"
 
 # Others
+* [Atlas Obscura](https://www.atlasobscura.com/)
+    * Atlas Obscura is a magazine about curious and wondrous travel destinations.
 * [ASK HN: Is there a point in school (2010)](https://news.ycombinator.com/item?id=1182512)
-    * "Even if you think university will teach you absolutely nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
+    * "Even if you think the university will teach you nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
+* [Grandpa's Photos](https://grandpas-photos.com)
+    * "This is Grandpa, otherwise known as Stephen Clarke. He was great at so many things. One of those was being a Grandpa. He was a WWII Air Force navigator, a husband, a Dad and we also discovered he was a great photographer."
 * [Dear Photograph](https://dearphotograph.com/)
     * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
-
-# Programming Languages
-* [Build your own LISP](https://www.buildyourownlisp.com/contents)
 
 # Tools
 * [carbon](https://carbon.now.sh/)
@@ -339,11 +382,15 @@ This section is a work in progress, and if the number of links increases, I will
     * A search engine for the classic web.
 
 # Wikipedia & TIL
+* [Ant-Fungus Mutualism](https://en.m.wikipedia.org/wiki/Ant%E2%80%93fungus_mutualism)
+    * The ant–fungus mutualism is a symbiosis seen between certain ant and fungal species, in which ants actively cultivate fungus much like humans farm crops as a food source. 
 * [Darwin (Programming Language)](https://en.m.wikipedia.org/wiki/Darwin_(programming_game))
     * Darwin was a programming game invented in August 1961 by Victor A. Vyssotsky, Robert Morris Sr., and M. Douglas McIlroy.
 * [Effective Altruism](https://en.m.wikipedia.org/wiki/Effective_altruism)
     * "Effective altruism (EA) is a 21st-century philosophical and social movement that advocates "using evidence and reason to figure out how to benefit others as much as possible, and taking action on that basis"".
 * [List of People claimed to be Jesus](https://en.m.wikipedia.org/wiki/List_of_people_claimed_to_be_Jesus)
+* [McNamara Fallacy](https://en.m.wikipedia.org/wiki/McNamara_fallacy)
+    * "The McNamara fallacy is often considered in the context of the Vietnam War, in which enemy body counts were taken to be a precise and objective measure of success."
 * [PSR J1748−2446ad](https://en.m.wikipedia.org/wiki/PSR_J1748%E2%88%922446ad)
     * PSR J1748−2446ad is the fastest-spinning pulsar known, at 716 Hz (times per second)
 * [The Inventor of the Black Box Was Told to Drop the Idea and “Get On With Blowing Up Fuel Tanks](https://spectrum.ieee.org/the-inventor-of-the-black-box-was-told-to-drop-the-idea-and-get-on-with-blowing-up-fuel-tanks)
