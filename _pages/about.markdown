@@ -31,7 +31,7 @@ I have a bachelor's degree in *Electronics, Telecommunications, and Information*
 ![jpg]({{site.url}}/assets/images/about/politehnica.jpeg){:height="50%" width="50%"}
 <sup><sup><sup> Universitatea Politehnica, Bucharest, Romania</sup></sup></sup>
 
-I have played with math, computers, and programming languages since childhood. My parents were engineers, and they instilled in me a healthy curiosity for technology. My maternal grandfather and granduncle were math teachers, so they've played me into playing with me with numbers.
+I have played with math, computers, and programming languages since childhood. My parents were engineers, and they instilled in me a healthy curiosity for technology. My maternal grandfather and granduncle were math teachers, so they've played me into playing with numbers.
 
 ![jpg]({{site.url}}/assets/images/about/muscalu.png){:height="50%" width="50%"}
 <sup><sup><sup>Me and Alexandru Muscalu, my cool grandfather math teacher</sup></sup></sup>

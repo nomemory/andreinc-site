@@ -8,7 +8,27 @@ This place is my *garden of curiosities*, or *a chocolate factory*, or *artifact
 
 This section is a work in progress, and if the number of links increases, I will need to find a better solution to manage them.
 
-# A.I.
+---
+
+- [Algorithms and Data Structures](#algorithms-and-data-structures)
+- [Art & Computers & Mathematics](#art-computers-mathematics)
+- [Blogging](#blogging)
+- [Books](#books)
+- [C Programming](#c-programming)
+- [Essays](#essays)
+- [Funny](#funny)
+- [Games](#games)
+- [Math](#math)
+- [Low Level](#low-level)
+- [Others](#others)
+- [Programming Languages](#programming-languages)
+- [Tools](#tools)
+- [Webrings & Blogrolls](#webrings-blogrolls)
+- [Wikipedia & TIL](#wikipedia-til)
+
+---
+
+<!-- # A.I.
 * [Better without A.I.](https://betterwithout.ai/)
     * Better without AI explores moderate apocalypses that could result from current and near-future AI technology. These are relatively overlooked risks: not extreme sci-fi extinction scenarios, nor the media’s obsession with “ChatGPT said something naughty” trivia. Rather: realistically likely disasters, up to the scale of our history’s worst wars and oppressions.
 * [Bubble trouble (2024)](https://www.wheresyoured.at/bubble-trouble/)
@@ -19,7 +39,7 @@ This section is a work in progress, and if the number of links increases, I will
 * [MDN’s AI Help and lucid lies (2024)](https://seirdy.one/posts/2024/04/04/mdn-ai-help-and-lucid-lies/)
     * Following the release of MDN’s AI chatbot “feature”, many developers turned to GitHub Issues to voice concerns. Most concerns revolved around the chatbot spouting misinformation on a technical reference expected to contain accurate information, and ethical concerns related to OpenAI and the use of a large language model (LLM).
 * [Not By AI](https://notbyai.fyi/)
-    * Banners to tell people what they read was not made with LLMs.
+    * Banners to tell people what they read was not made with LLMs. -->
 
 # Algorithms and Data Structures
 * [A gentle introduction to Algorithm Complexity Analysis](http://discrete.gr/complexity/)
@@ -53,6 +73,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Dave Whyte, motion graphic design.
 * [bleuje's animations](https://bleuje.com/animationsite/)
     * Animations since 2017. They look fantastic. Thank you, Etienne Jacob!
+* [broider](https://maxbittker.github.io/broider/)
+    * This a tool for making "9-patch" borders. 
 * [Dans Les Nuages](https://danslesnuages.xyz/)
     * "I enjoy the possibility of relative anonymity to regain a freedom of experimentation that some closed ecosystems cheerfully took away, by their elitism or traditionalism."
 * [e4494s](https://e4494s.neocities.org/)
@@ -62,6 +84,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "The following is a "photographic" gallery of fractal patterns found while exploring the planet with Google Earth"
 * [Finite Curve](https://www.finitecurve.com/)
     * A web app to draw any photo with a single line.
+* [Field Lines](https://acko.net/files/dump/tiles/fieldlines2.html)
 * [Glitch2](https://akx.github.io/glitch2/)
     * Glitch images in creative ways.
 * [hexeosis](https://hexeosis.com/)
@@ -84,8 +107,11 @@ This section is a work in progress, and if the number of links increases, I will
     * Looking at the number PI from different angles: PI on a grid, a random walk of PI digits, a circular web-walk of PI, and the probability histogram of PI.
 * [Virtual Insanity but it's played on an oscilloscope](https://www.youtube.com/watch?v=zGlZqDHqhR0)
     * Eventually, I've decided to include this in the category of arts.
+* [Sandspiel](https://sandspiel.club/)
 * [The Lorentz Attractor](https://acko.net/files/dump/tiles/lorenz.html)
     * Not exactly art, but you can consider it so.
+* [The story about Little Bird](https://exp-my-little-storybook.lusion.co/)
+    * Crossing the river.
 * [Weavesilk](http://weavesilk.com/)
     * Interactive generative art. It has a soothing effect.
 * [Zoomquilt](https://zoomquilt.org/)
@@ -93,10 +119,17 @@ This section is a work in progress, and if the number of links increases, I will
 
 # Blogging
 * [How Google helped destroy adoption of RSS feeds](https://openrss.org/blog/how-google-helped-destroy-adoption-of-rss-feeds)
+    * To this day I believe RSS is a lousy technology, but we don't have anything better.
+* [Indeed, it seems that Google IS forgetting the old Web](https://stop.zona-m.net/2018/01/indeed-it-seems-that-google-is-forgetting-the-old-web/)
+    * "I think Google has stopped in­dex­ing the old­er parts of the We­b. I think I can prove it. Google’s com­pe­ti­tion is do­ing bet­ter."
+* [This Page is Designed to Last (2019)](https://jeffhuang.com/designed_to_last/)
+    * "A Manifesto for Preserving Content on the Web"
 * [Where have all the websites gone?](https://www.fromjason.xyz/p/notebook/where-have-all-the-websites-gone/)
+    * "No one clicks a webpage hoping to learn which cat can haz cheeseburger. Weirdos, maybe."
 
 # Books
 * [Donald Knuth Non-Tech Reading List](https://www-cs-faculty.stanford.edu/~knuth/retd.html)
+    * "Of course I like to read nontechnical books, although I read very slowly."
 * [Free Tech Books](https://www.freetechbooks.com/)
     * A collection of free technical books under free licenses.
 * [LibriVox](https://librivox.org/)
@@ -109,6 +142,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A living library of Jewish Texts
 * [Standard EBooks](https://standardebooks.org/)
     * Free and liberated ebooks, carefully produced for the true book lover.
+* [The Journal of Open Source Software](https://joss.theoj.org/)
+    * Committed to publishing quality research software with zero article processing charges or subscription fees.
 * [The Universal Digital Library](http://ulib.isri.cmu.edu/)
     * This library promises 1 million free books, but I haven't counted them.
 * [What Should I read next?](https://www.whatshouldireadnext.com/)
@@ -116,7 +151,7 @@ This section is a work in progress, and if the number of links increases, I will
 
 # C Programming
 * [Beej's Guide](https://beej.us/guide/)
-    * C tutorials
+    * Quality C tutorials, i would defintely check: [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/), [Beej's Guide to C Programming](https://beej.us/guide/bgc/), and [Beej's Quick Guide to GDB](https://beej.us/guide/bggdb/).
 * [C Puzzles](http://www.gowrikumar.com/c/index.php)
 * [Cosmopolitan C](https://justine.lol/cosmopolitan/index.html)
     * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine.
@@ -135,11 +170,15 @@ This section is a work in progress, and if the number of links increases, I will
 * [The lost art of structure packing](http://www.catb.org/esr/structure-packing/)
     * Nice technical essay by [Eric S. Raymond](https://en.wikipedia.org/wiki/Eric_S._Raymond).
 * [The Underhanded C Contest](http://underhanded-c.org)
-    * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior. 
+    * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior.
+* [Why people were enthused about gcc early on in its life?](https://utcc.utoronto.ca/~cks/space/blog/unix/GccEarlyEnthusiasm)
+    * "What they didn't have was a good compiler."
 
 # Essays
 * [Either your estimates suck or your job does ](https://wordsandbuttons.online/either_your_estimates_suck_or_your_job_does.html)
     * "Luckily, most estimates never come true, and I have a dozen polynomial models to show you why."
+* [Glory is only 11MB/s away](https://thmsmlr.com/cheap-infra)
+    * "One thing is certain in life: if you’re getting something for a steal, someone is getting screwed, and it’s probably you elsewhere."
 * [Not a supplier (2022)](https://www.softwaremaxims.com/blog/not-a-supplier)
     * "Until then, I am not your supplier. So all your Software Supply Chain ideas? You are not buying from a supplier, you are a raccoon digging through dumpsters for free code. So I would advise you to put these rules in the same dumpster. And remember. I am not a supplier. Because **THIS SOFTWARE IS PROVIDED “AS IS”**".
 * [Learning to program is getting harder (2018)](https://allendowney.blogspot.com/2018/02/learning-to-program-is-getting-harder.html?m=1)
@@ -147,12 +186,18 @@ This section is a work in progress, and if the number of links increases, I will
 * [Software Development 450 Words Per Minute](https://www.vincit.com/blog/software-development-450-words-per-minute)
     * "I’m also blind. In this blog post I’m going to shed some light on the way I work."
 * [Things I wish I learned in Engineering School (2000)](http://www.cattell.net/talk/TiwiliesTalk.htm)
+* [The computer built to last 50 years (2021)](https://ploum.net/the-computer-built-to-last-50-years/)
+    * "How to create the long-lasting computer that will save your attention, your wallet, your creativity, your soul, and the planet."
+* [The bullshit web (2018)](https://pxlnv.com/blog/bullshit-web/)
+    * "I wanted to bring many threads together into a single document that may pretentiously be described as a theory of or, more practically, a guide to the bullshit web."
+* [VPN - a Very Precarious Narrative](https://overengineer.dev/blog/2019/04/08/very-precarious-narrative/)
+    * "In most circumstances, VPNs do very little to enhance your data security or privacy unless paired with other changes."
 * [Why Bloat Is Still Software’s Biggest Vulnerability](https://spectrum.ieee.org/lean-software-development)
 
 # Funny
-* [A baby is born on Google Street View (2010)](https://imgur.com/Nh6Xj)
 * [Can you tell an assembly language when you see one?](https://wordsandbuttons.online/can_you_tell_an_assembly_language_when_you_see_one.html)
     * "In fact, I'm not even sure that anyone can easily tell assembly code from some high-level code without googling. Can you?"
+* [Connnnngratulations! This project won China 2014 State Science and Technology Prizes ! FIRST PRIZE!!!!! ](https://github.com/iiordanov/remote-desktop-clients/issues/39)
 * [Make Front-End Shit Again](https://makefrontendshitagain.party/)
     * Multiple sites of pixel proportions.
 * [Movie-a-Minute](http://www.rinkworks.com/movieaminute/)
@@ -171,10 +216,16 @@ This section is a work in progress, and if the number of links increases, I will
 * [Collosal Cave Adventure Page](https://rickadams.org/adventure/)
     * You can play the game [here](https://rickadams.org/adventure/advent/)
     * The user would thus be a part of an ongoing story in a fantasy setting — in this case, an exploration of [Colossal Cave in Kentucky](https://en.wikipedia.org/wiki/Colossal_Cavern). But this Colossal Cave, though remarkably similar to its real-life counterpart, was also very different: *Magic was afoot in the cave...*
+* [DOS Games](https://www.doshaven.eu/)
+    * 21st century DOS games.
 * [Dune 2 (Web Version)](https://dos.zone/dune-ii-the-building-of-a-dynasty-dec-1992/)
     * The first RTS game I've played, now on WEB.
 * [Fantasy Map Generator](https://azgaar.github.io/Fantasy-Map-Generator/)
     * Can be helpful if you are the [Dungeon Master](https://en.wikipedia.org/wiki/Dungeon_Master).
+* [ORB Farm](https://orb.farm/)
+    * This is your personal aquatic ecosystem to nurture, sculpt, and observe.
+* [paku paku](https://abagames.github.io/crisp-game-lib-11-games/?pakupaku)
+    * 1-D pacman.
 * [puzzle script](https://www.puzzlescript.net/)
     * PuzzleScript is an open-source HTML5 puzzle game engine. 
 * [Quantum Soccer](https://gregegan.net/BORDER/Soccer/Soccer.html) 
@@ -203,8 +254,12 @@ This section is a work in progress, and if the number of links increases, I will
     * You are a ball in dark space. Can you light up the universe?
 * [Truncate](https://truncate.town/)
     * A words strategy game
+* [Zork](https://iplayif.com/?story=http%3A%2F%2Fwww.ifarchive.org%2Fif-archive%2Fgames%2Fzcode%2Fzdungeon.z5)
+    * "Welcome to ZORK."
 
 # Math
+* [A journey and a method for drawing spheres](https://medium.com/@refik/a-journey-and-a-method-for-drawing-spheres-5b24246ca479)
+    * I am not a big fan of medium articles, but this one is good.
 * [Calculus Made Easy, Silvanus P. Thompson](https://calculusmadeeasy.org/)
 * [Concursuri de Matematica](http://www.mategl.com/download.htm)
     * Exercises from various Romanian Math contests. Resources are in Romanian.
@@ -227,11 +282,28 @@ This section is a work in progress, and if the number of links increases, I will
 * [Sine and cosine](https://wordsandbuttons.online/sine_and_cosine.html)
     * "For every pair, I think I know what the words mean from school but I can't always tell one from another. I can always tell sine from cosine but I didn't learn them at school. My father taught me."
 
-# Operating Systems
+# Low Level
+* [An IRC client in your motherboard](https://axleos.com/an-irc-client-in-your-motherboard/)
+    * "I made a graphical IRC client that runs in UEFI."
+* [Building an operating system for Raspberry PI](https://jsandler18.github.io/)
 * [copy.sh/v86/](http://copy.sh/v86/)
     * Run operating systems in your browser.
+* [GNU Poke](https://jemarch.net/poke)
+    * GNU poke is an interactive, extensible editor for binary data.
+* [How wine works (2022)](https://werat.dev/blog/how-wine-works-101/)
+    * "This article greatly simplifies reality and I don’t claim to know all the details. However I hope the explanation here will give you a general understanding of how things like Wine work."
+* [Ray Tracing In Notepad.exe At 30 FPS](https://kylehalladay.com/blog/2020/05/20/Rendering-With-Notepad.html)
+    * "I ended up making a Snake game and a small ray tracer that use stock Notepad for all input and rendering tasks, and got to learn about DLL Injection, API Hooking and Memory Scanning along the way."
 * [Temple OS](https://templeos.org/)
     * God's operating system.
+* [Why computers represent signed integers using two's complement](https://igoro.com/archive/why-computers-represent-signed-integers-using-twos-complement/)
+    * "If you had to come up with a way to represent signed integers in 32-bits, how would you do it?"
+
+# Others
+* [ASK HN: Is there a point in school (2010)](https://news.ycombinator.com/item?id=1182512)
+    * "Even if you think university will teach you absolutely nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
+* [Dear Photograph](https://dearphotograph.com/)
+    * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
 
 # Programming Languages
 * [Build your own LISP](https://www.buildyourownlisp.com/contents)
@@ -240,7 +312,12 @@ This section is a work in progress, and if the number of links increases, I will
 * [carbon](https://carbon.now.sh/)
     * Create and share beautiful images of your source code.
 * [dittytoy](https://dittytoy.net/)
-    * Create your generative music online using a simple Javascript API. 
+    * Create your generative music online using a simple Javascript API.
+* [Markdown TOC generator](https://derlin.github.io/bitdowntoc/)
+* [Paper HN](https://www.wolfgangfaust.com/project/paper-hn/)
+    * Read hacker news as an old paper.
+* [Random HackerNews](https://randomhackernews.com/)
+    * Redirecting to a random date's front page.
 
 # Webrings & Blogrolls
 * [512kb Club](https://512kb.club/)
@@ -249,10 +326,12 @@ This section is a work in progress, and if the number of links increases, I will
     * To be eligible for a listing in this directory, a website must have a curated collection of bookmarks and/or links to other websites. I did my part.
 * [Blogroll](https://blogroll.org/)
     * You are viewing a humanly curated list of fine personal & independent blogs that are updated regularly. No algorithms ever!
-* [hn blogroll](https://dm.hn/)
-    * Personal blogs of hn users.
 * [collection.mataroa.blog](https://collection.mataroa.blog/)
     * Curated list of personal blogs on any topic.
+* [hn blogroll](https://dm.hn/)
+    * Personal blogs of hn users.
+* [Pointless Sites](https://www.pointlesssites.com/)
+    * We aim to list only pointless and useless sites that are completely pointless, don't have pop ads, are original, are useless, are not offensive and make you smile - family friendly fun.
 * [tilde.club/](https://tilde.club/)
 * [webring.xxiivv.com/](https://webring.xxiivv.com/)
     * This webring is an attempt to inspire artists & developers to build their websites and share traffic amongst each other. The ring welcomes hand-crafted wikis and portfolios. 
@@ -260,7 +339,6 @@ This section is a work in progress, and if the number of links increases, I will
     * A search engine for the classic web.
 
 # Wikipedia & TIL
-
 * [Darwin (Programming Language)](https://en.m.wikipedia.org/wiki/Darwin_(programming_game))
     * Darwin was a programming game invented in August 1961 by Victor A. Vyssotsky, Robert Morris Sr., and M. Douglas McIlroy.
 * [Effective Altruism](https://en.m.wikipedia.org/wiki/Effective_altruism)
@@ -268,6 +346,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [List of People claimed to be Jesus](https://en.m.wikipedia.org/wiki/List_of_people_claimed_to_be_Jesus)
 * [PSR J1748−2446ad](https://en.m.wikipedia.org/wiki/PSR_J1748%E2%88%922446ad)
     * PSR J1748−2446ad is the fastest-spinning pulsar known, at 716 Hz (times per second)
+* [The Inventor of the Black Box Was Told to Drop the Idea and “Get On With Blowing Up Fuel Tanks](https://spectrum.ieee.org/the-inventor-of-the-black-box-was-told-to-drop-the-idea-and-get-on-with-blowing-up-fuel-tanks)
+    * Fortunately, David Warren kept working on his crash-proof flight data recorder
 * [Why is the mouse cursor slightly tilted and not straight?](https://ux.stackexchange.com/questions/52336/why-is-the-mouse-cursor-slightly-tilted-and-not-straight)
 
 
