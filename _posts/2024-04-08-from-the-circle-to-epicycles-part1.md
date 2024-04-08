@@ -108,7 +108,6 @@ And then there's nature, which loves circles in a way that is not obvious, but t
 But, enough philosophical and mystical speculation, let's get back to basic mathematics. Illuminated or not, I suppose everyone knows what a circle is:
 
 <div id="simple-circle-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecircle.js)
 
 It's a geometric figure with a *center* point $$P(a,b)$$, and radius ($$r$$). Nothing more, nothing less. Based on this, we can come up with a *numeric definition* for the culprit:
 
@@ -123,12 +122,10 @@ If we pick the circle's centre as the centre of the [*Cartesian Grid*](https://e
 So (the unit) circle is composed of an infinity of dimensionless points $$P(x_{i}, y_{i})$$, for which their coordinates satisfy the simple *Pythagorean* condition: $$x_{i}^2 + y_{i}^2=1$$.
 
 <div id="simple-circle-rotating-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecirclerotating.js)
 
 The key to the circle's symmetry stems from the fact that $$\forall x \in \mathbb{R}, x^{2} = (-x)^2$$, so every point is perfectly reflected on the *other side*, regardless of the *quadrant*:
 
 <div id="triangle-in-circle-sketch"></div>
-[(Source code)]({{site.url}}/assets/js/2023-03-02-paiting-with-circles/triangleincircle.js)
 
 For example, if a take a point $$A(x,y)$$, its reflection on the other side (the opposite quadrant) will be $$A^{'}(-x, -y)$$. Because $$x^2+y^2=(-x)^2 + (-y)^2$$, then we can say that both $$A$$ and $$A^{'}$$ are on the same circle. Pick two symmetrical points, rotate them around, and you will obtain a circle. *Opposition creates symmetry*. 
 
@@ -137,7 +134,6 @@ But speaking of Pythagoras, if we look closer at the *equation* defining the Cir
 This means we can *trap* an infinity of right triangles inside a circle. To make things simpler, we also can define `sine` and `cosine` in relationship with the *Unit Circle*:
 
 <div id="simple-circle-rotating-triangle-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js)
 
 Where:
 * $$\theta$$ is the angle formed by the radius, $$r$$ and the $$x$$ axis, at every given point. 
@@ -165,18 +161,15 @@ To better understand "what is $$\pi$$?", let's look at the following animation. 
 If we roll a circle with a $$radius \neq 1$$ instead, the trail (*perimeter*) will be $$2*\pi*r$$ (where $$r$$ is the radius).
 
 <div id="rotating-PI-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpi.js)
 
 So, the angles expressed in degrees can also be described by the circle's *rolling projection* on the $$x$$ axis. The following animation is interactive; hold the mouse pressed in the middle of the circle and move it left or right to see the correspondence between radians and degrees:
 
 <div id="rotating-PI-w-PI-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/rotatingpiwpi.js)
 
 To transform an angle measured in degrees ($$360°$$) to radians, the algorithm is simple: we multiply the angle by $$\pi$$, and then we divide the result by $$180$$. To transform back an angle measured from radians to degrees, we do the inverse operations, multiply the angle by $$180$$, and divide everything by $$\pi$$.
 If we put all the information back into *The Unit Circle* animation, things are going to look like this:
 
 <div id="simple-circle-with-pi-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplecirclewithpi.js)<sup></sup>
 
 <table>
     <tr>
@@ -342,12 +335,10 @@ If you like math, it is good you memorise the values. If not, they can easily be
 The *moving* radius inside the Unit Circle is the *moving element* that helps us plot the $$sin$$ function. Sine is like a wave that oscillates in the interval $$[-1, 1]$$, from $$-\infty$$ to $$\infty$$, regardless of the input. In a way, $$sine$$ *unrolls* the circle in/with time. Given the circle's symmetry, sine is a *periodic function* that repeats every $$2\pi$$ unit. 
 
 <div id="simple-osc-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleosc.js)
 
 At this point, it will be unfair for cosine not to plot it on the same graph:
 
 <div id="simple-osc-cos-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleosccos.js)
 
 If you put $$sin$$ and $$cos$$ on the same graph, you will soon realise they are not so different; they are almost the same function, with a phase shift between them.
 
@@ -364,7 +355,6 @@ The $$x$$ for which $$sin(x)=1$$ and $$cos(x)=1$$ is $$x=\frac{\pi}{2}$$. Sorry 
 This is, of course, obvious if we plot the functions side by side:
 
 <div id="sin-cos-side-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sincosside.js)
 
 Because the cosine function has a small headstart ($$\frac{\pi}{2}$$) to the sine function, it's said that the *cosine leads the sine*, or that *sine lags the cosine*. Whenever we refer to a *sinusoid*, we mean both sine and cosine (without discrimination). I insist on this concept, because later in the article you will see *cosine* used as a *sinusoid*, so don't expect naming it a *cosinusoid* because such things don't exist, mathematically speaking. 
 
@@ -385,12 +375,10 @@ On the other hand, we've said the circle is the *essence* of symmetry, so we wou
 Well, the intuition is correct. The *cosine* is *even*, meaning $$cos(x)=cos(-x)$$:
 
 <div id="cosine-parity-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/cosineparity.js)
 
 And the *sine* is odd, meaning $$sin(-x)=-sin(x)$$, or $$sin(x)=-sin(-x)$$:
 
 <div id="sine-parity-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sineparity.js)
 
 # "Customising" the sine function (sinusoids)
 
@@ -444,7 +432,6 @@ The following animation is interactive. You can choose the values of $$A=$$
     to plot the sinusoid (if you pick $$\varphi=\frac{\pi}{2}$$ a cosine is plotted):
 
 <div id="sinusoids-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sinusoids.js)
 
 Observations:
 * The value of $$A$$ corresponds to the radius of the circle *generating* the oscilation. If we increase the amplitutde we increase the radius of the circle;
@@ -456,7 +443,6 @@ Even if it's counterintuitive from a physical sense, frequencies can have negati
 For example, two sinusoids in phase and with the same amplitudes but opposite frequencies nullify themselves. 
 
 <div id="one-negative-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/onenegative.js)
 
 This can also be explained by the fact *sine* is an odd function, so that $$sin(x) = -sin(-x)$$ and $$-sin(x)=sin(-x)$$.
 
@@ -476,13 +462,11 @@ So let's plot two arbitrary selected sinusoids $$y_{1}(x)$$ and $$y_{2}(x)$$, wh
 The sum $$y(x)=y_{1}(x) + y_{2}(x)$$ already looks more "fascinating".
 
 <div id="sum-simple-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumsimple.js)
 
 To make it easier to visualize, let's add random sinusoids to an existing one (with $$A=1$$, $$\omega=1$$, $$\varphi=1$$)  and observe the *beautiful* patterns that are created:
 
 
 <div id="drop-sinusoid-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/dropsinusoid.js)
 
 We can even express "square waves" as a sum of sinusoids. Let's take, for example, the following formula:
 
@@ -516,7 +500,6 @@ Choose how many sinusoids you want to use, and let's see how the functions look 
     </select>):
 
 <div id="square-wave-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewave.js)
 
 Except for those small overshoot "spikes" at the corners of the square ([Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon)), adding more sinusoids in the picture makes the "square" approximation more convincing. The reason for this phenomenon stems from the fact that a "jumping" function is hard to approximate using a "smooth" and "tame" sinusoid.
 
@@ -537,7 +520,6 @@ Pick <select id="sumEpiSins" onchange="updateSumEpi()">
 
 
 <div id="sum-epi-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/sumepi2.js)
 
 Wait a minute,  adding sinusoids means "stitching" their associated circles so that the centre of each subsequent circle is moving along the previous larger one. How is that even working? The components of this marvellous "machinery" describing the behaviour of $$y(x)$$ are called [Epycicles](https://en.wikipedia.org/wiki/Deferent_and_epicycle).
 
@@ -555,7 +537,6 @@ A position vector represents the displacement from the origin $$(0, 0)$$ to a sp
 If we plot $$y(x)$$ on the cartesian grid we obtain something like: 
 
 <div id="simple-yx-plot-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js)
 
 At each given point $$x$$, we can say for certain that $$\vec{u} = \vec{u_{1}} + \vec{u_{2}} + \vec{u_{3}}$$. This is why "epicycles" work like this; isn't this *amazing*?
 
@@ -566,7 +547,6 @@ Now, let's briefly forget about the cartesian representation of our sums of sinu
 Let's start with a flower:
 
 <div id="a-flower-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/aflower.js)
 
 Can you guess the individual sinusoids behind each epicycle for each of the four sketches or the ones behind the *flower*? 
 
@@ -583,7 +563,6 @@ When we think about numbers, we usually think of [*real numbers*](https://en.wik
 To represent real numbers we only need the $$Re$$ axis (one dimensional, rebranding of the $$X$$ axis of the Cartesian System):
 
 <div id="renums-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/renums.js)
 
 > Fun fact: We know that $$\pi$$ and $$e$$ are irrational numbers, but until now, we have no proof that $$e + \pi$$ is irrational. 
 
@@ -597,7 +576,6 @@ So, the natural solution was to *imagine* a number like this. We've isolated the
 By multiplying $$i$$ with various coefficients, we obtain an infinity of *imaginary* numbers ($$\mathbb{I}$$). For example $$5i$$, $$\pi i$$, $$\sqrt{7}i$$ are all imaginary numbers. Funnily enough, $$0*i = 0$$ can be considered both a *real* and a purely *imaginary* number. Philosophically speaking, reality and imagination start and end at $$0$$. We can represent all the imaginary numbers on a $$Im$$ axis that somehow intersects the axis of the *real* numbers in $$0$$, after all this is what *unites* them:
 
 <div id="imnums-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/imnums.js)
 
 *Imaginary numbers* are not particularly interesting from a mathematical standpoint; they are just multiples of $$i$$.
 
@@ -611,7 +589,6 @@ For example, in the next sketch, we are going to represent the following complex
 * $$z_{5}=-3.33-2.8i$$.
 
 <div id="cmplxnums-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/cmplxnums.js)
 
 The two parts, $$Re$$ and $$Im$$, never mix; they stand distinct as *extensions* of the number. So, in this sense, you can treat a complex number as a glorified 2D vector. However, what makes them unique, is that compared to vectors, *complex numbers* have an "inner" algebraic structure that makes them more powerful. 
 
@@ -624,12 +601,10 @@ The *direction of the complex number* is the angle it makes with the $$Re$$ axis
 Moving the *Unit Circle* to the *Complex Plane* is only natural. The only difference would be that compared to the *Cartesian System*, the points (on the Unit Circle) are not defined by two coordinates $$(x, y)$$, but by a single *complex number* ($$z=cos(\theta)+i*sin(\theta)$$):
 
 <div id="simple-circle-rotating-circle-cmp-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simplerotatingcirclecmp.js)
 
 But do you know what's interesting (and obvious)? Multiplying a *complex number* with *i* is the equivalent of rotating the number counterclockwise with $$\frac{\pi}{2}$$ on an "imaginary circle" with the radius: $$r=\mid a + b*i \mid=\sqrt{a^2 + b^2}$$. For example if we take $$z_{1} \in \mathbb{C}$$ and we multiply it 3 times with $$i$$, we will have it's (*rotated*) in all the four quadrants of the *Complex Plane*:
 
 <div id="cmpl-rotation-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/cmplrotation.js)
 
 The angle determined by $$(0, z_{1})$$ and $$(0, z_{1}*i)$$ is $$\frac{\pi}{2}$$, while the angle between $$(0, z_{1})$$ and $$(0, z_{1}*i*i)$$ is $$\pi$$. Remember this *rotational behaviour*, because it's the key to visually understanding the connection between $$\pi$$ and another transcendental constant of the *Universe*, $$e$$, as exposed by Euler's formula.
 
@@ -772,7 +747,6 @@ Two interesting observations:
 * If we project the complex sinusoid on the plane determined by the X-axis and Z-axis, we will plot a *cosine* (the Real part);
 
 <div id="three-d-complex-sketch"></div>
-[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/threedcomplex.js)
 
 If we step back, we might ask what's so unique about $$\mathbb{C}$$, why the *Unit Circle* from the *Complex Plane* is suddenly more interesting than the one we've introduced at the beginning of the article. Why do we use $$\mathbb{C}$$ and not $$\mathbb{R}^{2}$$? After all, $$\mathbb{R}^{2}$$ _has_ points; they are the *same points* as in $$\mathbb{C}$$, and the circles look the same, regardless of the formalism.
 

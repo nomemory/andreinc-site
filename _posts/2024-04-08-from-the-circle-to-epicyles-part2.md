@@ -111,7 +111,6 @@ It's time to understand how we've devised such an approximation.
 In *isolation*, the *Square Wave*, $$f(x)$$ looks like this:
 
 <div id="square-wave-f-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavef.js)</sup></sup>
 
 Throughout the interval  `[0, 2L]`, $$f(x)$$ can be written as:
 
@@ -169,14 +168,12 @@ First of all, let's look at $$A_{0} = \frac{1}{2L} \int_{0}^{2L} f(x) dx$$. Noti
 Well, this coefficient ($$A_{0}$$) is a fancy way to express the average of $$f(x)$$ over the interval (in our case `[0, 2L]`). In the same time $$A_{0}$$ is the area determined by $$f(x)$$ over `[0, 2L]` then divided by $$2L$$. But if you look at the plot again, you will see that the net area is  $$0$$, because the green area (S1) nullifies the red area (S2), regardless of $$L$$.
 
 <div id="square-wave-f-a0-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavefa0.js)</sup></sup>
 
 Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish. 
 
 Visually speaking, regardless of how you pick $$n$$ or $$L$$, the net area determined by the $$A_{n}$$ integral will always be zero. It's visually obvious if we *plot* $$A_n$$. For example plotting $$A_{1}$$, $$A_{2}$$, $$A_{3}$$, $$A_{4}$$ looks like this:
 
 <div id="square-wave-f-an-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavean.js)</sup></sup>
 
 Similar symmetrical patterns will emerge if you increase the $$n$$ in $$A_{n}$$ and plot them.
 
@@ -187,7 +184,6 @@ Thirdly, we need to compute:
  If we plot a $$B_{1}$$, $$B_{2}$$, $$B_{3}$$ and, let's say, $$B_{4}$$ we can intuitively *feel* what's happening with $$B_{n}$$:
 
 <div id="square-wave-f-bn-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavebn.js)</sup></sup>
 
 If you have a keen eye for geometrical representations, you will notice that every even $$B_{n}$$ is also 0. The red and green areas nullify, so the net area described by the integral is $$0$$. The odd terms will be $$2 * \text{something}$$, so let's calculate that $$\text{something}$$.
 
@@ -232,7 +228,6 @@ $$
 In the next animation, you will see that by increasing $$n$$, the accuracy of our approximation gets better and better, and the *gaps* are slowly closed:
 
 <div id="tight-fourier-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourier.js)</sup></sup>
 
 To understand how adding more coefficients improves the approximation, let's look back again at a few of our coefficients $$s_{1}(x)$$, $$s_{2}(x)$$, $$s_{3}(x)$$, $$s_{4}(x)$$ and $$s_{5}(x)$$ (we will pick $$\omega=\frac{\pi}{2}$$, so that $$2L=1$$):
 
@@ -251,7 +246,6 @@ Each of the 5 terms is a sinusoid, with $$\frac{4}{\pi}$$, $$\frac{4}{3\pi}$$, e
 So, if we were to approximate a *Square Wave* with its fifth partial sum (the red dot), we would obtain something like this:
 
 <div id="tight-fourier-avg-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js)</sup></sup>
 
 Notice how *obsessed* the *red dot* is with the *blue dot* (the actual function) and how closely it follows it. 
 
@@ -268,7 +262,6 @@ $$
 Plotting the function $$s(x)$$, we will see that things converge smoothly and fast. As soon as $$n$$ approaches $$6$$, we can already observe the triangle:
 
 <div id="tight-triangle-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tighttriangle.js)</sup></sup>
 
 Let's compute the first terms six terms of the $$\sum$$, so that:
 
@@ -305,7 +298,6 @@ $$
 Visually speaking, the results will not be surprising if we plot $$sin(-x)$$ and $$sin(x+\pi)$$ side by side; the two are equivalent:
 
 <div id="pi-shift-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/pishift.js)</sup></sup>
 
 If we consider this, the even terms of $$s(x)$$ will become:
 
@@ -325,7 +317,6 @@ $$
 Plotting $$s(x)$$, while increasing $$n$$, things look like this:
 
 <div id="tight-sawtooth-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightsawtooth.js)</sup></sup>
 
 ## A Fourier Series Machinery
 
@@ -338,7 +329,6 @@ You can pick the shape of the desired signal from here: <select id="fm-wave" onc
     </select> and the sketch will change accordingly.
 
 <div id="fmachinery-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/fmachinery.js)</sup></sup>
 
 ...A bunch of spinning circles on a stick, where each circle corresponds to exactly one term of the series - this is the marvelous *Fourier Series Machinery*. 
 
