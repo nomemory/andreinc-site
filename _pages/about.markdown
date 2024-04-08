@@ -63,6 +63,8 @@ My most popular articles so far are:
 
 ... it's a work in progress
 
+I've also started to collect interesting links. Check [this section]({{site.url}}/links).
+
 #### `Tools`
 
 Blog:
