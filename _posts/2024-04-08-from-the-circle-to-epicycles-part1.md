@@ -1,5 +1,5 @@
 ---
-title: "From the circle to epicycles (Part 1)"
+title: "From the circle to epicycles - Circles, Sines and Sinusoids (Part 1)"
 date: "2024-04-08"
 classes: wide
 usekatex: true
@@ -46,11 +46,11 @@ tags:
 
 I began working on this article almost one year ago (on and off) in my (now) limited spare time. Inspired by [this video](https://www.youtube.com/watch?v=r6sGWTCMz2k), and having my *math passion* re-ignited, I planned to draw some epicycles and be done with it. Applying the formulas is simple, so I assumed I would finish fast and jump into a different rabbit hole. But then I decided to write a more extensive article, sharing my findings, creating the visuals I never had, and hopefully coming up with something more original than drawing Homer Simpson with circles.
 
-This article will have 4 parts.
+This article will have four parts.
 
 ---
 
-I am not exactly a mathematician, and the article hasn't been *peer-reviewed*. It's almost 15 years since I've last played with those concepts. Any feedback, suggestions or corrections are strongly appreciated. Publishing it in this state (it's basically a draft), it's a naive call for help :).
+I am not precisely a mathematician, and the article hasn't been *peer-reviewed*. It's almost 15 years since I've last played with those concepts. Any feedback, suggestions, or corrections are enormously appreciated.
 
 ---
 

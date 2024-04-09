@@ -1,5 +1,5 @@
 ---
-title: "From the circle to epicycles (Part 2)"
+title: "From the circle to epicycles - Fourier Series (Part 2)"
 date: "2024-04-08"
 classes: wide
 usemathjax: false
@@ -29,8 +29,6 @@ tags:
 ---
 
 This is the second part of the article that started [here]({{site.url}}/2024/04/08/from-the-circle-to-epicycles-part1).
-
-This is more like a draft.
 
 ---
 
