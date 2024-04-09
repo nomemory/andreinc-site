@@ -22,6 +22,7 @@ This section is a work in progress, and if the number of links increases, I will
 - [Games](#games)
 - [Math](#math)
 - [Low Level](#low-level)
+- [Programming Languages & Compilers](#programming-languages--compilers)
 - [Others](#others)
 - [Tools](#tools)
 - [Webrings & Blogrolls](#webrings-blogrolls)
@@ -153,6 +154,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A living library of Jewish Texts
 * [Standard EBooks](https://standardebooks.org/)
     * Free and liberated ebooks, carefully produced for the true book lover.
+* [Software Foundations](https://softwarefoundations.cis.upenn.edu/)
+    * The Software Foundations series is a broad introduction to the mathematical underpinnings of reliable software.
 * [The Journal of Open Source Software](https://joss.theoj.org/)
     * Committed to publishing quality research software with zero article processing charges or subscription fees.
 * [The Universal Digital Library](http://ulib.isri.cmu.edu/)
@@ -170,10 +173,13 @@ This section is a work in progress, and if the number of links increases, I will
 * [C Puzzles](http://www.gowrikumar.com/c/index.php)
 * [Cosmopolitan C](https://justine.lol/cosmopolitan/index.html)
     * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine.
+* [Obfuscated Tiny C Compiler](https://bellard.org/otcc/)
+    * "My goal was to write the smallest C compiler which is able to compile itself."
 * [So you think you know C? (Test)](https://wordsandbuttons.online/so_you_think_you_know_c.html)
     * A lot of programmers claim they know C. Well, it has the most famous syntax, it has been there for 52 years, and it’s not cluttered with obscure features. It’s easy! 
 * [So you think you know C? (Ebook)](https://wordsandbuttons.online/SYTYKC.pdf)
     * ...And Ten More Short Essays on Programming Languages
+* [strcmp4humans](http://stereopsis.com/strcmp4humans.html)
 * The C Donuts:
     * [Have a donut (2006)](https://www.a1k0n.net/2006/09/15/obfuscated-c-donut.html)
     * [Donut math: how donut.c works (2011)](https://www.a1k0n.net/2011/07/20/donut-math.html)
@@ -262,6 +268,8 @@ This section is a work in progress, and if the number of links increases, I will
     * The first RTS game I've played, now on WEB.
 * [Fantasy Map Generator](https://azgaar.github.io/Fantasy-Map-Generator/)
     * Can be helpful if you are the [Dungeon Master](https://en.wikipedia.org/wiki/Dungeon_Master).
+* [Flexbox Adventure](https://codingfantasy.com/games/flexboxadventure/play)
+    * Learn CSS by playing the *Flexbox Adventure*. 
 * [ORB Farm](https://orb.farm/)
     * This is your personal aquatic ecosystem to nurture, sculpt, and observe.
 * [paku paku](https://abagames.github.io/crisp-game-lib-11-games/?pakupaku)
@@ -302,7 +310,11 @@ This section is a work in progress, and if the number of links increases, I will
     * I am not a big fan of medium articles, but this one is good.
 * [A truly incredible fact about the number 37](https://grossack.site/2023/11/08/37-median.html)
     * "37, the median value for the second prime factor of an integer; thus the probability that the second prime factor of an integer chosen at random is smaller than 37 is approximately 0.5"
+* [All in one math sheet](https://archive.org/details/all-in-one-math-cheat-sheet-v2.10/)
+    * This is a math cheat sheet that I found a while back.
 * [Calculus Made Easy, Silvanus P. Thompson](https://calculusmadeeasy.org/)
+* [Circles, Sines, and Signals](https://jackschaedler.github.io/circles-sines-signals/index.html)
+    * This text is designed to accompany your study of introductory digital signal processing.
 * [Concursuri de Matematica](http://www.mategl.com/download.htm)
     * Exercises from various Romanian Math contests. Resources are in Romanian.
 * [Does anybody knows this fractal](https://www.gibney.org/does_anybody_know_this_fractal)
@@ -321,10 +333,25 @@ This section is a work in progress, and if the number of links increases, I will
     * "Everything in mathematics is a choice."
 * [Is two to the power of infinity more than infinity?](https://igoro.com/archive/is-two-to-the-power-of-infinity-more-than-infinity/)
     * It depends?!
+* [Math Pages](https://www.mathpages.com/)
+    * A compendium of mathematics. 
 * [M.C. Escher: More Mathematics Than Meets the Eye (2002)](https://im-possible.info/english/articles/escher_printgallery/)
-    * "As a teenager, number theorist Hendrik Lenstra was fascinated by the mathematical themes of M.C. Escher's artwork." 
+    * "As a teenager, number theorist Hendrik Lenstra was fascinated by the mathematical themes of M.C. Escher's artwork."
+* [Napoleon's Theorem](https://www.mathpages.com/home/kmath270/kmath270.htm)
+    * "We expect all things from you, General, except a lesson in geometry. Laplace"
+* [Painting with Math](https://blog.maximeheckel.com/posts/painting-with-math-a-gentle-study-of-raymarching/)
+    * A Gentle Study of Raymarching.
 * [Sine and cosine](https://wordsandbuttons.online/sine_and_cosine.html)
     * "For every pair, I think I know what the words mean from school but I can't always tell one from another. I can always tell sine from cosine but I didn't learn them at school. My father taught me."
+* What is the inverse ...
+    * [of a circle ?](https://mattferraro.dev/posts/geometric-algebra)
+    * [of a vector ?](https://mattferraro.dev/posts/geometric-algebra)
+
+# Physics
+* [Reflections On Relativity, Kevin Brown](https://www.mathpages.com/rr/rrtoc.htm)
+    * "We ordinarily take for granted the existence through time of objects moving according to fixed laws in three-dimensional space, but this is a highly abstract model of the objective world, far removed from the raw sense impressions that comprise our actual experience."
+* [So You Want to Learn Physics…](https://www.susanrigetti.com/physics)
+    * "Nearly six years ago, I sat down at my desk and typed up a detailed guide for anyone who wanted to learn physics on their own."
 
 # Low Level
 * [An IRC client in your motherboard](https://axleos.com/an-irc-client-in-your-motherboard/)
@@ -336,12 +363,20 @@ This section is a work in progress, and if the number of links increases, I will
     * GNU poke is an interactive, extensible editor for binary data.
 * [How wine works (2022)](https://werat.dev/blog/how-wine-works-101/)
     * "This article greatly simplifies reality and I don’t claim to know all the details. However I hope the explanation here will give you a general understanding of how things like Wine work."
+* [JSLinux](https://bellard.org/jslinux/)
+    * Run Linux or other Operating Systems in your browser! 
 * [Ray Tracing In Notepad.exe At 30 FPS](https://kylehalladay.com/blog/2020/05/20/Rendering-With-Notepad.html)
     * "I ended up making a Snake game and a small ray tracer that use stock Notepad for all input and rendering tasks, and got to learn about DLL Injection, API Hooking and Memory Scanning along the way."
 * [Temple OS](https://templeos.org/)
     * God's operating system.
+* [Weird things I learned while writing an x86 emulator](https://www.timdbg.com/posts/useless-x86-trivia/)
+    * Useless x86 trivia.
 * [Why computers represent signed integers using two's complement](https://igoro.com/archive/why-computers-represent-signed-integers-using-twos-complement/)
     * "If you had to come up with a way to represent signed integers in 32-bits, how would you do it?"
+
+# Programming Languages & Compilers
+* [Programming languages & resources](https://bernsteinbear.com/pl-resources/)
+    * This page is a collection of my favorite resources for people getting started writing programming languages.
 
 # Others
 * [Atlas Obscura](https://www.atlasobscura.com/)
@@ -359,6 +394,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [dittytoy](https://dittytoy.net/)
     * Create your generative music online using a simple Javascript API.
 * [Markdown TOC generator](https://derlin.github.io/bitdowntoc/)
+* [numcalc](http://numcalc.com/)
+    * Scientific Java Script calculator.
 * [Paper HN](https://www.wolfgangfaust.com/project/paper-hn/)
     * Read hacker news as an old paper.
 * [Random HackerNews](https://randomhackernews.com/)

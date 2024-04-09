@@ -34,6 +34,7 @@ You can also check other articles on this topic:
 - [Write an esoteric programming language](#write-an-esoteric-programming-language)
 - [Write your own Virtual Machine](#write-your-own-virtual-machine)
 - [Write a game for UXN ](#write-a-game-for-uxn)
+- [Write a game for TIC-80](#write-a-game-for-tic-80)
 - [Write your original markdown language](#write-your-original-markdown-language)
 - [Write a static site-generator](#write-a-static-site-generator)
 - [Mandelbrot Set Navigator](#mandelbrot-set-navigator)
@@ -84,6 +85,8 @@ Once you have a working calculator, start exploring crazy ideas:
 4. Write a module that enables users to operate on matrices, including adding, multiplying, calculating the inverse, computing the determinant, and solving systems of linear equations, among other things.
 5. Can your calculator check if a number is prime?
 6. Can you write a module that gives the user random insights about numbers?
+
+It can also work in the [browser](http://numcalc.com/).
 
 ---
 
@@ -146,6 +149,16 @@ Why don't you try implementing something different:
 * [Volfied](https://www.retrogames.cz/play_1653-DOS.php);
 * [Q*Bert](https://www.retrogames.cz/play_023-NES.php);
 * [Jumping Jack](https://www.gamesdatabase.org/game/sinclair-zx-spectrum/jumping-jack)
+
+---
+
+# Write a game for TIC-80
+
+[TIC-80](https://tic80.com/) is a fantasy computer for making, playing, and sharing tiny games. 
+
+If you don't know what game to write, take inspiration from [here](https://tic80.com/play).
+
+This is more of an artistic project than a programming one, but still.
 
 ---
 
