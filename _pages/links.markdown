@@ -46,11 +46,15 @@ This section is a work in progress, and if the number of links increases, I will
 # Algorithms and Data Structures
 * [A gentle introduction to Algorithm Complexity Analysis](http://discrete.gr/complexity/)
     * "A lot of programmers that make some of the coolest and most useful software today, such as many of the stuff we see on the Internet or use daily, don't have a theoretical computer science background."
+* [Baltic Olympiad Of Informatics](https://cses.fi/boi/list/)
+    * List of problems.
 * [Competitive Programmer's Handbook, Antti Laaksonen](https://cses.fi/book/book.pdf)
     * A classical book to learn algorithms and data structures for competitive programming contests. The code examples are in C++.
     * Also on [GitHub](https://github.com/pllk/cphb/).
 * [CSES Problem Set](https://cses.fi/problemset/)
     * A collection of practice problems for Competitive Programming contests.
+* [D3GT](https://d3gt.com/index.html)
+    * D3 Graph Theory
 * [Great Ideas in Theoretical Computer Science](https://www.cs251.com/)
     * This course is about the rigorous study of computation, which is a fundamental component of our universe, the societies we live in, the new technologies we discover, as well as the minds we use to understand these things. 
 * [neetcode.io](https://neetcode.io/)
@@ -58,6 +62,7 @@ This section is a work in progress, and if the number of links increases, I will
 * [Notes on Data Structures and Programming Techniques, James Aspnes](http://www.cs.yale.edu/homes/aspnes/classes/223/notes.html)
     * A free book. Data Structures and algorithms using the C programming language.
     * It should be more popular.
+* [Notes on randomized algorithms, James Aspnes](https://www.cs.yale.edu/homes/aspnes/classes/469/notes.pdf)
 * [Skip Lists are fascinating](https://igoro.com/archive/skip-lists-are-fascinating/)
     * Skip lists are a fascinating data structure: very simple, and yet have the same asymptotic efficiency as much more complicated AVL trees and red-black trees.
 * [The Diamond-Square Algorithm](https://diamond-square.netlify.app/)
@@ -130,6 +135,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Fractal to infinity.
 
 # Blogging
+* [Full-text RSS feed is an offline-friendly act](https://hamatti.org/posts/full-text-rss-feed-is-offline-friendly-act/)
+    * "An excerpt-only feed is unreadable when there is no Internet access."
 * [How Google helped destroy adoption of RSS feeds](https://openrss.org/blog/how-google-helped-destroy-adoption-of-rss-feeds)
     * To this day I believe RSS is a lousy technology, but we don't have anything better.
 * [Indeed, it seems that Google IS forgetting the old Web](https://stop.zona-m.net/2018/01/indeed-it-seems-that-google-is-forgetting-the-old-web/)
@@ -158,6 +165,8 @@ This section is a work in progress, and if the number of links increases, I will
     * The Software Foundations series is a broad introduction to the mathematical underpinnings of reliable software.
 * [The Journal of Open Source Software](https://joss.theoj.org/)
     * Committed to publishing quality research software with zero article processing charges or subscription fees.
+* [The Diary of Thomas Alva Edison](https://ariwatch.com/VS/TheDiaryOfThomasEdison.htm)
+* [The manuscripts of Edsger W. Dijkstra](https://www.cs.utexas.edu/~EWD/)
 * [The Universal Digital Library](http://ulib.isri.cmu.edu/)
     * This library promises 1 million free books, but I haven't counted them.
 * [What Should I read next?](https://www.whatshouldireadnext.com/)
@@ -180,6 +189,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [So you think you know C? (Ebook)](https://wordsandbuttons.online/SYTYKC.pdf)
     * ...And Ten More Short Essays on Programming Languages
 * [strcmp4humans](http://stereopsis.com/strcmp4humans.html)
+* [The Althttpd Webserver](https://sqlite.org/althttpd/doc/trunk/althttpd.md)
+    * Althttpd is a simple webserver that has run the https://sqlite.org/ website since 2004. Althttpd strives for simplicity, security, and low resource usage.
 * The C Donuts:
     * [Have a donut (2006)](https://www.a1k0n.net/2006/09/15/obfuscated-c-donut.html)
     * [Donut math: how donut.c works (2011)](https://www.a1k0n.net/2011/07/20/donut-math.html)
@@ -192,6 +203,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Nice technical essay by [Eric S. Raymond](https://en.wikipedia.org/wiki/Eric_S._Raymond).
 * [The Underhanded C Contest](http://underhanded-c.org)
     * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior.
+* [Why should I have written ZeroMQ in C, not C++ ](https://250bpm.com/blog:4/)
+    * "Just to be clear from the very beginning: This is not going to be a Torvalds-ish rant against C++ from the point of view of die-hard C programmer."
 * [Why people were enthused about gcc early on in its life?](https://utcc.utoronto.ca/~cks/space/blog/unix/GccEarlyEnthusiasm)
     * "What they didn't have was a good compiler."
 
@@ -208,6 +221,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "A self-printing program – also called a quine – is a program that prints out its own source code."
 * [Quine Relay](https://github.com/mame/quine-relay)
     * QR.rb is a Ruby program that generates a Rust program that generates a Scala program that generates ...(through 128 languages in total)... a REXX program that generates the original Ruby code again.
+* [Hull: An alternative to shell that I'll never have time to implement](https://250bpm.com/blog:153/index.html)
+    * "Here's an idea. It's kind of crazy but it's also fun to think about."
 * [Self-printing Game of Life in C#](https://igoro.com/archive/self-printing-game-of-life-in-c/)
     * "I wrote a little C# program that contains a Game-of-Life grid. The program advances the game grid to the next generation and prints out a copy of itself, with the grid updated. You can take the output, compile it with a C# compiler, run it, and you’ll get the next generation of the game. You can iterate the process, or change the initial grid state manually."
 * [tio.run](https://tio.run)
@@ -231,6 +246,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [Software Development 450 Words Per Minute](https://www.vincit.com/blog/software-development-450-words-per-minute)
     * "I’m also blind. In this blog post I’m going to shed some light on the way I work."
 * [Things I wish I learned in Engineering School (2000)](http://www.cattell.net/talk/TiwiliesTalk.htm)
+* [The Collector’s Fallacy](https://zettelkasten.de/posts/collectors-fallacy/)
+    * "Collectors don’t make progress"
 * [The computer built to last 50 years (2021)](https://ploum.net/the-computer-built-to-last-50-years/)
     * "How to create the long-lasting computer that will save your attention, your wallet, your creativity, your soul, and the planet."
 * [The bullshit web (2018)](https://pxlnv.com/blog/bullshit-web/)
@@ -246,8 +263,11 @@ This section is a work in progress, and if the number of links increases, I will
 * [Connnnngratulations! This project won China 2014 State Science and Technology Prizes ! FIRST PRIZE!!!!! ](https://github.com/iiordanov/remote-desktop-clients/issues/39)
 * [Make Front-End Shit Again](https://makefrontendshitagain.party/)
     * Multiple sites of pixel proportions.
+* [Medieval Cat Meme Generator](https://michael-klein.github.io/medieval-cat-meme-generator/)
+    * King DerpCats most wondrous meme gen'rat'r.
 * [Movie-a-Minute](http://www.rinkworks.com/movieaminute/)
     * There's a lot of movies out there and very little time to watch them in.
+* [Our security auditor is an idiot. How do I give him the information he wants?](https://serverfault.com/questions/293217/our-security-auditor-is-an-idiot-how-do-i-give-him-the-information-he-wants)
 * [The brick bible](https://thebrickbible.com/)
     * The Scriptures in LEGO from Genesis to Revelation.
 * [The parable of the Physics Professor](https://www.parand.com/the-parable-of-the-physics-professor.html)
@@ -305,6 +325,29 @@ This section is a work in progress, and if the number of links increases, I will
 * [Zork](https://iplayif.com/?story=http%3A%2F%2Fwww.ifarchive.org%2Fif-archive%2Fgames%2Fzcode%2Fzdungeon.z5)
     * "Welcome to ZORK."
 
+# Low Level
+* [An IRC client in your motherboard](https://axleos.com/an-irc-client-in-your-motherboard/)
+    * "I made a graphical IRC client that runs in UEFI."
+* [Building an operating system for Raspberry PI](https://jsandler18.github.io/)
+* [copy.sh/v86/](http://copy.sh/v86/)
+    * Run operating systems in your browser.
+* [GNU Poke](https://jemarch.net/poke)
+    * GNU poke is an interactive, extensible editor for binary data.
+* [Hello world!](https://thecoder08.github.io/hello-world.html)
+    * "A deep dive into the world of abstraction behind a modern Hello World program."
+* [How wine works (2022)](https://werat.dev/blog/how-wine-works-101/)
+    * "This article greatly simplifies reality and I don’t claim to know all the details. However I hope the explanation here will give you a general understanding of how things like Wine work."
+* [JSLinux](https://bellard.org/jslinux/)
+    * Run Linux or other Operating Systems in your browser! 
+* [Ray Tracing In Notepad.exe At 30 FPS](https://kylehalladay.com/blog/2020/05/20/Rendering-With-Notepad.html)
+    * "I ended up making a Snake game and a small ray tracer that use stock Notepad for all input and rendering tasks, and got to learn about DLL Injection, API Hooking and Memory Scanning along the way."
+* [Temple OS](https://templeos.org/)
+    * God's operating system.
+* [Weird things I learned while writing an x86 emulator](https://www.timdbg.com/posts/useless-x86-trivia/)
+    * Useless x86 trivia.
+* [Why computers represent signed integers using two's complement](https://igoro.com/archive/why-computers-represent-signed-integers-using-twos-complement/)
+    * "If you had to come up with a way to represent signed integers in 32-bits, how would you do it?"
+
 # Math
 * [A journey and a method for drawing spheres](https://medium.com/@refik/a-journey-and-a-method-for-drawing-spheres-5b24246ca479)
     * I am not a big fan of medium articles, but this one is good.
@@ -331,6 +374,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Spoiler alert: not so efficient.
 * [How to fold a Julia Fractal](https://acko.net/blog/how-to-fold-a-julia-fractal/)
     * "Everything in mathematics is a choice."
+* [Intuitive Understanding Of Euler’s Formula](https://betterexplained.com/articles/intuitive-understanding-of-eulers-formula/)
 * [Is two to the power of infinity more than infinity?](https://igoro.com/archive/is-two-to-the-power-of-infinity-more-than-infinity/)
     * It depends?!
 * [Math Pages](https://www.mathpages.com/)
@@ -339,6 +383,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "As a teenager, number theorist Hendrik Lenstra was fascinated by the mathematical themes of M.C. Escher's artwork."
 * [Napoleon's Theorem](https://www.mathpages.com/home/kmath270/kmath270.htm)
     * "We expect all things from you, General, except a lesson in geometry. Laplace"
+* [Neural network training makes beautiful fractals](https://sohl-dickstein.github.io/2024/02/12/fractal.html)
 * [Painting with Math](https://blog.maximeheckel.com/posts/painting-with-math-a-gentle-study-of-raymarching/)
     * A Gentle Study of Raymarching.
 * [Sine and cosine](https://wordsandbuttons.online/sine_and_cosine.html)
@@ -346,6 +391,26 @@ This section is a work in progress, and if the number of links increases, I will
 * What is the inverse ...
     * [of a circle ?](https://mattferraro.dev/posts/geometric-algebra)
     * [of a vector ?](https://mattferraro.dev/posts/geometric-algebra)
+* [Stacking triangles for fun and for profit](https://www.oranlooney.com/post/angle-addition/)
+    * "We’ve shown that all of usual definitions of sine and cosine can be derived from the geometric definition, and that this can be made elementary if we start by proving the angle addition formulas using geometric arguments."
+* [The fourth operation](https://ariwatch.com/VS/Algorithms/TheFourthOperation.htm)
+    * "Those are the first, second, and third operations:  addition, multiplication, and exponentiation.  Presented in this manner a     prolonged series of operations comes to mind, each operation iterating the one before. The fourth operation would be?"
+* [The magic 6174](https://www.oranlooney.com/post/kaprekar/)
+    * The Kaprekar routine.
+
+
+# Others
+* [Atlas Obscura](https://www.atlasobscura.com/)
+    * Atlas Obscura is a magazine about curious and wondrous travel destinations.
+* [ASK HN: Is there a point in school (2010)](https://news.ycombinator.com/item?id=1182512)
+    * "Even if you think the university will teach you nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
+* [ASK HN: You have one shot to redesign the Internet – what do you change?](https://news.ycombinator.com/item?id=27663618)
+    * Honestly, just one thing, and I only need to go back to the early 90s.
+* [Dear Photograph](https://dearphotograph.com/)
+    * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
+* [Grandpa's Photos](https://grandpas-photos.com)
+    * "This is Grandpa, otherwise known as Stephen Clarke. He was great at so many things. One of those was being a Grandpa. He was a WWII Air Force navigator, a husband, a Dad and we also discovered he was a great photographer."
+* [How games are used to control you ](https://unherd.com/2024/04/how-games-are-used-to-control-you/)   
 
 # Physics
 * [Reflections On Relativity, Kevin Brown](https://www.mathpages.com/rr/rrtoc.htm)
@@ -353,47 +418,21 @@ This section is a work in progress, and if the number of links increases, I will
 * [So You Want to Learn Physics…](https://www.susanrigetti.com/physics)
     * "Nearly six years ago, I sat down at my desk and typed up a detailed guide for anyone who wanted to learn physics on their own."
 
-# Low Level
-* [An IRC client in your motherboard](https://axleos.com/an-irc-client-in-your-motherboard/)
-    * "I made a graphical IRC client that runs in UEFI."
-* [Building an operating system for Raspberry PI](https://jsandler18.github.io/)
-* [copy.sh/v86/](http://copy.sh/v86/)
-    * Run operating systems in your browser.
-* [GNU Poke](https://jemarch.net/poke)
-    * GNU poke is an interactive, extensible editor for binary data.
-* [How wine works (2022)](https://werat.dev/blog/how-wine-works-101/)
-    * "This article greatly simplifies reality and I don’t claim to know all the details. However I hope the explanation here will give you a general understanding of how things like Wine work."
-* [JSLinux](https://bellard.org/jslinux/)
-    * Run Linux or other Operating Systems in your browser! 
-* [Ray Tracing In Notepad.exe At 30 FPS](https://kylehalladay.com/blog/2020/05/20/Rendering-With-Notepad.html)
-    * "I ended up making a Snake game and a small ray tracer that use stock Notepad for all input and rendering tasks, and got to learn about DLL Injection, API Hooking and Memory Scanning along the way."
-* [Temple OS](https://templeos.org/)
-    * God's operating system.
-* [Weird things I learned while writing an x86 emulator](https://www.timdbg.com/posts/useless-x86-trivia/)
-    * Useless x86 trivia.
-* [Why computers represent signed integers using two's complement](https://igoro.com/archive/why-computers-represent-signed-integers-using-twos-complement/)
-    * "If you had to come up with a way to represent signed integers in 32-bits, how would you do it?"
-
 # Programming Languages & Compilers
 * [Programming languages & resources](https://bernsteinbear.com/pl-resources/)
     * This page is a collection of my favorite resources for people getting started writing programming languages.
-
-# Others
-* [Atlas Obscura](https://www.atlasobscura.com/)
-    * Atlas Obscura is a magazine about curious and wondrous travel destinations.
-* [ASK HN: Is there a point in school (2010)](https://news.ycombinator.com/item?id=1182512)
-    * "Even if you think the university will teach you nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
-* [Grandpa's Photos](https://grandpas-photos.com)
-    * "This is Grandpa, otherwise known as Stephen Clarke. He was great at so many things. One of those was being a Grandpa. He was a WWII Air Force navigator, a husband, a Dad and we also discovered he was a great photographer."
-* [Dear Photograph](https://dearphotograph.com/)
-    * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
 
 # Tools
 * [carbon](https://carbon.now.sh/)
     * Create and share beautiful images of your source code.
 * [dittytoy](https://dittytoy.net/)
     * Create your generative music online using a simple Javascript API.
+* [ImHex](https://github.com/WerWolv/ImHex)
+    * A Hex Editor for Reverse Engineers, Programmers and people who value their retinas when working at 3 AM.
 * [Markdown TOC generator](https://derlin.github.io/bitdowntoc/)
+    * As the title suggests.
+* [meli](https://github.com/meli/meli)
+    * BSD/Linux/macos terminal email client with support for multiple accounts and Maildir / mbox / notmuch / IMAP / JMAP / NNTP (Usenet).
 * [numcalc](http://numcalc.com/)
     * Scientific Java Script calculator.
 * [Paper HN](https://www.wolfgangfaust.com/project/paper-hn/)
@@ -421,6 +460,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A search engine for the classic web.
 
 # Wikipedia & TIL
+* [1983 Soviet nuclear false alarm incident](https://en.m.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident)
+    * Thank you, Mr. Petrov!
 * [Ant-Fungus Mutualism](https://en.m.wikipedia.org/wiki/Ant%E2%80%93fungus_mutualism)
     * The ant–fungus mutualism is a symbiosis seen between certain ant and fungal species, in which ants actively cultivate fungus much like humans farm crops as a food source. 
 * [Darwin (Programming Language)](https://en.m.wikipedia.org/wiki/Darwin_(programming_game))

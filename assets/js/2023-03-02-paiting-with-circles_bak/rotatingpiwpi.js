@@ -8,9 +8,7 @@ const rotatingWPi = (s) => {
     const h = 200;
     const d = 100;
     const r = d / 2;  // diameter of the moving center
-    const f = theme.frequency;
-    const reset = s.TWO_PI;
-    const rThet = r / 2;
+    const rThet = r/2;
     const xOff = r; // the offset of x for the grid system
 
     let ang = 0; // angle used for computing sin and cos
@@ -31,8 +29,8 @@ const rotatingWPi = (s) => {
             vC.y + s.cos(ang) * r
         );
         vThet = s.createVector(
-            vC.x + s.sin(ang / 2) * rThet,
-            vC.y + s.cos(ang / 2) * rThet
+            vC.x + s.sin(ang/2) * rThet,
+            vC.y + s.cos(ang/2) * rThet
         );
         // Circle Buffer
         buff = s.createGraphics(w, h);
@@ -85,46 +83,26 @@ const rotatingWPi = (s) => {
         s.push();
         s.stroke(theme.thetaColor);
         s.fill(theme.thetaColorLight);
-        s.arc(vC.x, vC.y, d, d, s.HALF_PI, -s.PI - (s.HALF_PI + ang));
+        s.arc(vC.x, vC.y, d, d, s.HALF_PI, -s.PI-(s.HALF_PI+ang));
         s.noStroke();
         s.fill(theme.thetaColor);
-        let tInD = (ang * 180 / s.PI).toFixed(2)
-        s.text("θ = " + tInD + "°", vThet.x, vThet.y);
-        s.text("θ = " +  ang.toFixed(2) + " (rad)", vC.x + 5, h / 2 + r + 40);
+        let tInD = (-1)*(ang*180/s.PI).toFixed(2)
+        s.text("θ = "+ tInD+"°", vThet.x, vThet.y);
+        s.text("θ = "+ (-1)*ang.toFixed(2) + " (rad)", vC.x + 5, h/2 + r + 40);
         s.pop();
 
-        ang += f;
-        vC.x += f*r;
-        vM.x = vC.x + s.sin(ang) * r;
-        vM.y = vC.y + s.cos(ang) * r;
-        vThet.x = vC.x + s.sin(ang / 2) * rThet;
-        vThet.y = vC.y + s.cos(ang / 2) * rThet;
-
-        if (ang > reset) {
-            ang = 0;
-            vC = s.createVector(xOff, h / 2);
-            vM = s.createVector(
-                vC.x + s.sin(ang) * r,
-                vC.y + s.cos(ang) * r
-            );
-            vThet = s.createVector(
-                vC.x + s.sin(ang / 2) * rThet,
-                vC.y + s.cos(ang / 2) * rThet
-            );
+        if (s.mouseIsPressed) {
+            if (s.dist(s.mouseX, s.mouseY, vC.x, vC.y) < r) {
+                if (s.mouseX - r >= 0 && s.mouseX - xOff < s.TWO_PI * r) {
+                    vC.x = s.mouseX;
+                    ang = -(vC.x - xOff)/r;
+                    vM.x = vC.x + s.sin(ang) * r;
+                    vM.y = vC.y + s.cos(ang) * r;
+                    vThet.x = vC.x + s.sin(ang/2) * rThet;
+                    vThet.y = vC.y + s.cos(ang/2) * rThet;
+                }
+            }
         }
-
-        // if (s.mouseIsPressed) {
-        //     if (s.dist(s.mouseX, s.mouseY, vC.x, vC.y) < r) {
-        //         if (s.mouseX - r >= 0 && s.mouseX - xOff < s.TWO_PI * r) {
-        //             vC.x = s.mouseX;
-        //             ang = -(vC.x - xOff)/r;
-        //             vM.x = vC.x + s.sin(ang) * r;
-        //             vM.y = vC.y + s.cos(ang) * r;
-        //             vThet.x = vC.x + s.sin(ang/2) * rThet;
-        //             vThet.y = vC.y + s.cos(ang/2) * rThet;
-        //         }
-        //     }
-        // }
 
         s.showFps();
     };
