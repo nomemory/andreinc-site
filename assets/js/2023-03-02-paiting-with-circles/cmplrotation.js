@@ -13,11 +13,11 @@ const complRotation = (s) => {
     const ic = new Complex(0, 1);
 
     let fqz = [
-        {n: new Complex(s.cos(0.2)*r, s.sin(0.2)*r), label: "z1", color: s.color('red')},
-        {n: new Complex(s.cos(s.PI/6)*r, s.sin(s.PI/6)*r), label: "z2", color: s.color('teal')},
-        {n: new Complex(s.cos(s.PI/4)*r, s.sin(s.PI/4)*r), label: "z3", color: s.color('yellowgreen')},
-        {n: new Complex(s.cos(s.PI/3)*r, s.sin(s.PI/3)*r), label: "z4", color: s.color('lightblue')},
-        {n: new Complex(s.cos(s.PI/2-0.2)*r, s.sin(s.PI/2-0.2)*r), label: "z5", color: s.color('lightsalmon')}
+        {n: new Complex(s.cos(0.2)*r, s.sin(0.2)*r), label: "z1", color: s.color('red')}
+        // {n: new Complex(s.cos(s.PI/6)*r, s.sin(s.PI/6)*r), label: "z2", color: s.color('teal')},
+        // {n: new Complex(s.cos(s.PI/4)*r, s.sin(s.PI/4)*r), label: "z3", color: s.color('yellowgreen')},
+        // {n: new Complex(s.cos(s.PI/3)*r, s.sin(s.PI/3)*r), label: "z4", color: s.color('lightblue')},
+        // {n: new Complex(s.cos(s.PI/2-0.2)*r, s.sin(s.PI/2-0.2)*r), label: "z5", color: s.color('lightsalmon')}
     ];
 
     s.setup = () => {

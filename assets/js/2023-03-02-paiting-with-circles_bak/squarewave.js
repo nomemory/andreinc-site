@@ -111,6 +111,8 @@ const squareWave = (s) => {
 
 let squareWaveSketch = new p5(squareWave, 'square-wave-sketch');
 
+console.log("hello world!");
+
 const updateSins = () => {
     squareWaveK = parseInt(document.getElementById('numSins').value);
     squareWaveOmega = parseInt(document.getElementById("sinsFreq").value);

@@ -8,7 +8,6 @@ usep5js: true
 custom-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/commons.js"
 custom-defer-javascript-list:
-    - "/assets/js/2023-03-02-paiting-with-circles/tetris.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecircle.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotating.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js"
@@ -29,13 +28,13 @@ custom-defer-javascript-list:
     - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
     - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
-    # # - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
-    # - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
     - "/assets/js/2023-03-02-paiting-with-circles/renums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplxnums.js"
     - "/assets/js/2023-03-02-paiting-with-circles/simplerotatingcirclecmp.js"
     - "/assets/js/2023-03-02-paiting-with-circles/cmplrotation.js"
-    # - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
+    - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
     - "/assets/js/2023-03-02-paiting-with-circles/squarewavean.js"
@@ -554,8 +553,6 @@ Now, let's briefly forget about the cartesian representation of our sums of sinu
 As you can see, the shapes can become quite "irregular" and wild. With enough luck, we can paint a flower, a dog, a sketch portrait of [Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz), or a circle (look at the last sketch).
 
 > As a side rule (easy to demonstrate trigonometrically), if you sum up sinusoids that share the same frequency, the result will be a sinusoid. So, it's safe to assume that the fourth sketch is a sum of sinusoids sharing the same frequency - it's a CIRCLE.
-
-# Adding sinusoids - The sinusoidal tetris
 
 # A flower 
 

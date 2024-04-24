@@ -180,6 +180,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [Build your own LISP](https://www.buildyourownlisp.com/contents)
     * Learn C by building your own LISP.
 * [C Puzzles](http://www.gowrikumar.com/c/index.php)
+* [How I program C](https://www.youtube.com/watch?v=443UNeGrFoM)
+    * A great video by Eskil Steenberg about programming in C.
 * [Cosmopolitan C](https://justine.lol/cosmopolitan/index.html)
     * Cosmopolitan Libc makes C a build-anywhere run-anywhere language, like Java, except it doesn't need an interpreter or virtual machine.
 * [Obfuscated Tiny C Compiler](https://bellard.org/otcc/)

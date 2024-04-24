@@ -62,10 +62,13 @@ I can't entirely agree with everything the following people are writing.
 | [blog.fogus.me/](https://blog.fogus.me/) | Send more paramedics. |
 | [blog.ignaciobrasca.com/](https://blog.ignaciobrasca.com/) | The Personal Blog of Ignacio Brasca. |
 | [blog.jgc.org/](https://blog.jgc.org/) | The blog of John [Graham-Cumming](https://jgc.org/). |
+| [blog.kellybrazil.com/](https://blog.kellybrazil.com/) | Musings on automation, scripting, programing, DevOps, and cybersecurity. |
 | [blog.nelhage.com/](https://blog.nelhage.com/) | The personal blog of Nelson Elhage. |
 | [blog.oddball.tech/](https://blog.oddball.tech/) | The oddball blog, by Horst Günther Burkhardt. |
 | [blog.plover.com/](https://blog.plover.com/) | The universe of discourse. |
 | [blog.rongarret.info/](https://blog.rongarret.info/) | Rondam Ramblings. |
+| [blog.sulami.xyz/](https://blog.sulami.xyz/) | Hi, my name is Robin Schroer, and this is my blog. |
+| [blog.thenewoil.org/](https://blog.thenewoil.org/) | The new oil |
 | [blog.tymscar.com/](https://blog.tymscar.com/) | Personal blog of Oscar Molnar. |
 | [boehs.org/in/blog](https://boehs.org/in/blog) | Evan Boehs is making friends. |
 | [brainbaking.com/](https://brainbaking.com/) | Freshly baked. |
@@ -87,6 +90,7 @@ I can't entirely agree with everything the following people are writing.
 | [eternodevir.com/](https://eternodevir.com/) | Vinicius Moraes' corner of the Internet. |
 | [eukaryotewritesblog.com/](https://eukaryotewritesblog.com/) | As the title says. |
 | [fabiensanglard.net/](https://fabiensanglard.net/) | The personal website of Fabien Sanglard. |
+| [fgiesen.wordpress.com/](https://fgiesen.wordpress.com/) |  When I grow up I'll be an inventor. |
 | [foudil.fr/blog/](https://foudil.fr/blog/) | Jazz trumpet player and Software Engineer. |
 | [gabrielistrate.wordpress.com/](https://gabrielistrate.wordpress.com/) | Gabriel Istrate's blog. Romanian teacher and researcher. Blog is in Romanian. |
 | [bearblog.dev/blog/](https://herman.bearblog.dev/blog/) | Herman's bear blog. |
@@ -95,6 +99,7 @@ I can't entirely agree with everything the following people are writing.
 | [hondu.co/](https://hondu.co/) | Javier Honduvilla Coto, a Software Engineer from Madrid living in London. |
 | [hookrace.net/](https://hookrace.net/) | Blog of [Dennis Felsing](https://dennis.felsing.org/). [Dennis believes God writes Haskell.](https://hookrace.net/blog/god-writes-haskell/) |
 | [isohedral.ca/](https://isohedral.ca/) | The website of Craig S. Kaplan. |
+| [jsomers.net/](https://jsomers.net/) | James Somers is a writer and programmer based in New York, NY. |
 | [jaylittle.com/](https://jaylittle.com/) | The blog of Jay Little. |
 | [j3s.sh](https://j3s.sh) | The (*minismallist*) good-looking personal site of Jes Olson. Talks about Free Software and other tech topics. [Here](https://j3s.sh/thought/my-website-is-one-binary.html) is where I found the motivation for writing [this]({{site.url}}/2022/04/10/a-blog-that-is-a-single-executable-binary) |
 | [jmmv.dev/](https://jmmv.dev/blog.html) | The personal blog of Julio Merino. Programming languages and operating systems. |
@@ -106,6 +111,7 @@ I can't entirely agree with everything the following people are writing.
 | [letterstoanewdeveloper.com/](https://letterstoanewdeveloper.com/) | What I wish I had known when starting my development career. |
 | [levlaz.org/](https://levlaz.org/) | The personal blog of Lev Lazinskiy |
 | [Low Byte Productions](https://www.youtube.com/c/lowleveljavascript) | This is the YouTube channel of [Francis Stokes](https://github.com/francisrstokes) |
+| [massimo-nazaria.github.io/](https://massimo-nazaria.github.io/) | Massimo Nazaria. |
 | [matklad.github.io/](https://matklad.github.io/) | Alex Kladov, a programmer who loves simple code and programming languages. |
 | [matduggan.com/](https://matduggan.com/) | The personal blog of Mathew Duggan, an OLD fashioned YAML farmer. |
 | [matt.might.net/](https://matt.might.net/articles/) | The blog of [Matt Might](https://matt.might.net/articles/). |
@@ -113,6 +119,7 @@ I can't entirely agree with everything the following people are writing.
 | [maxbittker.com/blog/](https://maxbittker.com/blog/) | The personal blog of Max Bittker. |
 | [mazzo.li/](https://mazzo.li/archive.html) | Frhttps://brainbaking.com/ancesco is a programmer. This is his homepage. |
 | [milan.cvitkovic.net/writing/](https://milan.cvitkovic.net/writing/) | Milan Cvitkovic working on neurotechnology. |
+| [minus-ze.ro/](https://minus-ze.ro/) | Personal blog of Alexandru Ică. |
 | [mitjafelicijan.com/](https://mitjafelicijan.com/) | The personal blog of Mitja Felicijan. | 
 | [mcmillen.dev/](https://www.mcmillen.dev/) | Colin McMillen, author of [93% of Paint Splatters are Valid Perl Programs](https://www.mcmillen.dev/sigbovik/) |
 | [muscar.eu](https://muscar.eu/) | This is the blog of Alex Muscar, an *old* childhood friend. He writes about algorithms and CS topics. | 
@@ -139,6 +146,7 @@ I can't entirely agree with everything the following people are writing.
 | [rknight.me/blog/](https://rknight.me/blog/) | The personal blog of Robb Knight. | 
 | [rosshartshorn.net/stuffrossthinksabout/](https://www.rosshartshorn.net/stuffrossthinksabout/) | This is the personal blog of Ross Hartshorn, who is a middle-aged father, husband, computer programmer, and bookreader. |
 | [ruudvanasseldonk.com/](https://ruudvanasseldonk.com/) | Hi, I am Ruud. I love to create beautiful things with elegant code. I particularly like low-level optimisation for bare metal performance and systems programming, but I also enjoy high-level functional programming. Sometimes I write about that. I am mildly allergic to buzzwords. |
+| [scattered-thoughts.net/](https://www.scattered-thoughts.net/) | Tinkering with systems, Jamie Brandon. |
 | [schneier.com/](https://www.schneier.com/) | Bruce Schneier is an internationally renowned security technologist, called a “security guru” by The Economist. |
 | [scottwillsey.com/](https://scottwillsey.com/) | The personal blog of Scott Willsey. |
 | [seancoates.com/](https://seancoates.com/) |  Sean Coates blogs (active) brews shares is about the Web, beer, and other stuff. |
