@@ -46,6 +46,8 @@ This section is a work in progress, and if the number of links increases, I will
 # Algorithms and Data Structures
 * [A gentle introduction to Algorithm Complexity Analysis](http://discrete.gr/complexity/)
     * "A lot of programmers that make some of the coolest and most useful software today, such as many of the stuff we see on the Internet or use daily, don't have a theoretical computer science background."
+* [Algorithms for modern hardware](https://en.algorithmica.org/hpc/)
+    * This is an upcoming high performance computing book titled “Algorithms for Modern Hardware” by Sergey Slotin.
 * [Baltic Olympiad Of Informatics](https://cses.fi/boi/list/)
     * List of problems.
 * [Competitive Programmer's Handbook, Antti Laaksonen](https://cses.fi/book/book.pdf)
@@ -213,6 +215,7 @@ This section is a work in progress, and if the number of links increases, I will
 # Command Line
 * [lsix](https://github.com/hackerb9/lsix)
     * Like `ls`, but for images. Shows thumbnails in terminal using sixel graphics.
+* [Sculpting text with regex, grep, sed, awk, emacs and vim ](https://matt.might.net/articles/sculpting-text/)
 * [thirsty](https://github.com/kalbhor/thirsty)
     * "If you're like me and you spend a lot of time programming with the command line open, chances are that you forget about everything for hours, which includes drinking water. At the end of the day I used to realise that I had not consumed enough water. Hence I created a bash/zsh script to remind me to drink water right on my command line."
 
@@ -254,9 +257,13 @@ This section is a work in progress, and if the number of links increases, I will
     * "How to create the long-lasting computer that will save your attention, your wallet, your creativity, your soul, and the planet."
 * [The bullshit web (2018)](https://pxlnv.com/blog/bullshit-web/)
     * "I wanted to bring many threads together into a single document that may pretentiously be described as a theory of or, more practically, a guide to the bullshit web."
+* [This word doesn't exist](https://www.thisworddoesnotexist.com/)
+    * But it should.
 * [VPN - a Very Precarious Narrative](https://overengineer.dev/blog/2019/04/08/very-precarious-narrative/)
     * "In most circumstances, VPNs do very little to enhance your data security or privacy unless paired with other changes."
 * [Why Bloat Is Still Software’s Biggest Vulnerability](https://spectrum.ieee.org/lean-software-development)
+* [Why Everything is Becoming a Game](https://www.gurwinder.blog/p/why-everything-is-becoming-a-game)
+    * "For years, some of the world’s sharpest minds have been quietly turning your life into a series of games. Not merely to amuse you, but because they realized that the easiest way to make you do what they want is to make it fun."
 
 # Funny
 * [Can you tell an assembly language when you see one?](https://wordsandbuttons.online/can_you_tell_an_assembly_language_when_you_see_one.html)
@@ -310,6 +317,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A tetris game that plays with sand.
 * [Snake Google Maps](https://snake.googlemaps.com/)
     * Play snake on "Google Maps".
+* [Simon Tatham's Portable Puzzle Collection](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/)
+    * Introduction This page contains a collection of small computer programs which implement one-player puzzle games.
 * [Synesthesia](http://synesthesiagame.com/)
     * Very creative.
 * [TIC-80](https://tic80.com/)
@@ -364,8 +373,12 @@ This section is a work in progress, and if the number of links increases, I will
     * Exercises from various Romanian Math contests. Resources are in Romanian.
 * [Does anybody knows this fractal](https://www.gibney.org/does_anybody_know_this_fractal)
     * "Experimenting with the "divisibility" of complex numbers, I stumbled across this thingy. It looks like a fractal. Although the formula does not do any iterations." 
+* [Erdos Problems](https://www.erdosproblems.com/)
+    * There are 614 problems in the database of which 168 have been solved.
 * [Euler Archive](http://eulerarchive.maa.org/)
-    * The Euler Archive is an online resource for Leonhard Euler's original works and modern Euler scholarship. 
+    * The Euler Archive is an online resource for Leonhard Euler's original works and modern Euler scholarship.
+* [Explained Visually](https://setosa.io/ev/)
+    * Explained Visually (EV) is an experiment in making hard ideas intuitive inspired the work of Bret Victor's.
 * [Functional Geometry](https://shashi.biz/ijulia-notebooks/funcgeo/)
     * Functional Geometry is a paper by Peter Henderson (original (1982), revisited (2002)) which deconstructs the MC Escher woodcut Square Limit
 * [Gift Exchange Archive](https://g4gexchangearchive.omeka.net/items)
@@ -388,6 +401,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [Neural network training makes beautiful fractals](https://sohl-dickstein.github.io/2024/02/12/fractal.html)
 * [Painting with Math](https://blog.maximeheckel.com/posts/painting-with-math-a-gentle-study-of-raymarching/)
     * A Gentle Study of Raymarching.
+* [Puzzles](https://jrmf.org/puzzle/)
+    * Free, fun, and meaningful math for all.
 * [Sine and cosine](https://wordsandbuttons.online/sine_and_cosine.html)
     * "For every pair, I think I know what the words mean from school but I can't always tell one from another. I can always tell sine from cosine but I didn't learn them at school. My father taught me."
 * What is the inverse ...
@@ -395,6 +410,8 @@ This section is a work in progress, and if the number of links increases, I will
     * [of a vector ?](https://mattferraro.dev/posts/geometric-algebra)
 * [Stacking triangles for fun and for profit](https://www.oranlooney.com/post/angle-addition/)
     * "We’ve shown that all of usual definitions of sine and cosine can be derived from the geometric definition, and that this can be made elementary if we start by proving the angle addition formulas using geometric arguments."
+* [The arithmetic derivative](https://apieceofthepi.substack.com/p/the-arithmetic-derivative)
+    * Can you differentiate a number and get a nonzero answer? You can't with the usual kind of differentiation, but you can with the “arithmetic derivative”.
 * [The fourth operation](https://ariwatch.com/VS/Algorithms/TheFourthOperation.htm)
     * "Those are the first, second, and third operations:  addition, multiplication, and exponentiation.  Presented in this manner a     prolonged series of operations comes to mind, each operation iterating the one before. The fourth operation would be?"
 * [The magic 6174](https://www.oranlooney.com/post/kaprekar/)
