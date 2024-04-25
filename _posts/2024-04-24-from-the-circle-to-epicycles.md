@@ -1,59 +1,59 @@
 ---
-title: "From the Circle to Epicycles (Part 1)"
+title: "From the Circle to Epicycles (Part 1) - An animated introduction to Fourier Series"
 date: "2024-04-24"
 classes: wide
 usekatex: true
 usep5js: true
 custom-javascript-list:
-    - "/assets/js/2023-03-02-paiting-with-circles/commons.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/commons.js"
 custom-defer-javascript-list:
-    - "/assets/js/2023-03-02-paiting-with-circles/simplecircle.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotating.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/triangleincircle.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simplecirclerotatingtriangle.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/rotatingpi.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/rotatingpiwpi.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simpleosc.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simpleosccos.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sineparity.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/cosineparity.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sinusoids.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/onenegative.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sumsimple.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/dropsinusoid.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewave.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sumepi2.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/aflower.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavean.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavebn.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simplecirclewithpi.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/imnum.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/triangleincircle.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sincosside.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/sineparity.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/cosineparity.js"    
-    - "/assets/js/2023-03-02-paiting-with-circles/someepis.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/renums.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/cmplxnums.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/simplerotatingcirclecmp.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/cmplrotation.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/threedcomplex.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavef.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavefsa0.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavean.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/squarewavebn.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/tightfourier.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/tighttriangle.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/pishift.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/tightsawtooth.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/theboxfunction.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/theboxfunctionft.js"
-    - "/assets/js/2023-03-02-paiting-with-circles/fmachinery.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplecircle.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplecirclerotating.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/triangleincircle.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplecirclerotatingtriangle.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/rotatingpi.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/rotatingpiwpi.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simpleosc.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simpleosccos.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sincosside.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sineparity.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cosineparity.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sinusoids.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/onenegative.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sumsimple.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/dropsinusoid.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewave.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sumepi2.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simpleyxplotsketch.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/aflower.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavef.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefsa0.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavean.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavebn.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplecirclewithpi.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/imnum.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/triangleincircle.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sincosside.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sineparity.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cosineparity.js"    
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/someepis.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/renums.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cmplxnums.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplerotatingcirclecmp.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cmplrotation.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/threedcomplex.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavef.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefsa0.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavean.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavebn.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourier.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourieravg.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tighttriangle.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/pishift.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightsawtooth.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/theboxfunction.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/theboxfunctionft.js"
+    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/fmachinery.js"
 
 comments: true
 excerpt: "A visual introduction to Fourier Series"
@@ -63,17 +63,15 @@ tags:
 - "fun"
 ---
 
-This is the first article from a short series of articles where I am going explore some aspects of *Fourier Mathematics* in order to " approximate" real-world shapes using complex sinusoids.
+This article will be part of a more extended series in which I plan to explore various aspects of [Fourier Mathematics](https://en.wikipedia.org/wiki/Fourier_analysis). I will take notes, create some visuals (a good pretext to learn more about graphics), and hope that it will be useful to someone other than me.
 
-By the end of the series, I hope I will able to showcase some "original" works that have been in the making for some time.
-
-The article is in draft status, and it hasn't been reviewed yet, so any feedback is strongly appreciated. It's going to change in the coming weeks.
-
-Meanwhile, check [this](https://www.youtube.com/watch?v=-qgreAUpPwM&t=15s) video.
+The article has yet to be thoroughly reviewed by anyone other than me, so I put it online, hoping to get some feedback before bringing it to a final state.
 
 # Table of contents
 
-This article covers topics like: basic trig, epicycles, and Fourier series.
+In this series, we will start with a brief recap of some of the math concepts related to the circle, including trigonometric functions like sine and cosine. We'll also discuss Euler's identity, introduce the concept of a sinusoid (and complex sinusoid), and finally, we'll introduce the concept of Fourier Series. 
+
+The animations used in this series are original, although I drew inspiration from some existing materials found on the web. Please keep in mind that this is not a comprehensive course on the topic, so if you're really interested in learning more, I recommend taking a full course on the subject.
 
 - [The Circle](#the-circle)
 - [The number $$\pi$$](#the-number-pi)
@@ -276,7 +274,7 @@ Of course, this is not a rigorous demonstration. One can prove Euler's identity 
 
 Euler's formula is a thing of marvel:
 
-$$e^{ix}=cos(x) + i * sin(x)$$
+$$e^{ix}=\cos(x) + i * \sin(x)$$
 
 Or, if we choose $$x=\pi$$:
 
@@ -286,17 +284,17 @@ $$e^{i\pi}+1=0$$
 
 By substituting $$x \rightarrow -x$$ into Euler's identity we obtain:
 
-$$e^{-ix}=cos(x)-i*sin(x)$$ 
+$$e^{-ix}=\cos(x)-i*\sin(x)$$ 
 
 If we add/subtract the two equalities, we will obtain the definition of the sine and cosine functions in their exponential form:
 
-$$cos(x) = \frac{e^{ix} + e^{-ix}}{2}$$
+$$\cos(x) = \frac{e^{ix} + e^{-ix}}{2}$$
 
-$$sin(x) = \frac{e^{ix} - e^{-ix}}{2*i}$$
+$$\sin(x) = \frac{e^{ix} - e^{-ix}}{2*i}$$
 
 All points of the circle are determined by a functon $$z(x)$$, where: 
 
-$$z(x)=e^{ix}=\underbrace{cos(x)}_{Re(x)}+\underbrace{i*sin(x)}_{Im(x)}$$
+$$z(x)=e^{ix}=\underbrace{\cos(x)}_{Re(x)}+\underbrace{i*\sin(x)}_{Im(x)}$$
 
 $$x$$ represents the actual angle $$\theta \in \mathbb{R}$$, so $$z(\theta)=e^{i\theta}=cos(\theta)+i*sin(\theta)$$.
 
@@ -318,7 +316,7 @@ $$
 If we consider *time* to be the $$x$$-axis, and $$y(t)$$ the $$y$$-axis, the sinusoid becomes:
 
 $$
-y=f(x)=A * sin(\omega x + \varphi)
+y=f(x)=A * \sin(\omega x + \varphi)
 $$
 
 The $$\sin$$ and $$\cos$$ are just particular cases of sinusoids.
@@ -369,7 +367,7 @@ $$A*e^{i\theta}=A*(cos(\theta)+i*sin(\theta))$$
 If we substitute $$\theta$$ with $$\theta=\omega t + \varphi$$ we obtain the complex sinusoid:
 
 $$
-s(t)=A*e^{i(\omega t + \varphi)} = A * cos(\underbrace{\omega t + \varphi}_{\theta}) + i * A * sin(\underbrace{\omega t + \varphi}_{\theta})
+s(t)=A*e^{i(\omega t + \varphi)} = A * cos(\underbrace{\omega t + \varphi}_{\theta}) + i * A * \sin(\underbrace{\omega t + \varphi}_{\theta})
 $$
 
 A *complex sinusoid* captures the behavior of two sinusoids (one cosine and one sine) on both its axes; on the real part, it behaves like a cosine, while on its imaginary part, it behaves like a sine. 
@@ -377,7 +375,7 @@ A *complex sinusoid* captures the behavior of two sinusoids (one cosine and one 
 The two are *in sync* as they both depend on the free variable $$\theta$$, expressed as $$\theta=\omega t + \varphi$$.
 
 <div id="three-d-complex-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/threedcomplex.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/threedcomplex.js)</sup></sup>
 
 Two interesting observations:
 * If we project the complex sinusoid on the plane determined by the Y-axis and Z-axis, we will plot a *sine* (the Imaginary part);
@@ -488,7 +486,7 @@ A position vector represents the displacement from the origin $$(0, 0)$$ to a sp
 If we plot $$y(x)$$ on the cartesian grid we obtain something like: 
 
 <div id="simple-yx-plot-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/simpleyxplotsketch.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/simpleyxplotsketch.js)</sup></sup>
 
 At each given point $$x$$, we can say for certain that $$\vec{u} = \vec{u_{1}} + \vec{u_{2}} + \vec{u_{3}}$$.
 
@@ -499,7 +497,7 @@ If we carefully pick the *right sinusoids* the moving circles can describe (appr
 Here is a flower for example:
 
 <div id="a-flower-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/aflower.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/aflower.js)</sup></sup>
 
 Can you guess the individual sinusoids working together to draw the flower?
 
@@ -568,7 +566,7 @@ It's time to understand how we've devised such an approximation.
 In *isolation*, the *Square Wave*, $$f(x)$$ looks like this:
 
 <div id="square-wave-f-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavef.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavef.js)</sup></sup>
 
 Throughout the interval  `[0, 2L]`, $$f(x)$$ can be written as:
 
@@ -590,14 +588,14 @@ First of all, let's look at $$A_{0} = \frac{1}{2L} \int_{0}^{2L} f(x) dx$$. Noti
 Well, this coefficient ($$A_{0}$$) is a fancy way to express the average of $$f(x)$$ over the interval (in our case `[0, 2L]`). In the same time $$A_{0}$$ is the area determined by $$f(x)$$ over `[0, 2L]` then divided by $$2L$$. But if you look at the plot again, you will see that the net area is  $$0$$, because the green area (S1) nullifies the red area (S2), regardless of $$L$$.
 
 <div id="square-wave-f-a0-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavefa0.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefa0.js)</sup></sup>
 
 Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish. 
 
 Visually speaking, regardless of how you pick $$n$$ or $$L$$, the net area determined by the $$A_{n}$$ integral will always be zero. It's visually obvious if we *plot* $$A_n$$. For example plotting $$A_{1}$$, $$A_{2}$$, $$A_{3}$$, $$A_{4}$$ looks like this:
 
 <div id="square-wave-f-an-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavean.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavean.js)</sup></sup>
 
 Similar symmetrical patterns will emerge if you increase the $$n$$ in $$A_{n}$$ and plot them.
 
@@ -608,7 +606,7 @@ Thirdly, we need to compute:
  If we plot a $$B_{1}$$, $$B_{2}$$, $$B_{3}$$ and, let's say, $$B_{4}$$ we can intuitively *feel* what's happening with $$B_{n}$$:
 
 <div id="square-wave-f-bn-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/squarewavebn.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavebn.js)</sup></sup>
 
 If you have a keen eye for geometrical representations, you will notice that every even $$B_{n}$$ is also 0. The red and green areas nullify, so the net area described by the integral is $$0$$. The odd terms will be $$2 * \text{something}$$, so let's calculate that $$\text{something}$$.
 
@@ -653,7 +651,7 @@ $$
 In the next animation, you will see that by increasing $$n$$, the accuracy of our approximation gets better and better, and the *gaps* are slowly closed:
 
 <div id="tight-fourier-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourier.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourier.js)</sup></sup>
 
 To understand how adding more coefficients improves the approximation, let's look back again at a few of our coefficients $$s_{1}(x)$$, $$s_{2}(x)$$, $$s_{3}(x)$$, $$s_{4}(x)$$ and $$s_{5}(x)$$ (we will pick $$\omega=\frac{\pi}{2}$$, so that $$2L=1$$):
 
@@ -672,7 +670,7 @@ Each of the 5 terms is a sinusoid, with $$\frac{4}{\pi}$$, $$\frac{4}{3\pi}$$, e
 So, if we were to approximate a *Square Wave* with its fifth partial sum (the red dot), we would obtain something like this:
 
 <div id="tight-fourier-avg-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightfourieravg.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourieravg.js)</sup></sup>
 
 Notice how *obsessed* the *red dot* is with the *blue dot* (the actual function) and how closely it follows it. 
 
@@ -689,7 +687,7 @@ $$
 Plotting the function $$s(x)$$, we will see that things converge smoothly and fast. As soon as $$n$$ approaches $$6$$, we can already observe the triangle:
 
 <div id="tight-triangle-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tighttriangle.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/tighttriangle.js)</sup></sup>
 
 Let's compute the first terms six terms of the $$\sum$$, so that:
 
@@ -726,7 +724,7 @@ $$
 Visually speaking, the results will not be surprising if we plot $$sin(-x)$$ and $$sin(x+\pi)$$ side by side; the two are equivalent:
 
 <div id="pi-shift-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/pishift.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/pishift.js)</sup></sup>
 
 If we consider this, the even terms of $$s(x)$$ will become:
 
@@ -746,7 +744,7 @@ $$
 Plotting $$s(x)$$, while increasing $$n$$, things look like this:
 
 <div id="tight-sawtooth-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/tightsawtooth.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/tightsawtooth.js)</sup></sup>
 
 # The Fourier Series Machinery
 
@@ -759,7 +757,7 @@ You can pick the shape of the desired signal from here: <select id="fm-wave" onc
     </select> and the sketch will change accordingly.
 
 <div id="fmachinery-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2023-03-02-paiting-with-circles/fmachinery.js)</sup></sup>
+<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/fmachinery.js)</sup></sup>
 
 ...A bunch of spinning circles on a stick, where each circle corresponds to exactly one term of the series - this is the marvelous *Fourier Series Machinery*. 
 
