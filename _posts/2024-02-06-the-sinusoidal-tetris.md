@@ -50,7 +50,7 @@ You lose if the original signal spikes outside the game buffer (canvas).
 
 A professional player turns off the suggestions, now enabled by default. If you are a savant, you can compute the [*Fourier Series Coefficients*](https://en.wikipedia.org/wiki/Fourier_series) in your head. Cancel that noise!
 
-To better understand what is happening, check out [this first article of a series]({{site.url}}/2024/04/08/from-the-circle-to-epicycles-part1).
+To better understand what is happening, check out [this first article of a series]({{site.url}}/2024/04/24/from-the-circle-to-epicycles).
 
 --- 
 
