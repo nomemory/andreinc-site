@@ -30,28 +30,14 @@ custom-defer-javascript-list:
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefsa0.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavean.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavebn.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplecirclewithpi.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/imnum.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/triangleincircle.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sincosside.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/sineparity.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cosineparity.js"    
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/someepis.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/renums.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cmplxnums.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/simplerotatingcirclecmp.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/cmplrotation.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/threedcomplex.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavef.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefsa0.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavean.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavebn.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourier.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightfourieravg.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tighttriangle.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/pishift.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightsawtooth.js"
-    - "/assets/js/2024-04-24-from-the-circle-to-epicycles/theboxfunction.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/theboxfunctionft.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/fmachinery.js"
 
@@ -205,10 +191,7 @@ And the *sine* is odd, meaning $$\sin(-x)=-\sin(x)$$, or $$\sin(x)=-\sin(-x)$$:
 
 In the [Complex Plane](https://en.wikipedia.org/wiki/Complex_plane), the points on the circle are defined by the following equation:
 
- $$
- z=cos(\theta)+i*sin(\theta)
- $$
-
+$$z=\cos(\theta)+i*\sin(\theta)$$
 
 <div id="simple-circle-rotating-circle-cmp-sketch"></div>
 
@@ -266,7 +249,7 @@ So, the rate of change is rotational.
 
 We can intuitively *feel* that the function $$e^{ix}$$ describes an actual circle. 
 
-There's no other possible solution. So we can boldly affirm that $$e^{ix} = cos(x) + i*sin(x)$$ (which is the formula discovered by Euler).
+There's no other possible solution. So we can boldly affirm that $$e^{ix} = \cos(x) + i*\sin(x)$$ (which is the formula discovered by Euler).
 
 Of course, this is not a rigorous demonstration. One can prove Euler's identity using [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series).
 
@@ -362,12 +345,12 @@ Starting with the definition of a sinusoid:
 
 If we multiply each side with $$A$$:
 
-$$A*e^{i\theta}=A*(cos(\theta)+i*sin(\theta))$$
+$$A*e^{i\theta}=A*(\cos(\theta)+i*\sin(\theta))$$
 
 If we substitute $$\theta$$ with $$\theta=\omega t + \varphi$$ we obtain the complex sinusoid:
 
 $$
-s(t)=A*e^{i(\omega t + \varphi)} = A * cos(\underbrace{\omega t + \varphi}_{\theta}) + i * A * \sin(\underbrace{\omega t + \varphi}_{\theta})
+s(t)=A*e^{i(\omega t + \varphi)} = A * \cos(\underbrace{\omega t + \varphi}_{\theta}) + i * A * \sin(\underbrace{\omega t + \varphi}_{\theta})
 $$
 
 A *complex sinusoid* captures the behavior of two sinusoids (one cosine and one sine) on both its axes; on the real part, it behaves like a cosine, while on its imaginary part, it behaves like a sine. 
@@ -418,13 +401,13 @@ If we carefully choose the sinusoids, we can create *predictable* patterns:
 Let's take, for example, use the following formula:
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2k-1)fx)}{2k-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{\sin(2\pi(2k-1)fx)}{2k-1}
 $$
 
 Through expansion, the formula becomes:
 
 $$
-y(x) =  \underbrace{\frac{4}{\pi}sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{sin((2k-1)\omega x)}}_{y_k(x)} + ...
+y(x) =  \underbrace{\frac{4}{\pi}\sin(\omega x)}_{y_{1}(x)} + \underbrace{\frac{4}{3\pi}\sin(3\omega x)}_{y_{2}(x)} + ... + \underbrace{\frac{4}{(2k-1)\pi}{\sin((2k-1)\omega x)}}_{y_k(x)} + ...
 $$
 
 $$y_1(x), y_2(x), y_3(x), ..., y_k(x), ...$$ are all the individual sinusoids.
@@ -486,7 +469,6 @@ A position vector represents the displacement from the origin $$(0, 0)$$ to a sp
 If we plot $$y(x)$$ on the cartesian grid we obtain something like: 
 
 <div id="simple-yx-plot-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/simpleyxplotsketch.js)</sup></sup>
 
 At each given point $$x$$, we can say for certain that $$\vec{u} = \vec{u_{1}} + \vec{u_{2}} + \vec{u_{3}}$$.
 
@@ -497,7 +479,6 @@ If we carefully pick the *right sinusoids* the moving circles can describe (appr
 Here is a flower for example:
 
 <div id="a-flower-sketch"></div>
-<sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/aflower.js)</sup></sup>
 
 Can you guess the individual sinusoids working together to draw the flower?
 
@@ -521,9 +502,9 @@ Where $$A_{n}$$ and $$B_{n}$$ are called *Fourier Coefficients* are defined by t
 
 $$A_{0} = \frac{1}{P} \int_{- \frac{P}{2}}^{+\frac{P}{2}} f(x) dx$$
 
-$$A_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * cos(\frac{2\pi nx}{P}) dx$$
+$$A_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * \cos(\frac{2\pi nx}{P}) dx$$
 
-$$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * sin(\frac{2\pi nx}{P}) dx$$
+$$B_{n} = \frac{2}{P} \int_{- \frac{P}{2}}^{+ \frac{P}{2}} f(x) * \sin(\frac{2\pi nx}{P}) dx$$
 
 # Fourier Series in Exponential Form
 
@@ -552,13 +533,13 @@ $$
 Remember the *Square Wave* we've approximated with sinusoids [in this section](#adding-sinusoids)? At that point, we used the following formula to express the *Square* as a sum of sinusoidal components:
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin(2\pi(2k-1)fx)}{2k-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{\sin(2\pi(2k-1)fx)}{2k-1}
 $$
 
 Or, to keep things simpler, by substituting $$\omega=2\pi f$$ ($$\omega$$ is the angular frequency):
 
 $$
-y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2k-1)\omega x)}{2k-1}
+y(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{\sin((2k-1)\omega x)}{2k-1}
 $$
 
 It's time to understand how we've devised such an approximation. 
@@ -590,7 +571,7 @@ Well, this coefficient ($$A_{0}$$) is a fancy way to express the average of $$f(
 <div id="square-wave-f-a0-sketch"></div>
 <sup><sup>[(Source code)]({{site.url}}//assets/js/2024-04-24-from-the-circle-to-epicycles/squarewavefa0.js)</sup></sup>
 
-Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish. 
+Secondly, let's compute the $$A_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * \cos(\frac{\pi nx}{L}) dx$$ coefficients. An important observation is that $$f(n)$$ is odd, and its average value on the interval is $$0$$; we can safely say all the coefficients $$A_{n}$$ also vanish. 
 
 Visually speaking, regardless of how you pick $$n$$ or $$L$$, the net area determined by the $$A_{n}$$ integral will always be zero. It's visually obvious if we *plot* $$A_n$$. For example plotting $$A_{1}$$, $$A_{2}$$, $$A_{3}$$, $$A_{4}$$ looks like this:
 
@@ -601,7 +582,7 @@ Similar symmetrical patterns will emerge if you increase the $$n$$ in $$A_{n}$$ 
 
 Thirdly, we need to compute:
 
- $$B_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * sin(\frac{\pi nx}{L}) dx$$
+ $$B_{n} = \frac{1}{L} \int_{0}^{2L} f(x) * \sin(\frac{\pi nx}{L}) dx$$
 
  If we plot a $$B_{1}$$, $$B_{2}$$, $$B_{3}$$ and, let's say, $$B_{4}$$ we can intuitively *feel* what's happening with $$B_{n}$$:
 
@@ -612,11 +593,11 @@ If you have a keen eye for geometrical representations, you will notice that eve
 
 We will need to split the integral on two sub-intervals $$[0, L]$$ and $$[L, 2L]$$ (there's a *chasm* at $$L$$), but given the fact $$f(x)$$ and $$sin(x)$$ are odd, $$B_{n}$$ can we written as:
 
- $$B_{n} = 2 * [\frac{1}{L} \int_{0}^{L} f(x) * sin(\frac{\pi nx}{L}) dx]$$
+ $$B_{n} = 2 * [\frac{1}{L} \int_{0}^{L} f(x) * \sin(\frac{\pi nx}{L}) dx]$$
 
 We can now perform [u-substition](https://en.wikipedia.org/wiki/Integration_by_substitution), so we can write:
 
-$$B_{n} = \frac{2}{L} \int_{0}^{nL\pi} \frac{sin(\frac{u}{L})}{n\pi}du$$
+$$B_{n} = \frac{2}{L} \int_{0}^{nL\pi} \frac{\sin(\frac{u}{L})}{n\pi}du$$
 
 After we take the constant out, we compute the integral, use the intervals, and take into consideration the periodicity of cosine:
 
@@ -626,26 +607,26 @@ And now we see it, $$B_{n}$$ is exactly $$0$$ if $$n$$ is even, and $$B_{n}=2 * 
 
 Putting all back into the master formula of the *Fourier Series*:
 
-$$f(x)=\underbrace{A_{0}}_{0} + \sum_{n=1}^{\infty} [\underbrace{A_{n} cos(\frac{\pi nx}{L})}_{0} + B_{n} sin(\frac{\pi nx}{L})]$$
+$$f(x)=\underbrace{A_{0}}_{0} + \sum_{n=1}^{\infty} [\underbrace{A_{n} \cos(\frac{\pi nx}{L})}_{0} + B_{n} \sin(\frac{\pi nx}{L})]$$
 
 Things become:
 
-$$f(x)=\frac{4}{\pi} \sum_{n=1,3,5...}^{+\infty} (\frac{1}{n} * sin(\frac{\pi nx}{L}))$$
+$$f(x)=\frac{4}{\pi} \sum_{n=1,3,5...}^{+\infty} (\frac{1}{n} * \sin(\frac{\pi nx}{L}))$$
 
 If we substitute $$n \rightarrow 2k-1$$ and consider, we obtain the initial formula:
 
-$$f(x)=\frac{4}{\pi} \sum_{k=1}^{+\infty} (\frac{sin(\frac{\pi (2k-1)x}{L})}{(2k-1)})$$
+$$f(x)=\frac{4}{\pi} \sum_{k=1}^{+\infty} (\frac{\sin(\frac{\pi (2k-1)x}{L})}{(2k-1)})$$
 
 To obtain the initial formula, we substitute $$L \rightarrow \frac{1}{2f}$$, and $$2\pi f \rightarrow \omega$$, basically we create an interdependence between $$L$$ (half of the interval) and $$\omega$$, $$L=\frac{\pi}{\omega}$$:
 
 $$
-f(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{sin((2k-1)\omega x)}{2k-1}
+f(x) = \frac{4}{\pi}\sum_{k=1}^{\infty}\frac{\sin((2k-1)\omega x)}{2k-1}
 $$
 
 Unfortunately, there's no way we can go to $$+\infty$$, so let's consider $$s(x)$$ as an approximation of $$f(x)$$ that depends on $$n$$.
 
 $$
-s(x) = \frac{4}{\pi}\sum_{k=1}^{n}\frac{sin((2k-1)\omega x)}{2k-1} \approx f(x)
+s(x) = \frac{4}{\pi}\sum_{k=1}^{n}\frac{\sin((2k-1)\omega x)}{2k-1} \approx f(x)
 $$
 
 In the next animation, you will see that by increasing $$n$$, the accuracy of our approximation gets better and better, and the *gaps* are slowly closed:
@@ -655,15 +636,15 @@ In the next animation, you will see that by increasing $$n$$, the accuracy of ou
 
 To understand how adding more coefficients improves the approximation, let's look back again at a few of our coefficients $$s_{1}(x)$$, $$s_{2}(x)$$, $$s_{3}(x)$$, $$s_{4}(x)$$ and $$s_{5}(x)$$ (we will pick $$\omega=\frac{\pi}{2}$$, so that $$2L=1$$):
 
-$$s_{1}(x) = \frac{4}{\pi} sin(\frac{\pi x}{2})$$
+$$s_{1}(x) = \frac{4}{\pi} \sin(\frac{\pi x}{2})$$
 
-$$s_{2}(x) = \frac{4}{3\pi} sin(\frac{3\pi x}{2})$$
+$$s_{2}(x) = \frac{4}{3\pi} \sin(\frac{3\pi x}{2})$$
 
-$$s_{3}(x) = \frac{4}{5\pi} sin(\frac{5\pi x}{2})$$
+$$s_{3}(x) = \frac{4}{5\pi} \sin(\frac{5\pi x}{2})$$
 
-$$s_{4}(x) = \frac{4}{7\pi} sin(\frac{7\pi x}{2})$$
+$$s_{4}(x) = \frac{4}{7\pi} \sin(\frac{7\pi x}{2})$$
 
-$$s_{5}(x) = \frac{4}{9\pi} sin(\frac{9\pi x}{2})$$
+$$s_{5}(x) = \frac{4}{9\pi} \sin(\frac{9\pi x}{2})$$
 
 Each of the 5 terms is a sinusoid, with $$\frac{4}{\pi}$$, $$\frac{4}{3\pi}$$, etc. amplitudes, and $$\frac{\pi}{2}$$, $$\frac{3\pi}{2}$$, etc. frequencies.
 
@@ -681,7 +662,7 @@ We can always add more terms to the partial sum to help the *red dot* in its *ho
 Without dealing with all the associated math, the *Fourier Series* decomposition for a triangle-wave is:
 
 $$
-s(x)=\frac{8}{\pi^2}\sum_{k=1}^{N}\frac{(-1)^{k-1}}{(2k-1)^2}*sin((2k-1)x)
+s(x)=\frac{8}{\pi^2}\sum_{k=1}^{N}\frac{(-1)^{k-1}}{(2k-1)^2}*\sin((2k-1)x)
 $$
 
 Plotting the function $$s(x)$$, we will see that things converge smoothly and fast. As soon as $$n$$ approaches $$6$$, we can already observe the triangle:
@@ -696,29 +677,29 @@ s(x) \approx s_1(x) + s_2(x) + s_3(x) + s_4(x) + s_5(x) + s_6(x)
 $$
 
 Where:
-* The first term is $$s_1(x)=\frac{8}{\pi^2}*sin(x)$$, where $$A=\frac{8}{\pi^2}$$, $$\omega=1$$, $$\varphi=0$$;
-* The second term is $$s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)$$, where $$A=-\frac{8}{3^2\pi^2}$$, $$\omega=3$$, $$\varphi=0$$;
-* The third term is $$s_3(x)=\frac{8}{5^2\pi^2}*sin(5x)$$, where $$A=\frac{8}{5^2\pi^2}$$, $$\omega=5$$, $$\varphi=0$$;
-* The fourth term is $$s_4(x)=-\frac{8}{7^2\pi^2}*sin(7x)$$, where $$A=-\frac{8}{7^2\pi^2}$$, $$\omega=7$$, $$\varphi=0$$;
-* The fifth term is $$s_5(x)=\frac{8}{9^2\pi^2}*sin(9x)$$, where $$A=\frac{8}{9^2\pi^2}$$, $$\omega=9$$, $$\varphi=0$$;
-* The sixth term is $$s_6(x)=-\frac{8}{11^2\pi^2}*sin(11x)$$, where $$A=-\frac{8}{11^2\pi^2}$$, $$\omega=11$$, $$\varphi=0$$;
+* The first term is $$s_1(x)=\frac{8}{\pi^2}*\sin(x)$$, where $$A=\frac{8}{\pi^2}$$, $$\omega=1$$, $$\varphi=0$$;
+* The second term is $$s_2(x)=-\frac{8}{3^2\pi^2}*\sin(3x)$$, where $$A=-\frac{8}{3^2\pi^2}$$, $$\omega=3$$, $$\varphi=0$$;
+* The third term is $$s_3(x)=\frac{8}{5^2\pi^2}*\sin(5x)$$, where $$A=\frac{8}{5^2\pi^2}$$, $$\omega=5$$, $$\varphi=0$$;
+* The fourth term is $$s_4(x)=-\frac{8}{7^2\pi^2}*\sin(7x)$$, where $$A=-\frac{8}{7^2\pi^2}$$, $$\omega=7$$, $$\varphi=0$$;
+* The fifth term is $$s_5(x)=\frac{8}{9^2\pi^2}*\sin(9x)$$, where $$A=\frac{8}{9^2\pi^2}$$, $$\omega=9$$, $$\varphi=0$$;
+* The sixth term is $$s_6(x)=-\frac{8}{11^2\pi^2}*\sin(11x)$$, where $$A=-\frac{8}{11^2\pi^2}$$, $$\omega=11$$, $$\varphi=0$$;
 
 A keen eye will see will observe the that $$s_2(x)$$, $$s_4(x)$$, $$s_6(x)$$ and all the even terms are *negative*. 
 
 A negative amplitude doesn't make too much sense, at least not in a physical sense. What are we going to do with the *minus sign*?
 
 We have two options:
-1. Because $$sin(-x)=-sin(x)$$, nobody stops us to make the *frequency* negative. For example, $$s_2(x)=\frac{8}{3^2\pi^2}*sin(-3x)$$, so that the $$\omega=-3$$. But again, why would we want a *negative frequency*? This also doesn't make sense in a physical sense.
+1. Because $$\sin(-x)=-\sin(x)$$, nobody stops us to make the *frequency* negative. For example, $$s_2(x)=\frac{8}{3^2\pi^2}*\sin(-3x)$$, so that the $$\omega=-3$$. But again, why would we want a *negative frequency*? This also doesn't make sense in a physical sense.
 2. We can use $$\vert A \vert$$ and shift the signal with $$\pi$$, so that $$\varphi=\pi$$. 
 
 In practice, we will go with 2. as it's more practical and gives us more control, but the two options are equivalent so that we can write $$s_2(x)$$ in both ways:
 
 $$
-s_2(x)=-\frac{8}{3^2\pi^2}*sin(3x)
+s_2(x)=-\frac{8}{3^2\pi^2}*\sin(3x)
 $$
  
 $$
-s_2(x)=\frac{8}{3^2\pi^2}*sin(3x + \pi)
+s_2(x)=\frac{8}{3^2\pi^2}*\sin(3x + \pi)
 $$
 
 Visually speaking, the results will not be surprising if we plot $$sin(-x)$$ and $$sin(x+\pi)$$ side by side; the two are equivalent:
@@ -738,7 +719,7 @@ If we consider this, the even terms of $$s(x)$$ will become:
 Shamelessly skipping the math demonstration, a reverse-sawtooth function has the following form:
 
 $$
-s(x)=\frac{2}{\pi}\sum_{k=1}^{N}(-1)^k*\frac{sin(kx)}{k}
+s(x)=\frac{2}{\pi}\sum_{k=1}^{N}(-1)^k*\frac{\sin(kx)}{k}
 $$
 
 Plotting $$s(x)$$, while increasing $$n$$, things look like this:
