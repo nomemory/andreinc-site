@@ -105,6 +105,7 @@ I can't entirely agree with everything the following people are writing.
 | [jmmv.dev/](https://jmmv.dev/blog.html) | The personal blog of Julio Merino. Programming languages and operating systems. |
 | [junkiyoshi.com/](https://junkiyoshi.com/) | Mathematical art. |
 | [justinmiller.io/](https://justinmiller.io/) | Justin Miller, maker, programmer, photographer, and traveler. |
+| [jsomers.net/](https://jsomers.net/) | James Somers is a writer and programmer based in New York, NY. |
 | [jvns.ca/](https://jvns.ca/) | Julia Evan's blog. |
 | [keybits.net/](https://www.keybits.net/) | Tom Atkins' site. |
 | [lemire.me](https://lemire.me/blog/) | The blog of Daniel Lemire, a science professor at the University of Quebec. He sure loves optimizations. |
@@ -123,6 +124,7 @@ I can't entirely agree with everything the following people are writing.
 | [mitjafelicijan.com/](https://mitjafelicijan.com/) | The personal blog of Mitja Felicijan. | 
 | [mcmillen.dev/](https://www.mcmillen.dev/) | Colin McMillen, author of [93% of Paint Splatters are Valid Perl Programs](https://www.mcmillen.dev/sigbovik/) |
 | [muscar.eu](https://muscar.eu/) | This is the blog of Alex Muscar, an *old* childhood friend. He writes about algorithms and CS topics. | 
+| [nadim.computer/](https://nadim.computer/) | The personal blog of Nadim Kobeissi. |
 | [nedbatchelder.com/](https://nedbatchelder.com/) | Ned Batchelder's blog. | 
 | [netmeister.org/blog/](https://www.netmeister.org/blog/) | Personal blog of Jan Schaumann. |
 | [notes.atomutek.org/](https://notes.atomutek.org/) | I am Matt, a roboticist, dabbling in everything tech, polyglot. |
@@ -132,7 +134,7 @@ I can't entirely agree with everything the following people are writing.
 | [odonnellweb.com/pelican/](https://odonnellweb.com/pelican/) | O'DonnellWeb was launched on 12/31/1995. That makes it one of the longest continuously running personal websites on the Internet. |
 | [openmymind.net/](https://www.openmymind.net/) | The blog of Karl Seguin. |
 | [opensourcemusings.com/](https://opensourcemusings.com/) | "A blog where I share my passion for Linux and open source, with a decidedly non-techie slant." |
-| [www.oranlooney.com/](https://www.oranlooney.com/) | "Hi, I’m Oran Looney. I do math. I write programs. I science… data?" | 
+| [oranlooney.com/](https://www.oranlooney.com/) | "Hi, I’m Oran Looney. I do math. I write programs. I science… data?" | 
 | [paritybit.ca](https://www.paritybit.ca/) | This is the personal blog of jbauer. One thing I love about it is the careful gardening of the [digital garden](https://www.paritybit.ca/garden/) |
 | [peterkrautzberger.org/](https://www.peterkrautzberger.org/) | Personal blog of Peter Krautzberger. |
 | [ploum.net/](https://ploum.net/index_en.html) | Personal blog of Lionel Dricot. |

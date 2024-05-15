@@ -213,6 +213,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "What they didn't have was a good compiler."
 
 # Command Line
+* [explain shell](https://explainshell.com/)
+    * Write down a command-line to see the help text that matches each argument.
 * [lsix](https://github.com/hackerb9/lsix)
     * Like `ls`, but for images. Shows thumbnails in terminal using sixel graphics.
 * [Sculpting text with regex, grep, sed, awk, emacs and vim ](https://matt.might.net/articles/sculpting-text/)
@@ -286,6 +288,8 @@ This section is a work in progress, and if the number of links increases, I will
 # Games
 * [A dark room](http://adarkroom.doublespeakgames.com/)
     * One interesting text-adventure game
+* [A slower speed of light](http://gamelab.mit.edu/games/a-slower-speed-of-light/)
+    * A Slower Speed of Light is a first-person game prototype in which players navigate a 3D space while picking up orbs that reduce the speed of light in increments. 
 * [Bonsai Builder](https://vandervasgenerator.itch.io/bonsaibuilder)
     * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
 * [Collosal Cave Adventure Page](https://rickadams.org/adventure/)
@@ -299,6 +303,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Can be helpful if you are the [Dungeon Master](https://en.wikipedia.org/wiki/Dungeon_Master).
 * [Flexbox Adventure](https://codingfantasy.com/games/flexboxadventure/play)
     * Learn CSS by playing the *Flexbox Adventure*. 
+* [Open Source Games](https://github.com/bobeff/open-source-games)
+    * This is a list of different open-source video games and commercial video games open-source remakes.
 * [ORB Farm](https://orb.farm/)
     * This is your personal aquatic ecosystem to nurture, sculpt, and observe.
 * [paku paku](https://abagames.github.io/crisp-game-lib-11-games/?pakupaku)
@@ -389,6 +395,8 @@ This section is a work in progress, and if the number of links increases, I will
     * Spoiler alert: not so efficient.
 * [How to fold a Julia Fractal](https://acko.net/blog/how-to-fold-a-julia-fractal/)
     * "Everything in mathematics is a choice."
+* [Immersive Math](https://immersivemath.com/)
+    * The world's first linear algebra book with fully interactive figures.
 * [Intuitive Understanding Of Euler’s Formula](https://betterexplained.com/articles/intuitive-understanding-of-eulers-formula/)
 * [Is two to the power of infinity more than infinity?](https://igoro.com/archive/is-two-to-the-power-of-infinity-more-than-infinity/)
     * It depends?!
@@ -430,6 +438,8 @@ This section is a work in progress, and if the number of links increases, I will
 * [Grandpa's Photos](https://grandpas-photos.com)
     * "This is Grandpa, otherwise known as Stephen Clarke. He was great at so many things. One of those was being a Grandpa. He was a WWII Air Force navigator, a husband, a Dad and we also discovered he was a great photographer."
 * [How games are used to control you ](https://unherd.com/2024/04/how-games-are-used-to-control-you/)   
+* [Wiby](https://wiby.me/)
+    * A search engine targeting the "old web". Click on surprise me to get surprised.
 
 # Physics
 * [Reflections On Relativity, Kevin Brown](https://www.mathpages.com/rr/rrtoc.htm)
@@ -438,6 +448,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "Nearly six years ago, I sat down at my desk and typed up a detailed guide for anyone who wanted to learn physics on their own."
 
 # Programming Languages & Compilers
+* [MAL - Make a Lisp](https://github.com/kanaka/mal#mal---make-a-lisp)
+    * Make a Lisp is almost 100 programming languages.
 * [Programming languages & resources](https://bernsteinbear.com/pl-resources/)
     * This page is a collection of my favorite resources for people getting started writing programming languages.
 
