@@ -40,7 +40,6 @@ custom-defer-javascript-list:
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/tightsawtooth.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/theboxfunctionft.js"
     - "/assets/js/2024-04-24-from-the-circle-to-epicycles/fmachinery.js"
-
 comments: true
 excerpt: "A visual introduction to Fourier Series"
 categories:
