@@ -1,4 +1,3 @@
 [build]
-  command = "bundle update rb-inotify"
   command = "jekyll build"
   publish = "_site"
