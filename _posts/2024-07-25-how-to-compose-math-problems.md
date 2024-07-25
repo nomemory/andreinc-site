@@ -65,6 +65,8 @@ So we can already generalize a little: if we replace $$2$$ and $$5$$ with two ar
 
 After this first *iteration*, the *new* problem is as concise as before, but it's not exactly original, nor does the expression $$\frac{3(b-a)}{2b-a}$$ looks *symmetrical* enough for my taste, not to mention the ugly $$\log_{(m*n^2)}(n^3)$$.
 
+But what if $$m$$, $$n$$ are not prime numbers? Is it still working? That's a different route we can take.
+
 ## Step 3
 
 Let's change $$T$$ into something more *beautiful* and concise. Why not proving $$T=\frac{b-a}{b+a}$$.
