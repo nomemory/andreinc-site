@@ -149,6 +149,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "No one clicks a webpage hoping to learn which cat can haz cheeseburger. Weirdos, maybe."
 
 # Books
+* [Biblioteca Digitala](https://biblioteca-digitala.ro/)
+    * Biblioteca Digitală a Publicațiilor Culturale (Romanian source)
 * [Donald Knuth Non-Tech Reading List](https://www-cs-faculty.stanford.edu/~knuth/retd.html)
     * "Of course I like to read nontechnical books, although I read very slowly."
 * [Free Tech Books](https://www.freetechbooks.com/)
@@ -272,6 +274,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "In fact, I'm not even sure that anyone can easily tell assembly code from some high-level code without googling. Can you?"
 * [Complaints Medieval Monks Scribbled in the Margins of Illuminated Manuscripts](https://www.themarginalian.org/2012/03/21/monk-complaints-manuscripts)
 * [Connnnngratulations! This project won China 2014 State Science and Technology Prizes ! FIRST PRIZE!!!!! ](https://github.com/iiordanov/remote-desktop-clients/issues/39)
+* [How To Write Unmaintainable Code](https://cs.fit.edu/~kgallagher/Schtick/How%20To%20Write%20Unmaintainable%20Code.html)
+    * Ensure a job for life. 
 * [Make Front-End Shit Again](https://makefrontendshitagain.party/)
     * Multiple sites of pixel proportions.
 * [Medieval Cat Meme Generator](https://michael-klein.github.io/medieval-cat-meme-generator/)
