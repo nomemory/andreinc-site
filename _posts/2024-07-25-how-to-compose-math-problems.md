@@ -13,7 +13,7 @@ tags:
 - "logarithms"
 ---
 
-When I was a young student (around 12), my math teacher came-up woth an unique requirement for his students to not only solve math problems but also to compose them. 
+When I was a young student (around 12), my math teacher came-up with an unique requirement for his students to not only solve math problems but also to compose them. 
 
 This unconventional approach encouraged his students (me and my classmates) to think creatively and critically, fostering a deeper understanding of the areas we were learning about. While the task was not mandatory, some classmates and I embraced the challenge and worked on developing geometry and algebra exercises from "scratch". I am not sure how original we were, but the efforts paid off when our *little creations* were published in an obscure math magazine I cannot find online.
 
