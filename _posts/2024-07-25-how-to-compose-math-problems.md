@@ -119,27 +119,58 @@ Now, it is time for a further generalization, the final touch.
 
 Let's pick $$n$$ prime numbers $$p_n$$ and their corresponding $$a_n$$.
 
-Our problem suddenly becomes:
+$$
+\begin{cases}
+a_1 = \ln p_1 \\
+a_2 = a_1 + \ln p_2 \\
+a_3 = a_2 + \ln p_3 \\
+... \\
+a_n = a_{n-1} + \ln p_n
+\end{cases}
+$$
 
-> If $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, find $$m$$, $$n$$ so that $$log_mn=\frac{a_n-a_1}{a_n+a_1}$$.
+Or from a different perspective:
+
+$$
+\begin{cases}
+\ln p_1 = a_1 \\
+\ln p_2 = a_2 - a_1 \\
+\ln p_3 = a_3 - a_2 \\
+... \\
+\ln p_n = a_n - a_{n-1}
+\end{cases}
+$$
+
+Again, if we sum them up, we observe that: $$\sum_{i=1}^n \ln p_i = \ln (\prod_{i=1}^n p_i) = a_n$$. Additionally:
+
+$$
+\begin{cases}
+a_n - a_1 = \ln (\prod_{i=2}^n p_i) \\
+a_n + a_1 = \ln (p_1 * \prod_{i=1}^n p_i) 
+\end{cases}
+$$
+
+So why don't we formulate our problem in the following manner:
+
+> Given $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
 
 Based on what we discussed, the answer is:
 
 $$
 \begin{cases}
-m=p_1\prod_{i=1}^n(p_i)\\
-n=\prod_{i=2}^n(p_i)
+k=p_1\prod_{i=1}^n(p_i)\\
+t=\prod_{i=2}^n(p_i)
 \end{cases}
 $$
 
-$$m$$ is the product of the first $$n$$ prime numbers, with $$2$$ appearing twice.
+$$k$$ is the product of the first $$n$$ prime numbers, with $$2$$ appearing twice.
 
-$$n$$ is the product of the first $$n$$ prime numbers, excluding $$2$$.
+$$t$$ is the product of the first $$n$$ prime numbers, excluding $$2$$.
 
 If we put everything back into the formula, you will see the answer is correct:
 
 $$
-\log_mn=\frac{\ln n}{\ln m}=\frac{\ln(\prod_{i=2}^n(p_i))}{\ln(p_1\prod_{i=1}^n(p_i))} = \frac{\ln(p_2 * ... * p_n)}{\ln(p_1*p_1*...*p_n)}=\\
+\log_kt=\frac{\ln t}{\ln k}=\frac{\ln(\prod_{i=2}^n(p_i))}{\ln(p_1\prod_{i=1}^n(p_i))} = \frac{\ln(p_2 * ... * p_n)}{\ln(p_1*p_1*...*p_n)}=\\
 \\
 \\
 \frac{\ln p_2 + ... + \ln p_n}{\ln p_1 + \ln p_1 + ... + \ln p_n}=\frac{a_n-a_1}{a_n + a_1}
@@ -152,13 +183,17 @@ It's nice to see that with enough pattern spotting and a clear plan, you can tra
 
 > If $$a=\ln5$$, $$b=a+\ln2$$ and $$T=\log_{20}8$$, prove $$T=\frac{3(b-a)}{2b-a}$$.
 
-To this one:
+To this:
 
-> If $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, find $$m$$, $$n$$ so that $$log_mn=\frac{a_n-a_1}{a_n+a_1}$$.
+> Given $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
 
 They are the same problem if you take that one step back and look closer.
 
- So where is the creative touch, you would ask? I am asking myself the same question.
+So where is the creative touch, you would ask? I am asking myself the same question.
+
+# Conclusion 2
+
+Is the problem we've come up with a good one? I am not sure; sometimes, our route takes us nowhere. Sometimes, we can "discover" beautiful truths camouflaged as math problems.
 
 
 
