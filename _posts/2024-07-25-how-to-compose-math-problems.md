@@ -152,7 +152,7 @@ $$
 
 So why don't we formulate our problem in the following manner:
 
-> Given $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
+> Given $$P_n=\{p_i \mid p_i \text{ is the ith prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
 
 Based on what we discussed, the answer is:
 
@@ -185,7 +185,7 @@ It's nice to see that with enough pattern spotting and a clear plan, you can tra
 
 To this:
 
-> Given $$P_n=\{p_i \mid p_i \text{ is prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
+> Given $$P_n=\{p_i \mid p_i \text{ is prime ith prime, } i=1,2,3...,n\}$$, and $$a_1=\ln p_1$$, $$a_2=a_1 + \ln p_2$$, ..., $$a_n=a_{n-1}+\ln p_n$$, if $$\log_kt=\frac{a_n-a_1}{a_n+a_1}$$, prove that there is at least one solution so that $$k,t \in \mathbb{N}$$, and $$k,t$$ have consecutive prime factors.
 
 They are the same problem if you take that one step back and look closer.
 
