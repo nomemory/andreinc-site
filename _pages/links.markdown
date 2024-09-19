@@ -511,6 +511,7 @@ This section is a work in progress, and if the number of links increases, I will
 * [The Inventor of the Black Box Was Told to Drop the Idea and “Get On With Blowing Up Fuel Tanks](https://spectrum.ieee.org/the-inventor-of-the-black-box-was-told-to-drop-the-idea-and-get-on-with-blowing-up-fuel-tanks)
     * Fortunately, David Warren kept working on his crash-proof flight data recorder
 * [Why is the mouse cursor slightly tilted and not straight?](https://ux.stackexchange.com/questions/52336/why-is-the-mouse-cursor-slightly-tilted-and-not-straight)
+* [Wow! Signal](https://en.wikipedia.org/wiki/Wow!_signal)
 
 
 <!-- | [http://copy.sh/v86/](http://copy.sh/v86/) | 
