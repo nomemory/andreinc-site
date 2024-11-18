@@ -1,6 +1,6 @@
 ---
 title: "A joke in approximating numbers raised to irrational powers"
-date: "2024-07-25"
+date: "2024-11-18"
 classes: wide
 comments: true
 excerpt: "Pade Approximations are cute"
