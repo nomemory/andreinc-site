@@ -155,3 +155,60 @@ Now, to test our marvelous approximation, let's compute $$2^{\sqrt{2}}$$:
 The actual result should've been: $$2.6651$$. Not bad. 
 
 Computing $$3^{\sqrt{3}}$$ with our function yields: $$6.58$$ instead of $$6.70$$. Not terrible.
+
+## Bonus
+
+This is the python code used to generate the plots:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# [3/3] Pade approximation of e^x
+def approx_exp(x):
+    return (-120-60*x-12*x**2-x**3) / (-120+60*x-12*x**2+x**3)
+
+# [2/2] Pade approximation of ln(x)
+def approx_log(x):
+    return 3*(x-1)*(x+1) / (x**2+4*x+1)
+
+# [2/2] Pade approximation of sqrt(x)
+def approx_radical(x):
+    return (5*x**2+10*x+1) / (x**2+10*x+5)
+
+true_function = np.log #change with np.exp or np.sqrt
+approx_function = approx_log #change with approx_exp or approx_radical
+title="Log[x] and [3/3] Padé Approximation on (0, 4)"
+
+x_values = np.linspace(0, 4, 1000)[1:] 
+
+# Evaluate functions
+true_values = true_function(x_values)
+approx_values = approx_function(x_values)
+deviation = np.abs(true_values - approx_values)
+annotation_points = np.linspace(0.5, 4, 10) 
+
+#Plotting
+plt.figure(figsize=(12, 6))
+plt.plot(x_values, true_values, label='sqrt(x)', color='blue', linewidth=2)
+plt.plot(x_values, approx_values, label='Padé [2/2] sqrt(x))', color='orange', linestyle='--', linewidth=2)
+plt.fill_between(x_values, 0, deviation, color='red', alpha=0.3, label='Deviation')
+
+# Annotate deviation at key points
+for x in annotation_points:
+    y_true = true_function(x)
+    y_approx = approx_function(x)
+    dev = np.abs(y_true - y_approx)
+    plt.text(x, dev + 0.0005, f"{dev:.5f}", color='black', fontsize=10, ha='center')
+
+# Add labels, legend, and set default y-axis scale
+plt.title(title, fontsize=16)
+plt.xlabel('x', fontsize=14)
+plt.ylabel('y', fontsize=14)
+plt.legend(fontsize=12)
+plt.grid(True)
+
+# Show the plot
+plt.tight_layout()
+plt.show()
+```
