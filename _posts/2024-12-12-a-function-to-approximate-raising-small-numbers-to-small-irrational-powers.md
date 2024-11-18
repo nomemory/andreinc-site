@@ -28,9 +28,9 @@ Because $$\sqrt{3}\approx 1.73 \Rightarrow \lfloor 3^{\sqrt{3}}\rfloor=6$$.
 
 ## The new problem
 
-The previous problem was cute, but it made me wonder if I can find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms and radicals), by relying solely on **addition** and **multiplication**. 
+The previous problem was cute, but it made me wonder if I can find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms and radicals), by relying solely on **addition** and **multiplication**. Basically I was looking for a solution where pen, paper and patience are enough. 
 
-In case you don't want to continue reading, here is the answer:
+This is mostly a joke, so in case you don't want to continue reading, here is the answer:
 
 $$
 a^{\sqrt{c}} \approx \frac{-120-60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
@@ -75,11 +75,15 @@ Secondly, I remember watching a few months ago a video from [Michael Penn](https
 
 ## Pade approximations are "smooth"
 
-So, without going into too much details, a Padé approximation is a rational function (the ratio of two polynomials) used to represent a given function. A Padé approximation of order `[m/n]` for a function $$f(x)$$ is expressed as:
+So, without going into too much details, a Padé approximation is a rational function (the ratio of two polynomials) used to represent a given function. The smart idea behind this technique is to distribute the *control points* of a polynomial between the denominator and the numerator of the rational function. 
+
+A Padé approximation of order `[m/n]` for a function $$f(x)$$ is expressed as:
 
 $$f(x) \approx P_{[m,n]}(x)=\frac{a_0+a_1x+a_2x^2+\dots+a_mx^m}{1+b_1x+b_2x^2+\dots+b_nx^n}$$
 
-Compared to *Taylor Series*, Padé seem to handle exponential behaviors much better. Needless to say, I was curious how well, so I've computed the Padé aproximation of order `[1/1]`, $$P_{[1/1]}(x)$$ for $$e^x$$. (For in depth *tutorial* follow the Professor's Penn *tutorial*, linked above).
+Compared to *Taylor Series*, Padé seem to handle exponential behaviors and discontinuities better, plus in a lot of cases it converges faster.
+
+Needless to say, I was curious how well those approximations actually work, so I've computed the Padé aproximation of order `[1/1]`, $$P_{[1/1]}(x)$$ for $$e^x$$. (For in depth *tutorial* follow the Professor's Penn *tutorial*, linked above).
 
 $$P_{[1/1]}(x)=\frac{a_0+a_1x}{b_1x+1}$$
 
