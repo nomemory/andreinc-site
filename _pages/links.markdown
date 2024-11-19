@@ -209,6 +209,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Nice technical essay by [Eric S. Raymond](https://en.wikipedia.org/wiki/Eric_S._Raymond).
 * [The Underhanded C Contest](http://underhanded-c.org)
     * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior.
+* [Writing a very simple JIT Compiler in about 1000 lines of C](https://kuterdinel.com/writing-a-very-simple-jit-compiler-in-about-1000-lines-of-c.html)
 * [Why should I have written ZeroMQ in C, not C++ ](https://250bpm.com/blog:4/)
     * "Just to be clear from the very beginning: This is not going to be a Torvalds-ish rant against C++ from the point of view of die-hard C programmer."
 * [Why people were enthused about gcc early on in its life?](https://utcc.utoronto.ca/~cks/space/blog/unix/GccEarlyEnthusiasm)
@@ -261,6 +262,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "How to create the long-lasting computer that will save your attention, your wallet, your creativity, your soul, and the planet."
 * [The bullshit web (2018)](https://pxlnv.com/blog/bullshit-web/)
     * "I wanted to bring many threads together into a single document that may pretentiously be described as a theory of or, more practically, a guide to the bullshit web."
+* [There are 665 open licences, most are pretty rubbish](https://csvbase.com/blog/14) 
 * [This word doesn't exist](https://www.thisworddoesnotexist.com/)
     * But it should.
 * [VPN - a Very Precarious Narrative](https://overengineer.dev/blog/2019/04/08/very-precarious-narrative/)
@@ -376,6 +378,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "37, the median value for the second prime factor of an integer; thus the probability that the second prime factor of an integer chosen at random is smaller than 37 is approximately 0.5"
 * [All in one math sheet](https://archive.org/details/all-in-one-math-cheat-sheet-v2.10/)
     * This is a math cheat sheet that I found a while back.
+* [Basics of Olympiad Inequalities](https://web.williams.edu/Mathematics/sjmiller/public_html/161/articles/Riasat_BasicsOlympiadInequalities.pdf)
 * [Calculus Made Easy, Silvanus P. Thompson](https://calculusmadeeasy.org/)
 * [Circles, Sines, and Signals](https://jackschaedler.github.io/circles-sines-signals/index.html)
     * This text is designed to accompany your study of introductory digital signal processing.
@@ -429,8 +432,9 @@ This section is a work in progress, and if the number of links increases, I will
 * [The magic 6174](https://www.oranlooney.com/post/kaprekar/)
     * The Kaprekar routine.
 
-
 # Others
+* [Ancient Greek](https://ancient-greek.net/)
+    * Information about the language and culture of the people of Ancient Greece
 * [Atlas Obscura](https://www.atlasobscura.com/)
     * Atlas Obscura is a magazine about curious and wondrous travel destinations.
 * [ASK HN: Is there a point in school (2010)](https://news.ycombinator.com/item?id=1182512)
@@ -441,7 +445,9 @@ This section is a work in progress, and if the number of links increases, I will
     * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
 * [Grandpa's Photos](https://grandpas-photos.com)
     * "This is Grandpa, otherwise known as Stephen Clarke. He was great at so many things. One of those was being a Grandpa. He was a WWII Air Force navigator, a husband, a Dad and we also discovered he was a great photographer."
-* [How games are used to control you ](https://unherd.com/2024/04/how-games-are-used-to-control-you/)   
+* [How games are used to control you ](https://unherd.com/2024/04/how-games-are-used-to-control-you/)
+* [Victorian Research](https://victorianresearch.org/)
+    * The aim of the Victoria Research Web is to assist scholars, at whatever stage of their studies, in making their way through the complex and ever-changing landscape of research resources pertinent to the long nineteenth century. 
 * [Wiby](https://wiby.me/)
     * A search engine targeting the "old web". Click on surprise me to get surprised.
 
@@ -508,8 +514,10 @@ This section is a work in progress, and if the number of links increases, I will
     * "The McNamara fallacy is often considered in the context of the Vietnam War, in which enemy body counts were taken to be a precise and objective measure of success."
 * [PSR J1748−2446ad](https://en.m.wikipedia.org/wiki/PSR_J1748%E2%88%922446ad)
     * PSR J1748−2446ad is the fastest-spinning pulsar known, at 716 Hz (times per second)
+* [Sprouts](https://en.m.wikipedia.org/wiki/Sprouts_(game))
 * [The Inventor of the Black Box Was Told to Drop the Idea and “Get On With Blowing Up Fuel Tanks](https://spectrum.ieee.org/the-inventor-of-the-black-box-was-told-to-drop-the-idea-and-get-on-with-blowing-up-fuel-tanks)
     * Fortunately, David Warren kept working on his crash-proof flight data recorder
+* [What is the history of the use of "foo" and "bar" in source code examples?](https://softwareengineering.stackexchange.com/questions/69788/what-is-the-history-of-the-use-of-foo-and-bar-in-source-code-examples)
 * [Why is the mouse cursor slightly tilted and not straight?](https://ux.stackexchange.com/questions/52336/why-is-the-mouse-cursor-slightly-tilted-and-not-straight)
 * [Wow! Signal](https://en.wikipedia.org/wiki/Wow!_signal)
 
