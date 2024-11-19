@@ -60,6 +60,7 @@ My most popular articles so far are:
 * [(2023) Demystifying bitwise operations, a gentle C tutorial]({{site.url}}/2023/02/01/demystifying-bitwise-ops) + [hn discussion](https://news.ycombinator.com/item?id=35010447)
 * [(2024) The math exams of my life]({{site.url}}/2024/01/09/the-most-important-math-exams-of-my-life) + [hn discussion](https://news.ycombinator.com/item?id=39081894)
 * [(2024) The sinusoidal tetris]({{site.url}}/2024/02/06/the-sinusoidal-tetris) + [hn discussion](https://news.ycombinator.com/item?id=28889442)
+* [(2024) From the Circle to Epicycles (Part 1) - An animated introduction to Fourier Series ]({{site.url}}/2024/04/24/from-the-circle-to-epicycles) + [hn discussion](https://news.ycombinator.com/item?id=40578705)
 
 ... it's a work in progress
 
@@ -73,9 +74,9 @@ Blog:
 * [netlify](https://www.netlify.com/);
 * [utterances](https://utteranc.es/).
 
-I create the "visuals" with [draw.io](https://drawio-app.com/). 
+I create the "visuals" with [draw.io](https://drawio-app.com/) and [desmos](https://desmos.com)
 
-I use [mathjax](https://www.mathjax.org/) for math formulas.
+I use [mathjax](https://www.mathjax.org/) and [katex](https://katex.org/) for math formulas.
 
 For HTML Canvas-related stuff, I am using [p5js](https://p5js.org/).
 
