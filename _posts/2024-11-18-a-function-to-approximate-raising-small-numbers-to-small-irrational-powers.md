@@ -26,11 +26,23 @@ $$3^7=2187<2401=7^4 \Rightarrow 3^{7/4} < 7 \Rightarrow 3^{1.75}<7$$
 
 Because $$\sqrt{3}\approx 1.73 \Rightarrow \lfloor 3^{\sqrt{3}}\rfloor=6$$.
 
+**Later edit:**
+
+After [posting on reddit](https://old.reddit.com/r/math/comments/1gu95wu/a_joke_in_approximating_numbers_raised_to/), `/u/JiminP` came with a different solution:
+
+$$6^3=2^3*3^3<3^2*3^3=3^5 \Rightarrow 6 < 3^{\frac{5}{3}}=3^{\sqrt{\frac{25}{9}}}<3^{\sqrt{\frac{27}{9}}}<3^{\sqrt{3}}$$
+
+In the same time:
+
+$$48<49 \Rightarrow 3*2^4 < 7^2$$ and $$3^7<256*3^2=2^8*3^2<7^4 \Rightarrow 7^4 > 3^{\frac{7}{4}}=3^{\sqrt{\frac{49}{16}}} > 3^{\sqrt{\frac{48}{16}}} > 3^{\sqrt{3}}$$
+
+The decision on which solution is the best is [left to the reader](https://academia.stackexchange.com/questions/20084/is-using-the-phrase-is-left-as-an-exercise-for-the-reader-considered-good).
+
 ## The new problem
 
 The previous problem was cute, but it made me wonder if I can find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms and radicals), by relying solely on **addition** and **multiplication**. Basically I was looking for a solution where pen, paper and patience are enough. 
 
-This is mostly a joke, so in case you don't want to continue reading, here is the answer:
+This is primarily a joke, so if you don't want to continue reading, here is the answer:
 
 $$
 a^{\sqrt{c}} \approx \frac{-120-60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
@@ -46,7 +58,7 @@ The *[Logarithmic](https://en.wikipedia.org/wiki/Logarithm)* and the *[Exponenti
 2. We use the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion of $$e^x=1+\frac{x^1}{1!}+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}+\dots$$ .
 3. So approximating $$3^{\sqrt{3}}$$ is just a matter of computing $$1+\frac{(\sqrt{3}\ln 3)^1}{1!}+\frac{(\sqrt{3}\ln 3)^2}{2!}+\frac{(\sqrt{3}\ln 3)^3}{3!}+\frac{(\sqrt{3}\ln 3)^4}{4!}+\dots$$.
 
-To get even closer to the actual result, I had to compute 8 terms for the series expansion, and no, it wasn't by hand, as I've used [WolframAlpha](https://www.wolframalpha.com/) do it for me:
+To get even closer to the actual result, I computed the first 8 terms of the series expansion (and no, it wasn't by hand, as I've used [WolframAlpha](https://www.wolframalpha.com/) do it for me):
 
 ```
 1+Sqrt[3]*Ln[3]+(Sqrt[3]*Ln[3])^2/2!+(Sqrt[3]*Ln[3])^3/3!+(Sqrt[3]*Ln[3])^4/4!+(Sqrt[3]*Ln[3])^5/5!+(Sqrt[3]*Ln[3])^6/6!+(Sqrt[3]*Ln[3])^7/7!+(Sqrt[3]*Ln[3])^8/8!
@@ -156,59 +168,19 @@ The actual result should've been: $$2.6651$$. Not bad.
 
 Computing $$3^{\sqrt{3}}$$ with our function yields: $$6.58$$ instead of $$6.70$$. Not terrible.
 
-## Bonus
+## The deviation for $$0.1^{\sqrt{x}}$$, $$2^{\sqrt{x}}$$ and $$3^{\sqrt{x}}$$
 
-This is the python code used to generate the plots:
+![img]({{site.url}}/assets/images/2024-12-12-a-function-to-approximate-raising-small-numbers-to-small-irrational-powers/approx01.png){:height="75%" width="75%"}
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+![img]({{site.url}}/assets/images/2024-12-12-a-function-to-approximate-raising-small-numbers-to-small-irrational-powers/approx2.png){:height="75%" width="75%"}
 
-# [3/3] Pade approximation of e^x
-def approx_exp(x):
-    return (-120-60*x-12*x**2-x**3) / (-120+60*x-12*x**2+x**3)
+![img]({{site.url}}/assets/images/2024-12-12-a-function-to-approximate-raising-small-numbers-to-small-irrational-powers/approx3.png){:height="75%" width="75%"}
 
-# [2/2] Pade approximation of ln(x)
-def approx_log(x):
-    return 3*(x-1)*(x+1) / (x**2+4*x+1)
+## Final thoughts
 
-# [2/2] Pade approximation of sqrt(x)
-def approx_radical(x):
-    return (5*x**2+10*x+1) / (x**2+10*x+5)
+* The monster function is impractical, especially after the discovery of the transistor and the logical gates. Even so, the article's true purpose was to find a goofy pretext to try Padé  Approximations by myself.
 
-true_function = np.log #change with np.exp or np.sqrt
-approx_function = approx_log #change with approx_exp or approx_radical
-title="Log[x] and [3/3] Padé Approximation on (0, 4)"
+* I was considering applying the same concept that Padé used with polynomials to Fourier series. While others have attempted this, the results aren't as remarkable. For instance, an expression like $$S_N(x)=a_{0}+\sum_{n=1}{N}(a_n\cos(nx)+b_n\sin(nx))$$ is certainly polynomial-like enough to be represented as a rational function.Doing this seems to reduce the Gibbs phenomenon near discontinuities. However, the main drawback is that Padé approximations are not periodic in nature.
 
-x_values = np.linspace(0, 4, 1000)[1:] 
 
-# Evaluate functions
-true_values = true_function(x_values)
-approx_values = approx_function(x_values)
-deviation = np.abs(true_values - approx_values)
-annotation_points = np.linspace(0.5, 4, 10) 
 
-#Plotting
-plt.figure(figsize=(12, 6))
-plt.plot(x_values, true_values, label='sqrt(x)', color='blue', linewidth=2)
-plt.plot(x_values, approx_values, label='Padé [2/2] sqrt(x))', color='orange', linestyle='--', linewidth=2)
-plt.fill_between(x_values, 0, deviation, color='red', alpha=0.3, label='Deviation')
-
-# Annotate deviation at key points
-for x in annotation_points:
-    y_true = true_function(x)
-    y_approx = approx_function(x)
-    dev = np.abs(y_true - y_approx)
-    plt.text(x, dev + 0.0005, f"{dev:.5f}", color='black', fontsize=10, ha='center')
-
-# Add labels, legend, and set default y-axis scale
-plt.title(title, fontsize=16)
-plt.xlabel('x', fontsize=14)
-plt.ylabel('y', fontsize=14)
-plt.legend(fontsize=12)
-plt.grid(True)
-
-# Show the plot
-plt.tight_layout()
-plt.show()
-```
