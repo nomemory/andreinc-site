@@ -16,7 +16,7 @@ A good source of finding good information is now [https://www.marginalia.nu/](ht
 
 Another interesting source is [https://bukmark.club/](https://bukmark.club/).
 
-And there is the [hackernews blogroll](https://dm.hn/).
+~~And there is the [hackernews blogroll](https://dm.hn/).~~ (it died)
 
 If you have a personal blog, I recommend you create your *blogroll* section. Your readers will appreciate it. Accessing quality content has become challenging in recent years. Publishing a list of sites you truly like & follow & subscribe to is helpful for everyone.
 

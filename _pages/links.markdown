@@ -15,6 +15,7 @@ This section is a work in progress, and if the number of links increases, I will
 - [Blogging](#blogging)
 - [Books](#books)
 - [C Programming](#c-programming)
+- [Chess](#chess)
 - [Command Line](#command-line)
 - [Esoteric](#esoteric)
 - [Essays](#essays)
@@ -149,6 +150,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "No one clicks a webpage hoping to learn which cat can haz cheeseburger. Weirdos, maybe."
 
 # Books
+* [Awesome Math](https://github.com/rossant/awesome-math)
 * [Biblioteca Digitala](https://biblioteca-digitala.ro/)
     * Biblioteca Digitală a Publicațiilor Culturale (Romanian source)
 * [Donald Knuth Non-Tech Reading List](https://www-cs-faculty.stanford.edu/~knuth/retd.html)
@@ -233,6 +235,8 @@ This section is a work in progress, and if the number of links increases, I will
     * QR.rb is a Ruby program that generates a Rust program that generates a Scala program that generates ...(through 128 languages in total)... a REXX program that generates the original Ruby code again.
 * [Hull: An alternative to shell that I'll never have time to implement](https://250bpm.com/blog:153/index.html)
     * "Here's an idea. It's kind of crazy but it's also fun to think about."
+* [Learn Prolog Now!](https://www.let.rug.nl/bos/lpn//lpnpage.php?pageid=online)
+    *  "We wanted to do two things with this course. First, we wanted to provide a text that was relatively self contained, a text that would permit someone with little or no knowledge of computing to pick up the basics of Prolog with the minimum of fuss. We also wanted the text to be clear enough to make it useful for self study. We believe that if you read the text, and do the associated exercises, you will gain a useful partial entry to the world of Prolog."
 * [Self-printing Game of Life in C#](https://igoro.com/archive/self-printing-game-of-life-in-c/)
     * "I wrote a little C# program that contains a Game-of-Life grid. The program advances the game grid to the next generation and prints out a copy of itself, with the grid updated. You can take the output, compile it with a C# compiler, run it, and you’ll get the next generation of the game. You can iterate the process, or change the initial grid state manually."
 * [tio.run](https://tio.run)
@@ -243,16 +247,19 @@ This section is a work in progress, and if the number of links increases, I will
     * Uiua lets you write code that is as short as possible while remaining readable, so you can focus on problems rather than ceremony.
 
 # Essays
+* [A Cypherpunk's Manifesto](https://www.activism.net/cypherpunk/manifesto.html)
+    * Privacy is necessary for an open society in the electronic age. Privacy is not secrecy. A private matter is something one doesn't want the whole world to know, but a secret matter is something one doesn't want anybody to know. Privacy is the power to selectively reveal oneself to the world. 
 * [Algorithms interviews: theory vs. practice](https://danluu.com/algorithms-interviews/)
     * "When I ask people at trendy big tech companies why algorithms quizzes are mandatory, the most common answer I get is something like "we have so much scale, we can't afford to have someone accidentally write an O(n^2) algorithm and bring the site down."
 * [Either your estimates suck or your job does ](https://wordsandbuttons.online/either_your_estimates_suck_or_your_job_does.html)
     * "Luckily, most estimates never come true, and I have a dozen polynomial models to show you why."
 * [Glory is only 11MB/s away](https://thmsmlr.com/cheap-infra)
     * "One thing is certain in life: if you’re getting something for a steal, someone is getting screwed, and it’s probably you elsewhere."
-* [Not a supplier (2022)](https://www.softwaremaxims.com/blog/not-a-supplier)
-    * "Until then, I am not your supplier. So all your Software Supply Chain ideas? You are not buying from a supplier, you are a raccoon digging through dumpsters for free code. So I would advise you to put these rules in the same dumpster. And remember. I am not a supplier. Because **THIS SOFTWARE IS PROVIDED “AS IS”**".
+* [Hacker's Manifesto](http://phrack.org/issues/7/1.html#article)
 * [Learning to program is getting harder (2018)](https://allendowney.blogspot.com/2018/02/learning-to-program-is-getting-harder.html?m=1)
     * "The fundamental problem is that the barrier between using a computer and programming a computer is getting higher."
+* [Not a supplier (2022)](https://www.softwaremaxims.com/blog/not-a-supplier)
+    * "Until then, I am not your supplier. So all your Software Supply Chain ideas? You are not buying from a supplier, you are a raccoon digging through dumpsters for free code. So I would advise you to put these rules in the same dumpster. And remember. I am not a supplier. Because **THIS SOFTWARE IS PROVIDED “AS IS”**".
 * [Software Development 450 Words Per Minute](https://www.vincit.com/blog/software-development-450-words-per-minute)
     * "I’m also blind. In this blog post I’m going to shed some light on the way I work."
 * [Things I wish I learned in Engineering School (2000)](http://www.cattell.net/talk/TiwiliesTalk.htm)
@@ -262,6 +269,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "How to create the long-lasting computer that will save your attention, your wallet, your creativity, your soul, and the planet."
 * [The bullshit web (2018)](https://pxlnv.com/blog/bullshit-web/)
     * "I wanted to bring many threads together into a single document that may pretentiously be described as a theory of or, more practically, a guide to the bullshit web."
+* [The humble programmer](https://www.cs.utexas.edu/~EWD/ewd03xx/EWD340.PDF)
+    * Dijkstra's overview of the programming universe as he saw it in 1972
 * [There are 665 open licences, most are pretty rubbish](https://csvbase.com/blog/14) 
 * [This word doesn't exist](https://www.thisworddoesnotexist.com/)
     * But it should.
@@ -276,6 +285,8 @@ This section is a work in progress, and if the number of links increases, I will
     * "In fact, I'm not even sure that anyone can easily tell assembly code from some high-level code without googling. Can you?"
 * [Complaints Medieval Monks Scribbled in the Margins of Illuminated Manuscripts](https://www.themarginalian.org/2012/03/21/monk-complaints-manuscripts)
 * [Connnnngratulations! This project won China 2014 State Science and Technology Prizes ! FIRST PRIZE!!!!! ](https://github.com/iiordanov/remote-desktop-clients/issues/39)
+* [EPIGRAMS IN PROGRAMMING](https://www.cs.yale.edu/homes/perlis-alan/quotes.html)
+    * One man's constant is another man's variable. 
 * [How To Write Unmaintainable Code](https://cs.fit.edu/~kgallagher/Schtick/How%20To%20Write%20Unmaintainable%20Code.html)
     * Ensure a job for life. 
 * [Make Front-End Shit Again](https://makefrontendshitagain.party/)
@@ -298,9 +309,13 @@ This section is a work in progress, and if the number of links increases, I will
     * A Slower Speed of Light is a first-person game prototype in which players navigate a 3D space while picking up orbs that reduce the speed of light in increments. 
 * [Bonsai Builder](https://vandervasgenerator.itch.io/bonsaibuilder)
     * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
+* [Can't Unsee](https://cantunsee.space/)
+    * Select the design that "is the most correct".
 * [Collosal Cave Adventure Page](https://rickadams.org/adventure/)
     * You can play the game [here](https://rickadams.org/adventure/advent/)
     * The user would thus be a part of an ongoing story in a fantasy setting — in this case, an exploration of [Colossal Cave in Kentucky](https://en.wikipedia.org/wiki/Colossal_Cavern). But this Colossal Cave, though remarkably similar to its real-life counterpart, was also very different: *Magic was afoot in the cave...*
+* [Cube Composer](https://david-peter.de/cube-composer/)
+    * Solve puzzles by thinking like a "Functional Programmer"
 * [DOS Games](https://www.doshaven.eu/)
     * 21st century DOS games.
 * [Dune 2 (Web Version)](https://dos.zone/dune-ii-the-building-of-a-dynasty-dec-1992/)
@@ -462,6 +477,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Make a Lisp is almost 100 programming languages.
 * [Programming languages & resources](https://bernsteinbear.com/pl-resources/)
     * This page is a collection of my favorite resources for people getting started writing programming languages.
+* [Very early C compilers and language](https://www.bell-labs.com/usr/dmr/www/primevalC.html)
 
 # Tools
 * [carbon](https://carbon.now.sh/)
