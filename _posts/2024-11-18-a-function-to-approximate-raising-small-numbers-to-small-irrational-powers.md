@@ -178,7 +178,7 @@ Computing $$3^{\sqrt{3}}$$ with our function yields: $$6.58$$ instead of $$6.70$
 
 ## Final thoughts
 
-* The monster function is impractical, especially after the discovery of the transistor and the logic gates. Even so, the article's true purpose was to find a goofy pretext to try Padé  Approximations by myself.
+* The monster function is impractical, especially after the discovery of the transistor and the logiccd  gates. Even so, the article's true purpose was to find a goofy pretext to try Padé  Approximations by myself.
 
 * I was considering applying the same concept that Padé used with polynomials to Fourier series. While others have attempted this, the results aren't as remarkable. For instance, an expression like $$S_N(x)=a_{0}+\sum_{n=1}{N}(a_n\cos(nx)+b_n\sin(nx))$$ is certainly polynomial-like enough to be represented as a rational function.Doing this seems to reduce the Gibbs phenomenon near discontinuities. However, the main drawback is that Padé approximations are not periodic in nature.
 
