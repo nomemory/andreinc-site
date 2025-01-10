@@ -153,7 +153,7 @@ The *renaissance* way to understand what a weak inequality is, is to imagine the
 
 ![img]({{site.url}}/assets/images/2024-12-09-15-A-short-introduction-to-math-olympiad-inequalities/adam.jpg)
 
-From a mathematical standpoint, we know, for example, that $$x^2+y^2\ge2xy$$. This is always true because $$(x-y)^2\ge0$$. If we plot both $$x^2+y^2$$, and $$2xy$$, we will a see thin line where the graphical representation "touch". That red line is the key to solve many problems in physics or engineering. Not sure about "higher" mathematics, because I am an engineer. 
+From a mathematical standpoint, we know, for example, that $$x^2+y^2\ge2xy$$. This is always true because $$(x-y)^2\ge0$$. If we plot both $$x^2+y^2$$, and $$2xy$$, we will a see thin line where the graphical representation "touch". That red line is the key to solve many problems in physics or engineering. This red line is specific to weak inequalities. 
 
 ![img]({{site.url}}/assets/images/2024-12-09-15-A-short-introduction-to-math-olympiad-inequalities/p02.png){:height="75%" width="75%"}
 
@@ -299,7 +299,7 @@ Let \(x \in \mathbb{R}_{+}\). Prove that \(x+\frac{1}{x} \ge 2\).
 </div>
 </p>
 
-Now, let's "expand" the same idea further:
+Now, let's "expand" the same idea further by solving the next problems:
 
 <p>
 <div class="mp">
@@ -314,20 +314,81 @@ Let \(x_1,x_2,\dots,x_n \in \mathbb{R}_{+}\). Prove that:
         S \ge n
     \)
     </p>
+    <p>Equality holds if \(x_1=x_2=\dots=x_n\).</p>
 </details>
 </div>
 </p>
 
-The AM-GM inequality establishes a beautiful relationship between the $$\sum$$ (sum) and the $$\prod$$ (product) of some positive, real numbers, in this regard, let's try to solve the following problem:
+<p>
+<div class="mp">
+Prove that \(\frac{1}{1*3}+\frac{1}{3*5}+\dots+\frac{1}{(n-2)n}\ge\frac{1}{\sqrt{n}}-\frac{1}{n}\), \(\forall n \in \mathbb{N}\).
+<details> 
+    <summary>Hint 1</summary>
+    <p>Did you know that you can write:</p>
+    <p>
+    \(
+        \frac{1}{1*2}+\frac{1}{2*3}+\frac{1}{3*4}+\dots+\frac{1}{(n-1)n}=\frac{2-1}{1*2}+\frac{3-2}{2*3}+\dots+\frac{n-(n-1)}{(n-1)n} = \Leftrightarrow \\
+        = \frac{1}{1}-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+\frac{1}{3}-\dots-\frac{1}{n}=1-\frac{1}{n}
+    \)
+    </p>
+</details>
+<details> 
+    <summary>Hint 2</summary>
+    <p>How we can we use the relationship from Hint 1 in our advantage?</p>
+</details>
+<details> 
+    <summary>Solution</summary>
+    <p>
+    \(
+        \frac{1}{1*3}+\frac{1}{3*5}+\dots+\frac{1}{(n-2)n} \ge \frac{1}{\sqrt{n}}-\frac{1}{n} \Leftrightarrow \\
+        \frac{1}{2}[\frac{3-1}{1*3}+\frac{5-3}{3*5}+\dots+\frac{n-(n-2)}{(n-2)n}] \ge \frac{1}{\sqrt{n}}-\frac{1}{n} \Leftrightarrow \\
+        \frac{1}{2}(1-\frac{1}{3}+\frac{1}{3}-\frac{1}{5}+\frac{1}{5}-\dots-\frac{1}{n}) \ge \frac{1}{\sqrt{n}}-\frac{1}{n} \Leftrightarrow \\
+        \frac{1}{2}-\frac{1}{2n}+\frac{1}{n} \ge \frac{1}{\sqrt{n}} \Leftrightarrow \\
+        \frac{1}{2}+\frac{1}{2n} \ge \frac{1}{\sqrt{n}} \Leftrightarrow \\
+        \frac{1+\frac{1}{n}}{2} \ge \sqrt{1*\frac{1}{n}}
+    \)
+    </p>
+    <p>The last relationship is true because of AM-GM. Equality holds when \(n=1\).</p>
+</details>
+</div>
+</p>
+
+The AM-GM inequality establishes a beautiful relationship between the $$\sum$$ (sum) and the $$\prod$$ (product) of some positive, real numbers, in this regard, let's try to solve the following problems:
 
 <p>
 <div class="mp">
-Let \(x_1, x_2, \dots x_n\) be non-negative real numbers. Can you find a value for \(P=\prod_{i=1}^nx_i\) so that \(S=\sum_{i=1}^n x_i \ge \pi\) ?
+Let \(x_1, x_2, \dots x_n\) be non-negative and positive real numbers. Can you find a value for \(P=\prod_{i=1}^nx_i\) so that \(S=\sum_{i=1}^n x_i \ge \pi\) ?
 <details> 
     <summary>Solution</summary>
     <p>If we pick \(P=\prod_{i=1}^n x_i = (\frac{\pi}{n})^n\), then we know for certain that \(\sum_{i=1}^n x_i \ge n \sqrt[n]{(\frac{\pi}{n})^n} = \pi \)</p>
 </details> 
 </div>
+</p>
+
+<p>
+    <div class="mp">
+    <p>Let \(x,y,a,b \gt 0\), prove that:</p>
+    <p class="mpc">
+        \(
+            \frac{a}{x}+\frac{b}{y} \ge \frac{4(ay+bx)}{(x+y)^2}
+        \)
+    </p>
+    <details>
+        <summary>Solution</summary>
+        <p>
+        \(
+            \frac{ay+bx}{xy} \ge \frac{4(ay+bx)}{(x+y)^2} \Leftrightarrow 
+            \frac{1}{xy} \ge \frac{4}{(x+y)^2} \Leftrightarrow 
+            (\frac{x+y}{2})^2 \ge xy
+        \)
+        </p>
+        <p>The inequality holds true.</p>
+    </details>
+    <details>
+        <summary>Source</summary>
+        <p>The Romanian Math Olympiad</p>
+    </details>
+    </div>
 </p>
 
 Now, just for fun, let's try a problem that (only!) looks more difficult:
@@ -377,11 +438,14 @@ Let \(m \in \mathbb{N}\), and \(x,y,z \in \mathbb{R}_{+}\), \( x \neq y \neq z \
 </details> 
 </div>
 
+
 ---
 
 ## Grouping terms
 
-Solving harder inequalities problems involve more than the simple use of the general formula. The most common technique we can apply is to group the terms in our advantage. After solving a few exercises this technique will come naturally.
+Solving harder inequalities problems involve more than the simple use of the general formula. A common technique is to group the terms in our advantage, apply the AM-GM (or any other known inequality) for each "group", and then combine the resulting inequalities into a bigger one.
+
+After solving a few exercises this technique will come naturally, but at first it might look unintuitive.
 
 Can you solve the next problem without using any hints ?
 
@@ -423,6 +487,7 @@ An important thing to take in consideration is that when we sum/multiply [weak i
 
 Let's take a look at the following example:
 
+<p>
 <div class="mp">
     <p>Let \(a,b,c\) positive real numbers. Let's group the numbers in the following manner, and apply the AM-GM inequality:</p>
     <p class="mpc">
@@ -439,10 +504,11 @@ Let's take a look at the following example:
     <p>This is correct:</p>
     <p class="mpc">\(3(a+b+c) \gt 2\sqrt{2}(\sqrt{ab}+\sqrt{bc}+\sqrt{ac})\)</p>
 </div>
-<br/>
+</p>
 
 Let's solve the next exercise. How should we group the terms?
 
+<p>
 <div class="mp">
 Let \( a,b,c \in \mathbb{R}_{+} \), and \(ab+bc+ca=1\). Prove that: 
 <p class="mpc">\( a+b+c\gt\frac{2}{3}(\sqrt{1-ab}+\sqrt{1-bc}+\sqrt{1-ac}) \)</p>
@@ -461,9 +527,9 @@ Let \( a,b,c \in \mathbb{R}_{+} \), and \(ab+bc+ca=1\). Prove that:
     <p class="mpc">
     \(
     \begin{cases}
-        \frac{a+(b+c)}{2} \ge \sqrt{ab+ac} \\
-        \frac{b+(a+c)}{2} \ge \sqrt{ba+bc} \\
-        \frac{c+(a+b)}{2} \ge \sqrt{ca+bc}
+        \frac{a+(b+c)}{2} \ge \sqrt{a(b+c)} = \sqrt{ab+ac} \\
+        \frac{b+(a+c)}{2} \ge \sqrt{b(a+c)} = \sqrt{ba+bc} \\
+        \frac{c+(a+b)}{2} \ge \sqrt{c(a+b)} = \sqrt{ca+cb}
     \end{cases}
     \)
     </p>
@@ -482,9 +548,11 @@ Let \( a,b,c \in \mathbb{R}_{+} \), and \(ab+bc+ca=1\). Prove that:
     <p>This problem is "original" and was created by me in the context of this article.</p>
 </details>
 </div>
-<br/>
+</p>
+
 Sometimes we need to find original ways to group terms. In won't be able to find the solution, don't worry, this inequality is more difficult to be solved relying only on AM-GM:
 
+<p>
 <div class="mp">
 Let \(a,b,c \in (0,\infty)\), and \(bc+ac+ca=abc\). Prove that: 
 <p class="mpc">\(3\sqrt{abc} \gt 2\sqrt{2}(\sqrt{a}+\sqrt{b}+\sqrt{c})\)</p>
@@ -530,9 +598,11 @@ Let \(a,b,c \in (0,\infty)\), and \(bc+ac+ca=abc\). Prove that:
     <p>This problem is "original" and was created by me in the context of this article.</p>
 </details>
 </div>
-<br/>
+</p>
 
 Problems can become even more beautiful when we perform grouping on known identities. In this regard, try to solve the next exercise without using any hints:
+
+<p>
 <div class="mp">
 Let \(a,b\in(0,\infty)\) and \(a-b\gt0\). Prove that:
 <p class="mpc">\(a^3+b^3\gt 4ab\sqrt{b(a-b)}\)</p>
@@ -543,7 +613,7 @@ Let \(a,b\in(0,\infty)\) and \(a-b\gt0\). Prove that:
 <details> 
     <summary>Solution</summary>
     <p>We can write \( a^3+b^3=(a+b)(a^2-ab+b^2) \).</p>
-    <p>By applying AM-GM on the first term of the expansion: \( a+b \gt 2\sqrt{a+b} \). Equality holds if \(a=b\), but we know for certain this is not possible.</p>
+    <p>By applying AM-GM on the first term of the expansion: \( a+b \gt 2\sqrt{ab} \). Equality holds if \(a=b\), but we know for certain this is not possible.</p>
     <p>By applying AM-GM to the second term of the expansion: \((a^2-ab)+b^2 \gt 2b\sqrt{a(a-b)}\).</p>
     <p>If we multiply the two inequalities (we are allowed to do so, as both terms are positive):</p>
     <p class="mpc">
@@ -558,6 +628,589 @@ Let \(a,b\in(0,\infty)\) and \(a-b\gt0\). Prove that:
     <p>This problem is "original" and was created by me in the context of this article.</p>
 </details>
 </div>
+</p>
+
+In the end of this section let's *re*focus on some nice *weak* inequalities:
+
+<p>
+<div class="mp">
+Let \(x_1, x_2, \dots, x_n\) be positive real numbers. Prove that:
+<p class="mpc">
+\(
+    1+\sum_{j=2}^n[(\sum_{i=1}^j x_i) * (\sum_{i=1}^j \frac{1}{x_i})] \ge \frac{n(n+1)(2n+1)}{6}
+\)
+</p>
+<details> 
+    <summary>Hint 1</summary>
+    <p>\(1^2+2^2+\dots+n^2 = \frac{n(n+1)(2n+1)}{6}\)</p>
+</details>
+<details>
+    <summary>Hint 2</summary>
+    <p>If we expand the sums, the relationship looks like this:</p>
+    <p class="mpc">
+    \(
+        1+(x_1+x_2)(\frac{1}{x_1}+\frac{1}{x_2})+\dots+(x_1+\dots+x_n)(\frac{1}{x_1}+\dots+\frac{1}{x_n}) \ge \frac{n(n+1)(2n+1)}{6}
+    \)
+    </p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>Let's introduce a Lemma (actually this "Lemma" is a direct consequence of the HM-AM or CBS inequalities we will discuss later). Let's prove that for all \(x_1, \dots, x_n\) positive real numbers the following inequality is true:</p>
+    <p class="mpc">
+        \(
+            (x_1+x_2+\dots+x_n)(\frac{1}{x_1}+\frac{1}{x_2}+\dots+\frac{1}{x_n}) \ge n^2
+        \)
+    </p>
+    <p>The solution is simple, we just apply the AM-GM on the two "groups" of terms:</p>
+    <p class="mpc">
+        \(
+            \begin{cases}
+            x_1+x_2+\dots+x_n \ge n\sqrt[n]{x_1 * x_2 * \dots * x_n} \\
+            \frac{1}{x_1}+\frac{1}{x_2}+\dots+\frac{1}{x_n} \ge n\sqrt[n]{\frac{1}{x_1 * x_2 * \dots * x_n}}
+            \end{cases}
+        \)
+    </p>
+    <p>In both cases equality holds for \(x_1=x_2=\dots=x_n\), so after multiplying the two expressions:</p>
+    <p class="mpc">
+        \(
+            (x_1+x_2+\dots+x_n)(\frac{1}{x_1}+\frac{1}{x_2}+\dots+\frac{1}{x_n}) \ge n^2 \sqrt[n]{\frac{x_1*x_2*\dots*x_n}{x_1*x^2*\dots*x_n}} = n^2
+        \)
+    </p>
+    <p>Using the Lemma:</p>
+    <p class="mpc">
+     \(
+        1+\underbrace{(x_1+x_2)(\frac{1}{x_1}+\frac{1}{x_2})}_{\ge 2^2}+\dots+\underbrace{(x_1+\dots+x_n)(\frac{1}{x_1}+\dots+\frac{1}{x_n})}_{\ge n^2} \ge \frac{n(n+1)(2n+1)}{6}
+    \)
+    </p>
+    <p>Equality holds for \(x_1=x_2=\dots=x_n\).</p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>This problem is "original" and was created by me in the context of this article.</p>
+</details>
+</div>
+</p>
+
+# The mean inequality chain
+
+> Also known as the QM-AM-GM-HM Inequalities, or how things are getting more serious.
+
+Before introducing the actual inequality let's define two new means, the *harmonic* mean and the *quadratic mean*:
+
+<p>
+<div class="mp">
+Let \(x_{i=1\dots n} \in \mathbb{R}_{+}\), then:
+<p class="mpc">
+\(
+\text{Harmonic Mean}=\frac{n}{\frac{1}{x_1}+\dots+\frac{1}{x_n}}=\frac{n}{\sum_{i=1}^n \frac{1}{x_i}} \\ \\ \\
+\)
+</p>
+<p class="mpc">
+\(
+\text{Quadratic Mean}=\sqrt{\frac{x_1^2+\dots+x_n^2}{n}}=\sqrt{\frac{\sum_{i=1}^n x_i^2}{n}}
+\)
+</p>
+</div>
+</p>
+
+This HM-GM-AM-QM inequality is a fundamental result in mathematic involving the *harmonic mean*, *geometric mean*, *arithmetic mean*, and the *quadratic mean*:
+
+<p>
+<div class="mp">
+Suppose \(x_1, x_2, \dots, x_n\) positive real numbers, then:
+<p class="mpc">
+\(
+    0 \lt \frac{n}{\sum_{i=1}^n \frac{1}{x_i}} \le \underbrace{\sqrt[n]{\prod_{i=1}^n x_i} \le \frac{\sum_{i=1}^n x_i}{n}}_{\text{AM-GM Inequality}} \le \sqrt{\frac{\sum_{i=1}^n x_i^2}{n}}
+\)
+</p>
+<p>Equality holds if \(x_1=x_2=\dots=x_n\).</p>
+<p>If \(n=2\), the chain becomes:</p>
+<p class="mpc">
+\(
+    0 \lt \frac{2x_1x_2}{x_1+x_2} \le \sqrt{x_1x_2} \le \frac{x_1+x_2}{2} \le \sqrt{\frac{x_1^2+x_2^2}{2}}
+\)
+</p>
+<p>If \(n=3\), the chain becomes:</p>
+<p class="mpc">
+\(
+    0 \lt \frac{3x_1x_2x_3}{x_1x_2+x_2x_3+x_3x_1} \le \sqrt[3]{x_1x_2x_3} \le \frac{x_1+x_2+x_3}{3} \le \sqrt{\frac{x_1^2+x_2^2+x_3^2}{3}}
+\)
+</p>
+</div>
+</p>
+
+We can now solve a few new problems using the newfound relationships. The identities we've seen are still relevant, and so is the "grouping" technique.
+
+<p>
+<div class="mp">
+Let \(a,b,c\) be positive real numbers, and \(abc=1\). Prove that:
+<p class="mpc">\(ab+bc+ca\ge3\)</p>
+<details>
+    <summary>Solution</summary>
+    <p>The HM-GM inequality states that:</p>
+    <p class="mpc">
+        \(
+            \begin{cases}
+            \frac{3*abc}{ab+bc+ca} \le \sqrt[3]{abc} \\
+            abc=1
+            \end{cases} \Rightarrow 3 \le ab+bc+ca
+        \)
+    </p>
+    <p>Equality holds when \(a=b=c=1\).</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp">
+Let \(a,b,c,x,y,z\) be positive real numbers, and \(x+y+z=a+b+c=1\). Prove that:
+<p class="mpc">
+\(
+    \frac{1}{ax+by+cz}+\frac{1}{cx+ay+bz}+\frac{1}{bx+cy+az} \ge 9
+\)
+</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>Is there a way to apply the HM-AM inequality to solve the problem?</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>We apply the HM-AM inequality in the following manner:</p>
+    <p class="mpc">
+    \(
+        \frac{\frac{1}{ax+by+cz}+\frac{1}{cx+ay+bz}+\frac{1}{bx+cy+az}}{3} \ge \frac{3}{(ax+by+cz)+(cx+ay+bz)+(bx+cy+az)} \Leftrightarrow \\
+        \frac{1}{ax+by+cz}+\frac{1}{cx+ay+bz}+\frac{1}{bx+cy+az} \ge \frac{9}{a(x+y+z)+b(x+y+z)+c(x+y+z)} \Leftrightarrow \\
+        \frac{1}{ax+by+cz}+\frac{1}{cx+ay+bz}+\frac{1}{bx+cy+az} \ge \frac{9}{a+b+c} \Leftrightarrow \\
+        \frac{1}{ax+by+cz}+\frac{1}{cx+ay+bz}+\frac{1}{bx+cy+az} \ge 9
+    \)
+    </p>
+</details>
+</div>
+</p>
+
+---
+
+# The power of substitutions
+
+Substitutions are powerful mechanisms in mathematics because they simplify complex problems, reveal hidden structures, and transform seemingly impossible problems into more familiar or solvable forms. By changing variables, substitutions allow viewing the same problem from different perspectives, often leading to new insights - or new problems. I assure you, problem creators love substitutions.
+
+In a previous exercise we've proven that $$x+\frac{1}{x}\ge2$$, $$\forall x \in \mathbb{R}_{+}$$. In this regard, can you solve the next problems ?
+
+<p>
+<div class="mp">
+Let \(a, b\) positive real numbers. Prove that \(\frac{a}{b}+\frac{b}{a}\ge2\).
+<details>
+    <summary>Solution</summary>
+    <p>We substitute \(x \rightarrow \frac{a}{b}\) in \(x+\frac{1}{x}\ge2 \) which we know is a true statement (proven before) \(\Rightarrow \frac{a}{b}+\frac{b}{a}\ge 2\) is also true.</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp">
+Let \(x,y,z\) be positive real numbers. Prove that:
+<p class="mpc">
+\(
+    3 \ge \frac{2(\sqrt{x}+1)}{2(\sqrt{x}+1)+x} + \frac{2(\sqrt{y}+1)}{2(\sqrt{y}+1)+y} + \frac{2(\sqrt{z}+1)}{2(\sqrt{z}+1)+z}
+\)
+</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>You can write: \(\frac{2(\sqrt{x}+1)}{2(\sqrt{x}+1)+x}=\frac{2(\sqrt{x}+1)}{(\sqrt{x}+1)^2+1}\)</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>For each of the terms we can apply the following trick: \(\frac{2(\sqrt{x}+1)}{2(\sqrt{x}+1)+x}=\frac{2(\sqrt{x}+1)}{(\sqrt{x}+1)^2+1}\). We have to prove: </p>
+    <p class="mpc">
+    \(
+        3 \ge \frac{2(\sqrt{x}+1)}{x+2\sqrt{x}+1+1}+\frac{2(\sqrt{y}+1)}{y+2\sqrt{y}+1+1}+\frac{2(\sqrt{z}+1)}{z+2\sqrt{z}+1+1} \Leftrightarrow \\
+        3 \ge \frac{2(\sqrt{x}+1)}{(\sqrt{x}+1)^2+1}+\frac{2(\sqrt{y}+1)}{(\sqrt{y}+1)^2+1}+\frac{2(\sqrt{z}+1)}{(\sqrt{z}+1)^2+1} \Leftrightarrow \\
+    \)
+    </p>
+    <p>We substitute:</p>
+    <p class="mpc">
+    \(
+    \begin{cases}
+        \sqrt{x}+1 \rightarrow a \\
+        \sqrt{y}+1 \rightarrow b \\
+        \sqrt{z}+1 \rightarrow c
+    \end{cases}
+    \)
+    </p>
+    <p>After substitution:</p>
+    <p class="mpc">
+    \(
+        3 \ge \frac{2a}{a^2+1}+\frac{2y}{y^2+1}+\frac{2c}{c^2+1} \Leftrightarrow
+        3 \ge \frac{2}{a+\frac{1}{a}}+\frac{2}{b+\frac{1}{b}}+\frac{2}{c+\frac{1}{c}}
+    \)
+    </p>
+    <p>We have proven that \(a+\frac{1}{a}\ \ge 2\), so the above inequality is true.</p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>This problem is "original" and was created by me in the context of this article.</p>
+</details>
+</div>
+</p>
+
+## Nesbitt's Inequality
+
+Nesbitt's Inequality is classic and elegant result in inequalities, and its commonly taught in the context of competitive mathematics. Using this, might help you "skip" tedious steps where you would normally have to use AM-GM.
+
+In a generalized form:
+
+<p>
+<div class="mp">
+If \(x_1, x_2, \dots, x_n\) are positive real numbers, then \(\sum_{i=1}^n \frac{a_i}{S-a_i}\ge\frac{n}{n-1}\), where \(S=\sum_{i=1}^n x_i\). Equality holds if \(x_1=x_2=\dots=x_n\).
+</div>
+</p>
+
+Most of the times you will apply it for three numbers:
+
+<p>
+<div class="mp">
+If \(a,b,c\) are positive positive real numbers, then:
+<p class="mpc">
+\(
+    \frac{a}{b+c}+\frac{b}{a+c}+\frac{c}{a+b} \ge \frac{3}{2}
+\)
+</p>
+</div>
+</p>
+
+Nesbitt's Inequality can be proven using the substitution technique corroborated with the AM-GM Inequality. So let's prove Nesbitt's inequality for $$n=3$$.
+
+<p>
+<div class="mp">
+<p>We have to prove: \(\frac{a}{b+c} + \frac{b}{c+a} + \frac{c}{a+b} \ge \frac{3}{2} \), \(\forall a,b,c \in \mathbb{R}_{+}\).</p>
+<p>The first step is to perform the following substitutions:</p>
+<p class="mpc">
+    \(
+        \begin{cases}
+            x=a+b\\
+            y=b+c \\
+            z=c+a
+        \end{cases}
+    \)
+</p>
+<p>We've already proven that \(\frac{x}{y}+\frac{y}{x}\ge2\), then:</p>
+<p class="mpc">\(\underbrace{\frac{x}{y}+\frac{y}{x}}_{\ge2}+\underbrace{\frac{x}{z}+\frac{z}{x}}_{\ge2}+\underbrace{\frac{y}{z}+\frac{z}{y}}_{\ge2}\ge6\)</p>
+<p>This also means:</p>
+<p class="mpc">\(\frac{x+z}{y}+\frac{y+z}{x}+\frac{x+y}{z}\ge6\)</p>
+<p>If we perform the reverse substitution:</p>
+<p class="mpc">
+\(
+    \frac{(a+b)+(c+a)}{b+c}+\frac{(b+c)+(c+a)}{a+b}+\frac{(a+b)+(b+c)}{c+a} \ge 6 \Leftrightarrow \\
+    \frac{2a}{b+c}+\frac{b+c}{b+c}+\frac{2c}{a+b}+\frac{a+b}{a+b}+\frac{2b}{c+a}+\frac{c+a}{c+a} \ge 6 \Leftrightarrow \\
+    \frac{a}{b+c}+\frac{c}{a+b}+\frac{b}{c+a} \ge \frac{3}{2}
+\)
+</p>
+</div>
+</p>
+
+As you just witnessed substitutions are powerful mechanisms through which we can transform and adapt a given structure into a known one. Of course, Nesbitt's Inequality can be proved using other techniques, so, if you are curious, check the official [wikipedia article](https://en.wikipedia.org/wiki/Nesbitt%27s_inequality).
+
+Can you solve the next problems using substitutions and Nesbitt's Inequality ?
+
+<p>
+<div class="mp">
+Let \(x,y,z\) positive real numbers. Prove that:
+<p class="mpc">
+\(
+    \frac{zy}{x(z+y)}+\frac{zx}{y(z+x)}+\frac{xy}{z(x+y)} \ge \frac{3}{2}
+\)
+</p>
+<details>
+    <summary>Solution 1</summary>
+    <p>All we need is to substitute \(a \rightarrow \frac{1}{x}, b \rightarrow \frac{1}{y}, c \rightarrow \frac{1}{z}\) in Nesbitt's inequality:</p>
+    <p class="mpc">
+    \(
+        \frac{\frac{1}{x}}{\frac{1}{y}+\frac{1}{z}}+\frac{\frac{1}{y}}{\frac{1}{x}+\frac{1}{z}}+\frac{\frac{1}{z}}{\frac{1}{x}+\frac{1}{y}} \ge \frac{3}{2} \Leftrightarrow \\
+        \frac{yz}{x(y+z)}+\frac{xz}{y(x+z)}+\frac{xy}{z(x+y)} \ge \frac{3}{2}
+    \)
+    </p>
+    <p>Equality holds if \(x=y=z\).</p>
+</details>
+</div>
+</p>
+
+For the next one there's any easy solution using the AM-GM inequality, but can you prove it with Nesbitt ?
+
+<p>
+<div class="mp">
+Let \(x,y,z \in \mathbb{R}_{+}\), prove that:
+<p class="mpc">
+\(
+    \frac{-x+y+z}{x}+\frac{x-y+z}{y}+\frac{x+y-z}{z} \ge 3
+\)
+</p>
+<details>
+    <summary>Hint</summary>
+    <p>Divide each side by \(2\):</p> 
+    <p class="mpc">\(\frac{-x+y+z}{2x}+\frac{x-y+z}{2y}+\frac{x+y-z}{2z} \ge \frac{3}{2}\).</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>After we divide each side by two we get the following relationship:</p>
+    <p class="mpc">
+    \(\frac{-x+y+z}{2x}+\frac{x-y+z}{2y}+\frac{x+y-z}{2z} \ge \frac{3}{2}\).
+    </p>
+    <p>We perform the following substitutions:</p>
+    <p class="mpc">
+        \(
+            \begin{cases}
+            a \rightarrow -x+y+z \\
+            b \rightarrow x-y+z \\
+            c \rightarrow x+y-z
+            \end{cases}
+        \)
+    </p>
+    <p>We observe:</p>
+    <p class="mpc">
+        \(
+            \begin{cases}
+            a+b \rightarrow 2z \\
+            b+c \rightarrow 2x \\
+            c+a \rightarrow 2y \\
+            \end{cases}
+        \)
+    </p>
+    <p>With this in mind, our inequality becomes Nesbitt's inequality:</p>
+    <p class="mpc">
+    \(
+        \frac{-x+y+z}{(x-y+z)+(x+y-z)}+\frac{x-y+z}{(-x+y+z)+(x+y-z)}+\frac{x+y-z}{(-x+y+z)+(x-y+z)} \ge \frac{3}{2} \Leftrightarrow \\
+        \frac{a}{b+c}+\frac{b}{a+c}+\frac{c}{a+b} \ge \frac{3}{2}
+    \)
+    </p>
+     <p>Equality holds if \(x=y=z\).</p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>This problem is "original" and was created by me in the context of this article.</p>
+</details>
+</div>
+</p>
+
+Can you solve the next problem using Nesbitt's Inequality:
+
+<p>
+<div class="mp">
+Let \(a, b, c\) be positive real numbers, and \(a+b+c=3\). Prove that:
+<p class="mpc">
+    \(
+        \frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} \ge \frac{3}{2}
+    \)
+</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>You can write:\(\frac{1}{a+b}=\frac{a+b+c}{(a+b)(a+b+c)}\)</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p class="mpc">
+    \(
+        \text{LHS}=\frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} = \frac{(a+b)+c}{(a+b)(a+b+c)} + \frac{(b+c)+a}{(b+c)(a+b+c)}+\frac{(c+a)+b}{(c+a)(a+b+c)} = \\ 
+        = \frac{1}{\underbrace{a+b+c}_{=3}}(\underbrace{\frac{c}{a+b}+\frac{a}{b+c}+\frac{b}{c+a}}_{\ge\frac{3}{2}}+\underbrace{\frac{a+b}{a+b}+\frac{b+c}{b+c}+\frac{c+a}{c+a}}_{=3}) \ge \frac{3}{2}
+    \)
+    </p>
+</details>
+</div>
+</p>
+
+The next one looks rather peculiar, but can you solve it using Nesbitt's Inequality and *something else* ?
+
+<p>
+<div class="mp">
+        Let \(x,y,z\) be positive real numbers, prove that:
+        <p class="mpc">
+            \(
+                \frac{2^{x-y+1}}{1+2^{z-y}}+\frac{2^{y-z+1}}{1+2^{x-z}}+\frac{2^{z-x+1}}{1+2^{y-x}}\ge\frac{2x}{1+x^2}+\frac{2y}{1+y^2}+\frac{2z}{1+z^2}
+            \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Can you isolate the Right-Hand Side from the Left-Hand Side?</p>
+        </details>
+        <details>
+            <summary>Hint 2</summary>
+            <p>Can you find a way to apply Nesbitt's inequality on the LHS by performing substitutions?</p>
+        </details>
+        <details>
+            <summary>Hint 3</summary>
+            <p>Can you find a way to prove that the RHS is \(\le3\)?</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>Let's start with the RHS, as it can be written as:</p>
+            <p class="mpc">
+                \(
+                    R=\frac{2x}{1+x^2}+\frac{2y}{1+y^2}+\frac{2z}{1+z^2}=\frac{2}{\frac{1}{x}+x}+\frac{2}{\frac{1}{y}+y}+\frac{2}{\frac{1}{z}+z}
+                \)
+            </p>
+            <p>For each of the terms we know that:</p>
+            <p class="mpc">
+                \(
+                    \begin{cases}
+                    \frac{2}{\frac{1}{x}+x} \le \sqrt{\frac{1}{x}*x} = 1\\
+                    \frac{2}{\frac{1}{y}+y} \le \sqrt{\frac{1}{y}*y} = 1\\
+                    \frac{2}{\frac{1}{z}+z} \le \sqrt{\frac{1}{z}*z} = 1
+                    \end{cases}
+                \)
+            </p>
+            <p>This means that \(R \le 3\)</p>
+            <p>Now let's rewrite the Left-Hand Side:</p>
+            <p class="mpc">
+                \(
+                    L=\frac{2^{x-y+1}}{1+2^{z-y}}+\frac{2^{y-z+1}}{1+2^{x-z}}+\frac{2^{z-x+1}}{1+2^{y-x}}=2[\frac{2^x}{2^y(1+2^{z-y})}+\frac{2^y}{2^z(1+2^{x-z})}+\frac{2^z}{2^x(1+2^{y-x})}] = \\
+                    = 2(\frac{2^x}{2^y+2^z}+\frac{2^x}{2^y+2^z}+\frac{2^z}{2^x+2^y})
+                \)
+            </p>
+            <p>In the last form we can recognize a Nesbitt form, so we say that \(L \ge 3\).</p>
+            <p>But if \(L \ge 3 \) and \(3 \ge R \), then \(L \ge R \).</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>This problem is "original" and was created by me in the context of this article.</p>
+        </details>
+</div>
+</p>
+---
+ 
+# The Cauchy-Bunyakovsky-Schwartz Inequality
+
+Along with the the AM-GM inequality, the CBS Inequality forms the foundation of inequality problems in intermediate or advanced math contests. In it's simplest algebraic form it looks like this:
+
+<p>
+<div class="mp">
+<p>For the real numbers \(a_{i=1 \dots n}, b_{i=1 \dots n}\) the inequality states:</p>
+<p class="mpc">
+    \(
+        (\sum_{i=1}^n a_i b_i)^2 \le (\sum_{i=1}^n a_i^2)(\sum_{i=1}^n b_i^2)
+    \)
+</p>
+<p>Equality holds if \(a_i = k*b_i\), \(\forall i\).</p>
+</div>
+</p>
+
+Alternatively, in expanded form:
+
+<p>
+<div class="mp">
+\(
+    (a_1b_1+a_2b_2+\dots+a_nb_n)^2 \le (a_1^2+a_2^2+\dots+a_n^2)(b_1^2+b_2^2+\dots+b_n^2)
+\)
+</div>
+</p>
+
+You would be surprised in *how many ways* the CBS Inequality can be applied. 
+
+Can you solve the next problems using the CBS Inequality ?
+
+<p>
+<div class="mp">
+<p>Let \(a,b,c\) real numbers. Show that:</p>
+<p class="mpc">\(3(a^2+b^2+c^2)\ge(a+b+c)^2\)</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>Why don't you write \(3=1^2+1^2+1^2\)</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>After writing \(3=1^2+1^2+1^2\), the next relationships is true by the CBS Inequality</p>
+    <p class="mpc">\((1^2+1^2+1^2)(a^2+b^2+c^2)\ge(a*1+b*1+c*1)^2\)</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp">
+<p>Let \(x, y, z \in \mathbb{R}\), prove that:</p>
+<p class="mpc">\(3x^2+10y^2+15z^2 \ge 2(x+y+z)^2\)</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>Did you know that \(\frac{1}{3}+\frac{1}{10}+\frac{1}{15}=\frac{1}{2}\)?</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>Let's use \((\frac{1}{\sqrt{3}}, \frac{1}{\sqrt{10}}, \frac{1}{\sqrt{15}})\) and \((x\sqrt{3}, y\sqrt{10}, z\sqrt{15})\) and apply the CBS Inequality:</p>
+    <p class="mpc">\((\underbrace{\frac{1}{3}+\frac{1}{10}+\frac{1}{15}}_{=\frac{1}{2}})(3x^2+10y^2+15z^2) \ge (\frac{x\sqrt{3}}{\sqrt{3}}+\frac{y\sqrt{10}}{\sqrt{10}}+\frac{z\sqrt{10}}{\sqrt{10}})^2 \Leftrightarrow \\
+        (3x^2+10y^2+15z^2) \ge 2(x+y+z)^2\)</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp">
+<p>Let \(n\in\mathbb{N}\), prove that:</p>
+<p class="mpc">\(\frac{n^2}{(n+1)^2}\le\sum_{i=1}^n\frac{1}{i^2}*\sum_{i=2}^{n+1}\frac{1}{i^2}\)</p>
+</div>
+</p>
+
+We've already proven Nesbitt's Inequality using the AM-GM inequality, but can you prove it using the CBS Inequality? In case you need help, please follow the generous hints.
+
+<p>
+<div class="mp">
+    <p>Let \(a,b,c\) positive real numbers. Prove Nesbitt's Inequality using the CBS Inequality:</p>
+    <p class="mpc">
+        \(
+            \frac{a}{b+c}+\frac{b}{a+c}+\frac{c}{a+b} \ge \frac{3}{2}
+        \)
+    </p>
+    <details>
+        <summary>Hint 1</summary>
+        <p>Try proving an equivalent inequality:</p>
+        <p class="mpc">\(\frac{a}{b+c}+1+\frac{b}{a+c}+1+\frac{c}{a+b}+1\ge\frac{9}{2}\)</p>
+    </details>
+    <details>
+        <summary>Hint 2</summary>
+        <p>Use substitution to so that:</p>
+        <p class="mpc">
+        \(
+            \begin{cases}
+            x \rightarrow \sqrt{a+b} \\
+            y \rightarrow \sqrt{b+c} \\
+            z \rightarrow \sqrt{c+a}
+            \end{cases}
+        \)
+        </p>
+    </details>
+    <details>
+        <summary>Solution</summary>
+        <p>We can start by adding 3 to both sides of the inequality we want proven:</p>
+        <p class="mpc">
+            \(
+                \frac{a}{b+c}+1+\frac{b}{a+c}+1+\frac{c}{a+b}+1\ge\frac{9}{2}
+            \)
+        </p>
+        <p>The neq (equivalent) inequality becomes:</p>
+        <p class="mpc">
+            \(
+                \frac{a}{b+c}+1+\frac{b}{a+c}+1+\frac{c}{a+b}+1\ge\frac{9}{2} \Leftrightarrow \\
+                \frac{a+b+c}{b+c}+\frac{a+b+c}{a+c}+\frac{a+b+c}{c+a}\ge\frac{9}{2} \Leftrightarrow \\
+                (a+b+c)(\frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a})\ge\frac{9}{2}
+            \)
+        </p>
+        <p>At this point, let's perform the following substitution:</p>
+        <p class="mpc">
+        \(
+            \begin{cases}
+            x \rightarrow \sqrt{a+b} \\
+            y \rightarrow \sqrt{b+c} \\
+            z \rightarrow \sqrt{c+a}
+            \end{cases}
+        \)
+        </p>
+        <p>With this in mind, our new inequality becomes:</p>
+        <p class="mpc">
+            \(
+                (x^2+y^2+z^2)(\frac{1}{x^2}+\frac{1}{y^2}+\frac{1}{z^2}) \ge (1+1+1)^2
+            \)
+        </p>
+        <p>Which is true by the CBS inequality.</p>
+    </details>
+</div>
+</p>
+
 ---
 
 # Free resources around the web:

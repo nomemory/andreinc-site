@@ -4,7 +4,7 @@ permalink: /blogroll/
 classes: wide
 ---
 
-[In 2023]({{site.url}}/2023/03/10/social-media-quit), I boldly decided to quit (or reduce) the time lost on various Social Media Sites. 
+In 2023 I boldly decided to quit (or reduce) the time lost on various Social Media Sites. 
 
 As a natural consequence, I decided to create *my own social media feed* by traveling back to the 2000s, installing an RSS Reader (called unimaginatively [Feeder](https://f-droid.org/packages/com.nononsenseapps.feeder/)), and curating a list of blogs that I found interesting. I've become my own algorithm.
 
@@ -14,9 +14,7 @@ I usually find blogs I like by scrolling the top page of [hn](https://news.ycomb
 
 A good source of finding good information is now [https://www.marginalia.nu/](https://www.marginalia.nu/). The [Website Explorer](https://explore.marginalia.nu/view) is an excellent way of accessing *the alternative indie internet*.
 
-Another interesting source is [https://bukmark.club/](https://bukmark.club/).
-
-~~And there is the [hackernews blogroll](https://dm.hn/).~~ (it died)
+Another interesting source is [https://bukmark.club/](https://bukmark.club/) or [https://minifeed.net/](https://minifeed.net/welcome)
 
 If you have a personal blog, I recommend you create your *blogroll* section. Your readers will appreciate it. Accessing quality content has become challenging in recent years. Publishing a list of sites you truly like & follow & subscribe to is helpful for everyone.
 
@@ -108,6 +106,7 @@ I can't entirely agree with everything the following people are writing.
 | [jsomers.net/](https://jsomers.net/) | James Somers is a writer and programmer based in New York, NY. |
 | [jvns.ca/](https://jvns.ca/) | Julia Evan's blog. |
 | [keybits.net/](https://www.keybits.net/) | Tom Atkins' site. |
+| [laihoconsulting.com/](https://laihoconsulting.com/) | My name is Pekka Laiho and I am a backend-focused software engineer by profession. I am also very interested in finance and investing as a hobby. This website is mostly about my blog and my writings related to these subjects which I am passionate about.|
 | [lemire.me](https://lemire.me/blog/) | The blog of Daniel Lemire, a science professor at the University of Quebec. He sure loves optimizations. |
 | [letterstoanewdeveloper.com/](https://letterstoanewdeveloper.com/) | What I wish I had known when starting my development career. |
 | [levlaz.org/](https://levlaz.org/) | The personal blog of Lev Lazinskiy |

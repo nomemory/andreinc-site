@@ -26,44 +26,47 @@ If you are a seasoned C developer that has already dabbled in this sort of stuff
 
 The reader should already be familiar with bitwise operations, hexadecimal notation, pointers, pointer functions, C macros, and some functions from the standard library (e.g., `fwrite` and `fread`). 
 
+> If you are not familiar with bitwise operations, you can follow my tutorial [here]({{site.url}}/2023/02/01/demystifying-bitwise-ops). 
+
 It will be unfair not to mention some existing blog posts covering the same topic as this article; the best in this category is [Write your Own Virtual Machine](https://justinmeiners.github.io/lc3-vm/) by [Justin Meiners](https://github.com/justinmeiners) and [Ryan Pendleton](https://github.com/rpendleton). Their code covers a more in-depth implementation of a VM. Compared to this article, our VM is a little simpler, and the code takes a different route in terms of the implementation. 
 
 *Later edit*: After publishing this article in December, [Philip Chimento](https://ptomato.wordpress.com/) was nice enough to write a Rust implementation of the same Virtual Machine. If you are curious to see how the solution looks like in another programming language, please [check this out](https://ptomato.wordpress.com/2022/01/10/a-little-computer/).
 
 # Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Virtual Machines](#virtual-machines)
 - [von Neumann model](#von-neumann-model)
 - [Implementing the VM](#implementing-the-vm)
   - [The Main Memory](#the-main-memory)
   - [The registers](#the-registers)
   - [The instructions](#the-instructions)
-    - [`add` - Adding two values](#add---adding-two-values)
-    - [`and` - Bitwise logical AND](#and---bitwise-logical-and)
-    - [`ld` - Load RPC + offset](#ld---load-rpc--offset)
-    - [`ldi` - Load indirect](#ldi---load-indirect)
-    - [`ldr` - Load Base+Offset](#ldr---load-baseoffset)
-    - [`lea` - Load effective address](#lea---load-effective-address)
-    - [`not` - Bitwise complement](#not---bitwise-complement)
-    - [`st` - Store](#st---store)
-    - [`sti` - Store indirect](#sti---store-indirect)
-    - [`str` - Store base + offset](#str---store-base--offset)
-    - [`jmp` - Jump](#jmp---jump)
-    - [`jsr` - Jump to subroutines](#jsr---jump-to-subroutines)
-    - [`br` - Conditional branch](#br---conditional-branch)
-    - [`trap`](#trap)
-        - [`tgetc`](#tgetc)
-        - [`toutc`](#toutc)
-        - [`tputs`](#tputs)
-        - [`tin`](#tin)
-        - [`thalt`](#thalt)
-        - [`tinu16`](#tinu16)
-        - [`toutu16`](#toutu16)
+  - [`add` - Adding two values](#add---adding-two-values)
+  - [`and` - Bitwise logical AND](#and---bitwise-logical-and)
+  - [`ld` - Load RPC + offset](#ld---load-rpc--offset)
+  - [`ldi` - Load indirect](#ldi---load-indirect)
+  - [`ldr` - Load Base+Offset](#ldr---load-baseoffset)
+  - [`lea` - Load effective address](#lea---load-effective-address)
+  - [`not` - Bitwise complement](#not---bitwise-complement)
+  - [`st` - Store](#st---store)
+  - [`sti` - Store indirect](#sti---store-indirect)
+  - [`str` - Store base + offset](#str---store-base--offset)
+  - [`jmp` - Jump](#jmp---jump)
+  - [`jsr` - Jump to subroutines](#jsr---jump-to-subroutines)
+  - [`br` - Conditional branch](#br---conditional-branch)
+  - [`trap`](#trap)
+    - [`tgetc`](#tgetc)
+    - [`toutc`](#toutc)
+    - [`tputs`](#tputs)
+    - [`tin`](#tin)
+    - [`thalt`](#thalt)
+    - [`tinu16`](#tinu16)
+    - [`toutu16`](#toutu16)
 - [Loading and running programs](#loading-and-running-programs)
   - [Our first program](#our-first-program)
   - [Running our first program](#running-our-first-program)
 - [Final thoughts](#final-thoughts)
-- [Community Links](#community-links)
+- [Community links](#community-links)
 
 
 # Virtual Machines

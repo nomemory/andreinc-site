@@ -10,39 +10,30 @@ This section is a work in progress, and if the number of links increases, I will
 
 ---
 
+You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the most interesting, weird and awesome websites of the Internet.
+
+---
+
 - [Algorithms and Data Structures](#algorithms-and-data-structures)
-- [Art & Computers & Mathematics](#art--computers--mathematics)
+- [Art \& Computers \& Mathematics](#art--computers--mathematics)
 - [Blogging](#blogging)
 - [Books](#books)
 - [C Programming](#c-programming)
-- [Chess](#chess)
 - [Command Line](#command-line)
 - [Esoteric](#esoteric)
 - [Essays](#essays)
 - [Funny](#funny)
 - [Games](#games)
-- [Math](#math)
 - [Low Level](#low-level)
-- [Programming Languages & Compilers](#programming-languages--compilers)
+- [Math](#math)
 - [Others](#others)
+- [Physics](#physics)
+- [Programming Languages \& Compilers](#programming-languages--compilers)
 - [Tools](#tools)
-- [Webrings & Blogrolls](#webrings-blogrolls)
-- [Wikipedia & TIL](#wikipedia-til)
+- [Webrings \& Blogrolls](#webrings--blogrolls)
+- [Wikipedia \& TIL](#wikipedia--til)
 
 ---
-
-<!-- # A.I.
-* [Better without A.I.](https://betterwithout.ai/)
-    * Better without AI explores moderate apocalypses that could result from current and near-future AI technology. These are relatively overlooked risks: not extreme sci-fi extinction scenarios, nor the media’s obsession with “ChatGPT said something naughty” trivia. Rather: realistically likely disasters, up to the scale of our history’s worst wars and oppressions.
-* [Bubble trouble (2024)](https://www.wheresyoured.at/bubble-trouble/)
-    * A story about how A.I. companies are running out of quality training data. 
-* [Google Books Is Indexing AI-Generated Garbage (2024)](https://www.404media.co/google-books-is-indexing-ai-generated-garbage/)
-    * Google said it will continue to evaluate its approach “as the world of book publishing evolves.”
-* [Language models can only write ransom notes](https://posts.decontextualize.com/language-models-ransom-notes/)
-* [MDN’s AI Help and lucid lies (2024)](https://seirdy.one/posts/2024/04/04/mdn-ai-help-and-lucid-lies/)
-    * Following the release of MDN’s AI chatbot “feature”, many developers turned to GitHub Issues to voice concerns. Most concerns revolved around the chatbot spouting misinformation on a technical reference expected to contain accurate information, and ethical concerns related to OpenAI and the use of a large language model (LLM).
-* [Not By AI](https://notbyai.fyi/)
-    * Banners to tell people what they read was not made with LLMs. -->
 
 # Algorithms and Data Structures
 * [A gentle introduction to Algorithm Complexity Analysis](http://discrete.gr/complexity/)
@@ -66,10 +57,14 @@ This section is a work in progress, and if the number of links increases, I will
     * A free book. Data Structures and algorithms using the C programming language.
     * It should be more popular.
 * [Notes on randomized algorithms, James Aspnes](https://www.cs.yale.edu/homes/aspnes/classes/469/notes.pdf)
+* [Numbers are leaves](https://www.christo.sh/numbers-are-leaves/)
 * [Skip Lists are fascinating](https://igoro.com/archive/skip-lists-are-fascinating/)
     * Skip lists are a fascinating data structure: very simple, and yet have the same asymptotic efficiency as much more complicated AVL trees and red-black trees.
+* [The Art and Mathematics of Genji-Kō](https://www.oranlooney.com/post/genji-ko/)
+    * There has never been a group of people, in any time or place, who were so driven to display their sophistication and refinement. It wouldn’t do to merely put out a few sticks of incense; no, you would have to prove that your taste was more exquisite, your judgment more refined, your etiquette more oblique.
 * [The Diamond-Square Algorithm](https://diamond-square.netlify.app/)
     * The diamond-square algorithm is a method for generating heightmaps for computer graphics. 
+* [The movie IRIS](https://github.com/LoSinCos/movie-iris)
 * [Tries as the evolution of nothing](https://wordsandbuttons.online/tries_as_the_evolution_of_nothing.html)
     * "The idea behind the tries evolves from doing nothing with unordered digits to the elaborate data structures that excel in big data storage. "
 * [SHA256 Explained](https://sha256algorithm.com/)
@@ -87,10 +82,12 @@ This section is a work in progress, and if the number of links increases, I will
     * Animations since 2017. They look fantastic. Thank you, Etienne Jacob!
 * [broider](https://maxbittker.github.io/broider/)
     * This a tool for making "9-patch" borders. 
+* [Chris Shier](https://csh.bz/)
 * [Dans Les Nuages](https://danslesnuages.xyz/)
     * "I enjoy the possibility of relative anonymity to regain a freedom of experimentation that some closed ecosystems cheerfully took away, by their elitism or traditionalism."
 * [e4494s](https://e4494s.neocities.org/)
     * "This is where I make art, games, generators, simulations, and other random things to waste time on. Sometimes I make kinda cool stuff."
+* [Fluid Simulation](https://paveldogreat.github.io/WebGL-Fluid-Simulation/)
 * [Fractal Jigsaw Puzzle](https://thatmichaelpark.github.io/fractal-jigsaw-puzzle/fractaljigsaw.html)
 * [Fractals On Google Earth](https://paulbourke.net/fractals/googleearth/)
     * "The following is a "photographic" gallery of fractal patterns found while exploring the planet with Google Earth"
@@ -119,6 +116,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Drawing lines by following a changing vector field.
 * [Mutable Gallery](https://mutable.gallery/)
     * A collection of generative artworks by Heydon Pickering.
+* [1d Reversible Automata](https://richiejp.com/1d-reversible-automata)
 * [Unicode Maze Generator](https://www.vidarholen.net/cgi-bin/labyrinth?w=39&h=24)
     * This script will generate mazes in plain unicode text.
 * [Visualising the beauty of PI](https://towardsdatascience.com/visualizing-the-beauty-of-pi-cfeb1dfdd749)
@@ -144,6 +142,8 @@ This section is a work in progress, and if the number of links increases, I will
     * To this day I believe RSS is a lousy technology, but we don't have anything better.
 * [Indeed, it seems that Google IS forgetting the old Web](https://stop.zona-m.net/2018/01/indeed-it-seems-that-google-is-forgetting-the-old-web/)
     * "I think Google has stopped in­dex­ing the old­er parts of the We­b. I think I can prove it. Google’s com­pe­ti­tion is do­ing bet­ter."
+* [https://lmno.lol/](https://lmno.lol/)
+  * Wholesome blogs minus the yucky bits of the modern web
 * [This Page is Designed to Last (2019)](https://jeffhuang.com/designed_to_last/)
     * "A Manifesto for Preserving Content on the Web"
 * [Where have all the websites gone?](https://www.fromjason.xyz/p/notebook/where-have-all-the-websites-gone/)
@@ -199,10 +199,12 @@ This section is a work in progress, and if the number of links increases, I will
 * [strcmp4humans](http://stereopsis.com/strcmp4humans.html)
 * [The Althttpd Webserver](https://sqlite.org/althttpd/doc/trunk/althttpd.md)
     * Althttpd is a simple webserver that has run the https://sqlite.org/ website since 2004. Althttpd strives for simplicity, security, and low resource usage.
+* [The biggest shell programs in the world](https://github.com/oils-for-unix/oils/wiki/The-Biggest-Shell-Programs-in-the-World)
 * The C Donuts:
     * [Have a donut (2006)](https://www.a1k0n.net/2006/09/15/obfuscated-c-donut.html)
     * [Donut math: how donut.c works (2011)](https://www.a1k0n.net/2011/07/20/donut-math.html)
     * [donut.c without a math library (2021)](https://www.a1k0n.net/2021/01/13/optimizing-donut.html)
+* [The fastest Mutex](https://justine.lol/mutex/)
 * [The International Obfuscated C Code Contest ](https://www.ioccc.org/)
     * Making history by writing unreadable C code.
 * [The `printf` tic-tac-toe](https://github.com/carlini/printf-tac-toe)
@@ -211,6 +213,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Nice technical essay by [Eric S. Raymond](https://en.wikipedia.org/wiki/Eric_S._Raymond).
 * [The Underhanded C Contest](http://underhanded-c.org)
     * The Underhanded C Contest is an annual contest to write innocent-looking C code implementing malicious behavior.
+* [Write a shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/)
 * [Writing a very simple JIT Compiler in about 1000 lines of C](https://kuterdinel.com/writing-a-very-simple-jit-compiler-in-about-1000-lines-of-c.html)
 * [Why should I have written ZeroMQ in C, not C++ ](https://250bpm.com/blog:4/)
     * "Just to be clear from the very beginning: This is not going to be a Torvalds-ish rant against C++ from the point of view of die-hard C programmer."
@@ -227,6 +230,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "If you're like me and you spend a lot of time programming with the command line open, chances are that you forget about everything for hours, which includes drinking water. At the end of the day I used to realise that I had not consumed enough water. Hence I created a bash/zsh script to remind me to drink water right on my command line."
 
 # Esoteric
+* [Droste's Lair Post](https://vezwork.github.io/drostes-lair-post/)
 * [esolangs](https://esolangs.org/wiki/Main_Page)
     * This wiki is dedicated to the fostering and documentation of programming languages designed to be unique, difficult to program in, or just plain weird.
 * [How to write a self-printing program](https://igoro.com/archive/how-to-write-a-self-printing-program/)
@@ -235,10 +239,12 @@ This section is a work in progress, and if the number of links increases, I will
     * QR.rb is a Ruby program that generates a Rust program that generates a Scala program that generates ...(through 128 languages in total)... a REXX program that generates the original Ruby code again.
 * [Hull: An alternative to shell that I'll never have time to implement](https://250bpm.com/blog:153/index.html)
     * "Here's an idea. It's kind of crazy but it's also fun to think about."
+* [KlongPy](https://github.com/briangu/klongpy)
 * [Learn Prolog Now!](https://www.let.rug.nl/bos/lpn//lpnpage.php?pageid=online)
     *  "We wanted to do two things with this course. First, we wanted to provide a text that was relatively self contained, a text that would permit someone with little or no knowledge of computing to pick up the basics of Prolog with the minimum of fuss. We also wanted the text to be clear enough to make it useful for self study. We believe that if you read the text, and do the associated exercises, you will gain a useful partial entry to the world of Prolog."
 * [Self-printing Game of Life in C#](https://igoro.com/archive/self-printing-game-of-life-in-c/)
     * "I wrote a little C# program that contains a Game-of-Life grid. The program advances the game grid to the next generation and prints out a copy of itself, with the grid updated. You can take the output, compile it with a C# compiler, run it, and you’ll get the next generation of the game. You can iterate the process, or change the initial grid state manually."
+* [THE COURAGE TO BE IMPERFECT](https://asiip.org/wp-content/uploads/2021/01/Rudolph-dreikurs-The-Courage-to-Imperfect-Speech.pdf)
 * [tio.run](https://tio.run)
     * TIO is a family of online interpreters for an evergrowing list of practical and recreational programming languages. It knows how to run a few of the most popular esoteric programming languages.
 * [tryapl](https://tryapl.org/)
@@ -253,11 +259,15 @@ This section is a work in progress, and if the number of links increases, I will
     * "When I ask people at trendy big tech companies why algorithms quizzes are mandatory, the most common answer I get is something like "we have so much scale, we can't afford to have someone accidentally write an O(n^2) algorithm and bring the site down."
 * [Either your estimates suck or your job does ](https://wordsandbuttons.online/either_your_estimates_suck_or_your_job_does.html)
     * "Luckily, most estimates never come true, and I have a dozen polynomial models to show you why."
+* [Employee Ownership](https://www.elysian.press/p/employee-ownership)
+    * Central States Manufacturing as a model for exiting to employee-ownership
 * [Glory is only 11MB/s away](https://thmsmlr.com/cheap-infra)
     * "One thing is certain in life: if you’re getting something for a steal, someone is getting screwed, and it’s probably you elsewhere."
+* [Greppability Code Metric](https://morizbuesing.com/blog/greppability-code-metric/)
 * [Hacker's Manifesto](http://phrack.org/issues/7/1.html#article)
 * [Learning to program is getting harder (2018)](https://allendowney.blogspot.com/2018/02/learning-to-program-is-getting-harder.html?m=1)
     * "The fundamental problem is that the barrier between using a computer and programming a computer is getting higher."
+* [Rules for writing Software Turorials](https://refactoringenglish.com/chapters/rules-for-software-tutorials/)
 * [Not a supplier (2022)](https://www.softwaremaxims.com/blog/not-a-supplier)
     * "Until then, I am not your supplier. So all your Software Supply Chain ideas? You are not buying from a supplier, you are a raccoon digging through dumpsters for free code. So I would advise you to put these rules in the same dumpster. And remember. I am not a supplier. Because **THIS SOFTWARE IS PROVIDED “AS IS”**".
 * [Software Development 450 Words Per Minute](https://www.vincit.com/blog/software-development-450-words-per-minute)
@@ -271,6 +281,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "I wanted to bring many threads together into a single document that may pretentiously be described as a theory of or, more practically, a guide to the bullshit web."
 * [The humble programmer](https://www.cs.utexas.edu/~EWD/ewd03xx/EWD340.PDF)
     * Dijkstra's overview of the programming universe as he saw it in 1972
+* [The night watch](https://scholar.harvard.edu/files/mickens/files/thenightwatch.pdf)
 * [There are 665 open licences, most are pretty rubbish](https://csvbase.com/blog/14) 
 * [This word doesn't exist](https://www.thisworddoesnotexist.com/)
     * But it should.
@@ -293,6 +304,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Multiple sites of pixel proportions.
 * [Medieval Cat Meme Generator](https://michael-klein.github.io/medieval-cat-meme-generator/)
     * King DerpCats most wondrous meme gen'rat'r.
+* [MIT graduates cannot power a light bulb with a battery](https://www.youtube.com/watch?v=aIhk9eKOLzQ)
 * [Movie-a-Minute](http://www.rinkworks.com/movieaminute/)
     * There's a lot of movies out there and very little time to watch them in.
 * [Our security auditor is an idiot. How do I give him the information he wants?](https://serverfault.com/questions/293217/our-security-auditor-is-an-idiot-how-do-i-give-him-the-information-he-wants)
@@ -307,6 +319,8 @@ This section is a work in progress, and if the number of links increases, I will
     * One interesting text-adventure game
 * [A slower speed of light](http://gamelab.mit.edu/games/a-slower-speed-of-light/)
     * A Slower Speed of Light is a first-person game prototype in which players navigate a 3D space while picking up orbs that reduce the speed of light in increments. 
+* [Assembly Arena](https://github.com/m2w4/assembly-arena)
+  * Assembly Arena is a programming game where participants create small assembly programs, to compete for control of a virtual computer's memory.
 * [Bonsai Builder](https://vandervasgenerator.itch.io/bonsaibuilder)
     * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
 * [Can't Unsee](https://cantunsee.space/)
@@ -334,6 +348,7 @@ This section is a work in progress, and if the number of links increases, I will
     * PuzzleScript is an open-source HTML5 puzzle game engine. 
 * [Quantum Soccer](https://gregegan.net/BORDER/Soccer/Soccer.html) 
     * In the game of Quantum Soccer, the aim is to shape the wave function of a quantum-mechanical “ball” so that the probability of it being inside one of the goals rises above a set threshold.
+* [Fantasy Map of GitHub](https://anvaka.github.io/map-of-github/#0.79/0/5.6)
 * [Retrogrames.cz](https://www.retrogames.cz/)
     * An online museum of old video games.
 * [Retromags](https://www.retromags.com/)
@@ -381,6 +396,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "I ended up making a Snake game and a small ray tracer that use stock Notepad for all input and rendering tasks, and got to learn about DLL Injection, API Hooking and Memory Scanning along the way."
 * [Temple OS](https://templeos.org/)
     * God's operating system.
+* [There's more to mathematics than rigour and proofs](https://terrytao.wordpress.com/career-advice/theres-more-to-mathematics-than-rigour-and-proofs/)
 * [Weird things I learned while writing an x86 emulator](https://www.timdbg.com/posts/useless-x86-trivia/)
     * Useless x86 trivia.
 * [Why computers represent signed integers using two's complement](https://igoro.com/archive/why-computers-represent-signed-integers-using-twos-complement/)
@@ -433,6 +449,8 @@ This section is a work in progress, and if the number of links increases, I will
     * A Gentle Study of Raymarching.
 * [Puzzles](https://jrmf.org/puzzle/)
     * Free, fun, and meaningful math for all.
+* [Seeing Theory](https://seeing-theory.brown.edu/index.html)
+    * A visual introduction to probability and statistics
 * [Sine and cosine](https://wordsandbuttons.online/sine_and_cosine.html)
     * "For every pair, I think I know what the words mean from school but I can't always tell one from another. I can always tell sine from cosine but I didn't learn them at school. My father taught me."
 * What is the inverse ...
@@ -444,6 +462,7 @@ This section is a work in progress, and if the number of links increases, I will
     * Can you differentiate a number and get a nonzero answer? You can't with the usual kind of differentiation, but you can with the “arithmetic derivative”.
 * [The fourth operation](https://ariwatch.com/VS/Algorithms/TheFourthOperation.htm)
     * "Those are the first, second, and third operations:  addition, multiplication, and exponentiation.  Presented in this manner a     prolonged series of operations comes to mind, each operation iterating the one before. The fourth operation would be?"
+* [The Lazy Way to Solve Differential Equations](https://iagoleal.com/posts/calculus-symbolic-ode/)
 * [The magic 6174](https://www.oranlooney.com/post/kaprekar/)
     * The Kaprekar routine.
 
@@ -456,6 +475,7 @@ This section is a work in progress, and if the number of links increases, I will
     * "Even if you think the university will teach you nothing, you've got a one-time offer from society that we're going to subsidize anything you do for the next four years and not have any expectation that you'll work for a living during that time. This offer is essentially only good once. Take it!"
 * [ASK HN: You have one shot to redesign the Internet – what do you change?](https://news.ycombinator.com/item?id=27663618)
     * Honestly, just one thing, and I only need to go back to the early 90s.
+* [Balacing Cube](https://willempennings.nl/balancing-cube/)
 * [Dear Photograph](https://dearphotograph.com/)
     * "The idea is simple: hold up a photograph from the past in front of the place where it was originally taken, take a second photograph, and add a sentence of dedication about what the photograph means to you. The results, however, are astounding, which is why millions have flocked to dearphotograph.com and thousands have submitted their own Dear Photographs."
 * [Grandpa's Photos](https://grandpas-photos.com)
@@ -475,6 +495,7 @@ This section is a work in progress, and if the number of links increases, I will
 # Programming Languages & Compilers
 * [MAL - Make a Lisp](https://github.com/kanaka/mal#mal---make-a-lisp)
     * Make a Lisp is almost 100 programming languages.
+* [Common Misconceptions about Compilers](https://sbaziotis.com/compilers/common-misconceptions-about-compilers.html)
 * [Programming languages & resources](https://bernsteinbear.com/pl-resources/)
     * This page is a collection of my favorite resources for people getting started writing programming languages.
 * [Very early C compilers and language](https://www.bell-labs.com/usr/dmr/www/primevalC.html)
@@ -521,16 +542,22 @@ This section is a work in progress, and if the number of links increases, I will
     * Thank you, Mr. Petrov!
 * [Ant-Fungus Mutualism](https://en.m.wikipedia.org/wiki/Ant%E2%80%93fungus_mutualism)
     * The ant–fungus mutualism is a symbiosis seen between certain ant and fungal species, in which ants actively cultivate fungus much like humans farm crops as a food source. 
+* [Autistic Assistant of Gauss used to check Primality](https://hsm.stackexchange.com/questions/15609/autistic-assistant-of-gauss-used-to-check-primality)
 * [Darwin (Programming Language)](https://en.m.wikipedia.org/wiki/Darwin_(programming_game))
     * Darwin was a programming game invented in August 1961 by Victor A. Vyssotsky, Robert Morris Sr., and M. Douglas McIlroy.
 * [Effective Altruism](https://en.m.wikipedia.org/wiki/Effective_altruism)
     * "Effective altruism (EA) is a 21st-century philosophical and social movement that advocates "using evidence and reason to figure out how to benefit others as much as possible, and taking action on that basis"".
+* [Intransitive Dice](https://en.m.wikipedia.org/wiki/Intransitive_dice)
 * [List of People claimed to be Jesus](https://en.m.wikipedia.org/wiki/List_of_people_claimed_to_be_Jesus)
 * [McNamara Fallacy](https://en.m.wikipedia.org/wiki/McNamara_fallacy)
     * "The McNamara fallacy is often considered in the context of the Vietnam War, in which enemy body counts were taken to be a precise and objective measure of success."
+* [Non-integer base of numeration](https://en.m.wikipedia.org/wiki/Non-integer_base_of_numeration)
+* [Probability theory paradoxes](https://en.m.wikipedia.org/wiki/Category:Probability_theory_paradoxes)
 * [PSR J1748−2446ad](https://en.m.wikipedia.org/wiki/PSR_J1748%E2%88%922446ad)
     * PSR J1748−2446ad is the fastest-spinning pulsar known, at 716 Hz (times per second)
+* [Rule 101](https://en.m.wikipedia.org/wiki/Rule_110)
 * [Sprouts](https://en.m.wikipedia.org/wiki/Sprouts_(game))
+* [The Boltzmann Brain](https://en.m.wikipedia.org/wiki/Boltzmann_brain)
 * [The Inventor of the Black Box Was Told to Drop the Idea and “Get On With Blowing Up Fuel Tanks](https://spectrum.ieee.org/the-inventor-of-the-black-box-was-told-to-drop-the-idea-and-get-on-with-blowing-up-fuel-tanks)
     * Fortunately, David Warren kept working on his crash-proof flight data recorder
 * [What is the history of the use of "foo" and "bar" in source code examples?](https://softwareengineering.stackexchange.com/questions/69788/what-is-the-history-of-the-use-of-foo-and-bar-in-source-code-examples)
