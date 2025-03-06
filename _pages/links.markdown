@@ -308,6 +308,7 @@ You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the 
 * [Movie-a-Minute](http://www.rinkworks.com/movieaminute/)
     * There's a lot of movies out there and very little time to watch them in.
 * [Our security auditor is an idiot. How do I give him the information he wants?](https://serverfault.com/questions/293217/our-security-auditor-is-an-idiot-how-do-i-give-him-the-information-he-wants)
+* [Rediscovery of Calculus](https://academia.stackexchange.com/questions/9602/rediscovery-of-calculus-in-1994-what-should-have-happened-to-that-paper)
 * [The brick bible](https://thebrickbible.com/)
     * The Scriptures in LEGO from Genesis to Revelation.
 * [The parable of the Physics Professor](https://www.parand.com/the-parable-of-the-physics-professor.html)
