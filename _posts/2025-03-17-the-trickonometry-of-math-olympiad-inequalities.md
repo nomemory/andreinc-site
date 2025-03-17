@@ -1,7 +1,9 @@
 ---
-title: "A short introduction to Math Olympiad inequalities"
-date: "2024-12-09"
+title: "The 'trickonometry' of math olympiad inequalities (Part 1)"
+date: "2025-03-17"
 classes: wide
+toc: true
+toc_sticky: true
 comments: true
 excerpt: "Getting started with competitive math inequalities"
 usekatex: true
@@ -74,7 +76,9 @@ The purpose of this article is to highlight some techniques and methods that can
 
 > An edgy teacher, names excluded, once said: "In an ideal world people would solve inequality problems instead of Sudoku!". We haven't spoken since, I like Sudoku.
 
----
+# Disclaimer
+
+I am not a math teacher, and nobody has reviewed this article (yet!). If you see any error please contact me via email.
 
 # Inequations vs. Inequalities
 
@@ -380,7 +384,7 @@ The next one is the first non-trivial exercise of this article, try to solve it 
 
 ---
 
-# Weak Inequalities
+# Weak Inequalities vs. Strict inequalities
 
 Weak Inequalities are inequalities that include the possibility of equality. They are denoted by the symbols $$\ge$$ or $$\le$$. These contrast with *strict inequalities*, which use $$\gt$$ and $$\lt$$ and do not allow equality.
 
@@ -398,7 +402,7 @@ All in all, the main idea is that *weak inequalities* are more *interesting* tha
 
 ---
 
-# Useful Identities
+# Being playful with algebraic identities
 
 Before discussing specific inequalities, it's important to highlight some key identities that problem creators often use when designing their problems. These identities are not only beneficial for understanding inequalities but also useful for solving other types of problems.
 
@@ -665,7 +669,7 @@ Let \(x_1, x_2, \dots x_n\) be non-negative and positive real numbers. Can you f
         <summary>Solution</summary>
         <p>
         \(
-            \frac{ay+bx}{xy} \ge \frac{4(ay+bx)}{(x+y)^2} \Leftrightarrow 
+            \frac{a}{x}+\frac{b}{y}=\frac{ay+bx}{xy} \ge \frac{4(ay+bx)}{(x+y)^2} \Leftrightarrow 
             \frac{1}{xy} \ge \frac{4}{(x+y)^2} \Leftrightarrow 
             (\frac{x+y}{2})^2 \ge xy
         \)
@@ -699,7 +703,7 @@ Now, just for fun, let's try some problems that (only!) looks more difficult. Th
             <p class="mpc">
                 \(
                     \frac{c+ab+1}{1+a+a^2}+\frac{a+bc+1}{1+b+b^2}+\frac{b+ca+1}{1+c+c^2} = \frac{abc^2+ab+abc}{1+a+a^2}+\frac{a^2bc+bc+abc}{1+b+b^2}+\frac{ab^2c+ca+abc}{1+c+c^2} = \\
-                    = ab(\frac{1+c+c^2}{1+a+a^2})+bc(\frac{1+a+a^2}{1+b+b^2})+ca(\frac{1+b+b^2}{1+c+c^2}) \ge 3\sqrt{a^2b^2c^2} = 3
+                    = ab(\frac{1+c+c^2}{1+a+a^2})+bc(\frac{1+a+a^2}{1+b+b^2})+ca(\frac{1+b+b^2}{1+c+c^2}) \overbrace{\ge}^{AM-GM} 3\sqrt{a^2b^2c^2} = 3
                 \)
             </p>
         </details>
@@ -888,7 +892,8 @@ We've already solved the next inequality with a different technique, but can you
             <p>After we multiply each sides by \(2\), the equivalent inequality is:</p>
             <p class="mpc">
                 \(
-                    \underbrace{(x^2+y^2)}_{\ge 2xy}+\underbrace{(y^2+z^2)}_{\ge 2yz}+\underbrace{(z^2+x^2)}_{\ge 2zx} \ge 2(xy + yz + zx) Leftrightarrow \\
+                    \underbrace{(x^2+y^2)}_{\ge 2xy}+\underbrace{(y^2+z^2)}_{\ge 2yz}+\underbrace{(z^2+x^2)}_{\ge 2zx} \ge 2(xy + yz + zx) \Leftrightarrow \\
+                    x^2 + y^2 + z^2 \ge xy + yz + zx
                 \)
             </p>
             <p>Equality holds for \(x=y=z\).</p>
@@ -925,18 +930,67 @@ We've already solved the next inequality with a different technique, but can you
             <p>Summing-up all three inequalities leads to:</p>
             <p class="mpc">
                 \(
-                    2(xy+yz+zx) \ge 2(x\sqrt{yz}+y\sqrt{zx}+z\sqrt{xy})
+                    2(xy+yz+zx) \ge 2(x\sqrt{yz}+y\sqrt{zx}+z\sqrt{xy}) \Leftrightarrow \\
+                    xy+yz+zx \ge x\sqrt{yz}+y\sqrt{zx}+z\sqrt{xy}
                 \)
             </p>
-            <p>After simplification this is exactly what we had to prove.</p>
+            <p>So:</p>
+            <p class="mpc">
+                \(
+                    \boldsymbol{x^2+y^2+z^2} \ge xy + yz + zx \ge \boldsymbol{x\sqrt{yz}+y\sqrt{zx}+z\sqrt{xy}}
+                \)
+            </p>
             <p>Equality holds for \(x=y=z=1\).</p>
         </details>
     </div>
 </p>
 
 <p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers, prove:</p>
+        <p class="mpc">
+        \(
+            a^3+b^3+c^3 + 3 \ge a+b+c+ab+bc+ca
+        \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>From AM-GM we know that: \(x^3+y^3+1 \ge 3xy\)</p>
+        </details>
+        <details>
+            <summary>Hint 2</summary>
+            <p>From AM-GM we know that: \(x^3+1+1 \ge 3x\)</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We apply the AM-GM inequality to the following group of terms:</p>
+            <p class="mpc">
+                \(
+                    \begin{cases}
+                    a^3+b^3+1 \ge 3ab \\
+                    b^3+c^3+1 \ge 3bc \\
+                    c^3+a^3+1 \ge 3ca \\
+                    \\
+                    a^3+1+1 \ge 3a \\
+                    b^3+1+1 \ge 3b \\
+                    c^3+1+1 \ge 3c
+                    \end{cases}
+                \)
+            </p>
+            <p>Summing everything:</p>
+            <p class="mpc">
+                \(
+                    3(a^3+b^3+c^3+3) \ge 3(a+b+c+ab+bc+ca) \Rightarrow a^3+b^3+c^3 + 3 \ge a + b + c + ab + bc + ca
+                \)
+            </p>
+            <p>Equality holds if a=b=c=1</p>
+        </details>
+    </div>
+</p>
+
+<p>
 <div class="mp">
-    Let \(a,b,c \in \mathbb{R}_{+}\), prove:
+    <p>Let \(a,b,c \in \mathbb{R}_{+}\), prove:</p>
     <p class="mpc">
         \(
             a^3+b^3+c^3 \ge \frac{3}{2}(ab+bc+cd-1)
@@ -1015,7 +1069,7 @@ We've already solved the next inequality with a different technique, but can you
     </div>
 </p>
 
-The next problem can be easily solved using an inequality we'll discuss shortly. However, let's first try solving it with AM-GM, using a strategy similar to the one we applied above:
+The next two problems can be easily solved using an inequality we'll discuss shortly. However, let's first try solving it with AM-GM, using a strategy similar to the one we applied above:
 
 <p>
 <div class="mp">
@@ -1056,6 +1110,47 @@ The next problem can be easily solved using an inequality we'll discuss shortly.
     <p>Concursul Gazeta Matematica si Viitori Olimpici, 9th grade, Edition X, Romania</p>
 </details>
 </div>
+</p>
+
+
+<p>
+    <div class="mp">
+        <p>Let \(x,y,z\) positive real numbers, prove:</p>
+        <p class="mpc">
+            \(
+                \frac{x^2+\sqrt{yz}}{2\sqrt{yz}}+\frac{y^2+\sqrt{zx}}{2\sqrt{zx}}+\frac{z^2+\sqrt{xy}}{2\sqrt{xy}} \ge \sqrt{x}+\sqrt{y}+\sqrt{z}
+            \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>An equivalent way to write the inequality is:</p>
+            <p class="mpc">
+                \(
+                    \frac{x^2}{\sqrt{yz}}+\frac{y^2}{\sqrt{zx}}+\frac{z^2}{\sqrt{xy}}+3 \ge 2(\sqrt{x}+\sqrt{y}+\sqrt{z})
+                \)
+            </p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>An equivalent way to write the inequality is:</p>
+            <p class="mpc">
+                \(
+                    \frac{x^2}{\sqrt{yz}}+\frac{y^2}{\sqrt{zx}}+\frac{z^2}{\sqrt{xy}}+3 \ge 2(\sqrt{x}+\sqrt{y}+\sqrt{z})
+                \)
+            </p>
+            <p>We can start applying the AM-GM inequality to the following terms:</p>
+            <p class="mpc">
+                \(
+                    \begin{cases}
+                        \frac{x^2}{\sqrt{yz}}+\sqrt{y}+\sqrt{z}+1 \ge 4\sqrt{x} \\
+                        \frac{y^2}{\sqrt{zx}}+\sqrt{z}+\sqrt{x}+1 \ge 4\sqrt{y} \\
+                        \frac{z^2}{\sqrt{xy}}+\sqrt{x}+\sqrt{y}+1 \ge 4\sqrt{z}
+                    \end{cases}
+                \)
+            </p>
+            <p>Summing everything up proves our inequality. Equality holds when \(x=y=z=1\).</p>
+        </details>
+    </div>
 </p>
 
 An important thing to take in consideration is that when we sum/multiply [weak inequalities](https://proofwiki.org/wiki/Definition:Inequality/Weak) involving *interdependent* terms:
@@ -1447,10 +1542,6 @@ If \(a, b, c\) are real numbers greater than 1, prove for any exponent \(r\gt0\)
 </div>
 </p>
 
-# Mistakes you shouldn't make
-
-
-
 # The mean inequality chain
 
 > Also known as the QM-AM-GM-HM Inequalities, or how things are getting more serious.
@@ -1549,6 +1640,17 @@ Let \(a,b,c,x,y,z\) be positive real numbers, and \(x+y+z=a+b+c=1\). Prove that:
 </p>
 
 <p>
+    <div class="mp">
+        <p>Given \(x,y,z\) such that \(x+y+z=1\), prove that:</p>
+        <p class="mpc">
+            \[
+                (x+y)^2+(y+z)^2 + (z+x)^2 \ge 4\sqrt{3xyz}
+            \]
+        </p>
+    </div>
+</p>
+
+<p>
 <div class="mp">
 Find \(x,y,z \in \mathbb{R}_{+}\) if: 
 <p class="mpc">
@@ -1619,7 +1721,173 @@ Find \(x,y,z \in \mathbb{R}_{+}\) if:
 </div>
 </p>
 
----
+# The weighted AM-GM inequality
+
+The Weighted AM-GM is a generalization of the standard AM-GM inequality that incorporates weights for each of the terms. 
+
+<p>
+    <div class="mp">
+        <p>Let \(a_1, a_2, \dots, a_n\) positive real numbers, and their associated (positive real) weights \(w_1, w_2, \dots, w_n\), such that:</p>
+        <p class="mpc">
+            \[
+                w_1 + w_2 + \dots + w_n = W
+            \]
+        </p>
+        <p>The Weighted AM-GM inequality states:</p>
+        <p class="mpc">
+            \[
+                \frac{a_1w_1+a_2w_2+\dots+a_nw_n}{W} \ge (a_1^{w_1}a_2^{w_2}\dots a_n^{w_n})^{\frac{1}{W}}
+            \]
+        </p>
+        <p>If \(W=1\), the inequality has the following form:</p>
+        <p class="mpc">
+            \[
+                a_1w_1+a_2w_2+\dots+a_nw_n \ge a_1^{w_1}a_2^{w_2}\dots a_n^{w_n}
+            \]
+        </p>
+        <p>If \(w_1=w_2=\dots=w_n=1\) then \(W=n\), so we obtain the "classical" AM-GM inequality:</p>
+        <p class="mpc">
+            \[
+                \frac{a_1+a_2+\dots+a_n}{n} \ge (a_1a_2\dots a_n)^{\frac{1}{n}}
+            \]
+        </p>
+    </div>
+</p>
+
+Let's try a classical exercise:
+
+<p>
+    <div class="mp">
+        <p>If \(a,b\) real positive numbers, if \(p>1\) and \(q>1\) are real numbers such that: \(\frac{1}{p}+\frac{1}{q} = 1\), prove:</p>
+        <p class="mpc">
+            \[
+                qa^p+pb^q \ge qab + pba
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>If \(\frac{1}{p}+\frac{1}{q} = 1\) then \(p+q=pq\).</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>Taking in consideration \(p+q=pq\):</p>
+            <p class="mpc">
+                \[
+                    qa^p+pb^q \ge qab + pba \Leftrightarrow qa^p + pb^q \ge ab(\underbrace{p+q}_{=pq}) \Leftrightarrow \\
+                    \Leftrightarrow a^p * \frac{1}{p} + b^q * \frac{1}{q} \ge ab 
+                \]
+            </p>
+            <p>Apply the Weigted AM-GM with the weights \(w_1=\frac{1}{p}\) and \(w_2=\frac{1}{q}\) so that \(W=w_1+w_2=1\):</p>
+            <p class="mpc">
+                \[
+                    \frac{a^p * \frac{1}{p} + b^q * \frac{1}{q}}{\frac{1}{p}+\frac{1}{q}} \ge [(a^p)^{\frac{1}{p}}*(b^q)^{\frac{1}{q}}]^{\frac{1}{\frac{1}{p}+\frac{1}{q}}} \Leftrightarrow \\
+                    \Leftrightarrow a^p * \frac{1}{p} + b^q * \frac{1}{q} \ge ab 
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>The exercise is actually <a href="https://en.wikipedia.org/wiki/Young%27s_inequality_for_products">Young's Inequality for products</a> written in a fancier way. Young's inequality is a direct consequence of the more powerful weighted AM-GM inequality.</p>
+        </details>
+    </div>
+</p>
+
+Now, let's try to solve a classical problem proposed by Nguyen Manh Dung (I've found it in multiple sources) using the Weighted AM-GM inequality:
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers such that \(a+b+c=1\). Prove that:</p>
+        <p class="mpc">
+            \[
+                a^ab^bc^c + a^bb^cc^a + a^cb^ac^b \le 1
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>\(W=a+b+c=1\)</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We permute the weights in the following manner (keeping in mind \(W=a+b+c=1\)):</p>
+            <p class="mpc">
+                \[
+                    \begin{cases}
+                        \frac{\textbf{a}*a + \textbf{b}*b + \textbf{c}*c}{\textbf{a}+\textbf{b}+\textbf{c}} \ge a^ab^bc^c \\
+                        \frac{\textbf{b}*a + \textbf{c}*b + \textbf{a}*c}{\textbf{b}+\textbf{c}+\textbf{a}} \ge a^bb^cc^a \\
+                        \frac{\textbf{c}*a + \textbf{a}*b + \textbf{b}*c}{\textbf{b}+\textbf{c}+\textbf{a}} \ge a^cb^ac^b \\
+                    \end{cases} \Leftrightarrow
+                    \begin{cases}
+                        a^2+b^2+c^2 \ge a^ab^bc^c \\
+                        ba + cb + ac \ge a^bb^cc^a \\
+                        ca + ab + bc \ge a^cb^ac^b
+                    \end{cases}
+                \]
+            </p>
+            <p>By summing the three:</p>
+            <p class="mpc">
+                \[
+                    (a^2+b^2+c^2) + 2(ab+bc+ca) = (a+b+c)^2 = 1 \ge a^ab^bc^c + a^bb^cc^a + a^cb^ac^b
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Nguyen Manh Dung</p>
+        </details>
+    </div>
+</p>
+
+The last problem in this section is authored by Dan Sitaru, the editor of the [Romanian Mathematical Magazine](https://www.ssmrmh.ro/):
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c,d>0\), prove that:</p>
+        <p class="mpc">
+            \[
+                (a+c)^c(b+d)^d(c+d)^{c+d} \le c^dd^d(a+b+c+d)^{c+d}
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Group the terms by their powers.</p>
+        </details>
+        <details>
+            <summary>Hint 2</summary>
+            <p>By "regrouping the terms", the new inequality becomes:</p>
+            <p class="mpc">
+                \[
+                    \frac{(a+c)^c}{c^c} * \frac{(b+d)^d}{d^d} \le \frac{(a+b+c+d)^{c+d}}{(c+d)^{c+d}}
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>By "regrouping the terms" based on their corresponding powers, the inequality is equivalent to:</p>
+            <p class="mpc">
+                \[
+                    \Bigl( \frac{a+b+c+d}{c+d} \Bigl)^{c+d} \ge \Bigl( \frac{a}{c}+1 \Bigl)^c \Bigl( \frac{b}{d} + 1 \Bigl)^d
+                \]
+            </p>
+            <p>In the same time if we apply the Weighted AM-GM inequality to \( \Bigl(\frac{a}{c}+1 \Bigl), \Bigl( \frac{b}{d} + 1\Bigl)\), with the weights \(w_1=c\) and \(w_2=d\), we would obtain:</p>
+            <p class="mpc">
+                \[
+                    \frac{c*(\frac{a}{c}+1) + d*(\frac{b}{d}+1)}{c+d} \ge \Bigl[\Bigl(\frac{a}{c}+1\Bigl)^c\Bigl(\frac{b}{d}+1\Bigl)^d\Bigl]^{\frac{1}{c+d}} \Leftrightarrow \\
+                    \frac{a+b+c+d}{c+d} \ge \Bigl[\Bigl(\frac{a}{c}+1\Bigl)^c\Bigl(\frac{b}{d}+1\Bigl)^d\Bigl]^{\frac{1}{c+d}}             
+                \]
+            </p>
+            <p>After raising each side at \(c+d\):</p>
+            <p class="mpc">
+                \[
+                      \Bigl( \frac{a+b+c+d}{c+d} \Bigl)^{c+d} \ge \Bigl(\frac{a}{c}+1\Bigl)^c\Bigl(\frac{b}{d}+1\Bigl)^d
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Dan Sitaru</p>
+        </details>
+    </div>
+</p>
 
 # The power of substitutions
 
@@ -2333,6 +2601,68 @@ Can you solve the next problems using the CBS Inequality ?
 </div>
 </p>
 
+<div class="mp">
+    <p>Let \(x, y, z \in (0, \infty)\) and \(x+y+z=6\), prove that:</p>
+    <p class="mpc">
+        \(
+            x\sqrt{x-1}+y\sqrt{y-1}+z\sqrt{z-1} \ge 6
+        \)
+    </p>
+    <details>
+        <summary>Hint 1</summary>
+        <p>Try to find a powerful, but obvious substitution.</p>
+    </details>
+    <details>
+        <summary>Hint 2</summary>
+        <p>Perform the following substitions to simplify the inequality:</p>
+        <p class="mpc">
+            \(
+                \begin{cases}
+                    \sqrt{x-1}=a \\
+                    \sqrt{y-1}=b \\
+                    \sqrt{z-1}=c
+                \end{cases}
+            \)
+        </p>
+    </details>
+    <details>
+        <summary>Solution</summary>
+        <p>There are multiple solutions to this problem, but this one will use the CBS inequality.</p>
+        <p>We start by performing the substitutions:</p>
+        <p class="mpc">
+            \(
+                \begin{cases}
+                    \sqrt{x-1}=a \\
+                    \sqrt{y-1}=b \\
+                    \sqrt{z-1}=c
+                \end{cases} \Leftrightarrow
+                \begin{cases}
+                    x=a^2+1 \\
+                    y=b^2+1 \\
+                    z=c^2+1
+                \end{cases} 
+            \)
+        </p>
+        <p>There is a new constraint for \(a,b,c\) is \(x+y+z=(a^2+b^2+c^2)+3 \Rightarrow a^2+b^2+c^2 = 3\).</p> 
+        <p>In the same time, the inequality is equivalent to:</p>
+        <p class="mpc">
+            \(
+                a(a^2+1)+b(b^2+1)+c(c^2+1) \ge 6 \Leftrightarrow (a^3+b^3+c^3)+(a+b+c) \ge 6
+            \)
+        </p>
+        <p>By applying the AM-GM inequality and then the CBS inequality:</p>
+        <p class="mpc">
+            \(
+                (a^3+b^3+c^3)+(a+b+c) \overbrace{\ge}^{AM-GM} 2 \sqrt{(a^3+b^3+c^3)(a+b+c)} \\ \overbrace{\ge}^{CBS} 2\sqrt{(a^2+b^2+c^2)^2} \ge 6
+            \)
+        </p>
+    </details>
+    <details>
+        <summary>Source</summary>
+        <p>Craciun Gheorghe</p>
+    </details>
+</div>
+
 <p>
 <div class="mp">
 <p>Let \(a,b,c\) positive real numbers, such that: \(a^2+b^2+c^2=1\). Prove that:</p>
@@ -2690,11 +3020,10 @@ Let's try to prove it:
             <p>As hinted, we apply the CBS inequality in the following manner:</p>
             <p class="mpc">
                 \(
-                    [\frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by}][x(ay+bz)+y(ax+bz)+z(ax+by)] \ge (a+b+c)^2 \Leftrightarrow \\
-                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(a+b+c)^2}{x(ay+bz)+y(ax+bz)+z(ax+by)} \Leftrightarrow \\
-                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(a+b+c)^2}{axy+bzx+axy+byz+azx+bzy} \Leftrightarrow \\
-                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(a+b+c)^2}{a(xy+yz+zx)+b(xy+yz+zx)} \Leftrightarrow \\
-                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(a+b+c)^2}{(a+b)(xy+yz+xz)} 
+                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \overbrace{\ge}^{CBS} \frac{(x+y+z)^2}{x(ay+bz)+y(ax+bz)+z(ax+by)} \Leftrightarrow \\
+                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(x+y+z)^2}{axy+bzx+axy+byz+azx+bzy} \Leftrightarrow \\
+                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(x+y+z)^2}{a(xy+yz+zx)+b(xy+yz+zx)} \Leftrightarrow \\
+                    \frac{x}{ay+bz}+\frac{y}{ax+bz}+\frac{z}{ax+by} \ge \frac{(x+y+z)^2}{(a+b)(xy+yz+xz)} 
                 \)
             </p>
             <p>
@@ -2710,7 +3039,7 @@ Let's try to prove it:
     </div>
 </p>
 
-With this in mind, let's try to solve the following two problems:
+With this in mind, let's try to solve the following problems:
 
 <p>
     <div class="mp">
@@ -2742,34 +3071,117 @@ With this in mind, let's try to solve the following two problems:
     </div>
 </p>
 
-<!-- <p>
+<p>
     <div class="mp">
-        <p>For any \(a,b,c \gt 0\), and any weights \(m,n,p\), with \(m+n+p=1\), prove that the following inequality holds:</p>
+        <p>Let \(a,b,c\) the lengths of the sides of a triangle. Prove:</p>
         <p class="mpc">
             \(
-                \frac{ma}{b+c}+\frac{nb}{c+a}+\frac{pc}{a+b} \ge \frac{ma+nb+pc}{(n+p)a+(p+m)b+(m+n)c}
+                \frac{a+c-b}{a+2b-c}+\frac{a+b-c}{a+2c-b}+\frac{b+c-a}{b+2a-c} \ge \frac{3}{2}
             \)
         </p>
         <details>
-            <summary>Notes</summary>
-            <p>An alternative form is:</p>
+            <summary>Hint 1</summary>
+            <p>The overall structure and the \(\frac{3}{2}\) on the right-hand side suggest a potential Nesbitt inequality hidden in plain sight. Can you think of some substitutions?</p>
+        </details>
+        <details>
+            <summary>Hint 2</summary>
+            <p>Why don't you use Ravi substition:</p>
             <p class="mpc">
                 \(
-                    \frac{ma}{b+c}+\frac{nb}{c+a}+\frac{pc}{a+b} \ge \frac{ma+nb+pc}{(1-m)a+(1-n)b+(1-p)c} = \frac{ma+nb+pc}{a+b+c-am-nb-pc}
+                    \begin{cases}
+                        a = x + y \\
+                        b = y + z \\
+                        c = z + x
+                    \end{cases}
                 \)
-            </p>
-            <p>If we consider the weighted sum \(\lambda=ma+nb+pc\), we can rewrite everything as:</p>
-            <p class="mpc">
-            \(
-                \frac{ma}{b+c}+\frac{nb}{c+a}+\frac{pc}{a+b} \ge \frac{\lambda}{a+b+c-\lambda}
-            \)
             </p>
         </details>
         <details>
-            <summary>Hint 1</summary>
+            <summary>Solution</summary>
+            <p>After applying Ravi substitution \(a = x + y, b = y + z, c = z + x\), the inequality becomes, and the previous refinement for Nesbitt:</p>
+            <p class="mpc">
+                \(
+                    \frac{2x}{3y+z}+\frac{2y}{3z+x}+\frac{2z}{3x+y} \ge \frac{3}{2} \Leftrightarrow \\
+                    \frac{x}{1.5x + 0.5y} + \frac{y}{1.5z + 0.5x} + \frac{z}{1.5x + 0.5y} \overbrace{\ge}^{\text{Nesb.}} \frac{3}{1.5 + 0.5}
+                \)
+            </p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Gheorghe Craciun, posted on the "Comunitatea Profesorilor de Matematica".</p>
         </details>
     </div>
-</p> -->
+</p>
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers, \(x \in (0, 6]\), and \(a+b+c=3\) prove:</p>
+        <p class="mpc">
+        \(
+            \frac{a+1}{x(b-c)+6c}+\frac{b+1}{x(c-a)+6a}+\frac{c+1}{x(a-b)+6b} \ge 1
+        \)
+        </p>
+        <p>Andrei N. Ciobanu</p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Split every term from the left-hand side:</p>
+            <p class="mpc">
+                \(
+                    \frac{a+1}{x(b-c)+6c} = \frac{a}{x(b-c)+6c} + \frac{1}{x(b-c)+6c}
+                \)
+            </p>
+        </details>
+        <details>
+            <summary>Hint 2</summary>
+            <p>Re-organize the denominators:</p>
+            <p class="mpc">
+                \(x(b-c)+6c=xb-xc+6c = xb + (\underbrace{6-x}_{=y})c = xb + yc\)
+            </p>
+            <p>Where \(y=6-\underbrace{x}_{0 \lt x \le 6} \ge 0\) and \(x+y=6\)</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We split the left-hand side of the inequality into two groups:</p>
+            <p class="mpc">
+                \(
+                    \frac{a+1}{x(b-c)+6c}+\frac{b+1}{x(c-a)+6a}+\frac{c+1}{x(a-b)+6b} = \underbrace{\sum \frac{a}{x(b-c)+6c}}_{S_1} + \underbrace{\sum \frac{1}{x(b-c)+6c}}_{S_2}
+                \)
+            </p>
+            <p>We observe we can rewrite the denominator in the following manner:</p>
+            <p class="mpc">
+                \(x(b-c)+6c=xb-xc+6c = xb + (\underbrace{6-x}_{=y})c = xb + yc\)
+            </p>
+            <p>Where \(y=6-\underbrace{x}_{0 \lt x \le 6} \ge 0\) and \(x+y=6\)</p>
+            <p>Then \(S_1, S_2\) are rewritten as:</p>
+            <p class="mpc">
+                \(
+                    \begin{cases}
+                    S_1 = \sum \frac{a}{xb + yc} \\
+                    S_2 = \sum \frac{1}{xb + yc}
+                    \end{cases}
+                \)
+            </p>
+            <p>Applying the refinement for \(S_1\):</p>
+            <p class="mpc">
+                \(
+                    S_1 \ge \frac{3}{\underbrace{x+y}_{6}} = \frac{1}{2}
+                \)
+            </p>
+            <p>Applying the CBS inequality for \(S_2\):</p>
+            <p class="mpc">
+                \(
+                    [\frac{1}{xb + yc} + \frac{1}{xc+ya} + \frac{1}{xa+yb}](xb+yc+xc+ya+xa+yb) \overbrace{\ge}^{CBS} (1+1+1)^2 \Leftrightarrow \\
+                    S_2 \ge \frac{9}{(x+y)(a+b+c)} \ge \frac{1}{2} \Leftrightarrow \\
+                \)
+            </p>
+            <p>Given \(S_1\ge\frac{1}{2}\) and \(S_2\ge\frac{1}{2}\) then \(S_1+S_2 \ge 1\)</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Andrei N. Ciobanu</p>
+        </details>
+    </div>
+</p>
 
 ---
 
@@ -3010,7 +3422,7 @@ To enforce the idea of the power behind Titu's Lemma, let's try to solve some "h
 </div>
 </p>
 
-The next problems are little more difficult, but Titu's Lemma plays a special role in simplifying them:
+For the next problems, Titu's Lemma plays a special role in simplifying them:
 
 <p>
     <div class="mp">
@@ -3036,6 +3448,41 @@ The next problems are little more difficult, but Titu's Lemma plays a special ro
         <details>
             <summary>Source</summary>
             <p>Crotia Math Olympiad, 2004</p>    
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers and \(a+b+c=3\), prove that:</p>
+        <p class="mpc">
+            \(
+                \frac{(a+1)^2(b+1)}{2\sqrt{b}(c+a)}+\frac{(b+1)^2(c+1)}{2\sqrt{c}(a+b)}+\frac{(c+1)^2(a+1)}{2\sqrt{a}(b+c)} \ge 6
+            \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Can you apply the AM-GM to the denominator to make it more "friendly"?</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We first observe that \(2\sqrt{a} \le a+1, 2\sqrt{b} \le b+1, 2\sqrt{c} \le c+1\):</p>
+            <p class="mpc">
+                \(
+                    \sum \frac{(a+1)^2(b+1)}{\underbrace{2\sqrt{b}}_{\le (b+1)}(c+a)} \ge \sum \frac{(a+1)^2(b+1)}{(b+1)(c+a)} = \sum \frac{(a+1)^2}{c+a}
+                \)
+            </p>
+            <p>In this regard:</p>
+            <p class="mpc">
+                \(
+                    \sum \frac{(a+1)^2}{c+a} \overbrace{\ge}^{Titu's} \frac{(a+b+c+3)^2}{2(\underbrace{a+b+c}_{=3})} = 6
+                \)
+            </p>
+            <p>Equality holds for \(a=b=c=1\)</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Andrei N. Ciobanu</p>
         </details>
     </div>
 </p>
@@ -3074,6 +3521,48 @@ The next problems are little more difficult, but Titu's Lemma plays a special ro
         <details>
             <summary>Source</summary>
             <p>Andrei N. Ciobanu</p>
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers, prove:</p>
+        <p class="mpc">
+            \(
+                \frac{a^2+1}{b+c}+\frac{b^2+1}{a+c}+\frac{c^2+1}{a+b} \ge 3
+            \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Split each term like \(\frac{a^2+1}{b+c}=\frac{a^2}{b+c}+\frac{1}{b+c}\) and apply Titu's Lemma for each group.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>After applying Titu's Lemma:</p>
+            <p class="mpc">
+                \(
+                    \frac{a^2+1}{b+c}+\frac{b^2+1}{a+c}+\frac{c^2+1}{a+b} \ge \frac{(a+b+c)^2+9}{2(a+b+c)} 
+                \)
+            </p>
+            <p>So we need to prove:</p>
+            <p class="mpc">
+                \(
+                    \frac{(a+b+c)^2+9}{2(a+b+c)} \ge 3
+                \)
+            </p>
+            <p>We perform the following substitution: \(a+b+c=x\), then:</p>
+            <p class="mpc">
+                \(
+                    x^2-6x+9 \ge 0 \Leftrightarrow (x-3)^3 \ge 0
+                \)
+            </p>
+            <p>It's obvious \((x-3)^2\ge0\).</p>
+            <p>Equality holds when \(a+b+c=3\) and \(a=b=c=1\).</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>RMO 2006</p>
         </details>
     </div>
 </p>
@@ -3138,60 +3627,160 @@ The next problems are little more difficult, but Titu's Lemma plays a special ro
 
 <p>
     <div class="mp">
-        <p>Let \(a,b,c\) positive real numbers, prove:</p>
+        <p>Let \(a,b,c\) positive real numbers:</p>
         <p class="mpc">
             \(
-                \frac{a^2+1}{b+c}+\frac{b^2+1}{a+c}+\frac{c^2+1}{a+b} \ge 3
+                \frac{(a^3+1)^2}{b+bc}+\frac{(b^3+1)^2}{c+ca}+\frac{(c^3+1)^2}{a+ba} \ge 3(abc+1)
             \)
         </p>
         <details>
             <summary>Hint 1</summary>
-            <p>Split each term like \(\frac{a^2+1}{b+c}=\frac{a^2}{b+c}+\frac{1}{b+c}\) and apply Titu's Lemma for each group.</p>
+            <p>We can apply the AM-GM to the denominator.</p>
         </details>
         <details>
             <summary>Solution</summary>
-            <p>After applying Titu's Lemma:</p>
+            <p>We apply Titu's Lemma directly:</p>
+            <p class="mpc">
+            \(
+                \sum \frac{(a^3+1)^2}{b+bc} \overbrace{\ge}^{Titu's} \frac{(a^3+b^3+c^3+3)^2}{(a+b+c)+(ab+bc+ca)}
+            \)
+            </p>
+            <p>Even if not obvious, we can "connect" \(a^3+b^3+c^3+3\) with \(a+b+c+ab+bc+ca\) by applying the AM-GM inequality in the following manner:</p>
             <p class="mpc">
                 \(
-                    \frac{a^2+1}{b+c}+\frac{b^2+1}{a+c}+\frac{c^2+1}{a+b} \ge \frac{(a+b+c)^2+9}{2(a+b+c)} 
+                    \begin{cases}
+                        a^3+b^3+1 \ge 3ab \\
+                        b^3+c^3+1 \ge 3bc \\
+                        c^3+a^3+1 \ge 3ca \\
+                        a^3+1+1 \ge 3a \\
+                        b^3+1+1 \ge 3b \\
+                        c^3+1+1 \ge 3c
+                    \end{cases}
                 \)
             </p>
-            <p>So we need to prove:</p>
+            <p>Summing everything up, we obtain \(a^3+b^3+c^3+3 \ge a + b + c + ab+bc+ca\). In this regard:</p>
             <p class="mpc">
                 \(
-                    \frac{(a+b+c)^2+9}{2(a+b+c)} \ge 3
+                      \sum \frac{(a^3+1)^2}{b+bc} \overbrace{\ge}^{Titu's} \frac{(a^3+b^3+c^3+3)^2}{\underbrace{(a+b+c)+(ab+bc+ca)}_{\le a^3+b^3+c^3+3}} \ge \overbrace{a^3+b^3+c^3}^{\ge3abc}+3 \ge 3abc+3 = 3(abc+1)
                 \)
             </p>
-            <p>We perform the following substitution: \(a+b+c=x\), then:</p>
-            <p class="mpc">
-                \(
-                    x^2-6x+9 \ge 0 \Leftrightarrow (x-3)^3 \ge 0
-                \)
-            </p>
-            <p>It's obvious \((x-3)^2\ge0\).</p>
-            <p>Equality holds when \(a+b+c=3\) and \(a=b=c=1\).</p>
         </details>
         <details>
             <summary>Source</summary>
-            <p>RMO 2006</p>
+            <p>Andrei N. Ciobanu</p>
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp">
+        <p>Let \(a,b,c\) positive real numbers, \(a+b+c=1\), prove that:</p>
+        <p class="mpc">
+        \(
+            (1+\frac{1}{a})(1+\frac{1}{b})(1+\frac{1}{c}) \ge 64
+        \)
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Can you find a lower bound for \(\frac{1}{abc}\)?</p>
+        </details>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Can you prove \(\frac{1}{abc}\ge27\) ?</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>Our inequality is equivalent to:</p>
+            <p class="mpc">
+                \(
+                    1+(\underbrace{\frac{1}{a}+\frac{1}{b}+\frac{1}{c}}_{S_1})+(\underbrace{\frac{1}{ab}+\frac{1}{bc}+\frac{1}{ca}}_{S_2})+\underbrace{\frac{1}{abc}}_{S_3} \ge 64 
+                \)
+            </p>
+            <p>We've formed 3 groups, \(S_1, S_2\) and \(S_3\). We need to found a lower bound for each of them.</p>
+            <p>Given \(a+b+c=1\), by applying the AM-GM inequality: </p>
+            <p class="mpc">\(\frac{a+b+c}{3}\ge\sqrt[3]{abc} \Leftrightarrow \frac{1}{3} \ge \sqrt[3]{abc} \Rightarrow \frac{1}{abc}\ge\frac{1}{3^3}=\frac{1}{27}\)</p>
+            <p>So we've found out that \(S_3\ge 27\).</p>
+            <p>Now, let's work on \(S_1, S_2\):</p>
+            <p>In the relationship \(a+b+c=1\) if we divide each side by \(abc\):</p>
+            <p class="mpc">
+                \(\frac{1}{bc}+\frac{1}{ca}+\frac{1}{ab}=\frac{1}{abc} \ge 27 \)
+            </p>
+            <p>This means that \(S_2 \ge 27\).</p>
+            <p>Lastly, to find the lower bound for \(S_1\) we can apply Titu's Lemma:</p>
+            <p class="mpc">
+                \(
+                    \frac{1}{a}+\frac{1}{b}+\frac{1}{c} \ge \frac{(1+1+1)^2}{a+b+c} = 9
+                \)
+            </p>
+            <p>We can conclude \(S_1 \ge 9\).</p>
+            <p>The inequality is proven:</p>
+            <p class="mpc">
+                   \(
+                    1+(\underbrace{\frac{1}{a}+\frac{1}{b}+\frac{1}{c}}_{S_1 \ge 9})+(\underbrace{\frac{1}{ab}+\frac{1}{bc}+\frac{1}{ca}}_{S_2 \ge 27})+\underbrace{\frac{1}{abc}}_{S_3 \ge 27} \ge 64 
+                \)
+            </p>
+            <p>Equality holds if \(a=b=c=\frac{1}{3}\)</p>
+            <p>Notes: solution was inspired by the solution provided by Alin Pop.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Ganciulescu Constantin. Solution inspired by the solution provided by Alin Pop. Problem was posted in the Facebook group "Comunitatea Profesorilor de Matematica"</p>
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp"> 
+        <p>Let \(x,y,z \gt 0\), show that:</p>
+        <p class="mpc">
+        \(
+            \frac{x^3}{z^3+x^2y}+\frac{y^3}{x^3+y^2z}+\frac{z^3}{y^3+z^2x} \ge \frac{3}{2}
+        \)
+        </p>
+        <details>
+            <summary>Solution</summary>
+            <p>To make things simpler , we can do the following substitution: \(a=x^3, b=y^3, c=z^3\):</p>
+            <p class="mpc">
+                \(
+                    \frac{a}{c+\sqrt[3]{a^2b}}+\frac{b}{a+\sqrt[3]{b^2c}}+\frac{c}{b+\sqrt[3]{c^2a}} \overbrace{\ge}^{?} \frac{3}{2}
+                \)
+            </p>
+            <p>Applying AM-GM to the following terms to the denominator:</p>
+            <p class="mpc">
+                \(
+                    \begin{cases}
+                        \sqrt[3]{a^2b} \le \frac{a+a+b}{3} \\
+                        \sqrt[3]{b^2c} \le \frac{b+b+c}{3} \\
+                        \sqrt[3]{c^2a} \le \frac{c+c+a}{3}
+                    \end{cases}
+                \)
+            </p>
+            <p>Using this we can write:</p>
+            <p class="mpc">
+                \(
+                    \frac{a}{c+\sqrt[3]{a^2b}}+\frac{b}{a+\sqrt[3]{b^2c}}+\frac{c}{b+\sqrt[3]{c^2a}} \ge 3[\frac{a}{3c+2a+b}+\frac{b}{3a+2b+c}+\frac{c}{3b+2c+a}] = \\
+                    = 3[\frac{a^2}{3ca+2a^2+ab}+\frac{b^2}{3ab+2b^2+bc}+\frac{c^2}{3bc+2c^2+ca}] \overbrace{\ge}^{Titu's} \frac{3(a+b+c)^2}{2(a^2+b^2+c^2)+4(ab+bc+ca)} = \\
+                    = \frac{3}{2}\frac{(a+b+c)^2}{(a+b+c)^2} = \frac{3}{2}
+                \)
+            </p>
+            <p>Equality holds for \(a=b=c=x=y=z=1\).</p>
         </details>
     </div>
 </p>
 
 
-# Bernouli's Inequality
+# In the next article
 
-<p>
-<div class="mp">
-<p>Let \( a,b,c \in [1, \infty) \). Prove:</p>
-<p class="mpc">
-\(
-    b\ln(\frac{a+1}{\sqrt[b]{b}})+c\ln(\frac{1+b}{\sqrt[c]{c}})+a\ln(\frac{1+c}{\sqrt[a]{a}}) \ge 3\ln 2
-\)
-</p>
-<p>Andrei N. Ciobanu</p>
-</div>
-</p>
+This article was only an introduction. In the next articles from this series I am planning to discuss about the following topics:
+
+* Holder's Inequality;
+* Radon's Inequality
+* Chebyshev equality
+* Muirhead inequality
+* Bernoulli inequality
+* Inequalities that are symmetrical / cyclical and homogenous
+* Using calculus to solve more inequalities
+
 ---
 
 # Free resources around the web:
