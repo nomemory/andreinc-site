@@ -60,7 +60,9 @@ tags:
 
 # Disclaimer
 
-This article hasn't been reviewed yet. In case you want to help reviewing drop me a message (see the *Contact Page*). I will slowly add more problems, if time allows. I am also working on Part 2.
+This article hasn't been reviewed yet. In case you want to help reviewing drop me a message (see the [*About Page*]({{site.url}}/about}})). 
+
+I will slowly add more problems, if time allows. I am also working on Part 2.
 
 # Introduction
 
