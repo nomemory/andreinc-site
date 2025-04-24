@@ -551,7 +551,7 @@ The following two problems have similar solutions. The key idea is to bound each
 <p>
 <div class="mp" id="pivi13">
 <p><a class="mpl" href="#pivi13">Problem IVI13</a></p> 
-<p>Let \(n \in \mathbb{N}\). Prove that:</p>
+<p>Let \(n \in \mathbb{N}\) and \(n \gt 1\). Prove that:</p>
 <p class="mpc">\[\frac{1}{2}\lt\frac{1}{n+1}+\frac{1}{n+2}+\dots+\frac{1}{2n}\lt\frac{3}{4}\]</p>
 <details> 
     <summary>Hint 1</summary>
@@ -1087,8 +1087,6 @@ The following are the first *non-trivial* challenges in this article that can be
 
 Weak inequalities are inequalities that allow for the possibility of equality. . They are typically denoted by the symbols $$\ge$$ or $$\le$$. In contrast, *strict inequalities*, use $$\gt$$ and $$\lt$$ and they don't permit equality.
 
-Weak inequalities are generally considered more significant than strict inequalities because they have broader applicability. In a sense, weak inequalities are *more fundamental*. For example if $$ax+b\ge0$$, then $$ax+b\gt0$$ still holds, but the converse is not necessarily true.
-
 A renaissance way to grasp the concept of a weak inequality is to think of the "finger of God" touching Adam's hand. In this metaphor, a strict inequality is represented by the following painting, as it depicts a situation that never occurs — at least not in olam ha-ze (this world).
 
 ![img]({{site.url}}/assets/images/2024-12-09-15-A-short-introduction-to-math-olympiad-inequalities/adam.jpg)
@@ -1334,7 +1332,7 @@ With a bit of creativity, you can solve the next problem in a manner similar to 
 <p>
     <div class="mp" id="pag03">
         <p><a class="mpl" href="#pag03">Problem AG03</a></p> 
-        <p>Let \(n\) be a positive integer. Show that:</p>
+        <p>Let \(n\) be a positive integer greater than \(1\). Show that:</p>
         <p class="mpc">
             \[
                 \frac{1}{n}+\frac{1}{n+1}+\frac{1}{n+2}+\dots+\frac{1}{2n-1} \gt n \left(\sqrt[n]{2} - 1\right)
@@ -1379,7 +1377,7 @@ With a bit of creativity, you can solve the next problem in a manner similar to 
                     \frac{1}{n}*\left( \frac{n+1}{n} + \frac{n+2}{n+1} + \dots + \frac{2n}{2n-1} \right) \overbrace{\gt}^{AM-GM} \sqrt[n]{\frac{n+1}{n}*\dots*\frac{2n}{2n-1}} \gt \sqrt[n]{2}
                 \]
             </p>
-            <p>This proves our inequality.</p>
+            <p>This proves our inequality. Equality would hold for \(n=1\), which is not possible given the constraints.</p>
         </details>
         <details>
             <summary>Source</summary>
@@ -2027,7 +2025,7 @@ Can you solve the following problems without relying on any hints?
 <p>
     <div class="mp" id="pgtm06">
         <p><a class="mpl" href="#pgtm06">Problem GTM06</a></p> 
-        <p>Let \(n \in \mathbb{N}^{*}\), prove the inequality:</p>
+        <p>Let \(n \in \mathbb{N}^{*}\) such that \(n\gt1\), prove the inequality:</p>
         <p class="mpc">
             \[
                 n^3+n^2+2n \gt 4\sqrt{n}(1+\sqrt{2}+\dots+\sqrt{n})
