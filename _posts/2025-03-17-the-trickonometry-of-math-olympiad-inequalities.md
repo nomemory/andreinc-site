@@ -2345,7 +2345,7 @@ The next problem is another generalisation of an exercise proposed to the *Roman
         </details>
         <details>
             <summary>Solution</summary>
-            <p>Since \(x_1, x_2, \dots, x_n \in (0,1)\) and \(k \in (0,1)\) then \(\prod x_i \in (0,1)\) and \(\prod x_i \in (0,1)\).</p>
+            <p>Since \(x_1, x_2, \dots, x_n \in (0,1)\) and \(k \in (0,1)\) then \(\prod x_i \in (0,1)\) and \(\prod (k-x_i) \in (0,1)\).</p>
             <p>Taking this into consideration:</p>
             <p class="mpc">
                 \[
@@ -2358,17 +2358,17 @@ The next problem is another generalisation of an exercise proposed to the *Roman
             <p class="mpc">
                 \[
                     \begin{align}
-                     \sqrt{\prod_{i=1}^n(k-x_i)} \lt \sqrt[3]{\prod_{i=1}^n(k-x_i)} \overbrace{\leq}^{AM-GM} \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \tag{2}
+                     \sqrt{\prod_{i=1}^n(k-x_i)} \lt \sqrt[n]{\prod_{i=1}^n(k-x_i)} \overbrace{\leq}^{AM-GM} \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \tag{2}
                     \end{align}
                 \]
             </p>
             <p>After summing \((1)\) and \((2)\), our initial inequality is proven:</p>
             <p class="mpc">
                 \[
-                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \sum_{i=1}^n x_i + \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \Leftrightarrow
+                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \frac{1}{n}\cdot \sum_{i=1}^n x_i + \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \Leftrightarrow
                 \]
                 \[
-                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \sum_{i=1}^n x_i + k - \sum_{i=1}^n x_i = k
+                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \frac{1}{n}\cdot \sum_{i=1}^n x_i + k - \frac{1}{n}\cdot \sum_{i=1}^n x_i = k
                 \]
             </p>
         </details>
