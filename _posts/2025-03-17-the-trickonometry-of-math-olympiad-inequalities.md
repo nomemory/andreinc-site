@@ -663,6 +663,48 @@ The following two problems have similar solutions. The key idea is to bound each
     </div>
 </p>
 
+There is something elegant about the next problem:
+
+<p>
+    <div class="mp" id="pivi141">
+        <p><a class="mpl" href="#pivi141">Problem IVI14.1</a></p> 
+        <p>Prove that for any \(x \in \mathbb{R}_{+}\) the following inequality is true:</p>
+        <p class="mpc">
+            \[
+                \sqrt{x^2+x+\sqrt{x^2+x+\sqrt{x^2+x+\sqrt{x^2+x+\dots+\sqrt{x^2+x}}}}} < x+1
+            \]
+        </p>
+        <p>\(n\) is the number of subsequent "radicals".</p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Try defining the expression recursively after squaring both sides.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We observe that squaring both sides of the inequality preserves its structure, regardless of the number of nested radicals \(n\):</p>
+            <p class="mpc">
+                \[
+                    x^2+x+\sqrt{x^2+x+\sqrt{x^2+x+\sqrt{x^2+x+\dots+\sqrt{x^2+x}}}} < (x+1)^2 \Leftrightarrow
+                \]
+                \[
+                    \sqrt{x^2+x+\sqrt{x^2+x+\sqrt{x^2+x+\dots+\sqrt{x^2+x}}}} < x+1
+                \]
+            </p>
+            <p>So, in essence, we need to verify that the base case of the nested radical satisfies the inequality:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{x^2+x} < x^2 + 1 \Leftrightarrow x+1 > 0
+                \]
+            </p>
+            <p>Since \(x > 0\), the last inequality clearly holds. Therefore, the original inequality is valid.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>D.M. Bătineţu-Giurgiu</p>
+        </details>
+    </div>
+</p>
+
 The following are the first *non-trivial* challenges in this article that can be solved without using *advanced* techniques or inequalities. Try using the provided hints before checking the full solution.
 
 <p>
@@ -7415,6 +7457,8 @@ For the next problems, Titu's Lemma plays a special role in simplifying them:
 
 # More challenges
 
+The problems from this chapter a little more challenging, so don't get discouraged if won't be able to solve them after the first try.
+
 <p>
     <div class="mp" id="pmch01">
         <p><a class="mpl" href="#pmch01">Problem MCH01</a></p> 
@@ -7580,6 +7624,131 @@ The next problem is an inequality problem "spiced-up" with just a little *number
         <details>
             <summary>Source</summary>
             <p>Andrei N. Ciobanu</p>
+        </details>
+    </div>
+</p>
+
+In a similar fashion:
+
+<p>
+    <div class="mp" id="pmch03">
+        <p><a class="mpl" href="#pmch03">Problem MCH03</a></p> 
+        <p>Prove that for any integer \(n \gt 1 \) the sum \(S\) of all divisors of \(n\) satisfies the following inequality:</p>
+        <p class="mpc">
+            \[
+                k\cdot\sqrt{n} < S 
+            \]
+        </p>
+        <p>Where \(k\) is the number of divisors of \(n\).</p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Let the divisors of \(n\) be arranged in increasing order:</p>
+            <p class="mpc">
+                \[
+                    1 = d_1 < d_2 < \dots < d_k = n
+                \]
+            </p>
+            <p>Observe that for each \(i = 1, 2, \dots, k\), we have:</p>
+            <p class="mpc">
+                \[
+                    n = d_k \cdot d_{k+1-i}
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>Let the divisors of \(n\) be:</p>
+            <p class="mpc">
+                \[
+                    1 = d_1 < d_2 < \dots < d_k = n
+                \]
+            </p>
+            <p>Then for each \(i = 1, 2, \dots, k\), it holds that:</p>
+            <p class="mpc">
+                \[
+                    n = d_k \cdot d_{k+1-i} \tag{1}
+                \]
+            </p>
+            <p>The sum \(S\) of all divisors of \(n\) is given by:</p>
+            <p class="mpc">
+                \[
+                    S=\sum_{i=1}^k d_i = d_1 + d_2 + \dots + d_k
+                \]
+            </p>
+            <p>To apply the AM-GM inequality, consider pairing the divisors symmetrically:</p> 
+            <p class="mpc">
+                \[
+                    S = \frac{2}{2} \cdot (d_1+ \dots + d_k) = \frac{1}{2} \cdot \sum^k_{i=1}(d_i + d_{k-i+1}) \overbrace{>}^{\text{AM-GM}} \sum_{i=1}^k \sqrt{d_i \cdot d_{k-i+1}} = 
+                \]
+                \[
+                    = \underbrace{\sqrt{n}+\sqrt{n}+\dots+\sqrt{n}}_{\text{k times}} = k\cdot\sqrt{n} \tag{2}
+                \]
+            </p>
+            <p>This proves our inequality.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Belarus, 1999</p>
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp" id="pmch04">
+        <p><a class="mpl" href="#pmch04">Problem MCH04</a></p> 
+        <p>Let \(a,b,c \in \mathbb{R}^{*}_{+}\) such that \(a+b+c=1\). Prove the inequality:</p>
+        <p class="mpc">
+            \[
+                (ab)^{\frac{5}{4}} + (bc)^{\frac{5}{4}} + (ca)^{\frac{5}{4}} \lt \frac{1}{4}    
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Try applying the Cauchy–Schwarz inequality to terms of the form \((ab)^{5/4}\)</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>To get rid of the exponents we apply the CBS inequality in the following manner:</p>
+            <p class="mpc">
+                \[
+                    \left[(ab)^{\frac{5}{4}} + (bc)^{\frac{5}{4}}) + (ca)^{\frac{5}{4}} \right]^2 \leq (\sqrt{ab}+\sqrt{bc}+\sqrt{ca})\left[ (ab)^2 + (bc)^2 + (ca)^2 \right] \tag{1}
+                \]
+            </p>
+            <p>The first term from the right hand side is \(\leq 1\), something that can be easily proved using the AM-GM inequality:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{ab}+\sqrt{bc}+\sqrt{ca} \leq \frac{a+b}{2} + \frac{b+c}{2} + \frac{c+a}{2} = 1 \tag{2}
+                \]
+            </p>
+            <p>It remains to prove that:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{(ab)^2 + (bc)^2 + (ca)^2} \lt \frac{1}{4} \Leftrightarrow
+                \]
+                \[
+                    \Leftrightarrow (ab)^2 + (bc)^2 + (ca)^2 \lt \frac{1}{16}
+                \]
+            </p>
+            <p>Without loss of generality we can assume \(a \geq b \geq c\). From the AM-GM inequality we know that:</p>
+            <p class="mpc">
+                \[
+                    \frac{a+(b+c)}{2} \geq \sqrt{a(b+c)} \Leftrightarrow
+                \]
+                \[
+                    \frac{1}{2} \geq \sqrt{a(b+c)} \Leftrightarrow
+                \]
+                \[
+                    \frac{1}{16} \geq a^2(b+c)^2 = a^2(b^2+2bc+c^2) \Leftrightarrow
+                \]
+                \[
+                    \frac{1}{16} \geq a^2b^2+a^2c^2+a^2\cdot bc \gt a^2b^2 + c^2a^2 + b^2c^2 \tag{3}
+                \]
+            </p>
+            <p>Multiplying \((2)\) and \((3)\) proves the required inequality.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Romanian Math Olympiad, National Phase, Shortlist, 2003, Dinu Teodorescu</p>
         </details>
     </div>
 </p>
