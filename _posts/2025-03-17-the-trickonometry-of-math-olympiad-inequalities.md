@@ -314,7 +314,7 @@ Now, let's try to use the previous result (the modulus inequality) in a creative
 <p>
     <div class="mp" id="pivi06">
         <p><a class="mpl" href="#pivi06">Problem IVI06</a></p> 
-        <p>Let \(a,b\) real numbers, prove:</p>
+        <p>Let \(a,b\) real numbers such that \(a+b \gt 0\), prove:</p>
         <p class="mpc">
             \[
                 \frac{a^2+b^2}{a+b} \geq \frac{a+b}{2}
@@ -1244,10 +1244,10 @@ For example, consider the following problems:
             x^2-(y+1)x+(y^2-y)=0
         \]
     </p>
-    <p>Now, we compute the discriminant, \(\Delta\), under the condition that \(\Delta > 0\):</p>
+    <p>Now, we compute the discriminant, \(\Delta\), under the condition that \(\Delta \geq 0\):</p>
     <p class="mpc">
         \[
-            \Delta = -3y^2+6y+1 \gt 0
+            \Delta = -3y^2+6y+1 \geq 0
         \]
     </p>
     <p>This inequality simplifies to:</p>
@@ -2090,21 +2090,21 @@ Can you solve the following problems without relying on any hints?
                     n\cdot(1+\dots+n)+(\underbrace{1+\dots+1}_{=n}) \gt 2(\sqrt{n}+\sqrt{2n}+\dots+\sqrt{n\cdot n})
                 \]
                 \[
-                    (n + 1) + (2n + 1) + \dots + (n\cdot n + 1) \geq 2(\sqrt{n}+\sqrt{2n}+\dots+\sqrt{n\cdot n})
+                    (n + 1) + (2n + 1) + \dots + (n\cdot n + 1) \gt 2(\sqrt{n}+\sqrt{2n}+\dots+\sqrt{n\cdot n})
                 \]
             </p>
             <p>We claim that each group \((k n + 1)\) is at least \(2\sqrt{k n}\) by the AM-GM inequality::</p>
             <p class="mpc">
                 \[
                     \begin{cases}
-                        n+1 \geq 2\sqrt{n} \\
-                        2n+1 \geq 2\sqrt{2n} \\
+                        n+1 \overbrace{\geq}^{\text{AM-GM}} 2\sqrt{n} \\
+                        2n+1 \overbrace{\geq}^{\text{AM-GM}} 2\sqrt{2n} \\
                         \dots \\
-                        n\cdot n + 1 \geq 2\sqrt{n\cdot n}
+                        n\cdot n + 1 \overbrace{\geq}^{\text{AM-GM}} 2\sqrt{n\cdot n}
                     \end{cases}
                 \]
             </p>
-            <p>Summing these inequalities for \(k\) from 1 to \(n\) yields exactly the required inequality.</p>
+            <p>Summing these inequalities for \(k\) from 1 to \(n\) yields exactly the required inequality. When summing the inequalities, the equality condition is lost due to the fact that there's no such \(n\) so that all weak inequalities hold (in the same time).</p>
         </details>
         <details>
             <summary>Source</summary>
@@ -2121,7 +2121,7 @@ The next problem is more difficult to solve but a previous exercise might help:
         <p>Let \(n \in \mathbb{N}\setminus\{0,1\}\). Prove the inequality:</p>
         <p class="mpc">
             \[
-                \frac{1}{5+2^4}+\frac{1}{5+3^4}+\frac{1}{5+4^4}+\dots+\frac{1}{5+n^2} \lt \frac{n-1}{4\cdot n}
+                \frac{1}{5+2^4}+\frac{1}{5+3^4}+\frac{1}{5+4^4}+\dots+\frac{1}{5+n^4} \lt \frac{n-1}{4\cdot n}
             \]
         </p>
         <details>
@@ -2350,7 +2350,7 @@ The next problem is another generalisation of an exercise proposed to the *Roman
             <p class="mpc">
                 \[
                     \begin{align}
-                    \sqrt{\prod_{i=1}^n x_i} < \sqrt[n]{\prod_{i=1}^n x_i} \overbrace{\leq}^{AM-GM} \frac{1}{n} \cdot \sum_{i=1}^n x_i \tag{1}
+                    \sqrt{\prod_{i=1}^n x_i} \leq \sqrt[n]{\prod_{i=1}^n x_i} \overbrace{\leq}^{AM-GM} \frac{1}{n} \cdot \sum_{i=1}^n x_i \tag{1}
                     \end{align}
                 \]
             </p>
@@ -2358,17 +2358,17 @@ The next problem is another generalisation of an exercise proposed to the *Roman
             <p class="mpc">
                 \[
                     \begin{align}
-                     \sqrt{\prod_{i=1}^n(k-x_i)} \lt \sqrt[n]{\prod_{i=1}^n(k-x_i)} \overbrace{\leq}^{AM-GM} \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \tag{2}
+                     \sqrt{\prod_{i=1}^n(k-x_i)} \leq \sqrt[n]{\prod_{i=1}^n(k-x_i)} \overbrace{\leq}^{AM-GM} \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \tag{2}
                     \end{align}
                 \]
             </p>
             <p>After summing \((1)\) and \((2)\), our initial inequality is proven:</p>
             <p class="mpc">
                 \[
-                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \frac{1}{n}\cdot \sum_{i=1}^n x_i + \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \Leftrightarrow
+                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \leq \frac{1}{n}\cdot \sum_{i=1}^n x_i + \frac{1}{n}\cdot \sum_{i=1}^n (k-x_i) \Leftrightarrow
                 \]
                 \[
-                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \lt \frac{1}{n}\cdot \sum_{i=1}^n x_i + k - \frac{1}{n}\cdot \sum_{i=1}^n x_i = k
+                    \sqrt{\prod_{i=1}^n x_i} +  \sqrt{\prod_{i=1}^n(k-x_i)} \leq \frac{1}{n}\cdot \sum_{i=1}^n x_i + k - \frac{1}{n}\cdot \sum_{i=1}^n x_i = k
                 \]
             </p>
         </details>
@@ -3246,7 +3246,7 @@ The following problems are not primarily about grouping terms but rather about i
                 \sum_{\text{cyc}} \frac{ab}{c+d+1} \le  \sum_{\text{cyc}} \frac{(a+b)^2}{4*(c+d+1)} \lt
             \]
             \[
-                \lt \sum_{\text{cyc}} \frac{(a+b+c+d)^2}{4(c+d+1)} \lt \sum_{\text{cyc}} \frac{k^2}{4(c+d+1)} \lt \sum_{\text{cyc}} \frac{k^2}{4} = k^2
+                \lt \sum_{\text{cyc}} \frac{(a+b+c+d)^2}{4(c+d+1)} = \sum_{\text{cyc}} \frac{k^2}{4(c+d+1)} \lt \sum_{\text{cyc}} \frac{k^2}{4} = k^2
             \]
         </p>
         <p>Thus, the strict inequality is proven.</p>
@@ -7741,7 +7741,7 @@ In a similar fashion:
                     \frac{1}{16} \geq a^2(b+c)^2 = a^2(b^2+2bc+c^2) \Leftrightarrow
                 \]
                 \[
-                    \frac{1}{16} \geq a^2b^2+a^2c^2+a^2\cdot bc \gt a^2b^2 + c^2a^2 + b^2c^2 \tag{3}
+                    \frac{1}{16} \geq a^2b^2+a^2c^2+2 \cdot a^2\cdot bc \gt a^2b^2 + c^2a^2 + b^2c^2 \tag{3}
                 \]
             </p>
             <p>Multiplying \((2)\) and \((3)\) proves the required inequality.</p>
