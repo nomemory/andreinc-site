@@ -60,9 +60,22 @@ tags:
 
 # Disclaimer
 
-This article hasn't been reviewed yet. In case you want to help reviewing drop me a message (see the [*About Page*]({{site.url}}/about)). 
+This article hasn't been reviewed yet, and it's still a work in progress. 
 
-I will slowly add more problems, if time allows. I am also working on Part 2.
+If you'd like to help out with reviewing, feel free to drop me a message (see the [*About Page*]({{site.url}}/about)) or leave a comment. 
+
+I’ll be gradually adding more problems as time permits (I'm also working on Part 2).
+
+Special thanks to:
+* `meithecatte` - for pointing one of the problem statements was incorrect.
+* `cryslith` - for pointing out some mistakes in my comments and helping me correct a few solutions.
+* Gheorghe Craciun for allowing me to borrow some of his problems.
+  
+If I forgot to include a source or mistakenly credited an exercise to the wrong author, please know it was unintentional. Some of the problems are original (created by me), but not all are signed, as the results are too elementary to require attribution. Similarly, some solutions are original, while others are based on official ones—just presented in slightly more detail.
+
+<div class="mpt">
+    <p>Writing this short article made me nostalgic and brought back fond memories of my high school math teacher, Mrs. Liana Georgescu, who had a positive influence on me, as well as Gabriel Tica, who also inspired me when I was a young student.</p>
+</div>
 
 # Introduction
 
@@ -473,6 +486,42 @@ For the next problem, consider applying an inequality we have already establishe
         <details>
             <summary>Source</summary>
             <p>Romanian Math Olympiad, Etapa Locala, 9th grade, Galati, 2004</p>
+        </details>
+    </div>
+</p>
+
+In a similar fashion:
+
+<p>
+    <div class="mp" id="pivi101">
+        <p><a class="mpl" href="#pivi101">Problem IVI10.1</a></p> 
+        <p>Let \(a,b,c\) positive real numbers such that \(abc=1\). Prove the inequality:</p>
+        <p class="mpc"> 
+            \[
+                \frac{a^3}{bc}+\frac{b^3}{ca}+\frac{c^3}{ab} \geq a+b+c
+            \]
+        </p>
+        <details>
+            <summary>Solution</summary>
+            <p>We start by rewriting the left-hand side over a common denominator:</p>
+            <p class="mpc">
+                \[
+                    \frac{a^3}{bc}+\frac{b^3}{ca}+\frac{c^3}{ab} = \frac{a^4+b^4+c^4}{abc} =
+                \]
+                \[
+                    = \frac{(a^2)^2+(b^2)^2+(c^2)^2}{abc} \tag{1}
+                \]
+            </p>
+            <p>In expression \((1)\), we apply the inequality \(x^2 + y^2 + z^2 \geq xy + yz + zx\) twice (see <a href="#pivi08">Problem IVI08</a>), and use the assumption \(abc = 1\):</p>
+            <p class="mpc">
+                \[
+                    \frac{(a^2)^2+(b^2)^2+(c^2)^2}{abc} \geq \frac{a^2b^2+b^2c^2+c^2a^2}{abc} \geq 
+                \]
+                \[
+                    \geq \frac{abbc+bcca+caab}{abc} = a+b+c
+                \]
+            </p>
+            <p>Thus, the inequality is proven. Equality holds when \(a = b = c\).</p>
         </details>
     </div>
 </p>
@@ -1755,6 +1804,17 @@ For the next exercise the key idea is to leverage the additional conditions prov
     </div>
 </p>
 
+<p>
+    <div class="mp" id="pag11">
+        <p><a class="mpl" href="#pag11">Problem AG11</a></p> 
+        <p>Let \(x,y,z\) positive real numbers. Prove that:</p>
+        <p class="mpc">
+            \[
+                \frac{x}{(x+y)(x+z)}+\frac{y}{(y+z)(y+x)}+\frac{z}{(z+x)(z+y)} \leq \frac{9}{4(x+y+z)}
+            \]
+        </p>
+    </div>
+</p>
 ---
 
 # Cyclic and Symmetrical Inequalities
@@ -7727,28 +7787,32 @@ In a similar fashion:
     </div>
 </p>
 
-# In the next article
+# In Part 2
 
-This article was only an introduction. In the next articles from this series I am planning to discuss about the following topics:
+This article was only an introduction. In the next articles from this series I am planning to discuss about the following topics: Jensen's Inequality, Holder's Inequality, Radon's Inequality, Chebyshev equality, Bernoulli inequality, The PQR Technique, Calculus Techniques and Lagrange Multipliers.
 
-* Jensen's Inequality;
-* Holder's Inequality;
-* Radon's Inequality
-* Chebyshev equality;
-* Bernoulli inequality;
-* The PQR Technique;
-* Calculus Techniques and Lagrange Multipliers.
+# Where to go next ?
 
----
+Have you started to develop a test for solving *inequality problems*, there are a few good resources that can help you further.
 
-# Free resources around the web
+First of all, if you want to read a more "serious" material, I recommend you to go through Vasile Cartoaje's books: 
+* [Mathematical Inequalities, Volume 1, Symmetrical Polynomial Inequalities](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_1.pdf)
+* [Mathematical Inequalities, Volume 2, Symmetric Rational and Nonrational Inequalities](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_2.pdf)
+* [Mathematical Inequalities, Volume 3, Cyclic and Noncyclic Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_3.pdf)
+* [Mathematical Inequalities, Volume 4, Extensions and Refinements of Jensen's Inequality, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_4.pdf)
+* [Mathematical Inequalities, Volume 5, Other Recent Methods For Creating and Solving Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_5.pdf), they are amazing.
+
+Secondly there are multiple articles online with similar content (most of them are accesible as a PDF files). For example:
 
 * [Basics Of Olympiad Inequalities, Samin Riasat](https://web.williams.edu/Mathematics/sjmiller/public_html/161/articles/Riasat_BasicsOlympiadInequalities.pdf)
 * [Eeshan Banerjee, Titu's Lemma](file:///home/andrei/down/titus_lemma.pdf)
 * [Introduction to Olympiad Inequalities, Sanja Simonovikj](https://esp.mit.edu/download/8a5f8efe-59f5-407d-9252-607ace7aa190/M11250_Intro%20to%20ol%20ineq%20hssp.pdf)
 * [Titu's Lemma, Pankaj Agarwal](https://aamonline.org.in/ganit-bikash/gb/volume-67/10-titu-s-lemma-Pankaj-Agarwal.pdf)
-* [Mathematical Inequalities, Volume 1, Symmetrical Polynomial Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_1.pdf)
-* [Mathematical Inequalities, Volume 2, Symmetric Rational and Nonrational Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_2.pdf)
-* [Mathematical Inequalities, Volume 3, Cyclic and Noncyclic Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_3.pdf)
-* [Mathematical Inequalities, Volume 4, Extensions and Refinements of Jensen's Inequality, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_4.pdf)
-* [Mathematical Inequalities, Volume 5, Other Recent Methods For Creating and Solving Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_5.pdf)
+
+I recommend you also the following Facebook groups where people gather to actually solve "difficult inequalities" (and not only):
+* [Romanian Mathematical Magazine (RMM)](https://www.facebook.com/groups/355300697927549/)
+* [Mathematical Inequalities](https://www.facebook.com/groups/1486244404996949/)
+
+[CutTheKnot](https://www.cut-the-knot.org/algebra.shtml) has a quite a few gems with full solutions available.
+
+[Leo Giugiuc's](https://leogiugiuc.wordpress.com/my-solutions/) (who's one of our "local experts" in inequalities) blog contains some advanced inequalities that are not easily solvable using conventional techniques.
