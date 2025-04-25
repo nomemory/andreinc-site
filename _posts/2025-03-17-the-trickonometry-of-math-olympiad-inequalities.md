@@ -69,7 +69,7 @@ I’ll be gradually adding more problems as time permits (I'm also working on Pa
 Special thanks to:
 * `meithecatte` - for pointing one of the problem statements was incorrect.
 * `cryslith` - for pointing out some mistakes in my comments and helping me correct a few solutions.
-* Gheorghe Craciun for allowing me to borrow some of his problems.
+* Gheorghe Craciun for inspiring and allowing me to borrow some of his problems.
   
 If I forgot to include a source or mistakenly credited an exercise to the wrong author, please know it was unintentional. Some of the problems are original (created by me), but not all are signed, as the results are too elementary to require attribution. Similarly, some solutions are original, while others are based on official ones—just presented in slightly more detail.
 
