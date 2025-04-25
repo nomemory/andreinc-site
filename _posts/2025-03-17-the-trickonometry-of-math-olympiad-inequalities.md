@@ -60,7 +60,7 @@ tags:
 
 # Disclaimer
 
-This article hasn't been reviewed yet. In case you want to help reviewing drop me a message (see the [*About Page*]({{site.url}}/about}})). 
+This article hasn't been reviewed yet. In case you want to help reviewing drop me a message (see the [*About Page*]({{site.url}}/about)). 
 
 I will slowly add more problems, if time allows. I am also working on Part 2.
 
@@ -2908,33 +2908,7 @@ The next two problems can be easily solved using an inequality that we will disc
     </div>
 </p>
 
-An important thing to take in consideration is that when we sum/multiply [weak inequalities](https://proofwiki.org/wiki/Definition:Inequality/Weak) involving *interdependent* terms:
-* We need to verify conditions across the inequalities to check if they remain consistent;
-* If the equality conditions lead to contradictions or undefined values, the summation/multiplication might prove invalid. The summation/multiplication is not invalid in general, it's only invalid as a weak inequality. In such cases we can still use the strict inequality signs ($$>$$ or $$<$$).
-* If the equality conditions are consistent, the summation/multiplication is valid, and you can proceed with the combined inequality.
-
-Let's take a look at the following example:
-
-<p>
-<div class="mp">
-    <p>Let \(a, b, c\) be positive real numbers. We will group the terms in the following manner and apply the Arithmetic Mean-Geometric Mean (AM-GM) inequality:</p>
-    <p class="mpc">
-    \[\begin{cases}
-        a+2b \ge 2\sqrt{2ab} \\ 
-        b+2c \ge 2\sqrt{2bc} \\
-        c+2a \ge 2\sqrt{2ac}
-    \end{cases}\]
-    </p>
-    <p>For each of the three inequalities equality holds if \(a=2b\), \(b=2c\) and \(c=2a\). However, these conditions cannot all hold simultaneously, as they would lead to a contradiction. Specifically, they would imply \(a=b=c=0\) which contradicts the assumption that \(a,b,c\) are positive real numbers. </p>
-    <p>So, if we sum the three inequalities, we will "inherit" only the strict inequality sign.</p>
-    <p>Therefore, when summing these inequalities, we must "inherit" only the strict inequality sign. Thus, the following is incorrect:</p>
-    <p class="mpc">\[3(a+b+c) \ge 2\sqrt{2}(\sqrt{ab}+\sqrt{bc}+\sqrt{ac})\]</p>
-    <p>The correct form is:</p>
-    <p class="mpc">\[3(a+b+c) \gt 2\sqrt{2}(\sqrt{ab}+\sqrt{bc}+\sqrt{ac})\]</p>
-</div>
-</p>
-
-Let's solve the next exercise. How should we group the terms?
+An important thing to take in consideration is that when we sum/multiply [weak inequalities](https://proofwiki.org/wiki/Definition:Inequality/Weak) involving *interdependent* terms, we need to verify conditions across the inequalities to check if they remain consistent:
 
 <p>
 <div class="mp" id="pgtm22">
