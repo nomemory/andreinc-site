@@ -74,7 +74,7 @@ Special thanks to:
 If I forgot to include a source or mistakenly credited an exercise to the wrong author, please know it was unintentional. Some of the problems are original (created by me), but not all are signed, as the results are too elementary to require attribution. Similarly, some solutions are original, while others are based on official ones—just presented in slightly more detail.
 
 <div class="mpt">
-    <p>Writing this short article made me nostalgic and brought back fond memories of my high school math teacher, Mrs. Liana Georgescu, who had a positive influence on me, as well as Gabriel Tica, who also inspired me when I was a young student.</p>
+    <p>Writing this short article made me nostalgic and brought back fond memories of my high school math teacher, Carmen Georgescu, who had a positive influence on me, as well as Gabriel Tica, who also inspired me when I was a young student.</p>
 </div>
 
 # Introduction
