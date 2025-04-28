@@ -1804,17 +1804,85 @@ For the next exercise the key idea is to leverage the additional conditions prov
     </div>
 </p>
 
+Sometimes you can solve "inequations" using "inequalities":
+
 <p>
     <div class="mp" id="pag11">
-        <p><a class="mpl" href="#pag11">Problem AG11</a></p> 
-        <p>Let \(x,y,z\) positive real numbers. Prove that:</p>
-        <p class="mpc">
-            \[
-                \frac{x}{(x+y)(x+z)}+\frac{y}{(y+z)(y+x)}+\frac{z}{(z+x)(z+y)} \leq \frac{9}{4(x+y+z)}
-            \]
-        </p>
+        <p><a class="mpl" href="#pag11">Problem AG11</a></p>
+        <p>Find \(x,y,z \in [\frac{1}{3}, \infty)\) such that \(x+y+z \leq 4\) and \(\sqrt{3x-1}+\sqrt{3y-1}+\sqrt{3z-1} \geq 3\sqrt{3}\).</p>
+        <details>
+            <summary>Hint 1</summary>
+           <p>Notice that the second inequality can be rewritten as:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{x-\frac{1}{3}}+\sqrt{x-\frac{1}{3}}+\sqrt{x-\frac{1}{3}} \geq 3
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>The key intuition for problems like this is to "trap" the value of the given sum between constants to force equality. Specifically, we aim to find a real number \(k\) such that:</p>
+            <p class="mpc">
+                \[
+                    k \leq \sqrt{3x-1}+\sqrt{3y-1}+\sqrt{3z-1} \leq k
+                \]
+            </p>
+            <p>Once we achieve this, we can determine the values of \(x, y, z\) by analyzing the equality conditions.</p>
+            <p>Then we can "force" the equality conditions and find the numbers.</p>
+            <p>First, notice that the second inequality transforms as follows:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{3x-1}+\sqrt{3y-1}+\sqrt{3z-1} \geq 3\sqrt{3} \Leftrightarrow 
+                \]
+                \[
+                    \Leftrightarrow \sqrt{x-\frac{1}{3}} + \sqrt{y-\frac{1}{3}} + \sqrt{z-\frac{1}{3}} \geq 3 \tag{1}
+                \]
+            </p>
+            <p>Now, we can apply the AM-GM inequality (Arithmetic Mean-Geometric Mean Inequality) in a "forced" way. Remember that for each positive number \(a\), \(\sqrt{a} \leq \frac{a+1}{2}\) Applying this to each term separately, we get:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{x-\frac{1}{3}} \leq \frac{x-\frac{1}{3}+1}{2} = \frac{3x+2}{6} \tag{2}
+                \]
+                \[
+                    \sqrt{y-\frac{1}{3}} \leq \frac{y-\frac{1}{3}+1}{2} = \frac{3y+2}{6} \tag{3}
+                \]
+                \[
+                    \sqrt{z-\frac{1}{3}} \leq \frac{z-\frac{1}{3}+1}{2} = \frac{3z+2}{6} \tag{4}
+                \]
+            </p>
+            <p>Adding inequalities \((2)\), \((3)\), (\(4\)) and using the condition \(x+y+z \leq 4\), we further obtain:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{x-\frac{1}{3}} + \sqrt{y-\frac{1}{3}} + \sqrt{z-\frac{1}{3}} \leq \frac{3(\overbrace{x+y+z}^{\leq 4})+6}{6} \leq 3 \tag{5}
+                \]
+            </p>
+            <p>From \((1)\) and \((5)\), it follows that:</p>
+            <p class="mpc">
+                \[
+                    3 \leq \sqrt{x-\frac{1}{3}} + \sqrt{y-\frac{1}{3}} + \sqrt{z-\frac{1}{3}} \leq 3
+                \]
+            </p>
+            <p>Thus, equality must occur throughout. In particular, equality must hold when applying AM-GM, meaning that:</p>
+            <p class="mpc">
+                \[
+                    x-\frac{1}{3} = 1 \Rightarrow x=\frac{4}{3} 
+                \]
+                \[
+                    y-\frac{1}{3} = 1 \Rightarrow y=\frac{4}{3}
+                \]
+                \[
+                    z-\frac{1}{3} = 1 \Rightarrow z=\frac{4}{3}
+                \]
+            </p>
+            <p>Therefore, the only solution is \(x = y = z = \frac{4}{3}\).</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Gheorghe F. Molea</p>
+        </details>
     </div>
 </p>
+
 ---
 
 # Cyclic and Symmetrical Inequalities
@@ -7654,6 +7722,7 @@ The next problem is an inequality problem "spiced-up" with just a little *number
                 \frac{x_1 + x_2}{x_3 x_4} + \frac{x_5}{x_6} + \frac{x_8}{x_7} + \frac{x_{11} + x_{12}}{x_9 x_{10}} > \frac{4\sqrt{n}}{n} + 2.
             \]
             </p>
+            <p>Now, can you prove the strict nature of the inequality ?</p>
         </details>
         <details>
             <summary>Source</summary>
@@ -7787,13 +7856,58 @@ In a similar fashion:
     </div>
 </p>
 
+<!-- The next problems "ressembles" a Nesbit-like structure, but appearances can be deceiving:
+
+<p>
+    <div class="mp" id="pmch05">
+        <p><a class="mpl" href="#pmch04">Problem MCH05</a></p> 
+        <p>Let \(a,b,c\) positive real numbers, such that \(a+b+c=1\). Prove the inequality:</p>
+        <p class="mpc">
+            \[
+                \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} \geq \sqrt{\frac{3}{2}}
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>How about "preparing" each term for the application of Titu's Lemma.</p>
+            <p class="mpc">
+                \[
+                   \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} = \sum_{\text{cyc}} \frac{a^2}{a\sqrt{b+c}}
+                \]
+            </p>
+        </details>
+        <details>   
+            <summary>Solution</summary>
+            <p>When we see a condition like \(a+b+c=1\) our first reflex would be to "prove" the additional:</p>
+            <p class="mpc">
+                \[
+                    (1+1+1)(a^2+b^2+c^2) \geq (a+b+c)^2 \Leftrightarrow a^2+b^2+c^2 \geq \frac{1}{3} \tag{1}
+                \] 
+            </p>
+            <p>We can apply Titu's Lemma:</p>
+            <p class="mpc">
+                \[
+                    \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} = \sum_{\text{cyc}}\frac{a^2}{a\sqrt{b+c}} \geq \frac{(a+b+c)^2}{\sum_{\text{cyc}}a\sqrt{b+c}} = \frac{1}{\sum_{\text{cyc}}a\sqrt{b+c}} \tag{2}
+                \]
+            </p>
+            <p>Now, let's work on the denominator by apply the CBS inequality in the following manner:</p>
+            <p class="mpc">
+                \[
+                    \left(a\sqrt{b+c}+b\sqrt{c+a}+c\sqrt{a+b}\right)^2 \leq (a^2+b^2+c^2)(a+b+b+c+c+a)
+                \]
+            </p>
+        </details>
+    </div>
+</p> -->
+
+
 # In Part 2
 
-This article was only an introduction. In the next articles from this series I am planning to discuss about the following topics: Jensen's Inequality, Holder's Inequality, Radon's Inequality, Chebyshev equality, Bernoulli inequality, The PQR Technique, Calculus Techniques and Lagrange Multipliers.
+This article was just an introduction. In the upcoming articles in this series, I plan to discuss the following topics: Jensen's Inequality, Hölder's Inequality, Radon's Inequality, Chebyshev's Inequality, Bernoulli's Inequality, the PQR Technique, Calculus Techniques, and Lagrange Multipliers.
 
 # Where to go next ?
 
-Have you started to develop a test for solving *inequality problems*, there are a few good resources that can help you further.
+If you have started to develop a taste for solving inequality problems, there are several excellent resources that can help you advance further.
 
 First of all, if you want to read a more "serious" material, I recommend you to go through Vasile Cartoaje's books: 
 * [Mathematical Inequalities, Volume 1, Symmetrical Polynomial Inequalities](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_1.pdf)
@@ -7803,7 +7917,6 @@ First of all, if you want to read a more "serious" material, I recommend you to 
 * [Mathematical Inequalities, Volume 5, Other Recent Methods For Creating and Solving Inequalities, Vasile Cirtoaje](http://ace.upg-ploiesti.ro/membri/vcirtoaje/math_ineq_5.pdf), they are amazing.
 
 Secondly there are multiple articles online with similar content (most of them are accesible as a PDF files). For example:
-
 * [Basics Of Olympiad Inequalities, Samin Riasat](https://web.williams.edu/Mathematics/sjmiller/public_html/161/articles/Riasat_BasicsOlympiadInequalities.pdf)
 * [Eeshan Banerjee, Titu's Lemma](file:///home/andrei/down/titus_lemma.pdf)
 * [Introduction to Olympiad Inequalities, Sanja Simonovikj](https://esp.mit.edu/download/8a5f8efe-59f5-407d-9252-607ace7aa190/M11250_Intro%20to%20ol%20ineq%20hssp.pdf)
@@ -7815,4 +7928,4 @@ I recommend you also the following Facebook groups where people gather to actual
 
 [CutTheKnot](https://www.cut-the-knot.org/algebra.shtml) has a quite a few gems with full solutions available.
 
-[Leo Giugiuc's](https://leogiugiuc.wordpress.com/my-solutions/) (who's one of our "local experts" in inequalities) blog contains some advanced inequalities that are not easily solvable using conventional techniques.
+[Leo Giugiuc's Blog](https://leogiugiuc.wordpress.com/my-solutions/) (who's one of our "local experts" in inequalities) blog contains some advanced inequalities that are not easily solvable using conventional techniques.
