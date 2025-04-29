@@ -5451,6 +5451,63 @@ For the next problems, the *Nesbitt structure* is harder to spot:
     </div>
 </p>
 
+<p>
+    <div class="mp" id="pnbt111">
+        <p><a class="mpl" href="#pnbt111">Problem NBT11.1</a></p> 
+        <p>Let \(a, b, c > -\frac{1}{2}\) be real numbers. Prove that the following inequality holds:</p>
+        <p class="mpc">
+            \[
+                \frac{a^2+2}{b+c+1}+\frac{b^2+2}{a+c+1}+\frac{c^2+2}{a+b+1} \geq 3
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>We can attempt to "reduce" the inequality to a Nesbitt-type structure using some clever manipulations:</p>
+            <p class="mpc">
+                \[
+                    a^2+2 = (a^2+1)+1 \geq 2a + 1
+                \]
+            </p>
+            <p>But wait — can we apply the AM-GM inequality when numbers are negative? The answer is nuanced. In this particular form, the inequality remains valid. Try checking what happens when \(a\) is negative but still greater than \(-\frac{1}{2}\).</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>After applying the first hint, we obtain:</p>
+            <p class="mpc">
+                \[
+                    \frac{a^2+2}{b+c+1}+\frac{b^2+2}{a+c+1}+\frac{c^2+2}{a+b+1} \geq 
+                \]
+                \[
+                    \geq \frac{2a+1}{b+c+1} + \frac{2b+1}{a+c+1}+\frac{2c+1}{a+b+1} \tag{1}
+                \]
+            </p>
+            <p>Since \(a, b, c > -\frac{1}{2}\), it is natural to make a substitution that eliminates the complications arising from possible negative values. Set:</p>
+            <p class="mpc">
+                \[
+                    x = a+\frac{1}{2}, \quad y = b+\frac{1}{2}, \quad z=c+\frac{1}{2}
+                \]
+            </p>
+            <p>Thus, equivalently:</p>
+            <p class="mpc">
+                \[
+                    a = x-\frac{1}{2}, \quad b = y-\frac{1}{2}, \quad c=z-\frac{1}{2}
+                \]
+            </p>
+            <p>Substituting into \((1)\), the expression becomes:</p>
+            <p class="mpc">
+                \[
+                    \frac{2a+1}{b+c+1} + \frac{2b+1}{a+c+1}+\frac{2c+1}{a+b+1} = 2\cdot\sum_{\text{cyc}} \frac{x}{y+z} \geq 3
+                \]
+            </p>
+             <p>This leads us directly to Nesbitt's inequality, thus completing the proof.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Marian Ionescu, Shortlisted for the Romanian Olympiad 2007</p>
+        </details>
+    </div>
+</p>
+
 The final problem presents a fascinating inequality that resembles Nesbitt's Inequality structure, though not exactly. Nevertheless, it's an interesting and noteworthy result:
 
 <p>
@@ -7855,51 +7912,6 @@ In a similar fashion:
         </details>
     </div>
 </p>
-
-<!-- The next problems "ressembles" a Nesbit-like structure, but appearances can be deceiving:
-
-<p>
-    <div class="mp" id="pmch05">
-        <p><a class="mpl" href="#pmch04">Problem MCH05</a></p> 
-        <p>Let \(a,b,c\) positive real numbers, such that \(a+b+c=1\). Prove the inequality:</p>
-        <p class="mpc">
-            \[
-                \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} \geq \sqrt{\frac{3}{2}}
-            \]
-        </p>
-        <details>
-            <summary>Hint 1</summary>
-            <p>How about "preparing" each term for the application of Titu's Lemma.</p>
-            <p class="mpc">
-                \[
-                   \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} = \sum_{\text{cyc}} \frac{a^2}{a\sqrt{b+c}}
-                \]
-            </p>
-        </details>
-        <details>   
-            <summary>Solution</summary>
-            <p>When we see a condition like \(a+b+c=1\) our first reflex would be to "prove" the additional:</p>
-            <p class="mpc">
-                \[
-                    (1+1+1)(a^2+b^2+c^2) \geq (a+b+c)^2 \Leftrightarrow a^2+b^2+c^2 \geq \frac{1}{3} \tag{1}
-                \] 
-            </p>
-            <p>We can apply Titu's Lemma:</p>
-            <p class="mpc">
-                \[
-                    \sum_{\text{cyc}}\frac{a}{\sqrt{b+c}} = \sum_{\text{cyc}}\frac{a^2}{a\sqrt{b+c}} \geq \frac{(a+b+c)^2}{\sum_{\text{cyc}}a\sqrt{b+c}} = \frac{1}{\sum_{\text{cyc}}a\sqrt{b+c}} \tag{2}
-                \]
-            </p>
-            <p>Now, let's work on the denominator by apply the CBS inequality in the following manner:</p>
-            <p class="mpc">
-                \[
-                    \left(a\sqrt{b+c}+b\sqrt{c+a}+c\sqrt{a+b}\right)^2 \leq (a^2+b^2+c^2)(a+b+b+c+c+a)
-                \]
-            </p>
-        </details>
-    </div>
-</p> -->
-
 
 # In Part 2
 

@@ -14,25 +14,25 @@ tags:
 
 ## How it started
 
-The story behind this post surprisingly starts on Facebook, on a group dedicated to mathematics. A math teacher asked audience to find the $$\lfloor 3^{\sqrt{3}}\rfloor$$ without using a calculator. Of course, it was a matter of proving $$\lfloor 3^{\sqrt{3}}\rfloor=6$$, or that $$\lfloor 3^{\sqrt{3}}\rfloor=7$$ (my intuition said it's 7).
+The story behind this post surprisingly begins on Facebook, in a group dedicated to mathematics. A math teacher asked the audience to determine the value of $$\lfloor 3^{\sqrt{3}}\rfloor$$ without using a calculator. Naturally, the challenge was to prove whether $$\lfloor 3^{\sqrt{3}}\rfloor=6$$ or $$\lfloor 3^{\sqrt{3}}\rfloor=7$$ (my intuition leaned toward 7).
 
-After a few back and forth discussions, everyone agreed the following solution (by Mihai Cris) is the *most acceptable*:
+After some back-and-forth discussion, everyone agreed that the following solution (proposed by Mihai Cris) was the most acceptable:
 
 $$3^{7}>2^{10} \Rightarrow 3^{7}*3^{10}>2^{10}*3^{10} \Rightarrow 3^{17} > 6^{10} \Rightarrow 3^{\frac{17}{10}}>6 \Rightarrow 3^{1.7} > 6$$
 
-In the same time:
+At the same time:
 
 $$3^7=2187<2401=7^4 \Rightarrow 3^{7/4} < 7 \Rightarrow 3^{1.75}<7$$
 
-Because $$\sqrt{3}\approx 1.73 \Rightarrow \lfloor 3^{\sqrt{3}}\rfloor=6$$.
+Since $$\sqrt{3}\approx 1.73 \Rightarrow \lfloor 3^{\sqrt{3}}\rfloor=6$$.
 
 **Later edit:**
 
-After [posting on reddit](https://old.reddit.com/r/math/comments/1gu95wu/a_joke_in_approximating_numbers_raised_to/), `/u/JiminP` came with a different solution:
+After [posting on reddit](https://old.reddit.com/r/math/comments/1gu95wu/a_joke_in_approximating_numbers_raised_to/), `/u/JiminP` proposed a different solution:
 
 $$6^3=2^3*3^3<3^2*3^3=3^5 \Rightarrow 6 < 3^{\frac{5}{3}}=3^{\sqrt{\frac{25}{9}}}<3^{\sqrt{\frac{27}{9}}}<3^{\sqrt{3}}$$
 
-In the same time:
+At the same time:
 
 $$48<49 \Rightarrow 3*2^4 < 7^2$$ and $$3^7<256*3^2=2^8*3^2<7^4 \Rightarrow 7^4 > 3^{\frac{7}{4}}=3^{\sqrt{\frac{49}{16}}} > 3^{\sqrt{\frac{48}{16}}} > 3^{\sqrt{3}}$$
 
@@ -40,7 +40,7 @@ The decision on which solution is the best is [left to the reader](https://acade
 
 ## The new problem
 
-The previous problem was cute, but it made me wonder if I can find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms and radicals), by relying solely on **addition** and **multiplication**. Basically I was looking for a solution where pen, paper and patience are enough. 
+The previous problem was cute, but it made me wonder whether I could find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms or radicals), relying solely on **addition** and **multiplication**. Basically, I was looking for a method where pen, paper, and patience are enough.
 
 This is primarily a joke, so if you don't want to continue reading, here is the answer:
 
@@ -55,8 +55,8 @@ $$
 The *[Logarithmic](https://en.wikipedia.org/wiki/Logarithm)* and the *[Exponential](https://en.wikipedia.org/wiki/Exponential_function)* functions came to the rescue.
 
 1. We start by writing $$3^{\sqrt{3}}=(e^{\ln 3})^{\sqrt{3}}=e^{\sqrt{3}\ln 3}$$. We know this is true because $$3=e^{\ln 3}=3^{\ln e}=3$$.
-2. We use the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion of $$e^x=1+\frac{x^1}{1!}+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}+\dots$$ .
-3. So approximating $$3^{\sqrt{3}}$$ is just a matter of computing $$1+\frac{(\sqrt{3}\ln 3)^1}{1!}+\frac{(\sqrt{3}\ln 3)^2}{2!}+\frac{(\sqrt{3}\ln 3)^3}{3!}+\frac{(\sqrt{3}\ln 3)^4}{4!}+\dots$$.
+2. We then use the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion of $$e^x=1+\frac{x^1}{1!}+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}+\dots$$ .
+3. Therefore,  approximating $$3^{\sqrt{3}}$$ becomes a matter of computing: $$1+\frac{(\sqrt{3}\ln 3)^1}{1!}+\frac{(\sqrt{3}\ln 3)^2}{2!}+\frac{(\sqrt{3}\ln 3)^3}{3!}+\frac{(\sqrt{3}\ln 3)^4}{4!}+\dots$$.
 
 To get even closer to the actual result, I computed the first 8 terms of the series expansion (and no, it wasn't by hand, as I've used [WolframAlpha](https://www.wolframalpha.com/) do it for me):
 
