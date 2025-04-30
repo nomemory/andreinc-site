@@ -309,8 +309,11 @@ You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the 
     * There's a lot of movies out there and very little time to watch them in.
 * [Our security auditor is an idiot. How do I give him the information he wants?](https://serverfault.com/questions/293217/our-security-auditor-is-an-idiot-how-do-i-give-him-the-information-he-wants)
 * [Rediscovery of Calculus](https://academia.stackexchange.com/questions/9602/rediscovery-of-calculus-in-1994-what-should-have-happened-to-that-paper)
+* [TabBoo](https://tabboo.xyz/)
+  * Add random jumpscares to sites you're trying to avoid 
 * [The brick bible](https://thebrickbible.com/)
     * The Scriptures in LEGO from Genesis to Revelation.
+* ["The closer to the train station, the worse the kebab" - A "Study"](https://www.jmspae.se/write-ups/kebabs-train-stations/)
 * [The parable of the Physics Professor](https://www.parand.com/the-parable-of-the-physics-professor.html)
 * [The surreal experience of my first developer job](https://bennuttall.com/the-surreal-experience-of-my-first-developer-job/)
     * Indeed surreal.
@@ -323,9 +326,11 @@ You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the 
 * [Assembly Arena](https://github.com/m2w4/assembly-arena)
   * Assembly Arena is a programming game where participants create small assembly programs, to compete for control of a virtual computer's memory.
 * [Bonsai Builder](https://vandervasgenerator.itch.io/bonsaibuilder)
-    * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
+  * "To grow a bonsai is to cultivate the essence of a tree in miniature. Take your time and enjoy the calming atmosphere. Explore the possibilities and share what you find with the community."
 * [Can't Unsee](https://cantunsee.space/)
-    * Select the design that "is the most correct".
+  * Select the design that "is the most correct".
+* [CEO Simulator](https://ceosimulator.vercel.app/)
+  * "Startup Edition"
 * [Collosal Cave Adventure Page](https://rickadams.org/adventure/)
     * You can play the game [here](https://rickadams.org/adventure/advent/)
     * The user would thus be a part of an ongoing story in a fantasy setting — in this case, an exploration of [Colossal Cave in Kentucky](https://en.wikipedia.org/wiki/Colossal_Cavern). But this Colossal Cave, though remarkably similar to its real-life counterpart, was also very different: *Magic was afoot in the cave...*
@@ -464,6 +469,7 @@ You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the 
 * [The fourth operation](https://ariwatch.com/VS/Algorithms/TheFourthOperation.htm)
     * "Those are the first, second, and third operations:  addition, multiplication, and exponentiation.  Presented in this manner a     prolonged series of operations comes to mind, each operation iterating the one before. The fourth operation would be?"
 * [The Lazy Way to Solve Differential Equations](https://iagoleal.com/posts/calculus-symbolic-ode/)
+* [The lost art of logarithms](https://www.lostartoflogarithms.com/)
 * [The magic 6174](https://www.oranlooney.com/post/kaprekar/)
     * The Kaprekar routine.
 
@@ -550,6 +556,8 @@ You can also [https://cloudhiker.net/](https://cloudhiker.net/) to discover the 
     * "Effective altruism (EA) is a 21st-century philosophical and social movement that advocates "using evidence and reason to figure out how to benefit others as much as possible, and taking action on that basis"".
 * [Intransitive Dice](https://en.m.wikipedia.org/wiki/Intransitive_dice)
 * [List of People claimed to be Jesus](https://en.m.wikipedia.org/wiki/List_of_people_claimed_to_be_Jesus)
+* [Marchetti's Constant](https://en.m.wikipedia.org/wiki/Marchetti%27s_constant)
+  * Marchetti's constant is the average time spent by a person for commuting each day. 
 * [McNamara Fallacy](https://en.m.wikipedia.org/wiki/McNamara_fallacy)
     * "The McNamara fallacy is often considered in the context of the Vietnam War, in which enemy body counts were taken to be a precise and objective measure of success."
 * [Non-integer base of numeration](https://en.m.wikipedia.org/wiki/Non-integer_base_of_numeration)

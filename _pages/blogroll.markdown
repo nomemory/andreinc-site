@@ -14,7 +14,7 @@ I usually find blogs I like by scrolling the top page of [hn](https://news.ycomb
 
 A good source of finding good information is now [https://www.marginalia.nu/](https://www.marginalia.nu/). The [Website Explorer](https://explore.marginalia.nu/view) is an excellent way of accessing *the alternative indie internet*.
 
-Another interesting source is [https://bukmark.club/](https://bukmark.club/) or [https://minifeed.net/](https://minifeed.net/welcome)
+Another interesting source is [https://bukmark.club/](https://bukmark.club/) or [https://minifeed.net/](https://minifeed.net/welcome) or [https://searchmysite.net/](https://searchmysite.net/).
 
 If you have a personal blog, I recommend you create your *blogroll* section. Your readers will appreciate it. Accessing quality content has become challenging in recent years. Publishing a list of sites you truly like & follow & subscribe to is helpful for everyone.
 
@@ -41,6 +41,7 @@ I can't entirely agree with everything the following people are writing.
 | [artem.krylysov.com/blog/](https://artem.krylysov.com/blog/) | The blog of Artem Krylysov. |
 | [artojonsson.com/](https://www.artojonsson.com/) | The personal blog of Arto Jonsson. | 
 | [antirez.com/](http://antirez.com/) | Antirez!? |
+| [aperiodical.com](https://aperiodical.com/) | The Aperiodical is a meeting-place for people who already know they like maths and would like to know more. |
 | [apieceofthepi.substack.com/](https://apieceofthepi.substack.com/) | An entertaining blog about mathematics, by [Richard Green](https://math.colorado.edu/~rmg/). |
 | [ariadne.space/](https://ariadne.space/) | Free software developer and internet jackalope extraordinaire. |
 | [arne.me/](https://arne.me/) | A developer, podcaster & dad based near Frankfurt, Germany. |
@@ -77,6 +78,7 @@ I can't entirely agree with everything the following people are writing.
 | [coryd.dev/](https://coryd.dev/) | The personal blog of Cory Dransfeldt. |
 | [cprimozic.net/blog/](https://cprimozic.net/blog/) | The personal blog of Casey Primozic. |
 | [creativegood.com/blog/](https://creativegood.com/blog/) | Creative Good since 1997. |
+| [curiouscoding.nl](https://curiouscoding.nl/) | Ragnar {Groot Koerkamp}, PhD High Throughput Bioinformatics @ BMI ETH Zurich |
 | [danpalmer.me/](https://danpalmer.me/) | I’m a software engineer living in London and regularly visiting Melbourne. I enjoy writing software to solve interesting problems and improving engineering culture and processes. |
 | [dansalva.to/blog/](https://dansalva.to/blog/) | A guy best known for creating Doki Doki Literature Club and FrankerFaceZ. |
 | [death.andgravity.com/](https://death.andgravity.com/) | Adrians talks python. |
@@ -107,6 +109,7 @@ I can't entirely agree with everything the following people are writing.
 | [jvns.ca/](https://jvns.ca/) | Julia Evan's blog. |
 | [keybits.net/](https://www.keybits.net/) | Tom Atkins' site. |
 | [laihoconsulting.com/](https://laihoconsulting.com/) | My name is Pekka Laiho and I am a backend-focused software engineer by profession. I am also very interested in finance and investing as a hobby. This website is mostly about my blog and my writings related to these subjects which I am passionate about.|
+| [leahneukirchen.org](https://leahneukirchen.org/) | |
 | [lemire.me](https://lemire.me/blog/) | The blog of Daniel Lemire, a science professor at the University of Quebec. He sure loves optimizations. |
 | [letterstoanewdeveloper.com/](https://letterstoanewdeveloper.com/) | What I wish I had known when starting my development career. |
 | [levlaz.org/](https://levlaz.org/) | The personal blog of Lev Lazinskiy |

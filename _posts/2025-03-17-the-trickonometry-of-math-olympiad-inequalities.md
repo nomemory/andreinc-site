@@ -398,6 +398,34 @@ Now, let's try to use the previous result (the modulus inequality) in a creative
     </div>
 </p>
 
+<p>
+    <div class="mp" id="pivi071">
+        <p><a class="mpl" href="#pivi071">Problem IVI07.1</a></p> 
+        <p>Let \(a, b\) be positive real numbers. Prove that:</p>
+        <p class="mpc">
+            \[
+                \frac{1}{a+b} \leq \frac{1}{4}\left(\frac{1}{a}+\frac{1}{b}\right)
+            \]
+        </p>
+        <details>
+            <summary>Solution</summary>
+            <p>This inequality can be proved directly by algebraic manipulation:</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a+b} \leq \frac{1}{4} \left( \frac{1}{a} + \frac{1}{b} \right) 
+                    \Leftrightarrow \frac{1}{a+b} \leq \frac{1}{4} \cdot \frac{a+b}{ab}
+                \]
+                \[
+                    \Leftrightarrow (a+b)^2 \geq 4ab 
+                    \Leftrightarrow (a - b)^2 \geq 0
+                \]
+            </p>
+             <p>The last inequality is always true since squares of real numbers are non-negative. Therefore, the original inequality holds.</p>
+            <p>Equality occurs if and only if \(a = b\).</p>
+        </details>
+    </div>
+</p>
+
 Keep in mind the following two inequalities, as they will be helpful when solving more complex problems:
 
 <p>
@@ -3356,6 +3384,52 @@ The following problems are not primarily about grouping terms but rather about i
 </div>
 </p>
 
+The next problem is more about "splitting" than grouping:
+
+<p>
+<div class="mp" id="pgtm271">
+    <p><a class="mpl" href="#pgtm271">Problem GTM27.1</a></p> 
+    <p>Let \(x,y,z\) positive real numbers, prove that:</p>
+    <p class="mpc">
+        \[
+            \frac{x}{\sqrt{(x+y)(x+z)}}+\frac{y}{\sqrt{(y+x)(y+z)}}+\frac{z}{\sqrt{(z+x)(z+y)}} \leq \frac{3}{2}
+        \]
+    </p>
+    <details>
+        <summary>Hint 1</summary>
+        <p>Each term can be rewritten using the "identity":</p>
+        <p class="mpc">
+            \[
+                \frac{a}{\sqrt{(a+b)(a+c)}} = \sqrt{\frac{a^2}{(a+b)(a+c)}} = \sqrt{\frac{a}{a+b}\cdot\frac{a}{a+c}}
+            \]
+        </p>
+    </details>
+    <details>
+        <summary>Solution</summary>
+        <p>We rewrite the left-hand side of the inequality using the hint:</p>
+        <p class="mpc">
+            \[
+                \frac{x}{\sqrt{(x+y)(x+z)}}+\frac{y}{\sqrt{(y+x)(y+z)}}+\frac{z}{\sqrt{(z+x)(z+y)}} \leq
+            \]
+            \[
+                \leq \sqrt{\frac{a}{a+b}\cdot\frac{a}{a+c}} + \sqrt{\frac{b}{b+c}\cdot\frac{b}{b+a}} + \sqrt{\frac{c}{c+a}\cdot\frac{c}{c+b}}
+            \]
+        </p>
+        <p>Next, we apply the AM-GM inequality to each radical term:</p>
+        <p class="mpc">
+            \[
+                \leq \sqrt{\frac{a}{a+b}\cdot\frac{a}{a+c}} + \sqrt{\frac{b}{b+c}\cdot\frac{b}{b+a}} + \sqrt{\frac{c}{c+a}\cdot\frac{c}{c+b}} \leq
+            \]
+            \[
+                \leq \frac{1}{2}\left(\frac{a}{a+b}+\frac{a}{a+c}+\frac{b}{b+c}+\frac{b}{b+a}+\frac{c}{c+a}+\frac{c}{c+b}\right) = \frac{3}{2}
+            \]
+        </p>
+        <p>Therefore, the inequality is proven.</p>
+        <p>Equality holds when \(x = y = z\).</p>
+    </details>
+</div>
+</p>
+
 <p>
 <div class="mp" id="pgtm28">
 <p><a class="mpl" href="#pgtm28">Problem GTM28</a></p> 
@@ -4695,6 +4769,7 @@ As a general piece of advice, whenever you encounter logarithms in an inequality
         </details>
     </div>
 </p>
+
 
 # Ravi Substitutions
 
@@ -7130,6 +7205,42 @@ For the next problems, Titu's Lemma plays a special role in simplifying them:
 </p>
 
 <p>
+    <div class="mp" id="ptt081">
+        <p><a class="mpl" href="#ptt081">Problem TT08.1</a></p> 
+        <p>Let \(a,b,c\) positive real numbers such that \(a+b+c=1\), prove that:</p>
+        <p class="mpc">
+            \[
+                \frac{\log^2_{ab}c}{a+b} + \frac{\log^2_{bc}a}{b+c}+\frac{\log^2_{ca}b}{c+a} \geq \frac{9}{8}
+            \]
+        </p>
+        <details>
+            <summary>Solution</summary>
+            <p>By Titu's lemma (a direct consequence of Cauchy-Schwarz inequality), we have:</p>
+            <p class="mpc">
+                \[
+                    \frac{\log^2_{ab}c}{a+b} + \frac{\log^2_{bc}a}{b+c}+\frac{\log^2_{ca}b}{c+a} \geq \frac{(\log_{ab}c+\log_{bc}a+\log_{ca}b)^2}{2(a+b+c)} =
+                \]
+                \[
+                    = \frac{(\log_{ab}c+\log_{bc}a+\log_{ca}b)^2}{2} \tag{2}
+                \]
+            </p>
+             <p>Now, as discussed in <a href="#pnbt02">Problem NBT02</a>, the expression \(\log_{ab}c + \log_{bc}a + \log_{ca}b\) has a structure resembling a Nesbitt inequality in logarithmic form. By changing bases appropriately and applying known inequalities, we conclude that:
+            </p>
+            <p class="mpc">
+                \[
+                    \log_{ab}c+\log_{bc}a+\log_{ca}b \geq \frac{3}{2} \tag{1}
+                \]
+            </p>
+            <p>Combining inequalities (1) and (2) proves our inequality.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Tudorel Lupu, Shortlisted for the Romanian Math Olympiad, 2003</p>
+        </details>
+    </div>
+</p>
+
+<p>
     <div class="mp" id="ptt09">
         <p><a class="mpl" href="#ptt09">Problem TT09</a></p> 
         <p>Let \(a,b,c\) positive real numbers such that \(ab+bc+ca=3\). Prove the inequality:</p>
@@ -7909,6 +8020,91 @@ In a similar fashion:
         <details>
             <summary>Source</summary>
             <p>Romanian Math Olympiad, National Phase, Shortlist, 2003, Dinu Teodorescu</p>
+        </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp" id="pmch05">
+        <p><a class="mpl" href="#pmch05">Problem MCH05</a></p> 
+        <p>Let \( a, b, c, d \) be positive real numbers, and define \( K = a + b + c + d + 1 \). Prove the inequality:</p>
+        <p class="mpc">
+            \[
+                \sum_{\text{cyc}} \frac{1}{K-a} <
+                \frac{1}{3}\left( \frac{\sqrt{d\sqrt{c\sqrt{b}}}}{c\sqrt{b\sqrt{a}}} + \frac{\sqrt{c\sqrt{b\sqrt{a}}}}{d\sqrt{c\sqrt{b}}} + \frac{\sqrt{b\sqrt{a\sqrt{d}}}}{a\sqrt{d\sqrt{c}}} + \frac{\sqrt{a\sqrt{d\sqrt{c}}}}{b\sqrt{a\sqrt{d}}} \right)
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>The method used in <a href="#pag05">Problem AG05</a> may be helpful here.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We begin by expanding the left-hand side:</p>
+            <p class="mpc">
+                \[
+                    \sum_{\text{cyc}} \frac{1}{K-a} = 
+                \]
+                \[
+                    \frac{1}{1+b+c+d}+\frac{1}{1+a+c+d}+\frac{1}{1+a+b+d}+\frac{1}{1+a+b+c} 
+                \]
+            </p>
+            <p>By reordering terms cyclically, we write:</p>
+            <p class="mpc">
+                \[
+                    \sum_{\text{cyc}} \frac{1}{K-a} = 
+                \]
+                \[
+                    \frac{1}{1+a+b+c}+\frac{1}{1+b+c+d}+\frac{1}{1+c+d+a}+\frac{1}{1+d+a+b} \tag{1}
+                \]
+            </p>
+            <p>Next, we apply the AM-GM inequality repeatedly to each denominator. For example:</p>
+            <p class="mpc">
+                \[
+                    (1+a)+b+c \geq (2\sqrt{a}+b)+c \geq 2\sqrt{2b\sqrt{a}}+c \geq 2\sqrt{2c\sqrt{2b\sqrt{a}}} =
+                \]
+                \[ 
+                    = {2}^{\frac{7}{4}}\sqrt{c\sqrt{b\sqrt{a}}} > 3\sqrt{c\sqrt{b\sqrt{a}}} \tag{2} 
+                \]
+            </p>
+            <p>Applying similar reasoning to the other terms, we get:</p>
+            <p class="mpc">
+                \[
+                    1+b+c+d \gt 3\sqrt{d\sqrt{c\sqrt{b}}} \tag{3}
+                \]
+                \[
+                    1+c+d+a \gt 3\sqrt{a\sqrt{d\sqrt{c}}} \tag{4}
+                \]
+                \[
+                    1+d+a+b \gt 3\sqrt{b\sqrt{a\sqrt{d}}} \tag{5}
+                \]
+            </p>
+            <p>From \((1), (2), (3), (4), (5)\):</p>
+            <p class="mpc">
+                \[
+                   \sum_{\text{cyc}} \frac{1}{K-a} < \frac{1}{3}\left(\frac{1}{\sqrt{c\sqrt{b\sqrt{a}}}} + \frac{1}{\sqrt{d\sqrt{c\sqrt{b}}}}+\frac{1}{\sqrt{a\sqrt{d\sqrt{c}}}}+\frac{1}{\sqrt{b\sqrt{a\sqrt{d}}}}\right) \tag{6}
+                \]
+            </p>
+            <p>Recall the inequality from <a href="#pivi07">Problem IVI07</a>:</p>
+            <p class="mpc">
+                \[
+                     \frac{a}{b^2}+\frac{b}{a^2} \ge \frac{1}{a}+\frac{1}{b} \tag{7}
+                \]
+            </p>
+            <p>For each two terms in \((6)\) we apply \((7)\):</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{3}\left(\frac{1}{\sqrt{c\sqrt{b\sqrt{a}}}} + \frac{1}{\sqrt{d\sqrt{c\sqrt{b}}}}+\frac{1}{\sqrt{a\sqrt{d\sqrt{c}}}}+\frac{1}{\sqrt{b\sqrt{a\sqrt{d}}}}\right) <
+                \]
+                \[
+                    < \frac{1}{3}\left( \frac{\sqrt{d\sqrt{c\sqrt{b}}}}{c\sqrt{b\sqrt{a}}} + \frac{\sqrt{c\sqrt{b\sqrt{a}}}}{d\sqrt{c\sqrt{b}}} + \frac{\sqrt{b\sqrt{a\sqrt{d}}}}{a\sqrt{d\sqrt{c}}} + \frac{\sqrt{a\sqrt{d\sqrt{c}}}}{b\sqrt{a\sqrt{d}}} \right)
+                \]
+            </p>
+            <p>Thus, the inequality is proven.</p>
+        </details>        
+        <details>
+            <summary>Source</summary>
+            <p>Andrei N. Ciobanu</p>
         </details>
     </div>
 </p>
