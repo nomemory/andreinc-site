@@ -426,6 +426,85 @@ Now, let's try to use the previous result (the modulus inequality) in a creative
     </div>
 </p>
 
+In rare (but "intentional") cases we can use inequalities to solve system of equations:
+
+<p>
+    <div class="mp" id="pivi072">
+        <p><a class="mpl" href="#pivi072">Problem IVI07.2</a></p> 
+        <p>Find positive real numbers \(a, b, c\) such that:</p>
+        <p class="mpc">
+            \[
+                \begin{cases}
+                    \frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} = \frac{3}{2} \\
+                    \frac{1}{a}+\frac{1}{b}+\frac{1}{c} = 3
+                \end{cases}
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Recall the inequality proven in <a href="#pivi071">Problem IVI07.1</a>:</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a+b} \leq \frac{1}{4}\left(\frac{1}{a}+\frac{1}{b}\right)
+                \]
+            </p>
+            <p>This is useful for bounding each term in the first equation.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We apply the inequality to each term in the first equation:</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a+b} \leq \frac{1}{4}\left(\frac{1}{a}+\frac{1}{b}\right)
+                \]
+                \[
+                    \frac{1}{b+c} \leq \frac{1}{4}\left(\frac{1}{b}+\frac{1}{c}\right)
+                \]
+                \[
+                    \frac{1}{c+a} \leq \frac{1}{4}\left(\frac{1}{c}+\frac{1}{a}\right)
+                \]                
+            </p>
+            <p>Summing the three inequalities gives:</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} \leq \frac{1}{2}\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right) \Leftrightarrow
+                \]
+                \[
+                    \frac{1}{a+b}+\frac{1}{b+c}+\frac{c+a} \leq \frac{3}{2} \tag{1}
+                \]
+            </p>
+            <p>The left side is exactly \(\frac{3}{2}\), so equality must hold in (1). Equality in the inequality</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a + b} \leq \frac{1}{4} \left( \frac{1}{a} + \frac{1}{b} \right)
+                \]
+            </p>
+            <p>occurs if and only if \(a = b\). Applying this to all terms shows that equality in (1) occurs only when:</p>
+            <p class="mpc">
+                \[
+                    a = b = c
+                \]
+            </p>
+            <p>Plugging into the second equation:</p>
+            <p class="mpc">
+                \[
+                    \frac{3}{a} = 3 \Rightarrow a = 1
+                \]
+            </p>
+            <p>Thus, the only solution is:</p>
+            <p class="mpc">
+                \[
+                    a = b = c = 1
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Andrei N. Ciobanu</p>
+        </details>
+    </div>
+</p>
+
 Keep in mind the following two inequalities, as they will be helpful when solving more complex problems:
 
 <p>
@@ -863,6 +942,41 @@ The following are the first *non-trivial* challenges in this article that can be
         <details>
             <summary>Source</summary>
             <p>Romanian Math Olympiad, Etapa Locala, 8th grade, Galati, 2017</p>
+        </details>
+    </div>
+</p>
+
+In a similar fashion:
+
+<p>
+    <div class="mp" id="pivi161">
+        <p><a class="mpl" href="#pivi161">Problem IVI16.1</a></p>
+        <p>Let \(a,b,c\) positive real numbers. Prove that:</p>
+        <p class="mpc">
+            \[
+                \frac{1}{a^3+b^3+abc} + \frac{1}{b^3+c^3+abc}+\frac{1}{c^3+a^3+abc} \leq \frac{1}{abc}
+            \]
+        </p>
+        <details>
+            <summary>Solution</summary>
+            <p>We begin by applying the inequality \( a^3 + b^3 \geq ab(a + b) \). This gives:</p>
+            <p class="mpc">
+                \[
+                    \frac{1}{a^3+b^3+abc} + \frac{1}{b^3+c^3+abc}+\frac{1}{c^3+a^3+abc} \leq
+                \]
+                \[
+                    \leq \frac{1}{ab(a+b)+abc} + \frac{1}{bc(b+c)+abc} + \frac{1}{ca(c+a)+abc} = 
+                \]
+                \[
+                    = \frac{1}{ab(a+b+c)} + \frac{1}{bc(a+b+c)} + \frac{1}{ca(a+b+c)} =
+                \]
+                \[
+                    = \frac{c}{abc(a+b+c)} + \frac{a}{abc(a+b+c)} + \frac{b}{abc(a+b+c)} = 
+                \]
+                \[
+                    = \frac{a+b+c}{abc(a+b+c)} = \frac{1}{abc}
+                \]
+            </p>
         </details>
     </div>
 </p>
@@ -2021,9 +2135,11 @@ These examples illustrate how the cyclic and symmetrical sum notations capture d
 
 ---
 
-# Grouping terms
+# Grouping and Splitting Terms
 
-Solving more complex inequality problems requires more than just applying the general formula. A common approach involves strategically grouping terms to our advantage, then applying the Arithmetic Mean-Geometric Mean (AM-GM) inequality—or another relevant inequality—to each group. Finally, we combine the resulting inequalities to form a larger, more powerful inequality.
+Solving more complex inequality problems requires more than just applying the general formula. A common approach involves strategically grouping terms to our advantage, then applying the Arithmetic Mean-Geometric Mean (AM-GM) inequality—or another relevant inequality—to each group. 
+
+Finally, we combine the resulting inequalities to form a larger, more powerful inequality.
 
 With practice, this technique will become second nature. However, at first glance, it may seem unintuitive.
 
@@ -3069,7 +3185,7 @@ An important thing to take in consideration is that when we sum/multiply [weak i
 <p>
 <div class="mp" id="pgtm22">
 <p><a class="mpl" href="#pgtm22">Problem GTM22</a></p> 
-<p>Let \( a,b,c \in> \mathbb{R}_{+} \) such that \(ab+bc+ca=1\). Prove that:</p>
+<p>Let \( a,b,c \in \mathbb{R}_{+} \) such that \(ab+bc+ca=1\). Prove that:</p>
 <p class="mpc">\[ a+b+c\gt\frac{2}{3}(\sqrt{1-ab}+\sqrt{1-bc}+\sqrt{1-ac}) \]</p>
 <details> 
     <summary>Hint 1</summary>
@@ -3112,6 +3228,61 @@ An important thing to take in consideration is that when we sum/multiply [weak i
     <p>Andrei N. Ciobanu</p>
 </details>
 </div>
+</p>
+
+<p>
+    <div class="mp" id="pgtm221">
+        <p><a class="mpl" href="#pgtm221">Problem GTM22.1</a></p> 
+        <p>Let \(a,b,c,d\) positive real numbers. Prove that:</p>
+        <p class="mpc">
+            \[
+                \sqrt[3]{\frac{a^2}{b(c+d)}}+\sqrt[3]{\frac{b^2}{c(d+a)}}+\sqrt[3]{\frac{c^2}{d(a+b)}}+\sqrt[3]{\frac{d^2}{a(a+b)}} > 3
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>Rewrite each term in the following form:</p>
+            <p class="mpc">
+                \[
+                    \sqrt[3]{\frac{a^2}{b(c+d)}} = \frac{a}{\sqrt[3]{ab(c+d)}}
+                \]
+            </p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p class="mpt">This is the official solution by Dorin Marghidanu.</p>
+            <p>We begin by rewriting the entire left-hand side expression:</p>
+            <p class="mpc">
+                \[
+                    \sqrt[3]{\frac{a^2}{b(c+d)}}+\sqrt[3]{\frac{b^2}{c(d+a)}}+\sqrt[3]{\frac{c^2}{d(a+b)}}+\sqrt[3]{\frac{d^2}{a(a+b)}} =
+                \]
+                \[
+                    \frac{a}{\sqrt[3]{ab(c+d)}}+\frac{b}{\sqrt[3]{cb(d+a)}}+\frac{c}{\sqrt[3]{dc(a+b)}}+\frac{d}{\sqrt[3]{ad(b+c)}} \tag{1}
+                \]
+            </p>
+            <p>Now apply the AM-GM inequality to each denominator:</p>
+            <p class="mpc">
+                \[
+                    \sqrt[3]{ab(c+d)} \leq \frac{a+b+(c+d)}{3} \tag{2}
+                \]
+            </p>
+            <p>Using inequalities (1) and (2), we obtain:</p>
+            <p class="mpc">
+                \[
+                    \frac{a}{\sqrt[3]{ab(c+d)}}+\frac{b}{\sqrt[3]{cb(d+a)}}+\frac{c}{\sqrt[3]{dc(a+b)}}+\frac{d}{\sqrt[3]{ad(b+c)}} >
+                \]
+                \[
+                    3\left(\frac{a}{a+b+c+d}+\frac{b}{a+b+c+d}+\frac{c}{a+b+c+d}+\frac{d}{a+b+c+d}\right) = 3
+                \]
+            </p>
+            <p>Thus, the inequality is proven.</p>
+             <p>Equality cannot occur, since it would require conditions such as \(a = b = c + d\), \(b = c = a + d\), \(c = d = a + b\), and \(d = a = b + c\), which together imply \(a = b = c = d = 0\), contradicting the assumption that the variables are positive.</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>Dorin Marghidanu</p>
+        </details>
+    </div>
 </p>
 
 Sometimes, we need to find creative ways to group terms. If you're unable to find the solution right away, don't worry—this inequality is quite challenging to solve using only the AM-GM inequality.
@@ -3229,7 +3400,7 @@ At the end of this section, let's refocus on some elegant weak inequalities:
 <p>Let \(x_1, x_2, \dots, x_n\) be positive real numbers. Prove that:</p>
 <p class="mpc">
 \[
-    1+\sum_{j=2}^n[(\sum_{i=1}^j x_i) * (\sum_{i=1}^j \frac{1}{x_i})] \ge \frac{n(n+1)(2n+1)}{6}
+    1+\sum_{j=2}^n\left[\left(\sum_{i=1}^j x_i\right) * \left(\sum_{i=1}^j \frac{1}{x_i}\right)\right] \ge \frac{n(n+1)(2n+1)}{6}
 \]
 </p>
 <details> 
@@ -3381,6 +3552,10 @@ The following problems are not primarily about grouping terms but rather about i
         </p>
         <p>Thus, the strict inequality is proven.</p>
     </details>
+    <details>
+        <summary>Source</summary>
+        <p>Andrei N. Ciobanu</p>
+    </details>
 </div>
 </p>
 
@@ -3426,6 +3601,125 @@ The next problem is more about "splitting" than grouping:
         </p>
         <p>Therefore, the inequality is proven.</p>
         <p>Equality holds when \(x = y = z\).</p>
+    </details>
+</div>
+</p>
+
+In a similar fashion:
+
+<p>
+<div class="mp" id="pgtm272">
+    <p><a class="mpl" href="#pgtm272">Problem GTM27.2</a></p> 
+    <p>Let \(x, y, z\) be positive real numbers. Prove that:</p>
+    <p class="mpc">
+        \[
+            \frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}}+\frac{y}{\sqrt{(y^2+x^2)(y^2+z^2)}}+\frac{z}{\sqrt{(z^2+x^2)(z^2+y^2)}} \leq 
+        \]
+        \[
+            \leq \frac{1}{2}\left(\frac{1}{x}+\frac{1}{y}+\frac{1}{z}\right)
+        \]
+    </p>
+    <details>
+        <summary>Hint 1</summary>
+        <p>As in the previous problem, apply an identity to each term on the left-hand side:</p>
+        <p class="mpc">
+            \[
+                \frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}} = \sqrt{\frac{x}{x^2+y^2}\cdot\frac{x}{x^2+z^2}}
+            \]
+        </p>
+    </details>
+    <details>
+        <summary>Hint 2</summary>
+        <p>Apply the AM-GM inequality to each term:</p>
+        <p class="mpc">
+            \[
+                \sqrt{\frac{x}{x^2+y^2}\cdot\frac{x}{x^2+z^2}} \overbrace{\leq}^{\text{AM-GM}} \frac{1}{2} \left(\frac{x}{x^2+y^2}+\frac{x}{x^2+z^2}\right)
+            \]
+        </p>
+    </details>
+    <details>
+        <summary>Solution 1</summary>
+        <p>We rewrite the left-hand side using Hint 1:</p>
+        <p class="mpc">
+            \[
+                \frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}}+\frac{y}{\sqrt{(y^2+x^2)(y^2+z^2)}}+\frac{z}{\sqrt{(z^2+x^2)(z^2+y^2)}} \leq 
+            \]
+            \[
+                \leq \sqrt{\frac{x}{x^2+y^2}\cdot\frac{x}{x^2+z^2}} + \sqrt{\frac{y}{y^2+x^2}\cdot\frac{y}{y^2+z^2}} + \sqrt{\frac{z}{z^2+x^2}\cdot\frac{z}{z^2+y^2}} \tag{1}
+            \]
+        </p>
+        <p>In \((1)\), apply the AM-GM inequality to each term on the right-hand side:</p>
+        <p class="mpc">
+            \[
+                \sqrt{\frac{x}{x^2+y^2}\cdot\frac{x}{x^2+z^2}} + \sqrt{\frac{y}{y^2+x^2}\cdot\frac{y}{y^2+z^2}} + \sqrt{\frac{z}{z^2+x^2}\cdot\frac{z}{z^2+y^2}} \leq
+            \]
+            \[
+                \frac{1}{2}\left(\frac{x}{x^2+y^2}+\frac{x}{x^2+z^2} + \frac{y}{y^2+x^2}+\frac{y}{y^2+z^2}+\frac{z}{z^2+x^2}+\frac{z}{z^2+y^2}\right) \tag{2}
+            \]
+        </p>
+         <p>Now apply the inequality \(a^2 + b^2 \geq \frac{(a + b)^2}{2}\) to each denominator on the right-hand side:</p>
+        <p class="mpc">
+            \[
+                \frac{1}{2}\left(\frac{x}{x^2+y^2}+\frac{x}{x^2+z^2} + \frac{y}{y^2+x^2}+\frac{y}{y^2+z^2}+\frac{z}{z^2+x^2}+\frac{z}{z^2+y^2}\right) \leq
+            \]
+            \[
+                \frac{1}{2}\left(\frac{2x}{(x+y)^2}+\frac{2y}{(y+x)^2}+\frac{2y}{(y+z)^2}+\frac{2z}{(y+z)^2}+\frac{2z}{(z+x)^2}+\frac{2x}{(z+x)^2}\right) = 
+            \]
+            \[
+                = \frac{1}{x+y} + \frac{1}{y+z} + \frac{1}{z+y} \tag{3}
+            \]
+        </p>
+        <p>In a previous exercise (see <a href="#pivi071">Problem IVI7.1</a>), we showed that:</p>
+        <p class="mpc">
+            \[
+                \frac{1}{a+b} \leq \frac{1}{4}(\frac{1}{a}+\frac{1}{b}) \tag{4}
+            \]
+        </p>
+        <p>Combining inequalities \((1), (2), (3)\), and \((4)\), we get:</p>
+        <p class="mpc">
+            \[
+                 \frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}}+\frac{y}{\sqrt{(y^2+x^2)(y^2+z^2)}}+\frac{z}{\sqrt{(z^2+x^2)(z^2+y^2)}} \leq 
+            \]
+            \[
+                \leq \frac{1}{4}\left(\frac{1}{x}+\frac{1}{y}+\frac{1}{y}+\frac{1}{z}+\frac{1}{z}+\frac{1}{x}\right) =
+            \]
+            \[
+                = \frac{1}{2}\left(\frac{1}{x}+\frac{1}{y}+\frac{1}{z}\right)
+            \]
+        </p>
+        <p>Therefore, the inequality is proven. Equality holds when \(x = y = z\).</p>
+    </details>
+    <details>
+        <summary>Solution 2 (by M.O. Drimbe)</summary>
+        <p>In the book <em>Inegalități, Idei și Metode</em> (2003), the author M.O. Drimbe presents a surprising and elegant approach. The inequality can be easily proven by showing that:</p>
+        <p class="mpc">
+            \[
+                E(x,y,z)=\frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}} \leq \frac{1}{y+z}
+            \]
+        </p>
+        <p>The surprising part is that the maximum value of the expression \(E(x, y, z)\) depends only on \(y\) and \(z\), but not on \(x\). Although unexpected, this can be proven as follows:</p>
+        <p class="mpc">
+            \[
+                \frac{x}{\sqrt{(x^2+y^2)(x^2+z^2)}} \leq \frac{1}{y+z} \Leftrightarrow
+            \]
+            \[
+                \Leftrightarrow x(y+z) \leq \sqrt{(x^2+y^2)(x^2+z^2)} \Leftrightarrow
+            \]
+            \[
+                \Leftrightarrow x^2(y+z)^2 \leq (x^2+y^2)(x^2+z^2) \Leftrightarrow
+            \]
+            \[
+                \Leftrightarrow 2x^2yz \leq x^4+y^2z^2 \Leftrightarrow
+            \]
+            \[
+                0 \leq (x^2-yz)^2
+            \]
+        </p>
+         <p>This final inequality is always true since squares are non-negative. Applying the same reasoning to all three terms and summing the resulting inequalities completes the proof.</p>
+    </details>
+    <details>
+        <summary>Source</summary>
+        <p>I found this problem in at least two sources, the earliest being M.O. Drimbe’s book Inegalități, Idei și Metode (2003). It’s an outstanding work that truly deserves an English translation. I made a slight modification to the original problem.</p>
     </details>
 </div>
 </p>
@@ -5915,6 +6209,12 @@ We have already proven the following inequality (as part of a previous problem) 
                 \]
             </p>
             <p>It's important to notice that equality holds when: \(\frac{a}{b+c}=\frac{b}{c+a}=\frac{c}{a+b}\).</p>
+            <p class="mpt">
+                It's possible to solve the problem using the AM-GM inequality. Hint: 
+                \[ 
+                    \sqrt{2x(y+z)} \leq \frac{2x+y+z}{2}
+                \]
+            </p>
         </details>
         <details>
             <summary>Source</summary>
@@ -7890,7 +8190,7 @@ The next problem is an inequality problem "spiced-up" with just a little *number
                 \frac{x_1 + x_2}{x_3 x_4} + \frac{x_5}{x_6} + \frac{x_8}{x_7} + \frac{x_{11} + x_{12}}{x_9 x_{10}} > \frac{4\sqrt{n}}{n} + 2.
             \]
             </p>
-            <p>Now, can you prove the strict nature of the inequality ?</p>
+            <p>Now, can you prove the strict nature of the inequality ? The easiest way is to analyse the two fractions: \(\frac{x_5}{x_6}\) and \(\frac{x_8}{x_7}\).</p>
         </details>
         <details>
             <summary>Source</summary>
@@ -8020,6 +8320,7 @@ In a similar fashion:
         <details>
             <summary>Source</summary>
             <p>Romanian Math Olympiad, National Phase, Shortlist, 2003, Dinu Teodorescu</p>
+            <p>The problem appears also in "Algebric Inequalities Springer, 2018" by H. Sedrakyan, N. Sedrakyan.</p>
         </details>
     </div>
 </p>
