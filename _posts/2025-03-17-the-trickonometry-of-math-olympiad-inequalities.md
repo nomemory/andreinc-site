@@ -69,7 +69,9 @@ I’ll be gradually adding more problems as time permits (I'm also working on Pa
 Special thanks to:
 * `meithecatte` - for pointing one of the problem statements was incorrect.
 * `cryslith` - for pointing out some mistakes in my comments and helping me correct a few solutions.
-* Gheorghe Craciun for inspiring and allowing me to borrow some of his problems.
+* `Gheorghe Craciun` - for inspiring and allowing me to borrow some of his problems.
+* `Thomas Klausner` - for his kindness in reporting errors in some of the proofs.
+* All the other problem creators!
   
 If I forgot to include a source or mistakenly credited an exercise to the wrong author, please know it was unintentional. Some of the problems are original (created by me), but not all are signed, as the results are too elementary to require attribution. Similarly, some solutions are original, while others are based on official ones—just presented in slightly more detail.
 
@@ -470,7 +472,7 @@ In rare (but "intentional") cases we can use inequalities to solve system of equ
                     \frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} \leq \frac{1}{2}\left(\frac{1}{a}+\frac{1}{b}+\frac{1}{c}\right) \Leftrightarrow
                 \]
                 \[
-                    \frac{1}{a+b}+\frac{1}{b+c}+\frac{c+a} \leq \frac{3}{2} \tag{1}
+                    \frac{1}{a+b}+\frac{1}{b+c}+\frac{1}{c+a} \leq \frac{3}{2} \tag{1}
                 \]
             </p>
             <p>The left side is exactly \(\frac{3}{2}\), so equality must hold in (1). Equality in the inequality</p>
@@ -987,7 +989,7 @@ In a similar fashion:
         <p>Let \(a,b,c\) positive real numbers such that \(abc=1\). Prove that:</p>
         <p class="mpc">
             \[
-                2\left(\frac{a}{b}+\frac{b}{c}+\frac{a}{a}\right) \geq \frac{1}{a} + \frac{1}{b} + \frac{1}{c} + a + b + c
+                2\left(\frac{a}{b}+\frac{b}{c}+\frac{c}{a}\right) \geq \frac{1}{a} + \frac{1}{b} + \frac{1}{c} + a + b + c
             \] 
         </p>
         <details>
@@ -1012,7 +1014,7 @@ In a similar fashion:
             <p>Using the condition \( abc = 1 \), substitute \( c = \frac{1}{ab} \) into the original inequality. The left-hand side becomes:</p>
             <p class="mpc">
                 \[
-                    2\left(\frac{a}{b} + ab^2 + \frac{1}{a^2b}\right) \geq \frac{1}{a} + \frac{1}{b} + a + b + \frac{1}{ab}
+                    2\left(\frac{a}{b} + ab^2 + \frac{1}{a^2b}\right) \geq \frac{1}{a} + \frac{1}{b} + ab + a + b + \frac{1}{ab}
                 \]
             </p>
             <p>We now simplify both sides to a common form. Multiply through as needed to bring all terms to a common denominator. After simplification and rearrangement, the inequality becomes:</p>
@@ -1024,7 +1026,7 @@ In a similar fashion:
                     (a^3-a^2-a+1)+(a^3b^3-ab-a^2b^2+1)+a^3(b^3-b^2-b+1) \geq 0 \Leftrightarrow
                 \]
                 \[
-                    \underbrace{\left[(a^3+b^3)-a(a+1)\right]}_{\geq 0} + \underbrace{\left[(a^3b^3+1)-ab(ab+1)\right]}_{\geq 0} +
+                    \underbrace{\left[(a^3+1)-a(a+1)\right]}_{\geq 0} + \underbrace{\left[(a^3b^3+1)-ab(ab+1)\right]}_{\geq 0} +
                 \]
                 \[
                     + \underbrace{a^3\left[(b^3+1)-b(b+1)\right]}_{\geq 0} \geq 0
@@ -1269,6 +1271,122 @@ In a similar fashion:
         </details>
     </div>
 </p>
+
+The following inequality may seem counterintuitive at first glance. How can a function $$f(x,y,z)$$, which clearly depends on the variables $$x$$, $$y$$, and $$z$$, attain its maximum value independently of $$x$$? Upon deeper reflection, however, there's no contradiction—this kind of behavior is entirely possible under the right structure:
+
+<p>
+    <div class="mp" id="pivi201">
+        <p><a class="mpl" href="#pivi201">Problem IVI20.1</a></p> 
+        <p>Let \(x,y,z\) positive real numbers. Prove the inequality:</p>
+        <p class="mpc">
+            \[
+                \sqrt{\frac{x+y}{x+z}}+\sqrt{\frac{x+z}{x+y}} \leq \frac{y+z}{\sqrt{yz}}
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+             <p>A straightforward, brute-force solution exists. One can simplify both sides and square the expressions to eliminate radicals.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We proceed by algebraic simplification. Although this approach may not be elegant, it is effective:</p>
+            <p class="mpc">
+                \[
+                    \sqrt{\frac{x+y}{x+z}}+\sqrt{\frac{x+z}{x+y}} \leq \frac{y+z}{\sqrt{yz}} \Leftrightarrow
+                \]
+                \[
+                    \frac{\sqrt{(x+y)^2}+\sqrt{(x+z)^2}}{\sqrt{(x+y)(x+z)}} \leq \frac{y+z}{\sqrt{yz}} \Leftrightarrow
+                \]
+                \[
+                    \frac{2x+y+z}{\sqrt{(x+y)(x+z)}} \leq \frac{y+z}{\sqrt{yz}} \Leftrightarrow
+                \]
+                \[
+                    yz(2x+y+z)^2 \leq (y+z)^2(x+y)(x+z) \Leftrightarrow
+                \]
+                \[
+                    yz(4x^2+y^2+z^2+4xy+4xz+2yz) \leq (y+z)^2(x^2 + xy + xz + yz) \Leftrightarrow
+                \]
+                \[
+                    yz[4x^2+4x(y+z)+(y+z)^2] \leq (y+z)^2[x^2+x(y+z)+yz] \Leftrightarrow
+                \]
+                \[
+                    4x^2yz + 4xyz(y+z)+yz(y+z)^2 \leq x^2(y+z)^2 + x(y+z)^3 + yz(y+z)^2 \Leftrightarrow
+                \]
+                \[
+                    4x^2yz + 4xyz(y+z) \leq x^2(y+z)^2 + x(y+z)^3 \Leftrightarrow
+                \]
+                \[
+                    0 \leq x^2[(y+z)^2-4yz] + x(y+z)((y+z)^2-4yz) \Leftrightarrow
+                \]
+                \[
+                    0 \leq x^2(y-z)^2 + x(y+z)(y-z)^2
+                \]
+            </p>
+            <p>Since all terms on the right-hand side are non-negative, the inequality is proven.</p>
+            <p>Equality holds if and only if \(y = z\).</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+             <p>This problem was originally posted in the <a href="https://www.facebook.com/groups/1486244404996949/">Mathematical Inequalities</a> Facebook group by Nguyễn Ngọc Phúc. The brute-force solution was contributed by Hung Nguyen Viet.</p>
+        </details>
+    </div>
+</p>
+
+Just a general observation: if we explore the mindset of problem creators, we find that inequalities like <a href="#pivi201">Problem IVI20.1</a> are especially appealing. They often serve as the building blocks for crafting more intricate and elegant problems. For instance, we can use that very inequality as the basis for generating new, seemingly more challenging problems. Let’s step into the mindset of a problem composer.
+
+<p>
+    <div class="mp">
+        <p>Recall that we have just proven the following inequality:</p>
+        <p class="mpc"> 
+            \[
+                \sqrt{\frac{x+y}{x+z}}+\sqrt{\frac{x+z}{x+y}} \leq \frac{y+z}{\sqrt{yz}} \tag{1}
+            \]
+        </p>
+        <p>Now, as a creative twist, we apply cyclic substitutions to obtain two additional inequalities:</p>
+        <p class="mpc">
+            \[
+                \sqrt{\frac{y+z}{y+x}}+\sqrt{\frac{y+x}{y+z}} \leq \frac{z+x}{\sqrt{zx}} \tag{2}
+            \]
+            \[
+                \sqrt{\frac{z+x}{z+y}}+\sqrt{\frac{z+y}{z+x}} \leq \frac{x+y}{\sqrt{xy}} \tag{3}
+            \]
+        </p>
+        <p>Adding inequalities \((1)\), \((2)\), and \((3)\), we obtain:</p>
+        <p class="mpc">
+            \[
+                \sqrt{\frac{x+y}{x+z}}+\sqrt{\frac{x+z}{x+y}} + \sqrt{\frac{y+z}{y+x}}+\sqrt{\frac{y+x}{y+z}} + \sqrt{\frac{z+x}{z+y}}+\sqrt{\frac{z+y}{z+x}} \leq
+            \]
+            \[
+                \frac{y+z}{\sqrt{yz}} + \frac{z+x}{\sqrt{zx}} + \frac{x+y}{\sqrt{xy}} \Leftrightarrow
+            \]
+            \[
+                \frac{\sqrt{x+y}+\sqrt{z+y}}{\sqrt{x+z}} + \frac{\sqrt{x+z}+\sqrt{y+z}}{\sqrt{x+y}} + \frac{\sqrt{z+x}+\sqrt{y+x}}{\sqrt{z+y}} \leq
+            \]
+            \[
+                \frac{\sqrt{x}+\sqrt{y}}{\sqrt{z}} + \frac{\sqrt{y}+\sqrt{z}}{\sqrt{x}} + \frac{\sqrt{z}+\sqrt{x}}{\sqrt{y}} \tag{4}
+            \]
+        </p>
+        <p>To add a final layer of challenge, we can impose the condition \(x + y + z = 1\). This leads to the following "new" problem, which appears more complicated but is structurally equivalent to the original:
+        </p>
+        <p>
+        <div class="mp">
+            <p>Let \(x,y,z\) positive real numbers such that \(x+y+z=1\). Prove that:</p>
+            <p class="mpc">
+                \[
+                    \frac{\sqrt{1-z}+\sqrt{1-x}}{\sqrt{1-y}} + \frac{\sqrt{1-y}+\sqrt{1-x}}{\sqrt{1-z}} + \frac{\sqrt{1-y}+\sqrt{1-z}}{\sqrt{1-x}} \leq
+                \]
+                \[
+                    \leq \frac{\sqrt{z}+\sqrt{x}}{\sqrt{y}} + \frac{\sqrt{y}+\sqrt{x}}{\sqrt{z}} + \frac{\sqrt{y}+\sqrt{z}}{\sqrt{x}}
+                \]
+            </p>
+        </div>
+        </p>
+        <p>And there you have it—your first composed inequality problem, born from a simple yet powerful foundational result.</p>
+        <p>If the problem you've just created is too elementary or too similar to an existing one (as in our case), you might choose not to attach your name to it. However, if you do choose to sign it, be sure to acknowledge the original source and clarify your own contribution. Noblesse oblige.</p>
+    </div>
+</p>
+
+But before creating new problems, it's important to keep solving more. To craft truly elegant problems, you need experience with more advanced techniques and problem-solving strategies:
 
 <p>
 <div class="mp" id="pivi21">
@@ -8407,6 +8525,18 @@ In a similar fashion:
             <summary>Source</summary>
             <p>Andrei N. Ciobanu</p>
         </details>
+    </div>
+</p>
+
+<p>
+    <div class="mp" id="pmch06">
+        <p><a class="mpl" href="#pmch06">Problem MCH06</a></p> 
+        <p>Let \(a,b,c\) positive real numbers Prove the inequality:</p>
+        <p class="mpc">
+            \[
+                \sum_{\text{cyc}}\frac{\sqrt{a+b}+\sqrt{b+c}}{\sqrt{c+a}} \leq \sum_{\text{cyc}}\frac{\sqrt{a}+\sqrt{b}}{\sqrt{c}}
+            \]
+        </p>
     </div>
 </p>
 
