@@ -5,6 +5,8 @@ classes: wide
 comments: true
 excerpt: "Pade Approximations are cute"
 usekatex: true
+custom-css-list:
+    - "/assets/css/math.css"
 categories:
 - "math"
 tags:
@@ -14,39 +16,64 @@ tags:
 
 ## How it started
 
-The story behind this post surprisingly begins on Facebook, in a group dedicated to mathematics. A math teacher asked the audience to determine the value of $$\lfloor 3^{\sqrt{3}}\rfloor$$ without using a calculator. Naturally, the challenge was to prove whether $$\lfloor 3^{\sqrt{3}}\rfloor=6$$ or $$\lfloor 3^{\sqrt{3}}\rfloor=7$$ (my intuition leaned toward 7).
+This story began, unexpectedly, on Facebook in a math-focused group. A teacher asked the group to determine the value of: $$\lfloor 3^{\sqrt{3}}\rfloor$$ without using a calculator. 
 
-After some back-and-forth discussion, everyone agreed that the following solution (proposed by Mihai Cris) was the most acceptable:
+Naturally, the challenge was to prove whether $$\lfloor 3^{\sqrt{3}}\rfloor=6$$ or $$\lfloor 3^{\sqrt{3}}\rfloor=7$$ (my intuition leaned toward 7).
 
-$$3^{7}>2^{10} \Rightarrow 3^{7}*3^{10}>2^{10}*3^{10} \Rightarrow 3^{17} > 6^{10} \Rightarrow 3^{\frac{17}{10}}>6 \Rightarrow 3^{1.7} > 6$$
+Eventually, the most convincing solution—proposed by Mihai Cris—was accepted by the group:
 
-At the same time:
+<p><div class="mp">
+\[
+3^{7}>2^{10} \Rightarrow 3^{7}*3^{10}>2^{10}*3^{10} \Rightarrow 3^{17} > 6^{10} \Rightarrow 3^{\frac{17}{10}}>6 \Rightarrow 3^{1.7} > 6
+\]
+</div></p>
 
-$$3^7=2187<2401=7^4 \Rightarrow 3^{7/4} < 7 \Rightarrow 3^{1.75}<7$$
+And on the other end:
+
+<p><div class="mp">\[
+    3^7=2187<2401=7^4 \Rightarrow 3^{7/4} < 7 \Rightarrow 3^{1.75}<7
+\]</div></p>
 
 Since $$\sqrt{3}\approx 1.73 \Rightarrow \lfloor 3^{\sqrt{3}}\rfloor=6$$.
 
 **Later edit:**
 
-After [posting on reddit](https://old.reddit.com/r/math/comments/1gu95wu/a_joke_in_approximating_numbers_raised_to/), `/u/JiminP` proposed a different solution:
+After sharing the post on [reddit](https://old.reddit.com/r/math/comments/1gu95wu/a_joke_in_approximating_numbers_raised_to/), user `/u/JiminP` proposed an alternative method:
 
-$$6^3=2^3*3^3<3^2*3^3=3^5 \Rightarrow 6 < 3^{\frac{5}{3}}=3^{\sqrt{\frac{25}{9}}}<3^{\sqrt{\frac{27}{9}}}<3^{\sqrt{3}}$$
+<p>
+<div class="mp">
+\[
+6^3=2^3*3^3<3^2*3^3=3^5 \Rightarrow 6 < 3^{\frac{5}{3}}=3^{\sqrt{\frac{25}{9}}}<3^{\sqrt{\frac{27}{9}}}<3^{\sqrt{3}}
+\]
+</div>
+</p>
 
-At the same time:
+Simultaneously:
 
-$$48<49 \Rightarrow 3*2^4 < 7^2$$ and $$3^7<256*3^2=2^8*3^2<7^4 \Rightarrow 7^4 > 3^{\frac{7}{4}}=3^{\sqrt{\frac{49}{16}}} > 3^{\sqrt{\frac{48}{16}}} > 3^{\sqrt{3}}$$
 
-The decision on which solution is the best is [left to the reader](https://academia.stackexchange.com/questions/20084/is-using-the-phrase-is-left-as-an-exercise-for-the-reader-considered-good).
+<p><div class="mp">\[
+    48<49 \Rightarrow 3*2^4 < 7^2 
+    \]
+    \[
+        3^7<256*3^2=2^8*3^2<7^4 \Rightarrow 7^4 > 3^{\frac{7}{4}}=3^{\sqrt{\frac{49}{16}}} > 3^{\sqrt{\frac{48}{16}}} > 3^{\sqrt{3}}
+\]</div></p>
+
+Which method is better? That’s [left to the reader](https://academia.stackexchange.com/questions/20084/is-using-the-phrase-is-left-as-an-exercise-for-the-reader-considered-good).
 
 ## The new problem
 
-The previous problem was cute, but it made me wonder whether I could find a way to approximate (small) numbers raised to (small) irrational powers **without using a calculator** (no logarithms or radicals), relying solely on **addition** and **multiplication**. Basically, I was looking for a method where pen, paper, and patience are enough.
+That problem was charming—but it sparked a bigger question:  
+Could we approximate small numbers raised to irrational powers without using calculators, logs, or radicals—just **addition** and **multiplication**?
 
-This is primarily a joke, so if you don't want to continue reading, here is the answer:
+This was more of a joke than a serious challenge, so here’s my final formula (if you don’t want to read the rest):
 
-$$
+<p>
+<div class="mp">
+\[
 a^{\sqrt{c}} \approx \frac{-120-60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
-$$
+\]
+</div>
+</p>
 
 (... as long as $$\frac{1}{2} < \ln a * \sqrt{c} < 3$$)
 
@@ -69,16 +96,15 @@ To get even closer to the actual result, I computed the first 8 terms of the ser
 
 ## The eureka!
 
-At this point I had a few *flashbacks* from my school days.
+At this point I had a few *flashbacks* from my school days, and two ideas resurfaced.
 
 Firstly, there was something called *[Small Angle Approximations](https://en.wikipedia.org/wiki/Small-angle_approximation)*, that happen when the angle is, as you would expect, (very) very small:
 
-$$
+<p><div class="mp">\[
 \sin(x) \approx x \\
 \cos(x) \approx 1-\frac{x^2}{2} \\
 \tan(x) \approx x
-$$
-
+\]</div></p>
 
 So I've wondered if there isn't something similar for $$e^x, \ln x$$ and $$\sqrt{x}$$, anything that works for small numbers.
 
@@ -91,22 +117,27 @@ So, without going into too much details, a Padé approximation is a rational fun
 
 A Padé approximation of order `[m/n]` for a function $$f(x)$$ is expressed as:
 
-$$f(x) \approx P_{[m,n]}(x)=\frac{a_0+a_1x+a_2x^2+\dots+a_mx^m}{1+b_1x+b_2x^2+\dots+b_nx^n}$$
+<p><div class="mp">\[
+    f(x) \approx P_{[m,n]}(x)=\frac{a_0+a_1x+a_2x^2+\dots+a_mx^m}{1+b_1x+b_2x^2+\dots+b_nx^n}
+\]</div></p>
 
 Compared to *Taylor Series*, Padé seem to handle exponential behaviors and discontinuities better, plus in a lot of cases it converges faster.
 
 Needless to say, I was curious how well those approximations actually work, so I've computed the Padé aproximation of order `[1/1]`, $$P_{[1/1]}(x)$$ for $$e^x$$. (For in depth *tutorial* follow the Professor's Penn *tutorial*, linked above).
 
-$$P_{[1/1]}(x)=\frac{a_0+a_1x}{b_1x+1}$$
+<p><div class="mp">\[
+    P_{[1/1]}(x)=\frac{a_0+a_1x}{b_1x+1}
+\]</div></p>
 
 To find $$a_0, a_1, b_1$$ we need to solve the following system of equations:
 
-$$\begin{cases}
+<p><div class="mp">\[
+\begin{cases}
 e^0=P(0)=a_0=1 \\
 e^0=P'(0)=a_1-b_1=1 \\
 e^0=P''(0)=2b_1(b_1-a_1)=1 \\
 \end{cases}
-$$
+\]</div></p>
 
 After solving this, we will get $$P_{[1/1]}=\frac{2+x}{2-x}$$.
 
@@ -143,15 +174,15 @@ Putting all together.
 
 So for "small numbers" we can approximate $$a^b$$ using the following expression:
 
-$$
-a^b \approx \frac{-120-60[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
-$$
+<p><div class="mp">\[
+    a^b \approx \frac{-120-60[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[b*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
+\]</div></p>
 
 Or we can compute:
 
-$$
+<p><div class="mp">\[
 a^{\sqrt{c}} \approx \frac{-120-60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}-[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}{-120+60[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]-12[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{2}+[\frac{5c^{2}+10c+1}{c^{2}+10c+5}*\frac{3(a-1)(a+1)}{a^{2}+4a+1}]^{3}}
-$$
+\]</div></p>
 
 ---
 
@@ -178,9 +209,11 @@ Computing $$3^{\sqrt{3}}$$ with our function yields: $$6.58$$ instead of $$6.70$
 
 ## Final thoughts
 
-* The monster function is impractical, especially after the discovery of the transistor and the logiccd  gates. Even so, the article's true purpose was to find a goofy pretext to try Padé  Approximations by myself.
+* The monster function is clearly impractical—especially in the era of logic gates and floating-point math. But that wasn't the point.
 
-* I was considering applying the same concept that Padé used with polynomials to Fourier series. While others have attempted this, the results aren't as remarkable. For instance, an expression like $$S_N(x)=a_{0}+\sum_{n=1}{N}(a_n\cos(nx)+b_n\sin(nx))$$ is certainly polynomial-like enough to be represented as a rational function.Doing this seems to reduce the Gibbs phenomenon near discontinuities. However, the main drawback is that Padé approximations are not periodic in nature.
+* This post was just a fun excuse to explore Padé Approximations firsthand.
+
+* I briefly considered extending this technique to Fourier series. While some research exists on "rationalizing" Fourier series to reduce Gibbs phenomena, Padé approximations lose periodicity, so it's a tricky compromise.
 
 
 

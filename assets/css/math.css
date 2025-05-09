@@ -1,0 +1,40 @@
+
+.mp {
+    border: thin solid #ccc;
+    background-color: #F0F0F0;
+    padding: 25px;
+    width: inherit;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+  
+  .mpl {
+    position: relative;
+    font: 0.7rem/1.1 sans-serif; /* small font */
+    font-style: italic;
+    text-decoration: none;       /* looks like plain text */
+    background: #F0F0F0;
+    border-radius: 1px;
+    border: 0px solid #ccd;
+  }
+  
+  .mpt {
+      padding: 25px;
+      font-style: italic;
+      color: #666;
+  }
+  
+  .mpc {
+      text-align: center;
+  }
+  
+  .mpn {
+    display: inline-block;  
+    font-weight: normal;            /* Removed bold */
+    font-size: 0.8rem;             /* Smaller font size */
+    color: #777;                   /* Distinguishable gray color */
+  }
