@@ -3298,6 +3298,77 @@ The next two problems can be easily solved using an inequality that we will disc
     </div>
 </p>
 
+The next problem is a classic exercise from [APMO 1998](https://www.apmo-official.org/). Its solution closely resembles the previous examples—once you spot a simple but effective trick:
+
+<p>
+    <div class="mp" id="pgtm211">
+        <p><a class="mpl" href="#pgtm211">Problem GTM21.1</a></p> 
+        <p>Let \( x, y, z \) be positive real numbers. Prove the following inequality:</p>
+        <p class="mpc">
+            \[
+                \left(1+\frac{x}{y}\right)\cdot\left(1+\frac{y}{z}\right)\cdot\left(1+\frac{z}{x}\right) \geq 2 + 2\cdot\frac{x+y+z}{\sqrt[3]{xyz}}
+            \]
+        </p>
+        <details>
+            <summary>Hint 1</summary>
+            <p>The term \(\sqrt[3]{xyz}\) suggests the use of the AM-GM inequality. Try to simplify or restructure the expression to reveal an appropriate application.</p>
+        </details>
+        <details>
+            <summary>Solution</summary>
+            <p>We start by simplifying the left-hand side:</p>
+            <p class="mpc">
+                \[
+                    \left(1+\frac{x}{y}\right)\cdot\left(1+\frac{y}{z}\right)\cdot\left(1+\frac{z}{x}\right) = 
+                \]
+                \[
+                    = \left(1+\frac{y}{z}+\frac{x}{y}+\frac{xy}{yz}\right)\left(1+\frac{z}{x}\right) = 
+                \]
+                \[
+                    = 1 + \frac{z}{x} + \frac{y}{z} + \frac{y}{x} + \frac{x}{y} + \frac{z}{y} + \frac{x}{z} + 1 = 
+                \]
+                \[
+                    = 2 + 2\cdot\left(\frac{x}{y}+\frac{y}{z}+\frac{z}{x}\right) \tag{1}
+                \]
+            </p>
+            <p>Substituting into the original inequality, we aim to prove:</p>
+            <p class="mpc">
+                \[
+                    2 + 2\cdot\left(\frac{x}{y}+\frac{y}{z}+\frac{z}{x}\right) \geq 2 + 2\cdot\frac{x+y+z}{\sqrt[3]{xyz}} \Leftrightarrow
+                \]
+                \[
+                    \frac{x}{y}+\frac{y}{z}+\frac{z}{x} \geq \frac{x+y+z}{\sqrt[3]{xyz}} \tag{2}
+                \]
+            </p>
+            <p>Multiply both sides by 3 to prepare for the AM-GM inequality:</p>
+            <p class="mpc">
+                \[
+                    3 \cdot \left(\frac{x}{y}+\frac{y}{z}+\frac{z}{x}\right) \geq 3 \cdot \frac{x+y+z}{\sqrt[3]{xyz}} \Leftrightarrow
+                \]
+                \[
+                    \left(\frac{x}{y}+\frac{x}{y}+\frac{y}{z}\right) + \left(\frac{y}{z}+\frac{y}{z}+\frac{z}{x}\right) + \left(\frac{z}{x}+\frac{z}{x}+\frac{x}{y}\right) \geq 3 \cdot \frac{x+y+z}{\sqrt[3]{xyz}} \Leftrightarrow
+                \]
+            </p>
+            <p>Applying AM-GM inequality to each group:</p>
+            <p class="mpc">
+                \[
+                    \left(\frac{x}{y}+\frac{x}{y}+\frac{y}{z}\right) + \left(\frac{y}{z}+\frac{y}{z}+\frac{z}{x}\right) + \left(\frac{z}{x}+\frac{z}{x}+\frac{x}{y}\right) \geq
+                \]
+                \[
+                    3 \sqrt[3]{\frac{x^2y}{y^2z}} + 3 \sqrt[3]{\frac{y^2z}{z^2x}} + 3 \sqrt{\frac{z^2x}{x^2y}} =
+                \]
+                \[
+                    3 \cdot \frac{x+y+z}{\sqrt[3]{xyz}}
+                \]
+            </p>
+            <p>Equality holds when \(x=y=z\).</p>
+        </details>
+        <details>
+            <summary>Source</summary>
+            <p>APMO 1998</p>
+        </details>
+    </div>
+</p>
+
 An important thing to take in consideration is that when we sum/multiply [weak inequalities](https://proofwiki.org/wiki/Definition:Inequality/Weak) involving *interdependent* terms, we need to verify conditions across the inequalities to check if they remain consistent:
 
 <p>
@@ -3347,6 +3418,8 @@ An important thing to take in consideration is that when we sum/multiply [weak i
 </details>
 </div>
 </p>
+
+The next problem is a textbook example of a clever application of the AM-GM inequality:
 
 <p>
     <div class="mp" id="pgtm221">
@@ -8525,18 +8598,6 @@ In a similar fashion:
             <summary>Source</summary>
             <p>Andrei N. Ciobanu</p>
         </details>
-    </div>
-</p>
-
-<p>
-    <div class="mp" id="pmch06">
-        <p><a class="mpl" href="#pmch06">Problem MCH06</a></p> 
-        <p>Let \(a,b,c\) positive real numbers Prove the inequality:</p>
-        <p class="mpc">
-            \[
-                \sum_{\text{cyc}}\frac{\sqrt{a+b}+\sqrt{b+c}}{\sqrt{c+a}} \leq \sum_{\text{cyc}}\frac{\sqrt{a}+\sqrt{b}}{\sqrt{c}}
-            \]
-        </p>
     </div>
 </p>
 
