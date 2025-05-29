@@ -906,41 +906,6 @@ The following are the first *non-trivial* challenges in this article that can be
     </div>
 </p>
 
-In a similar fashion:
-
-<p>
-    <div class="mp" id="pivi161">
-        <p><a class="mpl" href="#pivi161">Problem IVI16.1</a></p>
-        <p>Let \(a,b,c\) positive real numbers. Prove that:</p>
-        <p class="mpc">
-            \[
-                \frac{1}{a^3+b^3+abc} + \frac{1}{b^3+c^3+abc}+\frac{1}{c^3+a^3+abc} \leq \frac{1}{abc}
-            \]
-        </p>
-        <details>
-            <summary>Solution</summary>
-            <p>We begin by applying the inequality \( a^3 + b^3 \geq ab(a + b) \). This gives:</p>
-            <p class="mpc">
-                \[
-                    \frac{1}{a^3+b^3+abc} + \frac{1}{b^3+c^3+abc}+\frac{1}{c^3+a^3+abc} \leq
-                \]
-                \[
-                    \leq \frac{1}{ab(a+b)+abc} + \frac{1}{bc(b+c)+abc} + \frac{1}{ca(c+a)+abc} = 
-                \]
-                \[
-                    = \frac{1}{ab(a+b+c)} + \frac{1}{bc(a+b+c)} + \frac{1}{ca(a+b+c)} =
-                \]
-                \[
-                    = \frac{c}{abc(a+b+c)} + \frac{a}{abc(a+b+c)} + \frac{b}{abc(a+b+c)} = 
-                \]
-                \[
-                    = \frac{a+b+c}{abc(a+b+c)} = \frac{1}{abc}
-                \]
-            </p>
-        </details>
-    </div>
-</p>
-
 <p>
     <div class="mp" id="pivi17">
         <p><a class="mpl" href="#pivi17">Problem IVI17</a></p> 
@@ -1344,7 +1309,7 @@ Just a general observation: if we explore the mindset of problem creators, we fi
     </div>
 </p>
 
-But before creating new problems, it's important to keep solving more. To craft truly elegant problems, you need experience with more advanced techniques and problem-solving strategies:
+<!-- But before creating new problems, it's important to keep solving more. To craft truly elegant problems, you need experience with more advanced techniques and problem-solving strategies:
 
 <p>
 <div class="mp" id="pivi21">
@@ -1388,7 +1353,7 @@ But before creating new problems, it's important to keep solving more. To craft 
     <p>This problem is adapted from the book: T. Andreescu, Z. Feng - 101 Problems in Algebra (Korean Mathematics Competition, 2001).</p>
 </details>
 </div>
-</p>
+</p> -->
 
 ---
 
@@ -1777,7 +1742,7 @@ The AM-GM inequality reveals a profound connection between the sum (∑) and the
 <p>
 <div class="mp" id="pag06">
 <p><a class="mpl" href="#pag06">Problem AG06</a></p> 
-<p>Let \(x_1, x_2, \dots x_n\) be non-negative and positive real numbers. Can you find a value for \(P=\prod_{i=1}^nx_i\) so that \(S=\sum_{i=1}^n x_i \ge \pi\) ?</p>
+<p>Let \(x_1, x_2, \dots x_n\) positive real numbers different than \(0\). Can you find a value for \(P=\prod_{i=1}^nx_i\) so that \(S=\sum_{i=1}^n x_i \ge \pi\) ?</p>
 <details> 
     <summary>Solution</summary>
     <p>We wish to find a value for \(P\) such that the inequality \(S\ge\pi\) holds.</p> 
@@ -1858,7 +1823,7 @@ Now, for a bit of fun, let's tackle a problem that may appear more challenging a
             <p>Using the AM-GM inequality, observe that:</p>
             <p class="mpc">
                 \[
-                    \frac{1}{\underbrace{x^2+yz}_{\ge 2x\sqrt{xy}}} \le \frac{1}{2x\sqrt{xy}} = \frac{\sqrt{xy}}{2xyz}
+                    \frac{1}{\underbrace{x^2+yz}_{\ge 2x\sqrt{yz}}} \le \frac{1}{2x\sqrt{yz}} = \frac{\sqrt{yz}}{2xyz}
                 \]
             </p>
             <p>Apply this result to each term in the sum.</p>
@@ -2014,7 +1979,7 @@ For the next exercise the key idea is to leverage the additional conditions prov
             <p>By the Arithmetic Mean-Geometric Mean (AM-GM) inequality, we have:</p>
             <p class="mpc">
                 \[
-                    ab(\frac{1+c+c^2}{1+a+a^2})+bc(\frac{1+a+a^2}{1+b+b^2})+ca(\frac{1+b+b^2}{1+c+c^2}) \overbrace{\ge}^{AM-GM} 3\sqrt{a^2b^2c^2} = 3
+                    ab(\frac{1+c+c^2}{1+a+a^2})+bc(\frac{1+a+a^2}{1+b+b^2})+ca(\frac{1+b+b^2}{1+c+c^2}) \overbrace{\ge}^{AM-GM} 3\sqrt[3]{a^2b^2c^2} = 3
                 \]
             </p>
             <p>Equality holds when \(a=b=c=1\).</p>
@@ -2486,7 +2451,7 @@ The next problem is more difficult to solve but a previous exercise might help:
             <p>Observe that each term can be written in the form:</p>
             <p class="mpc">
                 \[
-                    \frac{1}{5+k^4} = \frac{1}{\left(\sqrt{4}\right)^4+k^4 + 1} \leq \text{?}
+                    \frac{1}{5+k^4} = \frac{1}{\left(\sqrt{2}\right)^4+k^4 + 1} \leq \text{?}
                 \]
             </p>
         </details>
@@ -2508,7 +2473,7 @@ The next problem is more difficult to solve but a previous exercise might help:
                     \frac{1}{5+2^4}+\frac{1}{5+3^4}+\frac{1}{5+4^4}+\dots+\frac{1}{5+n^4} =
                 \]
                 \[
-                    = \frac{1}{\left(\sqrt{4}\right)^4+2^4+1}+\frac{1}{\left(\sqrt{4}\right)^4+3^4+1}+\dots+\frac{1}{\left(\sqrt{4}\right)^4+n^4+1} \leq
+                    = \frac{1}{\left(\sqrt{2}\right)^4+2^4+1}+\frac{1}{\left(\sqrt{2}\right)^4+3^4+1}+\dots+\frac{1}{\left(\sqrt{2}\right)^4+n^4+1} \leq
                 \]
                 \[
                     \leq \frac{1}{2\cdot\sqrt{2}\cdot 2^2 \cdot \sqrt{2}} + \leq \frac{1}{2\cdot\sqrt{2}\cdot 3^2 \cdot \sqrt{2}} + \dots + \frac{1}{2\cdot\sqrt{2}\cdot n^2 \cdot \sqrt{2}} \leq
@@ -2954,9 +2919,10 @@ We have already solved the following inequality using a different technique, but
     </div>
 </p>
 
-Can we make a short generalisation?
+<!-- 
+Can we make a short generalisation? -->
 
-<p>
+<!-- <p>
     <div class="mp" id="pgtm16">
         <p><a class="mpl" href="#pgtm16">Problem GTM16</a></p> 
         <p>Let \(a,b,c,d\) positive real numbers and \(n \in \mathbb{N}^{*}\), prove that:</p>
@@ -3009,7 +2975,7 @@ Can we make a short generalisation?
         it forces \(a^n = 1\) and also each “1” must match \(a^n\). Consequently, \(a = 1\). The same argument applies to \(b, c,\) and \(d\), so all must be 1. Thus the inequality is sharp exactly when \(a=b=c=d=1\).</p>
         </details>
     </div>
-</p>
+</p> -->
 
 
 In a somewhat similar fashion:
@@ -5212,7 +5178,6 @@ As a general piece of advice, whenever you encounter logarithms in an inequality
         </details>
     </div>
 </p>
-
 
 # Ravi Substitutions
 
