@@ -25,7 +25,7 @@ If you'd like to help out with reviewing, feel free to drop me a message (see th
 I’ll be gradually adding more problems as time permits (I'm also working on Part 2).
 
 Special thanks to:
-* `meithecatte` - for pointing one of the problem statements was incorrect.
+* `meithecatte` - for pointing out that one of statements was incorrect.
 * `cryslith` - for pointing out some mistakes in my comments and helping me correct a few solutions.
 * `Gheorghe Craciun` - for inspiring and allowing me to borrow some of his problems.
 * `Thomas Klausner` - for his kindness in reporting errors in some of the proofs.
@@ -41,7 +41,7 @@ If I forgot to include a source or mistakenly credited an exercise to the wrong 
 
 Inequalities are among the most "fascinating" and versatile topics in [competitive mathematics](https://en.wikipedia.org/wiki/List_of_mathematics_competitions) because they challenge solvers to think creatively and intuitively. If you look at the [IMO problem sets](https://artofproblemsolving.com/wiki/index.php/IMO_Problems_and_Solutions), you will find that inequality problems are almost always present, year after year. 
 
-Approaching an "inequality" problem requires more than just sheer "mathematical force" (although using techniques from Real Analysis can help); you need to take a step back and come up with clever manipulations, substitutions, and (sometimes) novel ideas. In essence, inequality problems blend "beauty" with "intellectual challenge", and they are embodying so well the spirit of "competitive mathematics". 
+Approaching an "inequality" problem requires more than just sheer "mathematical force" (although using techniques from Real Analysis can help); you need to take a step back and come up with clever manipulations, substitutions, and (sometimes) novel ideas. In essence, inequality problems blend "beauty" with "intellectual challenge", and they embody so well the spirit of "competitive mathematics". 
 
 I am a bad salesperson when it comes to selling mathematics, but the main idea is inequality problems are cool.
 
@@ -50,7 +50,7 @@ I am a bad salesperson when it comes to selling mathematics, but the main idea i
 * For chess-lovers, solving a hard inequality problem feels like solving a mate-in-six puzzle.
 * For competitive programmers, solving a hard inequality feels like solving a hard problem on [codeforces](https://codeforces.com/).
 
-In case you haven't seen one, this is what a hard inequality problems look like:
+In case you haven't seen one, this is what hard inequality problems look like:
 
 <p>
 <div class="mp" id="pint01">
@@ -120,7 +120,7 @@ Those are inequations:
     </p>
     <details>
         <summary>Solution</summary>
-        <p>Solution is left to reader. It's not terribly difficult, even it's an IMO problem. Also there is no "trickonometry" involved.</p>
+        <p>Solution is left to reader. It's not terribly difficult, even though it's an IMO problem. Also there is no "trickonometry" involved.</p>
     </details>
     <details>
         <summary>Source</summary>
@@ -545,7 +545,7 @@ For the next problem, consider applying an inequality we have already establishe
                     a^4+b^4+c^4 = \left(a^2\right)^2 + \left(b^2\right)^2 + \left(c^2\right)^2 \geq \left(ab\right)^2 + \left(bc\right)^2 + \left(ca\right)^2 \geq 
                 \]
                 \[
-                    \geq ab^2c + a^2bc + abc^2 = abc(a+b+c) = abc
+                    \geq ab^2c + a^2bc + abc^2 = \underbrace{abc}_{=1}(a+b+c) = a+b+c
                 \]
             </p>
             <p>Equality holds when \(a=b=c\) and \(abc=1\), so \(a=b=c=1\).</p>
@@ -619,7 +619,7 @@ Do you know how to factor your [symmetric polynomials](https://en.wikipedia.org/
     </p>
     <p>Since \(5\) is an odd number, both \(x^5-y^5\) and \(x-y\) will always have the same sign. This ensures the left-hand side is always positive.</p>
     <p>If \(x=y\), the expression simplifies to:</p>
-    <p class="mpc">\[x^4+x^3y+x^2y^2+xy^3+y^4=4x^4\]</p>
+    <p class="mpc">\[x^4+x^3y+x^2y^2+xy^3+y^4=5x^4 \gt 0\]</p>
     <p>Thus, the inequality is always true.</p>
 </details>
 </div>
@@ -809,7 +809,7 @@ There is something elegant about the next problem:
             <p>So, in essence, we need to verify that the base case of the nested radical satisfies the inequality:</p>
             <p class="mpc">
                 \[
-                    \sqrt{x^2+x} < x^2 + 1 \Leftrightarrow x+1 > 0
+                    \sqrt{x^2+x} < x + 1 \Leftrightarrow x^2 + x < x^2 + 2x + 1 \Leftrightarrow 0 < x + 1
                 \]
             </p>
             <p>Since \(x > 0\), the last inequality clearly holds. Therefore, the original inequality is valid.</p>
@@ -2300,7 +2300,7 @@ Can you solve the following problems without relying on any hints?
         <p>Let \(x,y,z\) positive real numbers such that \(xyz=6\). Prove the inequality:</p>
         <p class="mpc">
             \[
-                \frac{2x}{(2x^2+y^2)(x^2+2z^2)}+\frac{3y}{(3y^2+z^2)(y^2+3x^2)}+\frac{5z}{(5z^2+x^2)(z^2+5y^2)} \leq \frac{1}{8}
+                \frac{2x}{(2x^2+y^2)(x^2+2z^2)}+\frac{3y}{(3y^2+z^2)(y^2+3x^2)}+\frac{5z}{(5z^2+x^2)(z^2+5y^2)} < \frac{1}{8}
             \]
         </p>
         <details>
@@ -2312,13 +2312,13 @@ Can you solve the following problems without relying on any hints?
             <p>We apply the AM-GM inequality to bound each factor in the denominators:</p>
             <p class="mpc">
                 \[
-                    \frac{2x}{(2x^2+y^2)(x^2+2z^2)} \leq \frac{2x}{2\sqrt{2}xy \cdot 2\sqrt{2}xz} = \frac{1}{4\cdot xyx} = \frac{1}{24}
+                    \frac{2x}{(2x^2+y^2)(x^2+2z^2)} < \frac{2x}{2\sqrt{2}xy \cdot 2\sqrt{2}xz} = \frac{1}{4\cdot xyz} = \frac{1}{24}
                 \]
                 \[
-                    \frac{3y}{(3y^2+z^2)(y^2+3x^2)} \leq \frac{3y}{2\sqrt{3}zy \cdot 2\sqrt{3}yx} = \frac{1}{4\cdot xyz} = \frac{1}{24}
+                    \frac{3y}{(3y^2+z^2)(y^2+3x^2)} < \frac{3y}{2\sqrt{3}zy \cdot 2\sqrt{3}yx} = \frac{1}{4\cdot xyz} = \frac{1}{24}
                 \]
                 \[
-                    \frac{5z}{(5z^2+x^2)(z^2+5y^2)} \leq \frac{5z}{2\sqrt{5}zx \cdot 2\sqrt{5}zy} = \frac{1}{4\cdot xyz} = \frac{1}{24}
+                    \frac{5z}{(5z^2+x^2)(z^2+5y^2)} < \frac{5z}{2\sqrt{5}zx \cdot 2\sqrt{5}zy} = \frac{1}{4\cdot xyz} = \frac{1}{24}
                 \]
             </p>
             <p>Summing the three inequalities proves the original.</p>
@@ -2394,7 +2394,7 @@ Can you solve the following problems without relying on any hints?
                     n^3+n^2+2n \gt 4\sqrt{n}(1+\sqrt{2}+\dots+\sqrt{n}) \Leftrightarrow 
                 \]
                 \[
-                    \Leftrightarrow n\cdot\frac{n(n+1)}{1}+2n \gt 4\left(\sqrt{n}+\sqrt{2n}+\dots+\sqrt{n^2}\right)
+                    \Leftrightarrow n\cdot\frac{n(n+1)}{2}+2n \gt 4\left(\sqrt{n}+\sqrt{2n}+\dots+\sqrt{n^2}\right)
                 \]
             </p>
             <p>Dividing both sides by \(2\), the inequality becomes:</p>
@@ -5775,7 +5775,7 @@ The next one looks rather peculiar, but can you solve it using Nesbitt's Inequal
                 \[
                     L=\frac{2^{x-y+1}}{1+2^{z-y}}+\frac{2^{y-z+1}}{1+2^{x-z}}+\frac{2^{z-x+1}}{1+2^{y-x}}= \\
                     = 2[\frac{2^x}{2^y(1+2^{z-y})}+\frac{2^y}{2^z(1+2^{x-z})}+\frac{2^z}{2^x(1+2^{y-x})}] = \\
-                    = 2(\underbrace{\frac{2^x}{2^y+2^z}+\frac{2^x}{2^y+2^z}+\frac{2^z}{2^x+2^y}}_{\ge \frac{3}{2}})
+                    = 2(\underbrace{\frac{2^x}{2^y+2^z}+\frac{2^y}{2^z+2^x}+\frac{2^z}{2^x+2^y}}_{\ge \frac{3}{2}})
                 \]
             </p>
             <p>Thus, we conclude that \(L \ge 3\).</p>
@@ -8246,65 +8246,34 @@ The next problem is an inequality problem "spiced-up" with just a little *number
             \]
         </p>
         <details>
-            <summary>Hint 1</summary>
-            <p>We first note that \( x_1 = 1 \) and \( x_{12} = n \), since \( x_1 \) is the smallest and \( x_{12} \) the largest positive divisor of \( n \).</p>
-        </details>
-        <details>
-            <summary>Hint 2</summary>
-            <p>For all \( i = 1, 2, \dots, 12 \), it holds that:</p>
-            <p class="mpc">
-            \[
-                x_i \cdot x_{13 - i} = n.
-            \]
-            </p>
-        </details>
-        <details>
             <summary>Solution</summary>
-            <p>We first note that \( x_1 = 1 \) and \( x_{12} = n \), since \( x_1 \) is the smallest and \( x_{12} \) the largest positive divisor of \( n \).</p>
-            <p>Also, for all \( i = 1, 2, \dots, 12 \), it holds that:</p>
+            <p>A key property of divisors is the symmetry of their products: \( x_i \cdot x_{13-i} = n \). Thus, we have \( x_1x_{12} = x_2x_{11} = x_3x_{10} = x_4x_9 = x_5x_8 = x_6x_7 = n \).</p>
+            
+            <p>Applying the AM-GM inequality to the first and last terms:</p>
             <p class="mpc">
-            \[
-                x_i \cdot x_{13 - i} = n.
-            \]
+                \[
+                    \frac{x_1 + x_2}{x_3 x_4} + \frac{x_{11} + x_{12}}{x_9 x_{10}} \geq 2\sqrt{\frac{(x_1+x_2)(x_{11}+x_{12})}{x_3x_4x_9x_{10}}}
+                \]
             </p>
-            <p>Applying the Arithmetic Mean–Geometric Mean (AM–GM) inequality to the first and last terms yields:</p>
+            <p>Since \( x_3x_{10} = n \) and \( x_4x_9 = n \), the denominator inside the radical is \( n^2 \). Expanding the numerator:</p>
             <p class="mpc">
-            \[
-                \frac{x_1 + x_2}{x_3 x_4} + \frac{x_{11} + x_{12}}{x_9 x_{10}} 
-                > 2\sqrt{\frac{(x_1 + x_2)(x_{11} + x_{12})}{x_3 x_4 x_9 x_{10}}}.
-            \]
+                \[
+                    (x_1+x_2)(x_{11}+x_{12}) = x_1x_{11} + x_1x_{12} + x_2x_{11} + x_2x_{12} = x_1x_{11} + n + n + x_2x_{12}
+                \]
             </p>
-            <p>Since \( x_3 x_4 \cdot x_9 x_{10} = n^2 \), and using the divisor symmetry:</p>
+            <p>Using \( x_1=1 \) and \( x_{12}=n \), this becomes \( x_{11} + 2n + x_2n \). By AM-GM, \( x_{11} + x_2n \geq 2\sqrt{x_{11} \cdot x_2n} = 2\sqrt{n \cdot n} = 2n \). Thus, the whole numerator is at least \( 4n \):</p>
             <p class="mpc">
-            \[
-                > 2\sqrt{\frac{(x_1 + x_2)(x_{11} + x_{12})}{n^2}}.
-            \]
+                \[
+                    2\sqrt{\frac{4n}{n^2}} = \frac{4\sqrt{n}}{n}
+                \]
             </p>
-            <p>Now apply Cauchy-Schwarz or use the fact that \( x_1 = 1 \), \( x_{12} = n \), and the symmetry suggests \( x_2 \cdot x_{11} = n \Rightarrow x_2 = \frac{n}{x_{11}} \). This motivates bounding the sum \( x_1 + x_2 \) and \( x_{11} + x_{12} \) in terms of \( \sqrt{n} \). Using that:</p>
+            <p>For the middle terms, apply AM-GM again:</p>
             <p class="mpc">
-            \[
-                (x_1 + x_2)(x_{11} + x_{12}) \geq (\sqrt{n} + \sqrt{n})^2 = 4n,
-            \]
+                \[
+                    \frac{x_5}{x_6} + \frac{x_8}{x_7} \geq 2\sqrt{\frac{x_5x_8}{x_6x_7}} = 2\sqrt{\frac{n}{n}} = 2
+                \]
             </p>
-            <p>We get:</p>
-            <p class="mpc">
-            \[
-                2\sqrt{\frac{(x_1 + x_2)(x_{11} + x_{12})}{n^2}} > 2\sqrt{\frac{4n}{n^2}} = \frac{4\sqrt{n}}{n}.
-            \]
-            </p>
-            <p>For the remaining two terms:</p>
-            <p class="mpc">
-            \[
-                \frac{x_5}{x_6} + \frac{x_8}{x_7} \geq 2\sqrt{\frac{x_5 x_8}{x_6 x_7}} = 2\sqrt{\frac{x_5 x_8}{x_6 x_7}} = 2.
-            \]
-            </p>
-            <p>Thus, the full expression satisfies:</p>
-            <p class="mpc">
-            \[
-                \frac{x_1 + x_2}{x_3 x_4} + \frac{x_5}{x_6} + \frac{x_8}{x_7} + \frac{x_{11} + x_{12}}{x_9 x_{10}} > \frac{4\sqrt{n}}{n} + 2.
-            \]
-            </p>
-            <p>Now, can you prove the strict nature of the inequality ? The easiest way is to analyse the two fractions: \(\frac{x_5}{x_6}\) and \(\frac{x_8}{x_7}\).</p>
+            <p>The inequality is strict because the middle terms \( x_5/x_6 = x_8/x_7 \) would imply \( x_5 = x_6 \), which contradicts \( x_5 < x_6 \). Summing the results gives the final proof.</p>
         </details>
         <details>
             <summary>Source</summary>
