@@ -48,7 +48,7 @@ tags:
 - "fun"
 ---
 
-This article will be part of a more extended series in which I plan to explore various aspects of [Fourier Mathematics](https://en.wikipedia.org/wiki/Fourier_analysis). I will take notes, create some visuals (a good pretext to learn more about graphics), and hope that it will be useful to someone other than me.
+This article will be part of an extensive series in which I plan to explore various aspects of [Fourier Mathematics](https://en.wikipedia.org/wiki/Fourier_analysis). I will take notes, create some visuals (a good pretext to learn more about graphics), and hope that it will be helpful to anyone looking for a clear, visual introduction to these concepts.
 
 The article has yet to be thoroughly reviewed by anyone other than me, so I put it online, hoping to get some feedback before bringing it to a final state.
 
@@ -58,6 +58,7 @@ In this series, we will start with a brief recap of some of the math concepts re
 
 The animations used in this series are original, although I drew inspiration from some existing materials found on the web. Please keep in mind that this is not a comprehensive course on the topic, so if you're really interested in learning more, I recommend taking a full course on the subject.
 
+- [Table of contents](#table-of-contents)
 - [The Circle](#the-circle)
 - [The number $$\pi$$](#the-number-pi)
 - [Radians](#radians)
@@ -67,7 +68,7 @@ The animations used in this series are original, although I drew inspiration fro
 - [Complex Numbers and the Unit Circle](#complex-numbers-and-the-unit-circle)
 - [Multiplying with $$i$$ means a rotation with $$\frac{\pi}{2}$$](#multiplying-with-i-means-a-rotation-with-fracpi2)
 - [Euler's identity](#eulers-identity)
-- [Euler's formula, the connection between $$e$$, $$\pi$$ and $$i$$](#eulers-formula-the-connection-between-e-pi-and-i)
+- [Euler's formula, the connection between $$e$$, $$\\pi$$ and $$i$$](#eulers-formula-the-connection-between-e-pi-and-i)
 - [The $$\sin$$ and $$\cos$$ in their exponential form](#the-sin-and-cos-in-their-exponential-form)
 - [The sinusoid](#the-sinusoid)
 - [Sinusoids are *flexible*](#sinusoids-are-flexible)
@@ -77,14 +78,14 @@ The animations used in this series are original, although I drew inspiration fro
 - [Adding random sinusoids for fun](#adding-random-sinusoids-for-fun)
 - [Playing Sinusoidal tetris for fun](#playing-sinusoidal-tetris-for-fun)
 - [A square wave and sinusoids](#a-square-wave-and-sinusoids)
-- [Epicycles - First Encounter](#epicycles-first-encounter)
-- [Epicycles - An intuitive understanding](#epicycles-an-intuitive-understanding)
-- [Epicycles - A flower ](#epicycles-a-flower)
+- [Epicycles - First Encounter](#epicycles---first-encounter)
+- [Epicycles - An intuitive understanding](#epicycles---an-intuitive-understanding)
+- [Epicycles - A flower](#epicycles---a-flower)
 - [Fourier Series](#fourier-series)
 - [Fourier Series in Exponential Form](#fourier-series-in-exponential-form)
 - [Example: The Fourier Series for the Box Function](#example-the-fourier-series-for-the-box-function)
-- [Example - The Fourier Series of the Triangle wave](#example-the-fourier-series-of-the-triangle-wave)
-- [Example - The Fourier Series of a Sawtooth Function](#example-the-fourier-series-of-a-sawtooth-function)
+- [Example - The Fourier Series of the Triangle wave](#example---the-fourier-series-of-the-triangle-wave)
+- [Example - The Fourier Series of a Sawtooth Function](#example---the-fourier-series-of-a-sawtooth-function)
 - [The Fourier Series Machinery](#the-fourier-series-machinery)
 
 **to be continued**
@@ -97,19 +98,17 @@ It all starts with [*The Circle*](https://en.wikipedia.org/wiki/Circle):
 
 <div id="simple-circle-sketch"></div>
 
-The Circle is a geometrical figure with a center $$P(a, b)$$, and a radius $$r$$. 
-
-It has the following associated equation:
+A circle is a geometric figure defined by its center $$P(a, b)$$ and its radius $$r$$. Algebraically, we describe it with the following equation:
 
 $$
 (x-a)^{2} + (y-b)^{2} = r^2 
 $$
 
-If $$a=0, b=0$$ and $$r=1$$, the circle becomes less generic, so we call it [*The Unit Circle*](https://en.wikipedia.org/wiki/Unit_circle):
+When we set the center at the origin ($$a=0, b=0$$) and the radius to $$r=1$$, we get a special case known as [**The Unit Circle**](https://en.wikipedia.org/wiki/Unit_circle):
 
 <div id="simple-circle-rotating-sketch"></div>
 
-The equation for *The Unit Circle* is:
+The equation simplifies beautifully to:
 
 $$
 x^2+y^2=1
@@ -117,66 +116,76 @@ $$
 
 One could argue *The Circle* is the epitome of [symmetry](https://en.wikipedia.org/wiki/Symmetry). 
 
-Pick one point, $$A$$, then its reflection *on the other side*, $$A^{'}$$, and start rotating:
+If you pick a point $$A$$ on the circumference and its reflection $$A'$$ on the opposite side, the relationship remains constant as they rotate. This rotational invariance is the "secret sauce" of Fourier Mathematics.
 
 <div id="triangle-in-circle-sketch"></div>
 
-What happens on *The Circle*, stays on *The Circle*.
+What happens on the circle, stays on the circle. Everything is periodic, predictable, and perfectly balanced.
 
 # The number $$\pi$$
 
-We rarely see angles expressed in [degrees](https://en.wikipedia.org/wiki/Degree_(angle)); usually, we represent them in relation to the number [PI]((https://en.wikipedia.org/wiki/Pi)) $$\pi$$: $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, etc.;
+In trigonometry and Fourier analysis, we rarely express angles in [degrees](https://en.wikipedia.org/wiki/Degree_(angle)). Instead, we use [**Radians**](https://en.wikipedia.org/wiki/Radian), which represent angles in relation to the number [$$\pi$$](https://en.wikipedia.org/wiki/Pi): $$\pi$$, $$\frac{\pi}{2}$$, $$\frac{\pi}{3}$$, $$\frac{\pi}{4}$$, and so on.
 
-$$\pi$$ is the ratio of a circle's circumference to its diameter. `π ≈ 3.14`.
+By definition, $$\pi$$ is the ratio of a circle's **circumference** to its **diameter**. Regardless of the circle's size, this ratio is constant:$$\pi \approx 3.14159...$$.
 
 <div id="rotating-PI-sketch"></div>
 
-If $$r \neq 1$$, the circle's perimeter is $$P=2\pi r$$, while the area is $$A=\pi r^2$$. Both $$A$$ and $$P$$ depend on $$\pi$$.
+Because of this relationship, the properties of a circle are inextricably linked to $$\pi$$. For any circle with a radius $$r$$:
+* **Perimeter (Circumference):** $$P = 2\pi r$$
+* **Area:** $$A = \pi r^2$$
 
-$$\pi$$ is [irrational](https://en.wikipedia.org/wiki/Irrational_number) and [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).
+Beyond geometry, $$\pi$$ is a fascinating number in its own right:
+* **[Irrational](https://en.wikipedia.org/wiki/Irrational_number):** It cannot be expressed as a simple fraction, and its decimal representation never ends or repeats.
+* **[Transcendental](https://en.wikipedia.org/wiki/Transcendental_number):** It is not the root of any non-zero polynomial equation with rational coefficients.
 
 # Radians
 
-The [`radian`](https://en.wikipedia.org/wiki/Radian) (or `rad`) is the *actual* unit we use to measure angles. An intimate relationship exists between the `radian` and the number $$\pi$$.
+While we are accustomed to using degrees in daily life, the [`radian`](https://en.wikipedia.org/wiki/Radian) (or `rad`) is the standard unit for measuring angles in mathematics and physics. There is an intimate, geometric relationship between the radian and the number $$\pi$$:
 
 <div id="rotating-PI-w-PI-sketch"></div>
 
-To transform an angle measured in degrees ($$360°$$) to radians, the algorithm is simple: we multiply the angle by $$\pi$$, then divide the result by $$180$$.
+Converting from degrees to radians is a simple matter of scaling: we multiply the angle by $$\pi$$, then divide the result by $$180$$.
 
+In the context of Fourier Mathematics, radians are essential. They allow us to treat trigonometric functions as functions of "real numbers" rather than just "angles." This makes the calculus involved in waves and oscillations much cleaner, without the constant need for conversion factors.
 
 # The sine and the cosine
 
-We can define $$\sin$$ and $$\cos$$ in relationship to *The Unit Circle*:
+We can define **Sine** ($$\sin$$) and **Cosine** ($$\cos$$) through their relationship with the **Unit Circle**. Effectively, these functions act as *coordinate trackers* for a point moving around a circle:
 
 <div id="simple-circle-rotating-triangle-sketch"></div>
 
-* $$\theta$$ is the angle formed by the radius, $$r$$ and the $$x$$ axis, at every given point. 
-* The $$\sin$$ function represents the $$y$$-coordinate of a point on the *Unit Circle*;
-* The $$\cos$$ function is the $$x$$-coordinate of the same point on the *Unit Circle*. 
+Where:
+* **$$\theta$$(Theta):** The angle formed between the radius and the positive $$x$$-axis.
+* **The Sine ($$\sin$$):** Represents the vertical displacement, or the $$y$$-coordinate, of the point.
+* **The Cosine ($$\cos$$):** Represents the horizontal displacement, or the $$x$$-coordinate, of the point.
 
-$$\sin$$ and $$\cos$$ are [*periodic functions*](https://en.wikipedia.org/wiki/Periodic_function) with the period $$2\pi$$.
+Because the point eventually returns to its starting position, $$\sin$$ and $$\cos$$ are [**periodic functions**](https://en.wikipedia.org/wiki/Periodic_function) with a period of **$$2\pi$$**. If we "unroll" the vertical motion of the point as it rotates, it traces a perfect wave over time:
 
 <div id="simple-osc-sketch"></div>
 
-At this point, it will be unfair for $$\cos$$ not to plot it on the same graph:
+To be fair to the horizontal component, we can plot the **Cosine** on the same graph. You will notice it creates the exact same wave shape, just shifted by $$\frac{\pi}{2}$$(or $$90^\circ$$).
 
 <div id="simple-osc-cos-sketch"></div>
 
 # The $$\cos$$ leads the $$\sin$$
 
-Putting $$\cos$$ and $$\sin$$ side by side, we observe that they are not that different:
+When we plot $$\cos$$ and $$\sin$$ side by side, it becomes clear that they aren’t just similar—they are essentially the same wave, just operating on a different "schedule." This difference in timing is known as a **Phase Shift**.
 
 $$
 \sin(x+\frac{\pi}{2})=\cos(x)
 $$
 
-We say that $$\cos$$ leads the $$\sin$$ with $$\frac{\pi}{2}$$:
+In technical terms, we say that **$$\cos$$ leads the $$\sin$$** by $$\frac{\pi}{2}$$ (or $$90^\circ$$). If you think of the waves as racers, the cosine wave has already reached its peak by the time the sine wave is just starting to climb from zero.
 
 <div id="sin-cos-side-sketch"></div>
 
+This shift is the reason we describe these two as being "in quadrature."
+
+In Fourier analysis, having both a sine and a cosine component allows us to describe any periodic signal, regardless of its starting position (phase).
+
 # The parity of $$\cos$$ and $$\sin$$
 
-The [*parity* of mathematical functions](https://en.wikipedia.org/wiki/Even_and_odd_functions) generally refers to whether a function is *even*, *odd*, or *neither*.
+In mathematics, [**parity**](https://en.wikipedia.org/wiki/Even_and_odd_functions) describes the symmetry of a function. A function can be classified as *even*, *odd*, or *neither*, depending on how it behaves when the sign of its input is flipped.
 
 The *cosine* is *even*, meaning $$\cos(x)=\cos(-x)$$:
 

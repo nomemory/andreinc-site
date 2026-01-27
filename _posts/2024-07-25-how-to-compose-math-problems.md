@@ -75,7 +75,7 @@ At this point, we have to *backtrack* the new value of $$T$$ in its logarithmic 
 
 So the new problem has just become:
 
-> If $$m$$, $$n$$ are prime numbers, $$a=\ln m$$, $$b=a + \ln n$$, and $$T=\log_{(m*n^2)}n$$, prove $$T=\frac{b-a}{b-a}$$.
+> If $$m$$, $$n$$ are prime numbers, $$a=\ln m$$, $$b=a + \ln n$$, and $$T=\log_{(m*n^2)}n$$, prove $$T=\frac{b-a}{b+a}$$.
 
 The new results are underwhelming. $$T=\log_{(m*n^2)}n$$ still looks bad, and honestly speaking, the problem is still elementary. 
 
@@ -112,6 +112,8 @@ It's nice, our *new* problem becomes:
 > If $$a=\ln2$$, $$b=\ln2+a$$, $$c=\ln5+b$$, $$d=\ln5+c$$, and $$T=\log_{(2*2*3*5*7)}(3*5*7)$$, prove $$T=\frac{d-a}{d+a}$$.
 
 Can you see the pattern $$T=\log_{(2*2*3*5*7)}(3*5*7)$$ ? The base of the algorithm is the product of the first four prime numbers ($$2$$ appears twice), while the argument of the logarithm is the product of the first four prime numbers minus the first one ($$2$$).
+
+Notice that primality is not essential—what matters is the additive structure induced by factorization. Primes simply make the structure transparent.
 
 ## Step 5
 
@@ -176,6 +178,7 @@ $$
 \frac{\ln p_2 + ... + \ln p_n}{\ln p_1 + \ln p_1 + ... + \ln p_n}=\frac{a_n-a_1}{a_n + a_1}
 \\
 $$
+
 
 ## Conclusion 1
 

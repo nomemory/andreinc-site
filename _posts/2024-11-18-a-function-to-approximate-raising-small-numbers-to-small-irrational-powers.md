@@ -20,7 +20,7 @@ This story began, unexpectedly, on Facebook in a math-focused group. A teacher a
 
 Naturally, the challenge was to prove whether $$\lfloor 3^{\sqrt{3}}\rfloor=6$$ or $$\lfloor 3^{\sqrt{3}}\rfloor=7$$ (my intuition leaned toward 7).
 
-Eventually, the most convincing solution—proposed by Mihai Cris—was accepted by the group:
+Eventually, the most convincing solution, proposed by Mihai Cris, was accepted by the group:
 
 <p><div class="mp">
 \[
@@ -158,6 +158,8 @@ Or, even better, $$e^x \approx \frac{-120-60x-12x^{2}-x^{3}}{-120+60x-12x^{2}+x^
 And it's get better, for the $$\ln x$$ function the equivalent `[2/2]` Padé approximation is: $$\frac{3(x-1)(x+1)}{x^{2}+4x+1}$$. Notice how the approximation is bad if $$x < 0.5$$. For this we should find a better function.
 
 ![img]({{site.url}}/assets/images/2024-12-12-a-function-to-approximate-raising-small-numbers-to-small-irrational-powers/padelog22.png){:height="75%" width="75%"}
+
+Note: While the exponential function is approximated around $$x=0$$ (a Maclaurin series), the approximations for $$\ln (x)$$ and $$x$$ are centered at $$x=1$$. This is because $$\ln (0)$$ is undefined, and we want our rational functions to be most accurate in the range of the small positive integers we are testing.
 
 And for $$\sqrt{x}$$ the `[2/2]` approximation will be $$\frac{5x^{2}+10x+1}{x^{2}+10x+5}$$.
 
