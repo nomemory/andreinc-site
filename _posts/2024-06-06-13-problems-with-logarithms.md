@@ -14,14 +14,13 @@ tags:
 - "math"
 - "logarithms"
 ---
-
 Solving math problems is satisfying, but designing them is a completely different beast.
 
- It's a side hobby of mine that feels less like following a map and more like wandering in the dark until you stumble onto something interesting. You start messing with variables, not knowing where you're going, and suddenly a pattern clicks.
+It's a side hobby of mine that feels less like following a map and more like wandering in the dark until you stumble onto something interesting. You start messing with variables, not knowing where you're going, and suddenly a pattern clicks.
 
-Most of this collection comes from that process of experimentation. While I didn't copy these from a textbook, math is a crowded room, so I'm sure I'm not the first to land on some of these ideas. 
+Most of this collection comes from that process of experimentation. However, I want to be clear: math is a crowded room. While I derived these independently, I realized afterwards that several of them (especially `LG03`, `LG06`, and `LG10`) are mathematical "folklore"—classic identities that appear in Olympiad training and textbooks everywhere. I may have essentially reinvented the wheel, but it was a fun wheel to build.
 
-The simpler exercises, in particular, are natural extensions of standard formulas. To give credit where it's due: `Exercise 4` uses a concept that floats around online in various forms; `Exercise 5` is my own riff on a classic problem from the Romanian Nastasescu & Nita collection; and `Exercise 8` shares DNA with a specific case (a=10,b=e) I once saw on YouTube.
+Others have specific roots I can trace: `LG04` relies on a concept often found online; `LG05` is my riff on a classic problem from the Romanian *Nastasescu & Nita* collection; and `LG08` generalizes a specific case ($a=10, b=e$) I once saw on YouTube. The rest are my own variations on these timeless themes.
 
 ---
 
