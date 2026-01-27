@@ -20,7 +20,7 @@ It's a side hobby of mine that feels less like following a map and more like wan
 
 Most of this collection comes from that process of experimentation. However, I want to be clear: math is a crowded room. While I derived these independently, I realized afterwards that several of them (especially `LG03`, `LG06`, and `LG10`) are mathematical "folklore"—classic identities that appear in Olympiad training and textbooks everywhere. I may have essentially reinvented the wheel, but it was a fun wheel to build.
 
-Others have specific roots I can trace: `LG04` relies on a concept often found online; `LG05` is my riff on a classic problem from the Romanian *Nastasescu & Nita* collection; and `LG08` generalizes a specific case ($a=10, b=e$) I once saw on YouTube. The rest are my own variations on these timeless themes.
+Others have specific roots I can trace: `LG04` relies on a concept often found online; `LG05` is my riff on a classic problem from the Romanian *Nastasescu & Nita* collection; and `LG08` generalizes a specific case ($$a=10, b=e$$) I once saw on YouTube. The rest are my own variations on these timeless themes. I did sign with my name the problems that I consider to be original enough. For the rest I did my best to include the source.
 
 ---
 
@@ -628,6 +628,10 @@ Others have specific roots I can trace: `LG04` relies on a concept often found o
     \]
     </p>
 </details>
+<details>
+    <summary>Source</summary>
+    <p>Andrei N. Ciobanu</p>
+</details>
 </div>
 </p>
 
@@ -673,6 +677,10 @@ Others have specific roots I can trace: `LG04` relies on a concept often found o
         \sum_{i=2}^{n-1} \log_i\left(\frac{i+1}{2}\right) \ge \sum_{i=2}^{n-1} \frac{1}{2} = (n-2) \cdot \frac{1}{2} = \frac{n-2}{2}
     \]
     </p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>Andrei N. Ciobanu</p>
 </details>
 </div>
 </p>
