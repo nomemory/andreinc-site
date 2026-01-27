@@ -338,7 +338,7 @@ Others have specific roots I can trace: `LG04` relies on a concept often found o
 </p>
 <p>where \(a, b>0\) and \(a, b \neq 1\).</p>
 <details>
-    <summary>Solution</summary>
+    <summary>Solution 1</summary>
     <p>Not all math questions have "nice" answers.</p>
     <p>Given:</p>
     <p>
@@ -396,6 +396,81 @@ Others have specific roots I can trace: `LG04` relies on a concept often found o
         \]
     </p>
     <p>Additionally, \(x = 1\) is a solution for any \(a, b\) where the logarithms are defined.</p>
+</details>
+<details>
+    <summary>Solution 2</summary>
+    <p>User @mgologanu actually challenged the fact that not all problems have nice solutions. We can make the answer look nicer, by keeping the symmetry.</p>
+    <p>
+        First, we take the natural logarithm (\(\ln\)) of both sides to bring the exponents down. The choice of using \(\ln\) belongs to him:
+    </p>
+    <p>
+        \[
+            \log_b x \cdot \ln(\log_a x) = \log_a x \cdot \ln(\log_b x) \iff
+        \]
+    </p>
+    <p>
+        \[
+            \iff \frac{\ln x}{\ln b} \cdot \ln\left(\frac{\ln x}{\ln a}\right) = \frac{\ln x}{\ln a} \cdot \ln\left(\frac{\ln x}{\ln b}\right) \iff
+        \]
+    </p>
+    <p>
+        Assuming \(x \neq 1\) (since \(x=1\) is a trivial solution):
+    </p>
+    <p>
+    \[
+       \iff \frac{1}{\ln b} \left[ \ln(\ln x) - \ln(\ln a) \right] = \frac{1}{\ln a} \left[ \ln(\ln x) - \ln(\ln b) \right] \iff
+    \]
+    </p>
+    <p>
+    \[
+        \iff \ln a \left[ \ln(\ln x) - \ln(\ln a) \right] = \ln b \left[ \ln(\ln x) - \ln(\ln b) \right] \iff
+    \]
+    </p>
+    <p>
+    \[
+        \iff \ln a \ln(\ln x) - \ln b \ln(\ln x) = \ln a \ln(\ln a) - \ln b \ln(\ln b) \iff
+    \]
+    \[
+        \iff \ln(\ln x) (\ln a - \ln b) = \ln a \ln(\ln a) - \ln b \ln(\ln b) \iff
+    \]
+    </p>
+    <p>
+        Solve for \(\ln(\ln x)\):
+    </p>
+    <p>
+        \[
+            \ln(\ln x) = \frac{\ln a \ln(\ln a) - \ln b \ln(\ln b)}{\ln a - \ln b} \iff
+        \]
+    </p>
+    <p>
+        \[
+            \iff \ln(\ln x) = \ln(\ln a) \cdot \left[ \frac{\ln a}{\ln a - \ln b} \right] - \ln(\ln b) \cdot \left[ \frac{\ln b}{\ln a - \ln b} \right] \iff
+        \]
+    </p>
+    <p>
+        \[
+            \iff \ln(\ln x) = \ln(\ln a) \left( \frac{1}{1-\frac{\ln b}{\ln a}} \right) + \ln(\ln b) \left( \frac{1}{1-\frac{\ln a}{\ln b}} \right) \iff
+        \]
+    </p>
+    <p>
+        \[
+            \iff \ln(\ln x) = \ln(\ln a) \left( \frac{1}{1-\log_a b} \right) + \ln(\ln b) \left( \frac{1}{1-\log_b a} \right) \iff
+        \]
+    </p>
+    <p>
+        \[
+           \iff  \ln(\ln x) = \ln \left[ (\ln a)^{\frac{1}{1 - \log_a b}} \cdot (\ln b)^{\frac{1}{1 - \log_b a}} \right] \iff
+        \]
+    </p>
+    <p>
+        Finally, exponentiate both sides to remove the outer logarithm:
+    </p>
+    <p>
+    \[
+        \ln x = (\ln a)^{\frac{1}{1 - \log_a b}} \cdot (\ln b)^{\frac{1}{1 - \log_b a}}
+    \]
+    </p>
+    <p>\(x\) from the solutions is "equivalent".</p>
 </details>
 </div>
 </p>
