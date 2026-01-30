@@ -14,13 +14,12 @@ tags:
 - "math"
 - "logarithms"
 ---
-Solving math problems is satisfying, but designing them is a completely different beast.
 
-It's a side hobby of mine that feels less like following a map and more like wandering in the dark until you stumble onto something interesting. You start messing with variables, not knowing where you're going, and suddenly a pattern clicks.
+In the Romanian math curriculum, the 10th grade marks a shift toward more abstract algebra, where **logarithms** take center stage. This collection is curated specifically as a training ground for students preparing for the Romanian Math Olympiad.
 
-Most of this collection comes from that process of experimentation. However, I want to be clear: math is a crowded room. While I derived these independently, I realized afterwards that several of them (especially `LG03`, `LG06`, and `LG10`) are mathematical "folklore"—classic identities that appear in Olympiad training and textbooks everywhere. I may have essentially reinvented the wheel, but it was a fun wheel to build.
+The problems below are a mix of the new and the battle-tested. Some are original compositions—exercises I designed to explore specific algebraic relationships. Others are drawn directly from past Local or Regional contest phases, selected because they test the exact kind of rigorous thinking required for competition.
 
-Others have specific roots I can trace: `LG04` relies on a concept often found online; `LG05` is my riff on a classic problem from the Romanian *Nastasescu & Nita* collection; and `LG08` generalizes a specific case ($$a=10, b=e$$) I once saw on YouTube. The rest are my own variations on these timeless themes. I did sign with my name the problems that I consider to be original enough. For the rest I did my best to include the source.
+Whether you are looking for a fresh challenge or revisiting classic techniques, these exercises are designed to sharpen the skills needed for the 10th-grade Olympiad level.
 
 ---
 
@@ -685,4 +684,359 @@ Others have specific roots I can trace: `LG04` relies on a concept often found o
 </div>
 </p>
 
+<p>
+<div class="mp" id="plg13">
+<p><a class="mpl" href="#plg13">Problem LG13</a></p>
+<p>Consider the set \( M \) defined as:</p>
+<p>
+    \[
+        M = \left\{ x \in (0,1) \cup (1,\infty) \mid 7 \ln^3 x - [\ln x]^3 - \{\ln x\}^3 = \{[\lg x]\} + [\{e^x\}] \right\}
+    \]
+</p>
+<p>Prove that the following inequality holds for any \( x \in M \):</p>
+<p>
+    \[
+        \sum_{k=2}^{2013} \log_k x < \frac{2012^2}{\ln \frac{1}{(2013!)^2}}
+    \]
+</p>
+<p>The notations \([\cdot]\) and \(\{\cdot\}\) represent the integer part (floor) and the fractional part of a real number, respectively.</p>
+<details>
+    <summary>Solution</summary>
+    <p>Before proving the inequality, we have to uncover the actual structure of \(M\), and for that, we need to solve the equation.</p>
+    <p>Let's look at the terms on the right side:</p>
+    <ul>
+        <li>\([\lg x]\) is an integer. The fractional part of any integer is always 0. So, \(\{[\lg x]\} = 0\).</li>
+        <li>\(\{e^x\}\) is a fractional part, so by definition it lies in the interval \([0, 1)\). The integer part (floor) of any number in \([0, 1)\) is 0. So, \([\{e^x\}] = 0\).</li>
+    </ul>
+    <p>In conclusion, \(\{[\lg x]\} + [\{e^x\}]\) is just a fancy way of saying \(0\).</p>
+    <p>Thus, the equation can be rewritten as:</p>
+    <p>
+        \[
+            7 \ln^3 x - [\ln x]^3 - \{\ln x\}^3 = 0
+        \]
+    </p>
+    <p>Let's substitute \(a = [\ln x]\) and \(b = \{\ln x\}\). Taking into consideration that \(\ln x = a + b\), we can rewrite the equation as:</p>
+    <p>
+        \[
+            7 (a + b)^3 - a^3 - b^3 = 0 \iff
+        \]
+        \[
+            \iff 6a^3 + 6b^3 + 21ab(a+b) = 0 \iff
+        \]
+        \[
+            \iff 2(a+b)(a^2 - ab + b^2) + 7ab(a+b) = 0 \iff
+        \]
+        \[
+            \iff (a+b)(2a^2 - 2ab + 2b^2) + 7ab(a+b) = 0 \iff
+        \]
+        \[
+            \iff (a+b)(2a^2+5ab+2b^2) = 0 \iff
+        \]
+        \[
+            \iff (a+b)(a+2b)(2a+b) = 0
+        \]
+    </p>
+    <p>It's already good news. We have 3 possible cases where the factors can be zero:</p>
+    <p>
+        <ul>
+            <li>\(a+b=0\), which means that \([\ln x]+\{\ln x\}=\ln x=0 \implies x=1\). We reject this solution, as \(x \in (0,1) \cup (1,\infty)\) per the definition of \(M\);</li>
+            <li>\(2a+b = 0 \implies b=-2a\). Since \(b=\{\ln x\} \in [0,1)\) and \(a=[\ln x] \in \mathbb{Z}\), the only solution is when \(a=b=0\). This means \(\ln x = 0 \implies x = 1\), and again this solution is rejected; </li>
+            <li>\(a+2b=0\). Since \(b=\{\ln x\} \in [0,1)\) and \(a=[\ln x] \in \mathbb{Z}\), the only valid solution here is \((a=-1, b=\frac{1}{2}) \implies \ln x = -\frac{1}{2} \implies x = \frac{1}{\sqrt{e}}\).</li>
+        </ul>
+    </p>
+    <p>So, in conclusion, \(M=\{\frac{1}{\sqrt{e}}\}\).</p>
+    <p>At this point, we need to prove the inequality, taking into consideration that \(\log_k \frac{1}{\sqrt{e}}=\log_k e^{-\frac{1}{2}}=-\frac{1}{2 \ln k}\). The inequality becomes:</p>
+    <p>
+        \[
+            -\frac{1}{2} \sum_{k=2}^{2013} \frac{1}{\ln k} < \frac{2012^2}{\ln \frac{1}{(2013!)^2}} \iff
+        \]
+        \[
+            \iff -\frac{1}{2} \sum_{k=2}^{2013} \frac{1}{\ln k} < - \frac{2012^2}{2 \sum_{k=2}^{2013} \ln k} \iff
+        \]
+        \[
+            \iff \sum_{k=2}^{2013} \frac{1}{\ln k} > \frac{2012^2}{\sum_{k=2}^{2013} \ln k}
+        \]
+    </p>
+    <p>If \(n=2012\) (because mathematicians prefer letters to numbers), the inequality holds thanks to the well-known Cauchy-Schwarz inequality:</p>
+    <p>
+        \[
+            \left( \sum_{k=2}^{n+1} \ln k \right) \left( \sum_{k=2}^{n+1} \frac{1}{\ln k} \right) > (1+1+\dots+1)^2 = n^2
+        \]
+    </p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>Concursul Județean de Matematică "Cristian S. Calude", ediția XIV-a, Galați, România, 2013</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp" id="plg14">
+<p><a class="mpl" href="#plg14">Problem LG14</a></p>
+<p>Let \( a, b, c, d \in (1, \infty) \). Prove that:</p>
+<p>
+    \[
+        \prod_{\text{cyc}} \log_{\frac{1}{(a+b)^2}} \frac{9}{4\left(\frac{a+b}{2} + c + d\right)^2}  \ge 1
+    \]
+</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>The notation \(\prod_{\text{cyc}}\) denotes a <strong>cyclic product</strong>. It implies multiplying the given expression by the 3 variations obtained by cyclically shifting the variables \(a \to b \to c \to d \to a\).</p>
+    <p>For example, if the first term depends on \((a,b,c,d)\), the second depends on \((b,c,d,a)\), the third on \((c,d,a,b)\), and the last on \((d,a,b,c)\).</p>
+    <p>Expanded, the expression is:</p>
+    <p>
+        \[
+        \begin{aligned}
+            &\log_{\frac{1}{(a+b)^2}} \frac{9}{4\left(\frac{a+b}{2} + c + d\right)^2} \cdot \log_{\frac{1}{(b+c)^2}} \frac{9}{4\left(\frac{b+c}{2} + d + a\right)^2} \cdot \\
+            &\cdot \log_{\frac{1}{(c+d)^2}} \frac{9}{4\left(\frac{c+d}{2} + a + b\right)^2} \cdot \log_{\frac{1}{(d+a)^2}} \frac{9}{4\left(\frac{d+a}{2} + b + c\right)^2} \ge 1
+        \end{aligned}
+        \]
+    </p>
+</details>
+<details>
+    <summary>Hint 2</summary>
+    <p>You can simplify the complex terms using the identity: \(\log_{A^n} (B^n) = \log_A B\). This can be derived from standard logarithmic properties.</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>We observe that for each term in the product, both the base and the argument can be written as powers with an exponent of \(-2\). We can use Hint 2 to simplify the expressions:</p>
+    <p>
+        \[
+            \begin{aligned}
+            \prod_{\text{cyc}} \log_{\frac{1}{(a+b)^2}} \frac{9}{4\left(\frac{a+b}{2} + c + d\right)^2} 
+            &= \prod_{\text{cyc}} \log_{\left(\frac{1}{a+b}\right)^2} \left[\frac{3}{2\left(\frac{a+b}{2} + c + d\right)}\right]^2 \\
+            &= \prod_{\text{cyc}} \log_{\left(a+b\right)^{-2}} \left[\frac{a+b+2(c+d)}{3}\right]^{-2} \\
+            &= \prod_{\text{cyc}} \log_{\left(a+b\right)} \left[\frac{a+b+2c+2d}{3}\right]
+            \end{aligned}
+        \]
+    </p>
+    <p>To exploit the symmetry, we regroup the terms in the argument:</p>
+    <p>
+        \[
+            \begin{aligned}
+            \prod_{\text{cyc}} \log_{\left(a+b\right)} \left[\frac{a+b+2c+2d}{3}\right] 
+            &= \prod_{\text{cyc}} \log_{\left(a+b\right)} \left[\frac{(b+c)+(c+d)+(d+a)}{3}\right]
+            \end{aligned}
+        \]
+    </p>
+    <p>Since \( a, b, c, d \in (1, \infty) \), the sums are positive. We apply the <strong>AM-GM inequality</strong> to the argument of the logarithm. Since the base \(a+b > 2\), the logarithm function is increasing, preserving the inequality:</p>
+    <p>
+        \[
+            \begin{aligned}
+                \prod_{\text{cyc}} \log_{\left(a+b\right)} \left[\frac{(b+c)+(c+d)+(d+a)}{3}\right] 
+                &\geq \prod_{\text{cyc}} \log_{\left(a+b\right)} \sqrt[3]{\left(b+c\right)\cdot\left(c+d\right)\cdot\left(d+a\right)} \\
+                &= \prod_{\text{cyc}} \frac{1}{3} \log_{\left(a+b\right)} \left[(b+c)\cdot(c+d)\cdot(d+a)\right] \\
+                &= \prod_{\text{cyc}} \left[\frac{\log_{(a+b)} (b+c) + \log_{(a+b)} (c+d) + \log_{(a+b)} (d+a)}{3}\right]
+            \end{aligned}
+        \]
+    </p>
+    <p>We now apply the <strong>AM-GM inequality</strong> again, this time to the sum of the logarithms:</p>
+    <p>
+        \[
+            \begin{aligned}
+                \prod_{\text{cyc}} \left[\dots\right] 
+                &\geq \prod_{\text{cyc}} \sqrt[3]{\log_{(a+b)}(b+c)\cdot\log_{(a+b)}(c+d)\cdot\log_{(a+b)}(d+a)} \\
+                &= \sqrt[3]{ \prod_{\text{cyc}} \left( \log_{(a+b)}(b+c)\cdot\log_{(a+b)}(c+d)\cdot\log_{(a+b)}(d+a) \right) }
+            \end{aligned}
+        \]
+    </p>
+    <p>Finally, we observe that the terms inside the product cancel out perfectly. We have 12 logarithmic terms that form reciprocal pairs (e.g., \(\log_x y \cdot \log_y x = 1\)):</p>
+    <p>
+        \[
+             = \sqrt[3]{\underbrace{\log_{(a+b)}(c+d) \cdot \log_{(c+d)} (a+b)}_{1} \cdot \dots} = 1
+        \]
+    </p>
+    <p>Since the product is 1, the inequality is proven.</p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>Concursul Interjudețean de Matematică "Cristian S. Calude", ediția a XII-a, Galați, 2011</p>
+    <p>Problem authors: Rodica Balan, Dumitru Balan</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp" id="plg15">
+<p><a class="mpl" href="#plg15">Problem LG15</a></p>
+<p>Consider the numbers \( A, B, a, k \) such that \( A > B > a > 1 \) and \( k > 0 \). Prove that:</p>
+<p>
+    \[
+        \log_a \frac{A}{B} + 1 > \log_{B+k} (A+k)
+    \]
+</p>
+<details>
+    <summary>Hint 1</summary>
+    <p>Try to simplify the inequality by eliminating the \(+1\) from the left side.</p>
+</details>
+<details>
+    <summary>Solution</summary>
+    <p>We begin by rewriting the inequality to make the Right-Hand Side (RHS) comparable to the Left-Hand Side (LHS):</p>
+    <p>
+        \[
+            \begin{aligned}
+            & \log_a \frac{A}{B} + 1 > \log_{B+k} (A+k) \iff \\
+            & \iff \log_a \frac{A}{B} > \log_{B+k} (A+k) - 1 \iff \\
+            & \iff \log_a \frac{A}{B} > \log_{B+k} (A+k) - \log_{B+k} (B+k) \iff \\
+            & \iff \log_a \frac{A}{B} > \log_{B+k} \left(\frac{A+k}{B+k}\right)
+            \end{aligned}
+        \]
+    </p>
+    <p>To prove this strict inequality, we establish an intermediate inequality and then apply the property of transitivity:</p>
+    <p>
+        \[
+            \log_a \frac{A}{B} \overset{\text{?}}{>} \dots > \log_{B+k} \left(\frac{A+k}{B+k}\right)
+        \]
+    </p>
+    <p>Intuitively, we first compare the arguments of the logarithms. We want to check if:</p>
+    <p>
+        \[ 
+            \log_a \frac{A}{B} \overset{\text{?}}{>} \log_a \left(\frac{A+k}{B+k}\right)
+        \]
+    </p>
+    <p>Since the base \(a > 1\), the logarithm is an increasing function. Thus, it suffices to prove that \(\frac{A}{B} > \frac{A+k}{B+k}\):</p>
+    <p>
+        \[
+            \begin{aligned}
+            & \frac{A}{B} > \frac{A+k}{B+k} \iff \frac{A}{B}-\frac{A+k}{B+k} > 0 \iff \\
+            & \iff \frac{A(B+k)-B(A+k)}{B(B+k)} > 0 \iff \\
+            & \iff \frac{AB + Ak - AB - Bk}{B(B+k)} > 0 \iff \\
+            & \iff \frac{k(A-B)}{B(B+k)} > 0
+            \end{aligned}
+        \]
+    </p>
+    <p>Since \( k > 0 \), \( A > B \) (implies \( A-B > 0 \)), and \( B > 1 \), the fraction \(\frac{k(A-B)}{B(B+k)}\) is strictly positive. Thus, the argument inequality holds.</p>
+    <p>Simultaneously, we compare the bases. Since \(B > a\) and \(k > 0\), we have \(B+k > a\). Recall that for a fixed argument greater than 1, a larger base yields a smaller logarithm value. Therefore:</p>
+    <p>
+        \[
+            \log_a \left( \frac{A+k}{B+k} \right) > \log_{B+k} \left( \frac{A+k}{B+k} \right)
+        \]
+    </p>
+    <p>Combining these two results allows us to form the complete chain of inequalities:</p>
+    <p>
+        \[
+             \log_a \frac{A}{B} > \log_a \left( \frac{A+k}{B+k} \right) > \log_{B+k} \left(\frac{A+k}{B+k}\right)
+        \]
+    </p>
+    <p>By transitivity, the original inequality is proven.</p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>Concursul Interjudețean de Matematică "Cristian S. Calude", Ediția a XVII-a, Galați, 5 Noiembrie 2016.</p>
+    <p>Clasa a X-a, Problema 1.b.</p>
+</details>
+</div>
+</p>
+
+<p>
+<div class="mp" id="plg16">
+<p><a class="mpl" href="#plg16">Problem LG16</a></p>
+<p>Let \( a, b, c \in (0, 1) \) or \( a, b, c \in (1, \infty) \). Prove the inequality:</p>
+<p>
+    \[
+        \sum_{\text{cyc}} \frac{1}{(\log_b c + \log_c a) \cdot \log_a^3 b} \ge \frac{3}{2}
+    \]
+</p>
+<details>
+    <summary>Hint</summary>
+    <p>The notation \(\sum_{\text{cyc}}\) stands for a <strong>cyclic sum</strong>. It means you take the first term and add the two other variations formed by shifting the variables in the cycle \(a \to b \to c \to a\).</p>
+    <p>So, the expression expands to:</p>
+    <p>
+        \[
+             \underbrace{\frac{1}{(\log_b c + \log_c a) \cdot \log_a^3 b}}_{\text{Original Term}} + 
+             \underbrace{\frac{1}{(\log_c a + \log_a b) \cdot \log_b^3 c}}_{\text{Shift } a \to b, b \to c, c \to a} + 
+             \underbrace{\frac{1}{(\log_a b + \log_b c) \cdot \log_c^3 a}}_{\text{Shift } b \to c, c \to a, a \to b}
+        \]
+    </p>
+</details>
+<details>
+    <summary>Solution 1</summary>
+    <p>This is a classic problem where substitution works to our advantage. Let's define: \(x = \frac{1}{\log_a b} = \log_b a\), \(y = \frac{1}{\log_b c} = \log_c b\), and \(z = \frac{1}{\log_c a} = \log_a c\). An important thing to notice is that:</p>
+    <p>
+        \[
+            \frac{1}{xyz} = \log_a b \cdot \log_b c \cdot \log_c a = 1 \implies xyz = 1
+        \]
+    </p>
+    <p>At the same time, since \(xyz=1\), the AM-GM inequality tells us that \(\frac{x+y+z}{3} \geq \sqrt[3]{xyz} = 1 \implies x+y+z \geq 3\).</p>
+    <p>Substituting these back into the original expression (noting that \(\log_a^3 b = (1/x)^3\)):</p>
+    <p>
+        \[
+            \begin{aligned}
+            & \sum_{\text{cyc}} \frac{1}{(\frac{1}{y}+\frac{1}{z})\frac{1}{x^3}} \geq \frac{3}{2} \iff \sum_{\text{cyc}} \frac{1}{\frac{z+y}{yz} \cdot \frac{1}{x^3}} \geq \frac{3}{2} \iff \\
+            & \iff \sum_{\text{cyc}} \frac{x^3 yz}{z+y} \geq \frac{3}{2}
+            \end{aligned}
+        \]
+    </p>
+    <p>Since \(xyz=1\), we have \(x^3 yz = x^2 (xyz) = x^2\). The inequality simplifies to:</p>
+    <p>
+        \[
+             \sum_{\text{cyc}} {\frac{x^2}{z+y}} \geq \frac{3}{2}
+        \]
+    </p>
+    <p>The resulting inequality is quite well known. To keep things simple (or perhaps a bit magical), we can use AM-GM in the following manner to isolate the variables:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \left(\frac{x^2}{z+y}+\frac{z+y}{4} \right) \overset{\text{AM-GM}}{\geq} 2\sqrt{\frac{x^2}{4}} = \sum_{\text{cyc}} x
+        \]
+    </p>
+    <p>Rearranging the terms:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \frac{x^2}{z+y} + \frac{1}{4}\sum_{\text{cyc}}(z+y) \geq \sum_{\text{cyc}} x
+        \]
+    </p>
+    <p>Notice that \(\sum_{\text{cyc}}(z+y) = (z+y) + (x+z) + (y+x) = 2(x+y+z)\). Thus:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \frac{x^2}{z+y} \geq \sum_{\text{cyc}} x - \frac{2(x+y+z)}{4} = \frac{x+y+z}{2}
+        \]
+    </p>
+    <p>Since we established earlier that \(x+y+z \ge 3\), the final result holds:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \frac{x^2}{z+y} \geq \frac{3}{2}
+        \]
+    </p>
+</details>
+<details>
+    <summary>Solution 2</summary>
+    <p>We can solve the problem directly using Titu's Lemma and logarithm manipulation:</p>
+    <p>
+        \[
+            \begin{aligned}
+            & \sum_{\text{cyc}} \frac{1}{(\log_b c + \log_c a) \cdot \log_a^3 b} = \sum_{\text{cyc}} \frac{1}{\left(\frac{1}{\log_c b}+\frac{1}{\log_a c}\right) \cdot \frac{1}{\log_b^3 a}} = \\
+            & = \sum_{\text{cyc}} \frac{\log_b a \cdot \log_c b \cdot \log_a c \cdot \log_b^2 a}{\log_c b + \log_a c}
+            \end{aligned}
+        \]
+    </p>
+    <p>Since \(\log_b a \cdot \log_c b \cdot \log_a c = 1\), the expression simplifies nicely to:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \frac{\log_b^2 a}{\log_c b + \log_a c}
+        \]
+    </p>
+    <p>This structure allows us to easily apply Titu's Lemma:</p>
+    <p>
+        \[
+            \sum_{\text{cyc}} \frac{\log_b^2 a}{\log_c b + \log_a c} \overset{\text{Titu's Lemma}}{\geq} \frac{\left( \log_b a + \log_c b + \log_a c\right)^2}{2\left(\log_b a + \log_c b + \log_a c \right)} = 
+        \]
+        \[
+            = \frac{\log_b a + \log_c b + \log_a c}{2}
+        \]
+    </p>
+    <p>Using AM-GM on the three logarithmic terms:</p>
+    <p>
+        \[
+             \frac{\log_b a + \log_c b + \log_a c}{2} \geq \frac{3\sqrt[3]{\log_b a \cdot \log_c b \cdot \log_a c}}{2} = \frac{3}{2}
+        \]
+    </p>
+</details>
+<details>
+    <summary>Source</summary>
+    <p>Concursul Interjudețean de Matematică "Cristian S. Calude", ediția a XVIII-a, Galați, 4 noiembrie 2017</p>
+    <p>Clasa a X-a, proposed by Iuliana Duma</p>
+</details>
+</div>
+</p>
 
