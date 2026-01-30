@@ -15,11 +15,11 @@ tags:
 - "logarithms"
 ---
 
-In the Romanian math curriculum, the 10th grade marks a shift toward more abstract algebra, where **logarithms** take center stage. This collection is curated specifically as a training ground for students preparing for the Romanian Math Olympiad.
+In the landscape of the Romanian 10th-grade Math Olympiad, **logarithms** are a distinct and recurring theme. While they don't dominate the entire curriculum, a problem involving them is bound to appear, often requiring a deep understanding of algebraic inequalities and identities.
 
-The problems below are a mix of the new and the battle-tested. Some are original compositions—exercises I designed to explore specific algebraic relationships. Others are drawn directly from past Local or Regional contest phases, selected because they test the exact kind of rigorous thinking required for competition.
+This collection is curated specifically as a training ground for that level. The problems below are a mix of the new and the battle-tested. Some are original compositions—exercises I designed to explore specific algebraic relationships. Others are drawn directly from past Local or Regional contest phases, selected because they capture the rigor required for competition.
 
-Whether you are looking for a fresh challenge or revisiting classic techniques, these exercises are designed to sharpen the skills needed for the 10th-grade Olympiad level.
+Whether you are looking for a fresh challenge or revisiting classic techniques, these exercises are designed to help you spot the patterns necessary for the Olympiad.
 
 ---
 
